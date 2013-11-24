@@ -1,0 +1,63 @@
+#LyX file created by tex2lyx 2.0.0
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass report
+\use_default_options false
+\language english
+\inputencoding ansinew
+\font_roman lmodern
+\font_sans default
+\font_typewriter lmodern
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize 10
+\spacing single
+\use_hyperref 0
+\papersize a4paper
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+
+Técnicas aplicadas en SLAM
+\end_layout
+
+\begin_layout Section
+
+Filtros de Kalman
+\end_layout
+
+\begin_layout Section
+
+Partículas
+\end_layout
+
+\begin_layout Section
+
+Grafos
+\end_layout
+
+\end_body
+\end_document

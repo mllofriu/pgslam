@@ -1,0 +1,18 @@
+Found NXT: mina 00165305C1A6
+leJOS NXJ> Connected to mina
+Connected to mina 00165305C1A6
+Console open
+5:276
+3:315
+3:580
+3:259
+3:451
+3:216
+3:480
+3:379
+3:414
+3:379
+3:388
+3:375
+3:299
+3:241

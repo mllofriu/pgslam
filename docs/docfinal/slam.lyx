@@ -1,0 +1,1335 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+El problema del SLAM
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+Este capítulo comienza presentando la definición de robot autónomo, las
+ motivaciones que llevan a los investigadores a trabajar en el problema
+ del SLAM y finalmente se introduce el problema del SLAM propiamente dicho.
+ Sobre el final de est
+\change_inserted -1785986595 1341271506
+e capítulo
+\change_deleted -1785986595 1341271511
+a primera parte 
+\change_inserted -1785986595 1341271513
+ 
+\change_unchanged
+se exponen las principales dificultades que tiene este problema en la robótica
+ y algunas de sus clasificaciones.
+ 
+\end_layout
+
+\begin_layout Section
+Robots Autónomos
+\end_layout
+
+\begin_layout Standard
+Existen diversas definiciones para el significado de robot autónomo o de
+ funcionamiento autónomo.
+ A continuación citamos dos definiciones de autores destacados en el área:
+\end_layout
+
+\begin_layout Itemize
+Funcionar autónomamente implica que un robot puede operar, autocontenido
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Un robot autocontenido es aquel que posee todo lo necesario para desempeñar
+ sus tareas en el propio robot.
+ Es decir, que no depende de elementos externos que realicen tareas, por
+ ejemplo
+\change_inserted 2090252569 1339432087
+,
+\change_unchanged
+ realizar cálculos
+\change_deleted 2090252569 1339432090
+,
+\change_unchanged
+ fuera del robot.
+\end_layout
+
+\end_inset
+
+, en variadas condiciones y sin necesidad de supervisión humana.
+ Que un robot sea autónomo significa que puede adaptarse a los cambios en
+ el ambiente (p.e.
+ 
+\change_inserted 2090252569 1339432188
+que 
+\change_unchanged
+se apag
+\change_deleted 2090252569 1339432193
+a
+\change_inserted 2090252569 1339432195
+ue
+\change_unchanged
+n las luces) o a problemas en s
+\change_deleted 2090252569 1339432518
+i
+\change_inserted 2090252569 1339432519
+í
+\change_unchanged
+ mismo (p.e.
+ si se rompe alguna de sus partes) sin dejar de 
+\change_deleted -1785986595 1341271521
+conseguir
+\change_inserted -1785986595 1341271523
+perseguir
+\change_unchanged
+ su objetivo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Un sistema es autónomo en la medida en que su comportamiento está determinado
+ por su propia experiencia (en el largo o mediano plazo)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NorvingRussell2003"
+
+\end_inset
+
+.
+
+\change_inserted -1785986595 1341332935
+ El autor aclara también que sería demasiado estricto pedir una autonomía
+ completa desde el inicio de la ejecución de un robot ya que el único conocimien
+to disponible es el incluido por el desarrollador.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+De las definiciones se desprende que la capacidad de navegar en ambientes
+ desconocidos forma una parte importante de lo que significa un robot autónomo
+ móvil.
+ En este sentido, uno de los principales problemas con los que se tiene
+ que enfrentar un investigador o desarrollador de robots móviles, es el
+ problema
+\change_inserted 2090252569 1339433056
+ conjunto
+\change_unchanged
+ de la localización y armado de mapas del entorno.
+ En la 
+\change_deleted 2090252569 1339696579
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:robotmovil"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339696629
+figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:robotmovil"
+
+\end_inset
+
+
+\change_unchanged
+ se observa un robot autónomo creado por la NASA
+\change_inserted 2090252569 1339696791
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "NASA:"
+description "en español, Agencia Nacional de Administración del Espacio"
+
+\end_inset
+
+
+\change_unchanged
+, que se encuentra en un ambiente desconocido y sin 
+\change_deleted 2090252569 1339696977
+tener
+\change_unchanged
+ información precisa sobre su ubicación, sin embargo, la principal tarea
+ de este robot es la navegación, y para realizar dicha actividad en forma
+ eficiente y eficaz, se necesita conocer el mapa del entorno y la ubicación
+ del robot en dicho mapa.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !hbt
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/oportunity.jpg
+	width 50text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Imagen del robot Oportunity de la NASA en 
+\change_deleted 2090252569 1339696654
+un 
+\change_unchanged
+el planeta Marte.
+ 
+\change_deleted -1785986595 1341272048
+Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341272054
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341272055
+Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:robotmovil"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Motivación del Problema del SLAM
+\end_layout
+
+\begin_layout Standard
+Existen ocasiones en las que se conoce de antemano el entorno en el cual
+ se moverá el robot y es posible proporcionarle un mapa del mismo.
+ Puede tomarse como ejemplo un agente
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Agente:"
+description "Se entiende por agente como una entidad capaz de percibir y modificar su entorno."
+
+\end_inset
+
+
+\change_inserted 2090252569 1339697124
+ 
+\change_unchanged
+robótico que debe limpiar un apartamento completo, utilizando un mapa de
+ este para llevar cuenta de las habitaciones visitadas.
+\end_layout
+
+\begin_layout Standard
+Por otro lado, existen situaciones en las que un agente robótico debe moverse
+ en un entorno desconocido, pero cuenta con información precisa sobre su
+ ubicación.
+ Para conocer su ubicación el agente puede utilizar, por ejemplo, visión
+ global 
+\change_inserted 2090252569 1341380176
+(
+\change_deleted 2090252569 1341380135
+o un sistema GPS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "GPS:"
+description "Sistema que permite conocer la posición de un objeto móvil gracias a la recepción de señales emitidas por una red de satélites."
+
+\end_inset
+
+, 
+\change_unchanged
+como ocurre en las competencias robóticas como el sumo
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Competencia robótica inspirada en el deporte de mismo nombre, que consiste
+ en que dos robots se saquen uno al otro de un dohyo.
+ Por ejemplo http://www.fing.edu.uy/inco/eventos/sumo.uy/
+\end_layout
+
+\end_inset
+
+ o fútbol de robots
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Versión robótica del fútbol.
+ Por ejemplo www.robocup.org/
+\end_layout
+
+\end_inset
+
+
+\change_inserted 2090252569 1341380182
+) o un sistema GPS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "GPS:"
+description "Sistema que permite conocer la posición de un objeto móvil gracias a la recepción de señales emitidas por una red de satélites."
+
+\end_inset
+
+.
+\change_deleted 2090252569 1341380121
+.
+
+\change_unchanged
+ 
+\end_layout
+
+\begin_layout Standard
+Sin embargo, existen casos aún más complejos que los mencionados, en los
+ que no se conoce el entorno y tampoco se tiene información sobre la ubicación
+ exacta del robot.
+ En este caso, el robot deberá generar un mapa del entorno y mantener su
+ ubicación en el mismo de forma simultánea.
+ Esta tarea resulta compleja debido a que para poder localizarse de forma
+ precisa se necesita un mapa, y por otro lado, para poder crear un mapa
+ es menester estar localizado en forma 
+\change_deleted 2090252569 1339697525
+precisa
+\change_inserted 2090252569 1339697526
+exacta
+\change_unchanged
+.
+ Esta es 
+\change_inserted -1785986595 1341272130
+el problema
+\change_deleted -1785986595 1341272125
+la tarea
+\change_unchanged
+ que estudia el SLAM, localización y armado de mapas en simultáneo.
+ Algunos ejemplos, en los cuales es puede ser útil realizar SLAM, son:
+\end_layout
+
+\begin_layout Itemize
+Exploración espacial 
+\end_layout
+
+\begin_layout Itemize
+Rescate en zonas afectadas por catástrofes 
+\end_layout
+
+\begin_layout Itemize
+Tareas domésticas 
+\end_layout
+
+\begin_layout Itemize
+Conducir un automóvil
+\end_layout
+
+\begin_layout Itemize
+Tareas agropecuarias
+\end_layout
+
+\begin_layout Section
+El problema del SLAM
+\end_layout
+
+\begin_layout Standard
+Tomando en cuenta lo expuesto, es fácil deducir que el problema del SLAM
+ aplica cuando el robot no tiene acceso a un mapa del entorno ni conoce
+ tampoco su posición en el mismo.
+ Un ejemplo de estas situaciones puede observare en la
+\change_inserted 2090252569 1339697677
+ figura 
+\change_deleted 2090252569 1339697680
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:irobotjapon"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339697688
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:irobotjapon"
+
+\end_inset
+
+
+\change_unchanged
+, donde un robot es utilizado para tareas de rescate lue
+\change_deleted 2090252569 1339697769
+d
+\change_inserted 2090252569 1339697769
+g
+\change_unchanged
+o de un accidente, en una zona donde el humano no puede acceder
+\change_deleted 2090252569 1339698084
+,
+\change_unchanged
+ debido a los elevados niveles de radiactividad.
+ En este ejemplo, el ambiente puede haber cambiado a causa del accidente
+ y no reflejar lo señalado en los mapas disponibles.
+ Adicionalmente la localización del robot no puede ser determinada con sistemas
+ de GPS debido a que se trata de un entorno cerrado.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, el robot solo dispone de la información proporcionada por las medidas
+ obtenidas de los sensores y la noción del movimiento propio.
+ El agente robótico intentará obtener un mapa del entorno y simultáneamente
+ localizarse en relación a dicho mapa
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Muevo esto a enfoque probabilístico
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !hbt
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/irobotjapon.jpg
+	width 60text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Robot 
+\change_deleted 2090252569 1339697782
+
+\begin_inset Quotes eld
+\end_inset
+
+Packbot
+\change_inserted 2090252569 1339697782
+
+\begin_inset Formula $\mathit{Packbot}$
+\end_inset
+
+
+\change_deleted 2090252569 1339697782
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\change_unchanged
+ 
+\change_deleted -1785986595 1341272148
+enviado por
+\change_inserted -1785986595 1341272149
+de
+\change_unchanged
+ la empresa IRobot
+\change_deleted -1785986595 1341272089
+ luego del terremoto en Japón, para realizar tareas de asistencia en las
+ plantas nucleares 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "irobot"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339782409
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ieeespectrumjapon"
+
+\end_inset
+
+
+\change_deleted -1785986595 1341272089
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341272092
+ luego del terremoto en Japón, para realizar tareas de asistencia en las
+ plantas nucleares 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "irobot"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:irobotjapon"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Dificultades que presenta el SLAM
+\end_layout
+
+\begin_layout Standard
+A continuación se presentan los principales desafíos que tiene el problema
+ del SLAM.
+\end_layout
+
+\begin_layout Subsection
+Manejo de incertidumbre
+\end_layout
+
+\begin_layout Standard
+Como se mencionó anteriormente, determinar la posición exacta del robot
+ localmente requiere una buena estimación del mapa en el cual el robot se
+ mueve.
+ Por otro lado, la determinación del mapa del entorno requiere conocimiento
+ de la posición exacta del agente.
+ Dado que el agente no posee inicialmente ninguno de estos datos, y dado
+ que la incertidumbre de su posición aumenta con su movimiento, el algoritmo
+ de SLAM debe ser capaz de manejar cierto error en los datos que son computados.
+ Esta incertidumbre debe ser manejada de forma tal que el error en las estimacio
+nes no crezca constantemente (de manera de evitar una divergencia en la
+ estimación de la posición del robot y del mapa).
+ 
+\end_layout
+
+\begin_layout Subsection
+Sensores
+\end_layout
+
+\begin_layout Standard
+Los sensores son dispositivos utilizados para obtener información del estado
+ del entorno, o del robot mismo.
+ En la 
+\change_deleted 2090252569 1339698496
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:sensor"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339698515
+figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sensor"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339698554
+,
+\change_unchanged
+  se observa
+\change_deleted 2090252569 1339698520
+r
+\change_unchanged
+ un sensor láser que tiene la capacidad de realizar barridos de 180° y medidas
+ a distancias hasta de 100 metros
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Dato obtenido de www.sick.com
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+buscar cual es la precisión
+\end_layout
+
+\end_inset
+
+.
+ Los sensores son limitados en lo que pueden percibir y no son totalmente
+ precisos en sus medidas
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+referencias, dice el fede :P, no me acuerdo, dp la busco bien
+\end_layout
+
+\end_inset
+
+.
+ Éstas restricciones vienen dadas por muchos factores.
+ El rango y la resolución de un sensor están sujetos a limitaciones físicas.
+ Un claro ejemplo son las cámaras, cuya calidad de imagen está condicionada
+ por 
+\change_inserted 2090252569 1341380610
+la calidad del lente, los filtros utilizados, la cantidad de megapixeles,
+ el preprocesamiento de los valores obtenidos, entre otras limitaciones.
+\change_deleted 2090252569 1341380554
+el hardware.
+
+\change_unchanged
+ 
+\end_layout
+
+\begin_layout Standard
+Además, 
+\change_deleted 2090252569 1339698682
+L
+\change_inserted -1785986595 1341332968
+las medidas realizadas por 
+\change_inserted 2090252569 1339698683
+l
+\change_unchanged
+os sensores  están sujetos a ruido estocástico, lo que perturba las medidas
+ de formas impredecibles.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted 2090252569 1339698849
+Luego, 
+\change_deleted 2090252569 1339698850
+D
+\change_inserted 2090252569 1339698850
+d
+\change_unchanged
+e lo mencionado anteriormente se desprende que los datos obtenidos de
+\change_inserted -1785986595 1341272191
+sde
+\change_unchanged
+ un sensor deben ser manipulados 
+\change_inserted 2090252569 1339698926
+con cuidado 
+\change_deleted 2090252569 1339698932
+de forma inteligente 
+\change_unchanged
+para extraer
+\change_deleted 2090252569 1339698936
+ la
+\change_unchanged
+ información
+\change_inserted 2090252569 1339699026
+ útil.
+
+\change_deleted 2090252569 1339699040
+ verdadera y filtrar el ruido estocástico.
+
+\change_unchanged
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/sick.jpg
+	width 40text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Sensor láser comúnmente utilizado para hacer SLAM.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "robotsinsearch.com"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sensor"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Movimiento del robot
+\end_layout
+
+\begin_layout Standard
+Mientras el robot se mueve en el entorno, se envían órdenes de movimiento
+ a
+\change_inserted 2090252569 1341380764
+ los actuadores
+\change_deleted 2090252569 1341380762
+l robot
+\change_unchanged
+, que comprenden información del cambio en la posición del robot.
+ Esta información luego se procesará para actualizar la estimación de la
+ posición del robot.
+ Un problema puede ocurrir cuando, por ejemplo, 
+\change_inserted 2090252569 1341380868
+se le envía una orden de movimiento a los motores y 
+\change_unchanged
+una de las ruedas 
+\change_inserted 2090252569 1341380914
+(traccionada por el motor que recibió la orden) 
+\change_unchanged
+del robot queda en el aire o resbala, lo que implica que el robot no cambió
+ su posición, o lo hizo pero en menor medida 
+\change_deleted 2090252569 1341380998
+que
+\change_inserted 2090252569 1341380998
+de
+\change_unchanged
+ lo 
+\change_inserted 2090252569 1341380942
+esperado
+\change_deleted 2090252569 1341380946
+reportado por los motores
+\change_unchanged
+.
+ 
+\change_deleted 2090252569 1339699350
+e
+\change_inserted 2090252569 1339699351
+E
+\change_unchanged
+n este sentido la estimación de la posición del robot será errónea si se
+ basa solamente en esta información.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted 2090252569 1339699434
+Cerrar c
+\change_deleted 2090252569 1339699422
+C
+\change_unchanged
+iclos
+\end_layout
+
+\begin_layout Standard
+Cerrar ciclos refiere a la situación en que el robot debe poder reconocer
+ cuando pasa por un lugar que ya ha sido visitado.
+ Realizar esta tarea con éxito se vuelve primordial en los mapas que poseen
+ algún cruce para poder armar el mapa correctamente.
+
+\change_inserted 2090252569 1339699523
+ 
+\change_unchanged
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:loop"
+
+\end_inset
+
+ se puede apreciar un escenario típico donde se presenta el problema del
+ cierre de ciclos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !hbt
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/cerradoCiclosRobot.png
+	width 50text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+La figura muestra el recorrido que hizo un robot
+\change_inserted -1785986595 1341334801
+ en un mapa.
+
+\change_deleted -1785986595 1341334817
+ que comienza en la cocina (donde se encuentra el punto azul).
+ Éste sale de la habitación, recorre una sala y entra nuevamente en la cocina.
+ Para que el algoritmo de SLAM arme el mapa correctamente deberá reconocer
+ que la cocina en la que entró en segundo lugar es la misma de donde partió.
+ Imagen extraída de
+\change_unchanged
+ 
+\change_deleted -1785986595 1341334850
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "loop"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341334821
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341334844
+Comienza en la cocina (donde se encuentra el punto azul).
+ Éste sale de la habitación, recorre una sala y entra nuevamente en la cocina.
+ Para que el algoritmo de SLAM arme el mapa correctamente deberá reconocer
+ que la cocina en la que entró en segundo lugar es la misma de donde partió.
+ Imagen extraída de
+\begin_inset CommandInset citation
+LatexCommand cite
+key "loop"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:loop"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Asociación incorrecta
+\end_layout
+
+\begin_layout Standard
+El algoritmo de SLAM debe ser lo suficientemente preciso como para no confundir
+ dos lugares diferentes de forma que lo lleve a creer que son el mismo.
+ En caso
+\change_deleted -1785986595 1341466302
+ de
+\change_unchanged
+ que el robot estime que dos lugares diferentes con características similares
+ son efectivamente el mismo, cerrará un ciclo donde no lo hay y generará
+ un mapa incorrecto del entorno.
+\end_layout
+
+\begin_layout Subsection
+Capacidad de cómputo
+\end_layout
+
+\begin_layout Standard
+Una gran limitación que encuentran los investigadores y desarrolladores
+ a la hora de resolver un problema de SLAM es el procesamiento de los datos.
+ Los algoritmos de SLAM suelen realizar tareas de procesamiento intensas
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+no entendi el coment del facu
+\end_layout
+
+\end_inset
+
+ debido a la densidad de la representación del mapa y a la complejidad de
+ los cálculos involucrados en la estimación de la posición.
+ Esto muchas veces hace difícil el procesamiento dentro del robot y obliga
+ a extraer los datos sensados para ser procesados afuera de este.
+\end_layout
+
+\begin_layout Section
+Clasificaciones de SLAM
+\end_layout
+
+\begin_layout Standard
+A continuación 
+\change_deleted -1785986595 1341272206
+incluimos
+\change_inserted -1785986595 1341272208
+se incluyen
+\change_unchanged
+ 
+\change_inserted 2090252569 1339699809
+las 
+\change_deleted 2090252569 1339699812
+algunas posibles 
+\change_unchanged
+clasificaciones
+\change_inserted 2090252569 1339699828
+ más utilizadas en la literatura
+\change_unchanged
+ 
+\change_inserted 2090252569 1339699927
+sobre 
+\change_deleted 2090252569 1339699836
+d
+\change_unchanged
+el problema del SLAM.
+\end_layout
+
+\begin_layout Subsection
+Sensores utilizados
+\end_layout
+
+\begin_layout Standard
+Los algoritmos de SLAM pueden ser clasificados según el tipo de sensor que
+ utilizan para obtener información del entorno.
+ Estos sensores pueden ser:
+\end_layout
+
+\begin_layout Itemize
+Sensores de barrido láser: realizan varias medidas por segundo utilizando
+ un láser sobre una plataforma rotativa.
+ Cada medida brinda información sobre orientación (relativa al robot) y
+ distancia del objeto sensado.
+\end_layout
+
+\begin_layout Itemize
+Sensores de ultrasonido e infrarrojos: estos sensores miden la distancia
+ al objeto más cercano.
+ A diferencia de los sensores de barrido láser, los sensores ultrasónicos
+ e infrarrojos no brindan información precisa sobre la orientación relativa
+ del objeto sensado.
+\end_layout
+
+\begin_layout Itemize
+Cámaras de video: Estos sensores permiten obtener imágenes del entorno y
+ procesarlas para 
+\change_deleted 2090252569 1339700221
+obtener
+\change_inserted 2090252569 1339700223
+conocer 
+\change_deleted 2090252569 1339700235
+ información sobre 
+\change_unchanged
+la ubicación de 
+\change_inserted 2090252569 1339700259
+los 
+\change_unchanged
+elementos de interés.
+\end_layout
+
+\begin_layout Subsection
+
+\emph on
+Offline
+\emph default
+ vs.
+ 
+\emph on
+Online
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Offline-vs.-Online"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En el caso del SLAM 
+\emph on
+online
+\emph default
+ se procesa la información en el mismo robot mientras este navega en el
+ entorno.
+ Por otro lado, en el 
+\emph on
+offline
+\emph default
+ se realiza SLAM sobre un conjunto de datos que previamente fueron recuperados
+ con algún robot, tanto de la medida de sus sensores como la información
+ de movimiento robot.
+\end_layout
+
+\begin_layout Subsection
+Topológico vs.
+ Métrico
+\end_layout
+
+\begin_layout Standard
+Algunas técnicas de armado de mapas solamente mantienen la descripción de
+ ciertas características del entorno y la relación entre ellas.
+ Estos métodos son conocidos como topológicos.
+ Por otro lado, los métodos métricos proveen información 
+\change_inserted 2090252569 1339700366
+de distancias
+\change_deleted 2090252569 1339700372
+métrica
+\change_unchanged
+ entre los lugares.
+ En los últimos años, los métodos topológicos han pasado de moda a pesar
+ de la amplia evidencia 
+\change_deleted -1785986595 1341466296
+de 
+\change_unchanged
+que los humanos utilizan a menudo información topológica, y que éstos pueden
+ resolver el problema de SLAM
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Activo vs.
+ Pasivo
+\begin_inset CommandInset label
+LatexCommand label
+name "activovspasivo"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En los algoritmos de SLAM pasivos, es otra entidad quien se encarga de controlar
+ el robot, mientras que el algoritmo de SLAM es puramente observador.
+ La gran mayoría de los algoritmos de SLAM son de este tipo
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+ En el caso de los algoritmos de SLAM activo, el robot explora de forma
+ activa el entorno en busca de conseguir un mapa más preciso en el menor
+ tiempo posible.
+ Existen técnicas híbridas donde el algoritmo de SLAM s
+\change_inserted -1785986595 1341272244
+ó
+\change_deleted -1785986595 1341272243
+o
+\change_unchanged
+lo controla la dirección de los sensores y otra entidad se encarga de la
+ dirección del movimiento del robot.
+\end_layout
+
+\begin_layout Subsection
+Estático vs.
+ Dinámico
+\end_layout
+
+\begin_layout Standard
+En el caso del SLAM estático se asume que el entorno 
+\change_deleted -1785986595 1341500943
+es estático (
+\change_unchanged
+no cambia con el 
+\change_inserted -1785986595 1341272263
+paso del 
+\change_unchanged
+tiempo
+\change_deleted -1785986595 1341272260
+)
+\change_unchanged
+.
+ En el caso del SLAM dinámico el algoritmo debe estar preparado para 
+\change_deleted -1785986595 1341272282
+soportar variaciones
+\change_inserted -1785986595 1341272287
+contemplar variaciones
+\change_unchanged
+ en el entorno 
+\change_inserted -1785986595 1341272300
+de un momento a otro
+\change_deleted -1785986595 1341272302
+(entorno dinámico)
+\change_unchanged
+.
+ La mayoría de la literatura asume entornos estáticos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Volumétrico vs.
+ Basado en marcas
+\end_layout
+
+\begin_layout Standard
+En SLAM volumétrico, el mapa es representado a una resolución que permite
+ una reconstrucción fotográfica del entorno.
+ En este caso el costo computacional del procesamiento de la información
+ es alto.
+ Por otro lado, en el SLAM basado en marcas se extraen características de
+ las medidas de los sensores de forma de armar el mapa en base a marcas
+ dispersas (ver
+\change_inserted 2090252569 1339701148
+ sección 
+\change_deleted 2090252569 1339701151
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Representación-del-mapa"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339701206
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Representación-del-mapa"
+
+\end_inset
+
+
+\change_unchanged
+).
+ Las técnicas que utilizan SLAM basado en marcas suelen ser 
+\change_deleted -1785986595 1341501008
+mas eficientes
+\change_inserted -1785986595 1341501021
+menos costosos desde un punto de vista computacional,
+\change_unchanged
+ ya que se descarta gran parte de la información de los sensores
+\change_deleted 2090252569 1339701266
+ 
+\change_unchanged
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,415 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Conclusiones y Trabajos Futuros
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted 2090252569 1339718946
+Introducción
+\end_layout
+
+\begin_layout Standard
+En este último capítulo se presentan las conclusiones y trabajos a futuro.
+\end_layout
+
+\begin_layout Section
+Conclusiones
+\end_layout
+
+\begin_layout Standard
+Se construyó un sistema robótico autónomo que realiza la tarea de 
+\emph on
+online
+\emph default
+ SLAM topológico, en el contexto de la resolución de un problema de cubrimiento,
+ en un entorno controlado.
+ Este sistema demuestra ser más robusto que utilizar el sistema de odometría
+ para realizar la localización en el contexto del problema planteado.
+\end_layout
+
+\begin_layout Standard
+El sistema de SLAM diseñado cumple los objetivos de ser una plataforma flexible
+ ya que los modelos de movimiento y modelo de sensado se hicieron como subsistem
+as independientes que se integran al núcleo del SLAM a través de interfaces,
+ de forma de facilitar mejoras o cambios en los modelos.
+\end_layout
+
+\begin_layout Standard
+Además, se logró un desarrollo fácil de depurar debido a la implementación
+ de un protocolo de comunicación a través de comandos, de forma de reproducir
+ el procesamiento realizado en el robot, pero en una PC externa, lo que
+ permite
+\change_inserted 2090252569 1341467667
+ almacenar datos para su posterior análisis
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+Se implementó un sistema de parametrización del sistema de SLAM utilizando
+ algoritmos evolutivos.
+ Esto permitió encontrar los parámetros del sistema que minimiza
+\change_inserted -1785986595 1341359509
+n
+\change_deleted -1785986595 1341359507
+ban
+\change_unchanged
+ el error en la estimación.
+ Los parámetros óptimos arrojados por el algoritmo resultaron contradecir
+ los estimados por los autores.
+\end_layout
+
+\begin_layout Standard
+Como logros adicionales se pueden mencionar la adquisición e interiorización
+ de conocimientos de robótica probabilística y SLAM.
+ Los autores entienden que el desarrollo de este campo es vital para el
+ desarrollo de la robótica en Uruguay.
+\end_layout
+
+\begin_layout Standard
+Adicionalmente, dado que se utilizó una plataforma de robótica educativa,
+ los conocimientos adquiridos y el software desarrollado puede ser utilizado
+ para enriquecer los cursos de robótica dictados por la Facultad de Ingeniería.
+ 
+\end_layout
+
+\begin_layout Standard
+Además, durante el desarrollo de la solución 
+\change_deleted -1785986595 1341359522
+de 
+\change_inserted -1785986595 1341359522
+se 
+\change_unchanged
+corrigieron defectos en algunas clases implementadas de LeJOS, particularmente
+ en la clase de manejo de la cámara.
+ Los autores pretenden colaborar con este software de código abierto a fin
+ de aportar el conocimiento generado durante el proyecto.
+\end_layout
+
+\begin_layout Section
+Trabajos Futuros
+\end_layout
+
+\begin_layout Standard
+A continuación se incluyen las posibles mejoras al sistema.
+\end_layout
+
+\begin_layout Subsection
+Rigidez del mapa final
+\end_layout
+
+\begin_layout Standard
+La implementación de 
+\change_deleted -1785986595 1341359543
+los 
+\change_unchanged
+Filtros de Kalman para la estimación de cada marca disminuyen la varianza
+ de la gaussiana del estado oculto en cada actualización.
+ Una de las posibles mejoras que se le puede hacer al sistema es que la
+ confianza de las marcas disminuya con el pasar del tiempo, de forma que
+ las nuevas observaciones tengan más peso de lo que tienen actualmente.
+\end_layout
+
+\begin_layout Subsection
+Modelo de sensado y cámara
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Modelo-de-sensado-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En función de los resultados obtenidos, se considera el cambio del modelo
+ de sensado como una tarea prioritaria.
+ En primer lugar se propone cambiar la cámara utilizada, debido a
+\change_inserted -1785986595 1341359533
+ que
+\change_unchanged
+ se considera que su utilización presenta una de las principales limitantes
+ para escalar el sistema a un entorno real.
+\change_inserted -1785986595 1341359896
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341359897
+Se plantea realizar un estudio del error en los modelo de estimación de
+ la distancia y ángulo relativo a las marcas.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341359897
+Adicionalmente, se propone utilizar bibliotecas robustas y probadas para
+ la estimación de estos datos, como por ejemplo OpenCV
+\begin_inset CommandInset citation
+LatexCommand cite
+key "opencv"
+
+\end_inset
+
+.
+ La realización de este ítem debería ir antecedido del cambio de cámara
+ propuesto en 
+\change_unchanged
+esta sección
+\change_inserted -1785986595 1341359897
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341359902
+Adicionalmente
+\change_inserted -1785986595 1341359903
+Finalmente
+\change_unchanged
+, se considera pertinente evaluar la factibilidad de utilizar sistemas automátic
+os
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sift"
+
+\end_inset
+
+ de detección de marcas, a fin de eliminar la necesidad de colocar marcas
+ artificiales en el entorno.
+\change_inserted -1785986595 1341359600
+
+\end_layout
+
+\begin_layout Subsection
+Pruebas adicionales
+\end_layout
+
+\begin_layout Standard
+Se plantea realizar pruebas adicionales que consistan en completar un mapa
+ parcial del entorno integrado a priori.
+ Esta prueba tendría la finalidad de confirmar que el alto error RMS obtenido
+ durante las pruebas realizadas se debe a un cambio en el marco de referencia.
+ Al realizar estas pruebas se forzaría al sistema de SLAM a adoptar el marco
+ de referencia del Doraemon, evitando este desfasaje.
+\end_layout
+
+\begin_layout Standard
+Además, se considera pertinente la realización de pruebas de localización
+ global una vez obtenido el mapa de un entorno.
+ 
+\change_inserted -1785986595 1341359693
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341359797
+Finalmente, se sugieren realizar pruebas donde se incremente el error de
+ información proporcionado por el sistema de odometría, para evaluar la
+ robustez de SLAM ante errores en la información de movimiento propioceptivo.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Algoritmo 
+\change_deleted -1785986595 1341359553
+evolutivo
+\change_inserted -1785986595 1341359554
+genético
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Se plantea la posibilidad de probar otras funciones de 
+\emph on
+fitness
+\emph default
+ para el algoritmo 
+\change_deleted -1785986595 1341359558
+evolutivo
+\change_inserted -1785986595 1341359559
+genético
+\change_unchanged
+.
+ En particular se considera importante incluir aspectos del mapa generado
+ en la evaluación de la calidad de una 
+\change_deleted -1785986595 1341359563
+parametrización
+\change_inserted -1785986595 1341359564
+calibración
+\change_unchanged
+.
+\change_inserted -1785986595 1341359914
+
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1341359937
+Integración con otros proyectos de grado
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341360128
+Los sistemas generados podrían integrarse con los productos finales de otros
+ proyectos de grado como Salimo (fútbol de robot) y VisRob2
+\change_unchanged
+ (visión en robots)
+\change_inserted -1785986595 1341360128
+.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341424098
+Se podría implementar un sistema de localización basado en filtro de partículas,
+ que tome datos exportados por el proyecto de visión, con la característica
+ adicional que modele componentes dinámicos de un campo de fútbol como otros
+ jugadores y la pelota.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1341424296
+Identificación de marcas libre de errores
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341424535
+Un punto débil del sistema implementado es el sistema de determinación de
+ la identidad de una marca.
+ Si la identificación de las marcas se realiza de forma incorrecta el sistema
+ de SLAM puede diverger.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341424924
+Existen varias técnicas utilizadas en la literatura para mitigar este riesgo.
+ Existe una solución que realiza la identificación de varias marcas de forma
+ simultanea disminuir la probabilidad de una falsa identificación
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorBailey"
+
+\end_inset
+
+.
+ Otras soluciones eliminan por completo el concepto de identidad de marca
+ y resuelven esta incertidumbre como parte del problema de estimación.
+\end_layout
+
+\begin_layout Subsection
+
+\change_deleted -1785986595 1341359591
+Estimación de la posición de las marcas
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341359591
+Se plantea realizar un estudio del error en los modelo de estimación de
+ la distancia y ángulo relativo a las marcas.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341359591
+Adicionalmente, se propone utilizar bibliotecas robustas y probadas para
+ la estimación de estos datos, como por ejemplo OpenCV
+\begin_inset CommandInset citation
+LatexCommand cite
+key "opencv"
+
+\end_inset
+
+.
+ La realización de este ítem debería ir antecedido del cambio de cámara
+ propuesto en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-sensado-1"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_body
+\end_document

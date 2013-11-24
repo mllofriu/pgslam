@@ -1,0 +1,1889 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman lmodern
+\font_sans default
+\font_typewriter lmodern
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author -1571385475 "fede,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Casos de estudio
+\end_layout
+
+\begin_layout Section
+FastSLAM
+\end_layout
+
+\begin_layout Standard
+Fast
+\change_deleted -1785986595 1330716191
+ 
+\change_unchanged
+SLAM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fastslam2,Montemerlo02fastslam:a"
+
+\end_inset
+
+ es un algoritmo de SLAM basado en filtro de partículas sobre un mapa de
+ marcas, desarrollado por Michael Montemerlo, Sebastian Thrun, Daphne Koller
+ y Ben Wegbreit.
+ 
+\end_layout
+
+\begin_layout Standard
+A continuación se detallan algunas de las particularidades de FastSLAM.
+\end_layout
+
+\begin_layout Subsection
+Partículas y Kalman
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+referencia a murphy
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La principal característica de FastSLAM es su combinación de un filtro de
+ partículas con un conjunto de filtros de Kalman.
+\end_layout
+
+\begin_layout Standard
+Los autores se basan en el hecho que, dada la trayectoria de un robot, la
+\change_inserted -1571385475 1331146747
+s
+\change_unchanged
+ posiciones de cada marca se tornan independientes entre s
+\change_inserted -1571385475 1331146756
+í
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331146762
+creo q es un 
+\begin_inset Quotes eld
+\end_inset
+
+si
+\begin_inset Quotes erd
+\end_inset
+
+ con tilde
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_deleted -1571385475 1331146752
+i
+\change_unchanged
+.
+ Este hecho se desprende de la 
+\change_inserted -1785986595 1330984535
+figura 
+\change_unchanged
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:La-red-bayesiana-1"
+
+\end_inset
+
+
+\change_inserted -1785986595 1331137902
+ de la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:SLAM-Probabilísticos"
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+Basándose en 
+\change_inserted -1571385475 1331146858
+lo recién mencionado
+\change_deleted -1571385475 1331146855
+esto
+\change_unchanged
+, FastSLAM se implementa como un filtro de partículas que busca encontrar
+ la trayectoria del robot 
+\begin_inset Formula $p(x_{1:t}|u_{t},z_{t})$
+\end_inset
+
+ sin importar el mapa 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Luego, cada partícula toma como verdadera su estimación de la trayectoria
+ y, por lo tanto, realiza una estimación independiente para cada una de
+ las marcas del mapa.
+\end_layout
+
+\begin_layout Standard
+Como resultado, cada partícula posee 
+\begin_inset Formula $K$
+\end_inset
+
+ filtros de Kalman de baja dimensión (igual a la del entorno de trabajo),
+ donde 
+\begin_inset Formula $K$
+\end_inset
+
+ es el número de marcas del sistema.
+\end_layout
+
+\begin_layout Standard
+Tomando esto en cuenta, es posible observar que una implementación sencilla
+ de este algoritmo requiere 
+\begin_inset Formula $O(MK)$
+\end_inset
+
+ de tiempo computacional, siendo 
+\begin_inset Formula $M$
+\end_inset
+
+ el número de partículas y 
+\begin_inset Formula $K$
+\end_inset
+
+ la cantidad de marcas.
+ Para disminuir el tiempo computacional se implementó una estructura de
+ datos arborecente que reduce los cálculos a 
+\begin_inset Formula $O(MlogK)$
+\end_inset
+
+.
+ Esto se cumple siempre y cuando la correspondencia sea conocida
+\change_deleted -1785986595 1330817751
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+agregar tema de correspondencia en cap2
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+Una diferencia importante entre el modelo tradicional y FastSLAM es que
+ utiliza gaussianas de dos dimensiones, obteniendo un orden de cómputo constante
+ (no creciente con la cantidad de marcas), a diferencia del tradicional,
+ que es de orden lineal en la cantidad de marcas.
+\end_layout
+
+\begin_layout Subsection
+Optimización de la distribución propuesta
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Optimización-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+FastSLAM 2.0 implementa una mejora vinculada al paso de predicción, también
+ conocido como paso de generación de la distribución propuesta.
+\end_layout
+
+\begin_layout Standard
+La optimización consta de utilizar la información de sensado como parte
+ del modelo de 
+\change_deleted -1785986595 1331137923
+desplazamiento
+\change_inserted -1785986595 1331137925
+transición
+\change_unchanged
+, es decir que el modelo de desplazamiento queda:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(x_{t}|x_{t-1},u_{t},z_{t},m)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esto implica que las partículas generadas en el paso de predicción son más
+ verosímiles a la observación realizada.
+ En la práctica, esto significa que 
+\change_inserted -1571385475 1331147040
+se necesitan 
+\change_unchanged
+menos partículas 
+\change_deleted -1571385475 1331147044
+son necesarias 
+\change_unchanged
+para representar correctamente la distribución luego de incluída la información
+ de odometría.
+\end_layout
+
+\begin_layout Standard
+Es importante destacar que, si bien cada partícula corresponde a una trayectoria
+ del robot, para generar el nuevo conjunto de partículas solo se utiliza
+ la posición del robot más reciente 
+\begin_inset Formula $x_{t-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Inclusión de marcas nuevas
+\end_layout
+
+\begin_layout Standard
+Para la inclusión de marcas nuevas detectadas se utiliza un algoritmo común
+ en el área de SLAM sobre marcas.
+ Este algoritmo consta en mantener un índice que relaciona:
+\end_layout
+
+\begin_layout Itemize
+La cantidad de veces que se observó la marca.
+\end_layout
+
+\begin_layout Itemize
+La cantidad de veces que se debería haber observado una marca (está se encontrab
+a dentro del campo visual) y no sucedió.
+\end_layout
+
+\begin_layout Standard
+Este índice se mantiene para todas las marcas y se consideran activas aquellas
+ en las que este supera cierto umbral 
+\change_deleted -1571385475 1335960341
+arbitrario
+\change_inserted -1571385475 1335960343
+empírico
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+La utilización de este índice permite al sistema incorporar nuevas marcas
+ con una cierta seguridad de su existencia y eliminar marcas que dejan de
+ ser observables.
+ En definitiva, este manejo de las marcas permite contemplar cierto dinamismo
+ en el entorno de trabajo.
+\end_layout
+
+\begin_layout Subsection
+Capacidad de escalar
+\end_layout
+
+\begin_layout Standard
+Debido a que las marcas son utilizadas de manera independiente y el tiempo
+ de ejecución de la operación más costosa (paso de actualización) se realiza
+ en tiempo 
+\begin_inset Formula $O(M.log(K))$
+\end_inset
+
+, este sistema escala a un número mayor de marcas que los filtros de Kalman,
+ los cuales tienen un tiempo de actualización de 
+\begin_inset Formula $O(K^{2})$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ver 1 millon features
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Representación del mapa
+\end_layout
+
+\begin_layout Standard
+Como se vió, cada partícula mantiene la estimación de las 
+\begin_inset Formula $K$
+\end_inset
+
+ marcas
+\change_inserted -1571385475 1331147303
+.
+ Luego,
+\change_deleted -1571385475 1331147304
+, 
+\change_inserted -1571385475 1331147305
+ 
+\change_unchanged
+la función de copia requiere tiempo de 
+\begin_inset Formula $O(MK)$
+\end_inset
+
+.
+ Sin embargo, la mayoría de las copias pueden ser evitadas.
+ 
+\end_layout
+
+\begin_layout Standard
+La idea principal es que el conjunto de gaussianas en cada partícula es
+ representada por un árbol binario de búsqueda balanceado, y que en el proceso
+ de generación de una nueva partícula sólo se referencia a el árbol de la
+ partícula padre incluyendo algunas modificaciones realizadas a las marcas.
+ Solo se actualiza la estimación de la marca necesaria, el resto de las
+ estimaciones permanecen intactas.
+\change_inserted -1785986595 1331137941
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331138036
+Esta característica es similar a la implementada en DP-SLAM, ver sección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:DP-SLAM"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Asociación de datos
+\end_layout
+
+\begin_layout Standard
+En FastSLAM se estima la asociación (identificación de la marca observada)
+ para cada partícula.
+ Incluso cada partícula podría poseer un número diferente de marcas en sus
+ respectivos mapas.
+ Las partículas que tengan errores en la asociación tienden a desaparecer,
+ a diferencia del enfoque 
+\change_inserted -1785986595 1330716282
+utilizado 
+\change_deleted -1785986595 1330716295
+por
+\change_inserted -1785986595 1330716295
+en
+\change_unchanged
+ 
+\change_deleted -1785986595 1330716286
+EKF 
+\change_inserted -1785986595 1330716291
+los filtros de Kalman, 
+\change_unchanged
+en el cual 
+\change_deleted -1785986595 1331138342
+esto
+\change_inserted -1785986595 1331138348
+un error de asociación puede
+\change_unchanged
+ 
+\change_deleted -1785986595 1331139081
+genera
+\change_inserted -1785986595 1331139084
+provocar
+\change_unchanged
+ una falla irrecuperable.
+\end_layout
+
+\begin_layout Standard
+Como consecuencia negativa, se observa que el sistema de partículas realiza
+ una búsqueda en el espacio conjunto de las trayectorias posibles del robot
+ y las asociaciones posibles de datos.
+ Esto torna más grande el espacio de búsqueda, y por lo tanto aumenta el
+ número necesario de partículas.
+\change_inserted -1785986595 1330725807
+
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330725931
+Pruebas y resultados
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330726384
+Se realizaron pruebas sobre un conjunto de datos obtenidos utilizando un
+ robot real en el entorno Victoria Park, Sydney
+\begin_inset CommandInset citation
+LatexCommand cite
+key "treesslam"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139139
+El camino transitado consta de 3,5
+\change_deleted -1571385475 1331147814
+ 
+\change_inserted -1785986595 1331139139
+km
+\change_inserted -1571385475 1331149369
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331149378
+unificar criterio de unidad de medida en todo el doc km o m
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1331139139
+ de trayectoria y el entorno tiene un largo de 
+\change_inserted -1571385475 1331147837
+0,
+\change_inserted -1785986595 1331139139
+320
+\change_deleted -1571385475 1331147817
+ 
+\change_inserted -1571385475 1331147840
+k
+\change_inserted -1785986595 1331139139
+m.
+ El vehículo que recabó los datos estaba equipado con un GPS diferencial
+ que brinda un estimado de la posición verdadera.
+ Este dato es utilizado solo para la evaluación del desempeño del sistema.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139351
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:fastslam1"
+
+\end_inset
+
+ muestra el camino estimado utilizando solo los datos de odometría, que
+ según los autores resulta muy pobre, con un error RMS
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330727390
+El error RMS (del ingles root mean squared o raiz del valor esperado al
+ cuadrado) es un estimador muy utilizado en estadística que mide la precisión
+ de un estimador 
+\begin_inset Formula $\hat{\theta}$
+\end_inset
+
+ con respecto a la medida real 
+\begin_inset Formula $\theta$
+\end_inset
+
+, según la fórmula:
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330727248
+\begin_inset Formula 
+\[
+RMS(\hat{\theta})=\sqrt{E((\hat{\theta}-\theta)^{2})}
+\]
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+ de 
+\change_inserted -1571385475 1331147909
+0,0
+\change_inserted -1785986595 1331139351
+93
+\change_deleted -1571385475 1331147911
+.
+\change_inserted -1785986595 1331139351
+6 
+\change_inserted -1571385475 1331147913
+k
+\change_inserted -1785986595 1331139351
+m.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330809519
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1330809375
+\begin_inset Graphics
+	filename images/fastslam1a.png
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1331139340
+Camino estimado utilizando tan solo información de odometría.
+ Se muestra el camino en rojo sobre una foto aérea del entorno.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fastslam2"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fastslam1"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330810045
+Se realizaron experimentos utilizando solo una partícula para demostrar
+ la eficiencia de la distribución propuesta implementada y con 100 partículas
+ para obtener resultados más precisos.
+ Los resultados de la estimación del camino (ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:fastslam1part"
+
+\end_inset
+
+) son cualitativamente muy similares a los resultados utilizando 100 partículas
+ (ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:fastslam100par"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330809651
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1330809886
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809927
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809927
+\begin_inset Graphics
+	filename images/fastslam1b.png
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809971
+Estimación utilizando una partícula.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fastslam1part"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809930
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809930
+\begin_inset Graphics
+	filename images/fastslam1c.png
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809987
+Estimación utilizando 100 partículas.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fastslam100par"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330809651
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330817549
+Estimación del camino sobre foto aérea del entorno.
+ La linea amarilla representa la estimación del camino realizado por el
+ robot y los puntos amarillos las marcas utilizadas por el algoritmo.
+ Imágenes extraídas de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fastslam2"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+\change_inserted -1785986595 1331137969
+GMapping
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330816577
+GMapping 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gmapping"
+
+\end_inset
+
+ es un algoritmo de SLAM basado en filtro de partículas que trabaja con
+ una grilla de ocupación, desarrollado por Giorgio Grisetti, Cyrill Stachniss
+ y Wolfram Burgard, de la universidad de Freiburg.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330816709
+Además, parte de la implementación de este algoritmo forma parte de un algoritmo
+ de SLAM de MRPT
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mrpt"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330708604
+A continuación se detallan algunas de las particularidades de GMapping.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330708604
+Optimización de la distribución propuesta
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330708604
+Al igual que FastSLAM, GMapping realiza una optimización de la distribución
+ propuesta.
+ Por más información en este punto se sugiere ver la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Optimización-de-la"
+
+\end_inset
+
+.
+ Sin embargo, varias modificaciones fueron necesarias para la implementación
+ de este sistema utilizando grillas de ocupación (a diferencia de FastSLAM
+ que utiliza un mapa de marcas).
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139378
+En esta solución, basada en una heurísticca se intenta encontrar una distribució
+n gaussiana (por elección arbitraria de los autores) que represente la nueva
+ posición de la partícula, tomando en cuenta tanto la información de movimiento
+ como la de sensado.
+ La implementación se realiza de la siguiente forma (ver también el algoritmo
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:distprop"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1785986595 1330708604
+Se realiza un proceso de 
+\emph on
+scanmatching
+\emph default
+ en un entorno de la posición de la partícula, para encontrar el área donde
+ la información sensada presenta una mayor verosimilitud.
+ Se toma el area de verosimilitud como aquella en la que el 
+\emph on
+scanmatch 
+\emph default
+retorna un resultado mayor que un umbral.
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1785986595 1330708604
+Luego se toman 
+\begin_inset Formula $K$
+\end_inset
+
+ muestras al azar del área de verosimilitud.
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1785986595 1330708604
+Utilizando estas muestras se calculan la media y varianza de la distribución
+ buscada.
+ Esto se logra realizando un promedio pesado de las posiciones de las muestras,
+ tomando como peso su verosimilitud con respecto al modelo de sensado y
+ movimiento.
+ Luego se calcula la varianza como, simplemente, la varianza de este conjunto
+\change_inserted -1571385475 1331148116
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331148120
+esta rara la redaccion
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1330708604
+.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330708604
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+\begin_inset listings
+lstparams "language=Python,mathescape=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+para cada particula $p^i$
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+	areaVerosimil = scan_match($x_t$, $
+\backslash
+mu$)
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+	$
+\backslash
+mu$ = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1331139449
+
+	para cada muestra $m^j$ de areaVerosimil
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+		$
+\backslash
+mu$ += $p^i$.pos * p($z_t$|$m^j$.pos) 
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+			* p($m^j$.pos|$p^i.pos$,$u_t$) / $
+\backslash
+eta_i$
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+	$
+\backslash
+sigma$ = varianza(muestras)
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+return $
+\backslash
+mu$, $
+\backslash
+sigma$
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330708604
+Algoritmo de estimación de la distribución propuesta tomando en cuenta informaci
+ón de odometría y sensado
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:distprop"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139430
+Finalmente se obtienen los parámetros de la distribución gaussiana óptima
+ que refleja tanto la información de odometría como la de sensado.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139431
+Esta distribución se utiliza más adelante para generar la nueva generación
+ de partículas.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330708604
+Si bien esta característica intenta aumentar la eficiencia del sistema mediante
+ la optimización de la actualización de la posición de cada partícula, para
+ este proceso es necesario realizar un proceso de 
+\emph on
+scanmatching
+\emph default
+ y un pequeño procedimiento de Montecarlo (la generación de muestras) para
+ estimar la nueva distribución, para cada partícula existente.
+ Esto pone en duda si realmente la optimización 
+\change_deleted -1571385475 1331148177
+realmente 
+\change_inserted -1785986595 1330708604
+da réditos.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330708604
+Actualización retardada del filtro
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330708604
+En vez de actualizar el filtro con cada llegada de información de odometría,
+ GMapping integra los movimientos hasta que el desplazamiento o la rotación
+ sobrepasan un umbral 
+\change_deleted -1571385475 1335960381
+arbitrario
+\change_inserted -1571385475 1335960384
+definido previamente
+\change_inserted -1785986595 1330708604
+.
+ De esta forma se ahorran recursos, sin perder demasiada precisión.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330708604
+
+\emph on
+Resampling 
+\emph default
+selectivo
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139541
+Cada vez que se realiza un paso de 
+\emph on
+resampling
+\emph default
+, la diversidad de las partículas se ve disminuida.
+ Esto implica un riesgo de perder el subconjunto de partículas que representan
+ la verdadera ubicación del agente, un efecto conocido como 
+\emph on
+particle depletion
+\emph default
+.
+ Es decir que es posible que se pierdan todas las partículas 
+\change_deleted -1571385475 1331148318
+todas las partículas 
+\change_inserted -1785986595 1331139541
+en una vecindad de la ubicación real del robot.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330708604
+Para disminuir el riesgo de que esto ocurra, GMapping solo realiza el paso
+ de 
+\emph on
+resampling
+\emph default
+ cuando la diversidad de las partículas supera un umbral predeterminado.
+ La diversidad de las partículas se mide utilizando un indicador 
+\begin_inset Formula $N_{eff}$
+\end_inset
+
+ inversamente proporcional a la varianza de los pesos de las partículas,
+ ver ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:neff"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139553
+\begin_inset Formula 
+\begin{equation}
+N_{eff}=\frac{1}{\sum_{i=1}^{N}(w_{i})^{2}}\label{eq:neff}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139631
+Esta técnica es utilizada además para ahorrar recursos de cómputo.
+ Dado que el paso de 
+\emph on
+resampling 
+\emph default
+suele hacer uso exhaustivo de los recursos de procesamiento, al disminuir
+ la cantidad de veces que se realiza, se optimiza el uso de estos.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330815909
+Pruebas y resultados
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139800
+A continuación se presentan las pruebas realizadas por los autores de GMapping
+ y también el resultado de las pruebas realizadas durante el proyecto de
+ estudio del estado del arte, realizado sobre el código disponible en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openslam"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+
+\change_inserted -1785986595 1330815974
+Pruebas realizadas por los autores de GMapping
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330816157
+Se probó el algoritmo utilizando conjuntos de datos conocidos.
+ Se utilizaron los conjuntos de datos de Intel, Freiburg y MIT
+\change_inserted -1571385475 1331149689
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cyrill"
+
+\end_inset
+
+
+\change_inserted -1785986595 1330816157
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330815797
+Los autores establecen que el algoritmo ejecuta en linea en plataformas
+ conocidas como ActivMedia Pioneer2 AT, Pioneer 2 DX-8, iRobot B2lr.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330815837
+En todos los conjuntos de datos se obtuvieron buenos resultados, elaborando
+ mapas sin inconsistencias (evaluados por terceros), incluso en el orden
+ de centímetros.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139826
+Para la elaboración de los mapas fueron suficientes menos de 100 partículas.
+ Sin embargo, es importante notar que cada una de estas partículas realiza
+ una estimación de la distribución de probabilidad utilizando K muestras,
+ lo que implica más trabajo por partícula.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330815882
+El consumo de recursos también resulto 
+\change_deleted -1571385475 1331148444
+positivo
+\change_inserted -1571385475 1331148445
+eficiente
+\change_inserted -1785986595 1330815882
+.
+ Se realizaron todos los cálculos necesarios para un conjuntos de datos
+ de 45 minutos de grabación utilizando tan solo 150 megas y 30 minutos de
+ procesamiento de una maquina con un procesador de 2,8 GHz.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330815982
+Los autores recalcan que el algoritmo es robusto a características desfavorables
+ como dinamismos en el ambiente y objetos difíciles de modelar como pasto
+\change_deleted -1571385475 1331148508
+s
+\change_inserted -1785986595 1330815982
+ y cables.
+\end_layout
+
+\begin_layout Subsubsection
+
+\change_inserted -1785986595 1330816004
+Pruebas realizadas como parte del estudio del estado del arte
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139853
+Se realizaron pruebas utilizando el conjunto de datos del 
+\emph on
+MIT Killian Court
+\change_inserted -1571385475 1331149943
+
+\emph default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mitkillian"
+
+\end_inset
+
+
+\change_inserted -1785986595 1331139853
+.
+ Se eligió este conjuntos de datos porque presentaba un grado interesante
+ de desafío para el algoritmo, debido a los grandes ciclos presentes en
+ el camino del robot, y porque se incluyen datos de sensores láser y de
+ distancia, lo que resultaba propicio para utilizarlo en robots de bajo
+ costo en una etapa posterior del proyecto de grado.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330816425
+Los resultados cualitativos de las pruebas realizadas no coincidieron con
+ los presentados en los documentos de descripción de la solución, sobre
+ el mismo conjunto de datos
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330816422
+explicar conjunto de datos
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139877
+Se contactó a los autores del algoritmo para pedirles consejo sobre la parametri
+zación del algoritmo a fin de obtener los resultados esperados.
+ Estos realizaron sugerencias que mejoraron los resultados pero no al punto
+ de obtener los mismos resultados cualitativos que los presentados en los
+ documentos de descripción, 
+\change_deleted -1571385475 1331148585
+sobre todo
+\change_inserted -1571385475 1331148587
+en particular
+\change_inserted -1785986595 1331139877
+ en lo que refiere al adecuado cierre de ciclos.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Section
+
+\change_inserted -1785986595 1331137977
+DP-SLAM
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DP-SLAM"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330815687
+DP-SLAM
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dpslam,DPSLAM20,dpslamsite"
+
+\end_inset
+
+ es un algoritmo de on-line SLAM basado en filtro de partículas que utiliza
+ grillas de ocupación y busca reducir los tiempos computacionales evitando
+ la sucesiva copia de los mapas de cada partícula en el paso de 
+\emph on
+resampling
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330710698
+Mapa Único
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330710724
+Este algoritmo mantiene un único mapa del mundo.
+ Para esto, cada partícula mantiene ciertas estructuras de datos que le
+ permite conocer los cambios realizados por la misma y sus ancestros (partículas
+ progenitoras).
+ De esta forma, cada partícula puede mantener un mapa propio minimizando
+ el tiempo dedicado a la copia de datos en el proceso de 
+\emph on
+resampling
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331139903
+La estructura utilizada consta de un árbol por cada una de las casillas
+ de la grilla.
+ Inicialmente, estos árboles contienen solo un nodo con el valor de ocupación
+ de la grilla.
+ Cuando una partícula modifica la casilla, genera un nodo nuevo en el árbol
+ y registra el valor modificado.
+ El nuevo nodo será hijo del nodo correspondiente a la última modificación
+ realizada por una partícula ancestro de esta partícula.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330712874
+Para mostrar la utilidad de la estructura implementada conviene observar
+ las figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Varias-partículas-utilizando"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:solomodif"
+
+\end_inset
+
+.
+ En la primera figura se puede observar un árbol que representa la cadena
+ herencia de un conjunto de partículas.
+ Cada una de las partículas del último nivel del árbol de descendencia guarda
+ una grilla de ocupación propia.
+ Dado que estas partículas solo difieren en pequeñas porciones locales del
+ mapa, sería un desperdicio mantener cuatro copias del mapa entero.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330713157
+La figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:solomodif"
+
+\end_inset
+
+ ilustra la alternativa implementada, donde cada partícula inserta una observaci
+ón en el árbol de cada casilla.
+ Se puede observar como la mayoría del mapa permanece incambiado.
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330711584
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1330711444
+\begin_inset Graphics
+	filename images/dpslam1.gif
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330712755
+Varias partículas utilizando mapas diferentes.
+ Los puntos rojos representan la posición de la partícula, las lineas negras
+ representan la observación realizada y las lineas grises las porciones
+ del mapa heredado.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dpslamsite"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Varias-partículas-utilizando"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330714929
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1330711613
+\begin_inset Graphics
+	filename images/dpslam2.gif
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330712544
+Varias partículas guardan tan solo la modificación sobre las celdas que
+ modifican.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dpslamsite"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:solomodif"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330715234
+Las partículas P2, P3 y P5 realizan un cambio en la celda superior izquierda
+ y la partícula P2 realiza también un cambio dos casillas más abajo.
+ Como concecuencia, el árbol de ocupación correspondiente a la casilla superior
+ izquierda quedará como el la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Arbol-de-modificaciones"
+
+\end_inset
+
+, donde P0 es el identificador de la partícula ancestro de todas las partículas
+ y P1 es el padre de P3 y P5.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330715251
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1330715007
+\begin_inset Graphics
+	filename images/arboldpslam1.eps
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330715198
+Árbol de modificaciones de una grilla del mapa.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Arbol-de-modificaciones"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330817034
+Para consultar el valor de una determinada celda de la grilla de ocupación
+ para una partícula, se debe recorrer el árbol de ocupación en busca del
+ ancestro más cercano, tomando el valor de P0 en caso de no existir este.
+ A modo de ejemplo, si el árbol en cuestión fuera el de la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Arbol-de-modificaciones"
+
+\end_inset
+
+ todos los descendientes de P2 deberían utilizar el valor de ocupación almacenad
+o en el nodo P2.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1330817048
+Pruebas y resultados
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330817294
+Se probó el algoritmo utilizando conjuntos de datos generados con un iRobot
+ ATVR y un sensor SICK.
+ El ambiente del conjunto de datos cubría 60 m
+\change_deleted -1571385475 1331148858
+etro
+\change_inserted -1571385475 1331148858
+.
+\change_deleted -1571385475 1331148859
+s
+\change_inserted -1785986595 1330817294
+ de largo por 24 m
+\change_deleted -1571385475 1331148863
+etros
+\change_inserted -1571385475 1331148864
+.
+
+\change_inserted -1785986595 1330817294
+ de ancho y contenía un ciclo de al menos 12 m
+\change_inserted -1571385475 1331148848
+.
+\change_deleted -1571385475 1331148844
+etros
+\change_inserted -1785986595 1330817294
+ por 40 m
+\change_deleted -1571385475 1331148851
+etros
+\change_inserted -1571385475 1331148853
+.
+\change_inserted -1785986595 1330817294
+.
+ Se utilizaron resoluciones de grilla del orden de los centímetros utilizando
+ 10000 partículas.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330817586
+Cualitativamente, se logró generar un mapa aparentemente preciso y consistente,
+ ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:dpslam"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1330817332
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1330817351
+\begin_inset Graphics
+	filename images/dpslam.png
+	lyxscale 50
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1330817573
+Mapa generado por el algoritmo de DP-SLAM.
+ Los números representan puntos de interés, donde se obtuvieron fotos del
+ entorno real, disponibles en el sitio web de origen.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dpslamsite"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:dpslam"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

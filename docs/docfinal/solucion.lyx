@@ -1,0 +1,1980 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Desarrollo de un sistema de SLAM
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+En este capítulo se presenta
+\change_inserted -1785986595 1341425998
+ la solución de SLAM desarrollada.
+
+\change_unchanged
+ Se describen los modelos de sensado y movimiento y el filtro de partículas.
+ Adicionalmente, se incluye una sección que describe la arquitectura del
+ sistema implementado, y cómo esta se adecúa a los requerimientos no funcionales
+ establecidos.
+\change_inserted -1785986595 1341425998
+
+\end_layout
+
+\begin_layout Section
+Algoritmo de SLAM
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Software---Algoritmo"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El Algoritmo de SLAM está compuesto principalmente por tres componentes:
+ el núcleo encargado de realizar la estimación del estado oculto, el modelo
+ de sensado y modelo de movimiento.
+ En esta sección se presentan las características de cada una de estas tres
+ componentes.
+ Además, se hace una breve reseña de la forma en que se estima una posición
+ concreta en base a la distribución mantenida.
+\end_layout
+
+\begin_layout Subsection
+Núcleo del SLAM
+\end_layout
+
+\begin_layout Standard
+A continuación se describen cuatro componentes principales del sistema implement
+ado.
+\end_layout
+
+\begin_layout Subsubsection
+Partículas
+\end_layout
+
+\begin_layout Standard
+El sistema de partículas encapsula toda la funcionalidad referente a los
+ procesos de actualización basado en la observación 
+\emph on
+(update), 
+\emph default
+generación de nuevas partículas 
+\emph on
+(resampling) 
+\emph default
+y
+\emph on
+ 
+\emph default
+estimación del movimiento 
+\emph on
+(predict
+\emph default
+), esenciales para los filtros de partículas
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+
+\emph on
+ 
+\end_layout
+
+\begin_layout Standard
+Cada partícula mantiene un estimado de su posición utilizando tres coordenadas
+ 
+\begin_inset Formula $(x,y,\theta)$
+\end_inset
+
+ y una estimación del mapa, en particular cada una mantiene 
+\change_inserted -1785986595 1341426798
+
+\begin_inset Formula $K$
+\end_inset
+
+
+\change_deleted -1785986595 1341426797
+6
+\change_unchanged
+ Filtros de Kalman (ver sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Filtros-de-Kalman2"
+
+\end_inset
+
+, en adelante FK) que estiman la posición de las 
+\change_inserted -1785986595 1341426808
+
+\begin_inset Formula $K$
+\end_inset
+
+
+\change_deleted -1785986595 1341426806
+6
+\change_unchanged
+ marcas existentes.
+ 
+\end_layout
+
+\begin_layout Standard
+La arquitectura de software implementada para el sistema de partículas se
+ detalla en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Partículas-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Mapa y Filtro de Kalman
+\end_layout
+
+\begin_layout Standard
+Como se explicó anteriormente, el sistema de SLAM mantiene un modelo interno
+ del entorno en el que se mueve utilizando un mapa formado por marcas.
+ En este modelo, cada marca es un FK, que mantiene una distribución gaussiana
+ de dos dimensiones.
+ Formalmente se modela cada marca como:
+\end_layout
+
+\begin_layout Itemize
+Un vector con la posición 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ de la marca
+\end_layout
+
+\begin_layout Itemize
+Una matriz de covarianza asociada al error de la estimación de la posición
+ de la marca
+\end_layout
+
+\begin_layout Standard
+La matriz de covarianza es inicializada con la matriz de covarianza del
+ error de observación (ver sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-sensado"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Como la estimación de las marcas está condicionada por la estimación del
+ recorrido del robot, cada partícula tiene un FK para cada marca existente
+ en el entorno.
+ Esto difiere del enfoque tradicional de FK en el cual se mantiene una matriz
+ de 
+\begin_inset Formula $K*K$
+\end_inset
+
+ (siendo 
+\begin_inset Formula $K$
+\end_inset
+
+ el número de marcas) donde luego de una nueva observación, el orden del
+ costo de actualización de la matriz es 
+\begin_inset Formula $\mathit{O(K^{2})}$
+\end_inset
+
+
+\begin_inset Formula $.$
+\end_inset
+
+ Luego, en nuestro caso, para 
+\begin_inset Formula $M$
+\end_inset
+
+ partículas y 
+\begin_inset Formula $K$
+\end_inset
+
+ marcas habrá 
+\begin_inset Formula $M*K$
+\end_inset
+
+ FK, por lo cual el costo de actualización es 
+\begin_inset Formula $\mathit{O(MK)}$
+\end_inset
+
+.
+ Esto es posible debido a que la estimación de las marcas depende solamente
+ del recorrido del robot y no hay dependencia entre las marcas
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fastslam2"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Cada actualización del mapa (observación de una nueva marca o de una marca
+ ya existente en el sistema) se realiza a través de un FK que se encarga
+ de combinar la estimación actual de la marca con la nueva observación,
+ ponderando según la varianza de cada gaussiana.
+ En caso que la marca observada no tenga una estimación anterior, se la
+ da de alta en el sistema con un bajo nivel de confianza (un valor alto
+ en la covarianza).
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:updatekalman"
+
+\end_inset
+
+ se puede observar como actúa el FK implementado frente a una nueva observación.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/kalman1.png
+	lyxscale 30
+	width 25text%
+	height 25text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejemplo de estimación gaussiana de una marca.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/kalman2.png
+	lyxscale 30
+	width 25text%
+	height 25text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Nueva observación de la misma marca realizada por el robot.
+ El óvalo de observación es más grande debido a que la observación posee
+ una incertidumbre mayor a la estimación actual.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/kalman3.png
+	lyxscale 30
+	width 25text%
+	height 25text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Integración de la observación con la estimación de la marca.
+ La media de la gaussiana resultante se encuentra más cerca de la gaussiana
+ de menor covarianza.
+ La covarianza resultante es menor que la más chica de las gaussianas combinadas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Etapa de actualización de una marca a través del FK.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:updatekalman"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+describir más esta imagen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El FK logra que, tras sucesivas observaciones de la misma marca, la covarianza
+ disminuya, es decir que aumenta la confianza en la estimación de la marca.
+\end_layout
+
+\begin_layout Subsubsection
+Proceso de 
+\emph on
+Resampling
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Proceso-de-Resampling"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este proceso (como se mencionó en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "par:Paso-de-actualización"
+
+\end_inset
+
+) permite ajustar la estimación a la última observación realizada por el
+ robot.
+ Para ello se dispone de un método en la clase presentada en la subsección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "par:MCLParticleSet"
+
+\end_inset
+
+ destinado a realizar el 
+\emph on
+resampling
+\emph default
+.
+ Este algoritmo tiene una relevancia importante ya que es el encargado de
+ 
+\begin_inset Quotes eld
+\end_inset
+
+decidir
+\begin_inset Quotes erd
+\end_inset
+
+ que partículas se mantienen (sobreviven) y cuales desaparecen (mueren),
+ acción que puede tener resultados muy negativos en caso de ser realizada
+ en forma incorrecta.
+ En la implementación presentada, esta operación es ejecutada cada vez que
+ el modelo de sensado obtiene, con cierto nivel de confianza, una nueva
+ medida de una marca.
+ En 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Seudocódigo-de-un"
+
+\end_inset
+
+ se presenta un seudocódigo del algoritmo de 
+\emph on
+resampling
+\emph default
+ implementado.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Python,mathescape=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pesoTotal = suma del peso de todas las partíclas
+\end_layout
+
+\begin_layout Plain Layout
+
+si pesoTotal == 0
+\end_layout
+
+\begin_layout Plain Layout
+
+	para cada partícula p del conjunto
+\end_layout
+
+\begin_layout Plain Layout
+
+		p.peso = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+	fin (no realizar el remuestreo)
+\end_layout
+
+\begin_layout Plain Layout
+
+sino
+\end_layout
+
+\begin_layout Plain Layout
+
+	normalizar el peso 
+\end_layout
+
+\begin_layout Plain Layout
+
+	calcular la varianza de los pesos
+\end_layout
+
+\begin_layout Plain Layout
+
+	si varianza > parámetro de resampling
+\end_layout
+
+\begin_layout Plain Layout
+
+		nuevasPartículas = vacío
+\end_layout
+
+\begin_layout Plain Layout
+
+		hasta completar la cantidad máxima de partículas
+\end_layout
+
+\begin_layout Plain Layout
+
+			sortear una partícula en proporción al peso
+\end_layout
+
+\begin_layout Plain Layout
+
+			realizar una copia
+\end_layout
+
+\begin_layout Plain Layout
+
+			agregar(copia, nuevasPartículas)
+\end_layout
+
+\begin_layout Plain Layout
+
+	partículas = nuevasPartículas
+\end_layout
+
+\begin_layout Plain Layout
+
+fin	 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Seudocódigo del proceso de resampling.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Seudocódigo-de-un"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este seudocódigo comienza realizando un control que el peso de las partículas
+ sea mayor que cero.
+ En caso contrario no se realiza el resampling y se le asigna peso 
+\begin_inset Formula $1$
+\end_inset
+
+ a todas las partículas.
+ Esto se debe a que es necesario mantener un valor superior a cero en el
+ peso para llevar a cabo los cálculos con partículas sin error, sobretodo
+ divisiones.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, se obtiene la varianza de los pesos normalizados y se compara con
+ el parámetro de resampling.
+ Esto se debe a que no siempre es útil realizar el paso de resampling.
+ El paso de 
+\emph on
+resampling
+\emph default
+ sólo debe llevarse a cabo cuando se espera que esto implique un cambio
+ sustancial en la estimación de la posición
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gmapping"
+
+\end_inset
+
+.
+ En general esto ocurre cuando las partículas están muy dispersas, y los
+ pesos asociados a la última observación presenta una gran varianza.
+ 
+\end_layout
+
+\begin_layout Standard
+Si se cumple la condición de resampling, se realiza un sorteo, en el cual
+ se eligen 
+\begin_inset Formula $N$
+\end_inset
+
+ partículas con reposición y probabilidad proporcional al peso.
+ Esto último se debe a que las partículas con mayor peso son las que se
+ adaptan mejor la última observación realizada por el robot.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Proceso de 
+\emph on
+predict
+\end_layout
+
+\begin_layout Standard
+La implementación del proceso de predict se realiza iterando sobre las partícula
+s, aplicando a cada una un cambio determinado por el modelo de movimiento
+ y la información de odometría recibida.
+\end_layout
+
+\begin_layout Standard
+En el seudocódigo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Seudocódigo-del-proceso"
+
+\end_inset
+
+ se observa las operaciones realizadas sobre cada partícula.
+ Se incluye como último argumento de las funciones avanzar y rotar, dos
+ números al azar obtenidos de distribuciones gaussianas.
+ Estas distribuciones dependen de los parámetros del modelo de desplazamiento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "mathescape=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+para cada partícula p
+\end_layout
+
+\begin_layout Plain Layout
+
+	avanzar(p,$u_t$, randomGauss(parametro desplazamiento))
+\end_layout
+
+\begin_layout Plain Layout
+
+	rotar(p, $u_t$, randomGauss(parametro rotación))
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Seudocódigo del proceso de predict.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Seudocódigo-del-proceso"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Estimación de la posición
+\end_layout
+
+\begin_layout Standard
+Para realizar la estimación de la posición, el algoritmo implementado realiza
+ una suma ponderada de la posición de cada partícula.
+ Es decir, que la posición estimada sería:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{pos}=\frac{\sum_{1}^{N}w_{i}x_{i}}{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Donde 
+\begin_inset Formula $\mathit{w}$
+\end_inset
+
+ es el peso de cada partícula y varía entre 
+\begin_inset Formula $\mathit{0}$
+\end_inset
+
+ y 
+\begin_inset Formula $\mathit{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Este modelo representa una simplificación del utilizado realmente.
+ El modelo real realiza un promedio por separado de las componentes del
+ vector 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Esto se debe a que la componente de orientación del robot debe ser promediada
+ de una forma particular, debido a que toma valores en un espacio con una
+ discontinuidad en el valor 
+\begin_inset Formula $180$
+\end_inset
+
+ (
+\emph on
+manifold
+\emph default
+).
+ 
+\end_layout
+
+\begin_layout Standard
+El promedio de la orientación se realiza promediando vectores de dos dimensiones
+, que forman un ángulo 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ con el eje de las abscisas y tienen un módulo igual al peso de la partícula
+ correspondiente.
+ Esto es:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{rot}=\frac{\sum_{1}^{N}w_{i}(cos(rot_{i}),sin(rot_{i}))}{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+rot=arctan(v_{rot})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde 
+\begin_inset Formula $arctan$
+\end_inset
+
+ toma un vector y retorna el ángulo que este forma con el eje 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Esta práctica no tiene fundamento teórico debido a que los pesos 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ refieren a la verosimilitud de una partícula dada al momento de realizado
+ el último sensado.
+ Este peso es asignado para realizar el paso de 
+\emph on
+resampling
+\emph default
+ que convierte la distribución propuesta en la distribución correspondiente
+ a la ubicación del robot y el mapa.
+ Luego de realizado el paso de 
+\emph on
+resampling
+\emph default
+, este peso 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ pierde validez.
+\end_layout
+
+\begin_layout Standard
+Sin embargo, dado que la representación de la distribución de probabilidad
+ se realiza con un conjunto de elementos discretos, los autores entienden
+ que la utilización de esta práctica mejora el estimado de la media de la
+ distribución real.
+\end_layout
+
+\begin_layout Subsection
+Modelo de sensado
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Modelo-de-sensado"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El modelo de sensado supone conocidas la distancia y ángulo relativos a
+ una marca sensada.
+ Luego, puede tomarse la posición estimada de la marca como valor sensado.
+ Es decir que se considera un metasensor que proporciona las coordenadas
+ absolutas de la marca, calculándolas a partir de los datos de distancia
+ y ángulo relativos, y la estimación de la posición absoluta del robot.
+\end_layout
+
+\begin_layout Standard
+Entonces, el modelo de sensado, es decir la función que establece la probabilida
+d de sensar un dato, dado el mapa y la posición del robot, se estableció
+ como una distribución gaussiana en torno a la estimación actual de la marca.
+\end_layout
+
+\begin_layout Standard
+Adicionalmente, dado que la posición de las marcas se estima también utilizando
+ una distribución gaussiana, se estableció como modelo de sensado la convolución
+ de la gaussiana de sensado con la de estimación de la marca.
+ Haciendo esto, se toman en cuenta los parámetros de varianza de la estimación
+ de la marca y no solo la media como dato.
+\end_layout
+
+\begin_layout Standard
+La utilización de esta distribución gaussiana como modelo de sensado agrega
+ un parámetro al sistema, correspondiente a la varianza de esta.
+ Su media no representa un parámetro, porque vale cero, debido a que la
+ gaussiana siempre se concentra en la ubicación de la marca.
+\end_layout
+
+\begin_layout Subsection
+Modelo de movimiento
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Modelo-de-movimiento"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se implementó un modelo de movimiento similar al presentado en la sección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Movimiento"
+
+\end_inset
+
+, que contempla dos fuentes de ruido:
+\end_layout
+
+\begin_layout Itemize
+Ruido gaussiano relacionado al desplazamiento lineal
+\end_layout
+
+\begin_layout Itemize
+Ruido gaussiano relacionado a la rotación del robot
+\end_layout
+
+\begin_layout Standard
+Ambas fuentes de ruido dependen proporcionalmente de la magnitud del movimiento
+ realizado.
+\end_layout
+
+\begin_layout Standard
+Cada fuente de ruido tiene un parámetro asociado.
+ Este parámetro indica la varianza de la distribución gaussiana.
+ Cuanto mayor sea el parámetro, mayor será la varianza del ruido generado
+ en el desplazamiento.
+ Este parámetro fue relevado de forma empírica, esto implica que:
+\end_layout
+
+\begin_layout Itemize
+El sistema será más robusto ante errores cometidos en el desplazamiento
+ ya que en el modelo se tienen en cuenta los errores 
+\begin_inset Quotes eld
+\end_inset
+
+mecánicos
+\begin_inset Quotes erd
+\end_inset
+
+ cometidos por el robot al desplazarse en el escenario
+\end_layout
+
+\begin_layout Itemize
+La dispersión de las partículas tenderá a aumentar proporcionalmente al
+ valor de los parámetros mencionados
+\end_layout
+
+\begin_layout Standard
+El modelo refleja el error real cometido por el robot en sus movimientos.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+agregar las modificaciones al agoritmo de lego(fede) cuales eran bien? las
+ del 0.5? o habia otras??
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El tercer parámetro asociado a la rotación final no fue utilizado, debido
+ a que se supone que los movimientos realizados por el robot siempre constan
+ de rotaciones o traslaciones, pero nunca describen arcos.
+\end_layout
+
+\begin_layout Section
+Arquitectura
+\end_layout
+
+\begin_layout Subsection
+Introducción
+\end_layout
+
+\begin_layout Standard
+En esta subsección se desarrollan en profundidad las características más
+ relevantes de la arquitectura del sistema de SLAM implementado.
+ Se presenta una breve descripción de los módulos más importantes y finalmente
+ se explica como se organiza la arquitectura.
+\end_layout
+
+\begin_layout Subsection
+Requerimientos de la arquitectura
+\end_layout
+
+\begin_layout Standard
+Como se puede inferir del problema a resolver, el sistema tiene el requerimiento
+ principal de realizar localización continua sobre un mapa generado por
+ el propio sistema en forma simultánea, basándose en la información resultante
+ del sensado de las marcas dispuestas en el entorno.
+ 
+\end_layout
+
+\begin_layout Standard
+Además, se establecieron requerimientos no funcionales para el sistema,
+ que se detallan a continuación:
+\end_layout
+
+\begin_layout Itemize
+generar una plataforma flexible
+\end_layout
+
+\begin_layout Itemize
+ejecutar el sistema embebido en el robot 
+\end_layout
+
+\begin_layout Itemize
+desacoplamiento de módulos
+\end_layout
+
+\begin_layout Itemize
+fácil depuración
+\end_layout
+
+\begin_layout Itemize
+experimentos reproducibles
+\end_layout
+
+\begin_layout Standard
+Estos puntos se desarrollan a continuación.
+\end_layout
+
+\begin_layout Subsubsection
+Generar una plataforma flexible
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Generar-una-plataforma"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se espera que la arquitectura implementada permita reutilizar el sistema
+ de SLAM generado, permitiendo intercambiar los módulos (ej.
+ módulo de sensado o movimiento) sin alterar el resto del sistema.
+\end_layout
+
+\begin_layout Subsubsection
+Ejecución embebida en el robot
+\end_layout
+
+\begin_layout Standard
+Dado que el sistema a implementar pretende ser base para el desarrollo de
+ un robot autónomo, este se debe ejecutar por completo en el robot.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Desacoplamiento
+\end_layout
+
+\begin_layout Standard
+Teniendo en cuenta que el sistema de SLAM es parte de un sistema de navegación
+ (que es una actividad deliberativa
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+), consideramos importante desacoplar el sistema generado de los sistemas
+ de operación básicos del robot.
+ Esto permitiría la implementación de arquitecturas regidas por la organización
+ del software que propone el paradigma híbrido
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Paradigma híbrido:"
+description "Paradigma de programación de agentes robóticos que permite la ejecución concurrente de acciones reactivas y deliberativas"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Específicamente, se desea que el sistema sea capaz de mantener un estimado
+ de la posición independientemente de la actividad desarrollada por el robot,
+ sin que este tenga que modificar su comportamiento para que el sistema
+ de SLAM funcione correctamente, ni que el comportamiento más rudimentario
+ del robot precise del estimado proporcionado por el sistema de localización
+ para funcionar
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+no entiendo que quiere decir 
+\begin_inset Quotes eld
+\end_inset
+
+depender totalmente
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Depuración
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Depuración"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para contemplar la complejidad del proceso de depuración del sistema de
+ localización a implementar, se desea que la arquitectura permita el envío
+ de información de depuración a una PC utilizando protocolos inalámbricos.
+\end_layout
+
+\begin_layout Standard
+A través de este protocolo, se realiza el envío de los comandos que son
+ procesados y ejecutados en el robot (movimientos realizados y detección
+ de marcas) a una PC.
+\end_layout
+
+\begin_layout Subsubsection
+Facilitar la investigación
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Facilitar-la-investigación"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que el desarrollo forma parte de un proyecto de investigación, la arquitect
+ura del sistema desarrollado debe facilitar la investigación de las técnicas
+ utilizadas en el SLAM.
+\end_layout
+
+\begin_layout Standard
+Se busca:
+\end_layout
+
+\begin_layout Itemize
+Facilitar la reproducción de experimentos para comprender el funcionamiento
+ del sistema con mayor sencillez.
+\end_layout
+
+\begin_layout Itemize
+Simplificar los procesos de optimización del sistema, como la parametrización
+ y estudio del uso de diferentes opciones utilizadas en la literatura del
+ SLAM.
+\end_layout
+
+\begin_layout Subsection
+Diagrama de arquitectura
+\end_layout
+
+\begin_layout Standard
+Para mayor comprensión del sistema a desarrollar, se incluye un diagrama
+ de componentes de la arquitectura en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-clases"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/diaClasesSinDespliegue.dia
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de componentes del sistema.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-clases"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Subsistemas
+\end_layout
+
+\begin_layout Standard
+El sistema se divide en los siguientes subsistemas, correspondientes a las
+ componentes presentadas en el diagrama de clases:
+\end_layout
+
+\begin_layout Itemize
+Partículas
+\end_layout
+
+\begin_layout Itemize
+Modelos
+\end_layout
+
+\begin_layout Itemize
+Desacoplamiento
+\end_layout
+
+\begin_layout Itemize
+Comunicación
+\end_layout
+
+\begin_layout Itemize
+Random
+\end_layout
+
+\begin_layout Standard
+Todos estos subsistemas se explican en detalle a continuación.
+\end_layout
+
+\begin_layout Subsubsection
+Partículas
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Partículas-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este subsistema pertenece al núcleo del SLAM y mantiene la estimación de
+ la posición del robot y del mapa.
+ Está compuesto de tres clases con tareas bien diferenciadas: MCLPoseProvider,
+ MCLParticleSet y MCLParticle, como se puede observar en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-partículas."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La lógica relacionada con los modelos de sensado y movimiento es delegado
+ a otro subsistema, haciendo al filtro más genérico y reutilizable.
+ 
+\end_layout
+
+\begin_layout Standard
+Este subsistema se implementó tomando como base la implementación de partículas
+ de LeJOS
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lejos"
+
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+no aparece antes
+\end_layout
+
+\end_inset
+
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-partículas."
+
+\end_inset
+
+ se aprecian las tres clases que conforman el filtro de partículas con las
+ operaciones más relevantes de cada una de ellas.
+\end_layout
+
+\begin_layout Standard
+A continuación se describen las clases que componen el sistema de Partículas.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+MCLPoseProvider
+\end_layout
+
+\begin_layout Standard
+Esta clase es la interfaz del sistema.
+ Centraliza las funcionalidades de interacción, como el ingreso de información
+ de odometría y sensado.
+ También centraliza los cálculos de posiciones a partir de las partículas
+ actuales.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+MCLParticleSet
+\begin_inset CommandInset label
+LatexCommand label
+name "par:MCLParticleSet"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta clase administra el conjunto de partículas.
+ Centraliza los procesos de iteración sobre las partículas, necesarios en
+ los pasos de 
+\emph on
+update 
+\emph default
+y 
+\emph on
+predict.
+
+\emph default
+ También se encarga de serializar
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+El proceso de serialización permite convertir una estructura de datos en
+ un arreglo de bytes para ser transmitido por un canal de comunicación.
+\end_layout
+
+\end_inset
+
+ el conjunto de partículas para ser transmitido, funcionalidad implementada
+ acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+ para enviar las partículas como información de depuración.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+MCLParticle
+\end_layout
+
+\begin_layout Standard
+Esta clase mantiene una referencia a la posición estimada, la estimación
+ del mapa y los modelos de sensado y movimiento.
+ Encapsula la funcionalidad de las operaciones necesarias por partícula
+ para las operaciones de 
+\emph on
+update
+\emph default
+, 
+\emph on
+predict
+\emph default
+ y 
+\emph on
+updateMarca
+\emph default
+ (utilizada para la actualización del mapa).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/particulas.dia
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de partículas.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-partículas."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Modelos
+\end_layout
+
+\begin_layout Standard
+Este subsistema encapsula la lógica de los modelos de sensado y movimiento.
+ Se implementó de forma genérica para que pueda ser reutilizado en el sistema
+ acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Generar-una-plataforma"
+
+\end_inset
+
+.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-modelos"
+
+\end_inset
+
+ se observan las principales clases del mismo y su interacción.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/modelos.dia
+	lyxscale 50
+	width 75text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de modelos de sensado y movimiento.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-modelos"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Además del subsistema genérico de modelos, se implementaron dos modelos
+ específicos para la solución de SLAM implementada:
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+GaussianMModel
+\end_layout
+
+\begin_layout Standard
+Un modelo de movimiento que toma como entrada la posición y el movimiento
+ realizado por el robot, devolviendo como salida una muestra de la distribución
+ de probabilidad de la nueva posición del robot.
+ Este tema fue tratado en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-movimiento"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+MarcaSModel
+\end_layout
+
+\begin_layout Standard
+Un modelo de sensado que utiliza la información de la marca sensada, la
+ posición del robot y el mapa, para determinar la verosimilitud de la posición
+ estimada con respecto a lo sensado.
+ Este tema fue tratado en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-sensado"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Desacoplamiento
+\end_layout
+
+\begin_layout Standard
+Este subsistema se encarga de las funcionalidades de desacoplamiento entre
+ el módulo de partículas y el de comportamiento del robot.
+\end_layout
+
+\begin_layout Standard
+Para esto se implementó un sistema de comandos (Patrón de diseño 
+\emph on
+Command
+\emph default
+) que son ejecutados de forma asincrónica (ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-desacoplamiento."
+
+\end_inset
+
+).
+ Estos comandos se corresponden a los pasos de 
+\emph on
+update
+\emph default
+ y 
+\emph on
+predict
+\emph default
+.
+ Cuando el robot sensa información o termina un movimiento, avisa al sistema
+ de desacoplamiento de esta información, quien encola los comandos correspondien
+tes, para su posterior procesamiento.
+\end_layout
+
+\begin_layout Standard
+Las clases de MoveProvider se encargan de reportar movimientos de forma
+ asincrónica, que son serializados por la clase CmdProxy y enviados a la
+ clase CmdProvider.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/desacoplamiento.dia
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de desacoplamiento.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-desacoplamiento."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Comunicación
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Comunicación"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El subsistema de comunicación fue implementado para cumplir con el requerimiento
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+.
+ Como se puede ver en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-comunicación."
+
+\end_inset
+
+, el sistema utiliza patrones 
+\emph on
+Observer
+\emph default
+ para detectar cambios en los objetos de interés, serializarlos y enviarlos
+ hacia la PC.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/comunicacion_sinNXTyPC.dia
+	lyxscale 50
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de comunicación.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-comunicación."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se implementó el sistema buscando centralizar todas las operaciones comunes
+ al envío y recepción de información en una misma clase, que luego es heredada
+ por cada clase específica, para la comunicación entre componentes arbitrarios
+ del sistema.
+ 
+\end_layout
+
+\begin_layout Standard
+Para serializar los objetos se implementó una operación que trabaja sobre
+ un arreglo de bytes, en pos de un uso eficiente del flujo de datos sobre
+ el canal utilizado.
+\end_layout
+
+\begin_layout Paragraph
+Utilidades PC
+\end_layout
+
+\begin_layout Standard
+Este subsistema recibe datos del robot y los utiliza para diferentes funciones
+ (ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-utilidadespc."
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Itemize
+Desplegar las partículas actuales sobre el mapa del entorno (
+\emph on
+MapCanvas
+\emph default
+ y 
+\emph on
+PartUpdater
+\emph default
+).
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Interfaz-de-una"
+
+\end_inset
+
+ es posible observar un conjunto de partículas graficadas (círculos rojo),
+ el mapa real del entorno (cuadrados grises) y el mapa estimado por el sistema
+ (cuadrados amarillos, verdes, violetas, azules, rojos y rosados).
+ La cruz verde representa la última posición obtenida del sistema de visión.
+\end_layout
+
+\begin_layout Itemize
+Guardar los datos de los comandos del 
+\emph on
+CmdPoseProvider 
+\emph default
+para uso posterior en los procesos de parametrización (
+\emph on
+LoggerRecorrida
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../docuLineas/utilidadespc.dia
+	lyxscale 50
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de utilidades de la PC.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-utilidadespc."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/r3c_recortada_sin_lineas.png
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Interfaz de una aplicación del subsistema de utilidades de la PC, utilizada
+ para depuración.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Interfaz-de-una"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\emph on
+Random
+\end_layout
+
+\begin_layout Standard
+Este subsistema se implementó acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Facilitar-la-investigación"
+
+\end_inset
+
+.
+ Posee una única clase y tiene como cometido centralizar la generación de
+ números aleatorios.
+ Mediante esta centralización se torna más fácil el proceso de reproducción
+ de experimentos, utilizando una única semilla (
+\emph on
+seed
+\emph default
+) centralizada y conocida.
+ Esta semilla es utilizada en la generación y evaluación de las partículas.
+\end_layout
+
+\end_body
+\end_document

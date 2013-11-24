@@ -1,0 +1,4548 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Pruebas Realizadas
+\end_layout
+
+\begin_layout Standard
+En este capítulo se presentan las pruebas realizadas para evaluar el sistema
+ de recorrido implementado, detallando el entorno de pruebas utilizado,
+ las métricas establecidas, las ejecuciones realizadas, y brindando un análisis
+ de los resultados.
+\end_layout
+
+\begin_layout Standard
+Para evaluar el sistema de SLAM implementado y la solución de recorrido
+ que lo utiliza (
+\change_deleted -1785986595 1341357418
+en adelante 
+\change_inserted -1785986595 1341357421
+en adelante 
+\change_unchanged
+SLAM-R)
+\change_deleted -1785986595 1341357356
+,
+\change_inserted -1785986595 1341357377
+ se propuso realizar la comparación con otro sistema.
+ Este sistema fue implementado por los autores.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341357386
+El sistema destinado a la comparación
+\change_deleted -1785986595 1341357389
+ se propuso implementar 
+\change_inserted -1785986595 1341357391
+ consiste de 
+\change_unchanged
+una variante del sistema de recorrido en la que la localización se implementa
+ utilizando un sistema de integración de información de odometría, en adelante
+ Odom-R.
+ En el sistema Odom-R, la información de la ubicación del robot se obtiene
+ sumando la información proporcionada por odometría, es decir que no se
+ utiliza la información de las marcas visuales para corregir el error acumulado.
+\end_layout
+
+\begin_layout Standard
+De este modo, se puede evaluar el sistema de SLAM implementado, comparando
+ los rendimientos de SLAM-R y Odom-R.
+\end_layout
+
+\begin_layout Standard
+En las pruebas se utilizó un sistema de visión global 
+\change_deleted -1785986595 1341357459
+basado en 
+\change_unchanged
+Doraemon (en adelante Doraemon) que provee visión global del entorno donde
+ se mueve el robot.
+ 
+\change_deleted -1785986595 1341357446
+El 
+\change_unchanged
+Doraemon se utilizó únicamente con fines de evaluación y la información
+ de posición global nunca fue suministrada al sistema evaluado.
+\end_layout
+
+\begin_layout Section
+Pruebas de Cubrimiento
+\end_layout
+
+\begin_layout Standard
+Estas pruebas constan en medir el cubrimiento del entorno realizado por
+ ambos sistemas, SLAM-R y Odom-R, a fin de tener un criterio objetivo de
+ comparación.
+\end_layout
+
+\begin_layout Standard
+A continuación se detalla la metodología seguida para las pruebas realizadas.
+\end_layout
+
+\begin_layout Subsection
+Metodología
+\end_layout
+
+\begin_layout Subsubsection
+Punto de Partida
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Ejecución-de-las"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Pelo varias cosas porque estan repetidas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+movido
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El robot partió en todas las ejecuciones desde la posición 
+\begin_inset Formula $(600,300)$
+\end_inset
+
+ medida en milímetros, y tomando como origen el punto más arriba y a la
+ derecha en la figura del entorno descrito,
+\change_inserted -1785986595 1341357481
+ ver
+\change_unchanged
+ figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Punto-de-partida"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/entornoPruebas.JPG
+	lyxscale 10
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Punto de partida del entorno de pruebas.
+ 
+\change_deleted -1785986595 1341357498
+En la esquina superior derecha se puede observar el marco de referencia.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Punto-de-partida"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341357500
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341357885
+En la esquina superior derecha se puede observar el marco de referencia.
+ Esta imagen difiere con las capturas de pantalla de los mapas generados
+ en la ubicación del marco de referencia, que se encuentra en la esquina
+ inferior izquierda.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Repeticiones
+\end_layout
+
+\begin_layout Standard
+Debido a que el sistema de SLAM utiliza una componente de azar al sortear
+ las partículas, resulta conveniente realizar varias ejecuciones de cada
+ prueba para evaluar al sistema de forma estadística, obteniendo promedios
+ de varias medidas.
+ Se realizaron 5 ejecuciones de cada sistema en cada prueba realizada.
+ 
+\end_layout
+
+\begin_layout Standard
+Si bien 5 ejecuciones por sistema no representan un número óptimo para una
+ comparación estadística, mantuvimos este número para disminuir el tiempo
+ que insumen la preparación y ejecución de las pruebas de modo de hacer
+ la ejecución de los experimentos factible en el tiempo disponible en el
+ marco de un proyecto de grado.
+ Se debe tener en cuenta que, como se verá más adelante, se dedicaron finalmente
+ 100 minutos a cada ejecución.
+\end_layout
+
+\begin_layout Subsubsection
+Terminación de las pruebas
+\end_layout
+
+\begin_layout Standard
+Se definieron dos criterios de terminación de las pruebas:
+\end_layout
+
+\begin_layout Itemize
+Abandono del escenario: Si una rueda del robot 
+\change_deleted -1785986595 1341357515
+salía
+\change_inserted -1785986595 1341357516
+sale
+\change_unchanged
+ del escenario se considera
+\change_deleted -1785986595 1341357522
+ba
+\change_unchanged
+ la prueba como finalizada.
+ Este criterio tiene sentido ya que si el robot sale del ambiente de trabajo
+ le es físicamente difícil de retornar.
+\end_layout
+
+\begin_layout Itemize
+Tiempo de ejecución: Las pruebas finalizaban por tiempo de ejecución.
+ Se realizaron ejecuciones de 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos de duración.
+ Como se verá en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Resultados"
+
+\end_inset
+
+, el desenlace de estas ejecuciones motivaron al diseño de un segundo 
+\change_deleted 2090252569 1339781689
+set
+\change_inserted 2090252569 1339781691
+conjunto
+\change_unchanged
+ de pruebas en las que se aumentó el tiempo de ejecución a 
+\begin_inset Formula $100$
+\end_inset
+
+ minutos.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Este criterio surge debido a la necesidad de limitar el tiempo de las pruebas,
+ pero teniendo en cuenta el tiempo mínimo necesario que el robot necesita
+ para recorrer todo el escenario.
+\begin_inset space \space{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ambos criterios fueron utilizados de forma simultánea.
+ Es decir que el cumplimiento de cualquiera de los criterios implicaba la
+ terminación de la ejecución.
+\end_layout
+
+\begin_layout Subsubsection
+Métricas de rendimiento
+\end_layout
+
+\begin_layout Standard
+Se establecieron las siguientes métricas para la evaluación de los sistemas
+ de recorrido.
+ Estas métricas se definieron teniendo en cuenta el escenario de trabajo
+ y definiendo una zona en la que se espera que el robot se mueva libre
+\change_inserted -1785986595 1341357539
+mente
+\change_unchanged
+, a una distancia prudente de las paredes y de las marcas.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento útil
+\end_layout
+
+\begin_layout Standard
+Se delimitó una zona en el interior del entorno de operación del robot,
+ denominada zona útil.
+ Esta zona corresponde al espacio que el robot debería 
+\change_deleted -1785986595 1341357548
+recorrer
+\change_inserted -1785986595 1341357549
+cubrir
+\change_unchanged
+ en caso de operar de forma óptima.
+\end_layout
+
+\begin_layout Standard
+En base al esquema de comportamientos planteado en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Sistema de recorrido"
+
+\end_inset
+
+, se define la zona útil como un rectángulo interior al entorno de operación,
+ donde cada lado dista 
+\begin_inset Formula $30$
+\end_inset
+
+cm.
+ del lado correspondiente en el límite del entorno, como muestra la figura
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Limite-de-la"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Debido a que el robot se detiene y cambia su rumbo al ver una pared a 
+\begin_inset Formula $40$
+\end_inset
+
+cm., y el cubrimiento se registra con 
+\begin_inset Formula $20$
+\end_inset
+
+cm.
+ de diámetro, la zona de cubrimiento 
+\begin_inset Quotes eld
+\end_inset
+
+no útil
+\begin_inset Quotes erd
+\end_inset
+
+ debe ser una banda de 
+\begin_inset Formula $30$
+\end_inset
+
+cm.
+ de ancho.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341357562
+Sin embargo
+\change_deleted -1785986595 1341357563
+L
+\change_inserted -1785986595 1341357565
+, l
+\change_unchanged
+a distancia del límite inferior al borde del entorno se redujo a 
+\begin_inset Formula $20$
+\end_inset
+
+cm., debido a que la posición inicial del robot implicaba que estos 
+\begin_inset Formula $10$
+\end_inset
+
+cm.
+ restantes fueran cubiertos en el inicio del experimento, como se vio en
+ la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Ejecución-de-las"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/zonautil2.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Límite de la zona útil (rojo) en el entorno de trabajo (azul).
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Limite-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A su vez, todo el entorno de trabajo fue dividido 
+\change_deleted -1785986595 1341358031
+por
+\change_inserted -1785986595 1341358032
+con
+\change_unchanged
+ una grilla 
+\change_inserted -1785986595 1341358037
+regular 
+\change_deleted -1785986595 1341358043
+con una 
+\change_inserted -1785986595 1341358044
+cuya 
+\change_unchanged
+precisión 
+\change_inserted -1785986595 1341358048
+es 
+\change_unchanged
+de 
+\begin_inset Formula $0,5$
+\end_inset
+
+cm.
+\change_deleted -1785986595 1341358052
+.
+
+\change_unchanged
+ Luego, a medida que el robot navegaba por el entorno, su posición real
+ 
+\change_deleted -1785986595 1341358066
+era
+\change_inserted -1785986595 1341358066
+es
+\change_unchanged
+ obtenida del sistema de visión Doraemon y las 
+\change_deleted -1785986595 1341358073
+casillas 
+\change_inserted -1785986595 1341358074
+celdas 
+\change_unchanged
+vecinas al robot 
+\change_deleted -1785986595 1341358092
+eran
+\change_inserted -1785986595 1341358092
+son
+\change_unchanged
+ marcadas como visitadas, donde se entiende vecindad del robot como un cuadrado
+ de 20cm.
+\change_inserted -1785986595 1341358105
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341358245
+La utilización de esta constante fue elegida tomando en cuenta el tamaño
+ del robot y margen que podría abarcar una eventual cámara apuntando al
+ piso.
+ Esta decisión se tomó considerando que el robot podría recorrer el entorno
+ buscando elementos que solo pueden ser sensados en un entorno de su ubicación.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+ de lado centrado en el robot.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, se define cubrimiento como la cantidad de 
+\change_deleted -1785986595 1341358260
+casillas
+\change_inserted -1785986595 1341358262
+celdas
+\change_unchanged
+ marcadas como visitadas por el robot.
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cubrimiento"
+
+\end_inset
+
+ se puede observar el cubrimiento de una ejecución graficado en el mapa
+ del entorno.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/cubrimiento.png
+	lyxscale 50
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Cubrimiento de una ejecución utilizando SLAM.
+ 
+\change_deleted -1785986595 1341358278
+En gris se muestra la zona cubierta por el robot.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cubrimiento"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341358280
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341358280
+En gris se muestra la zona cubierta por el robot.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, se toma como cubrimiento útil, la cantidad de 
+\change_deleted -1785986595 1341358322
+casillas
+\change_inserted -1785986595 1341358323
+celdas
+\change_unchanged
+ de la zona útil visitadas.
+ La medida obtenida es normalizada utilizando el número total de 
+\change_deleted -1785986595 1341358325
+casillas 
+\change_inserted -1785986595 1341358326
+celdas 
+\change_unchanged
+de la zona útil, de forma que la métrica representa un porcentaje del cubrimient
+o útil posible.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento inútil
+\end_layout
+
+\begin_layout Standard
+Análogamente al cubrimiento útil, esta métrica consta del recuento de 
+\change_deleted -1785986595 1341358334
+casillas
+\change_inserted -1785986595 1341358335
+celdas
+\change_unchanged
+ visitadas fuera de la zona útil.
+ Al igual que el cubrimiento útil, esta medida es normalizada en base a
+ la cantidad de casillas que componen la zona inútil, por lo que la métrica
+ representa la proporción de zona inútil cubierta por el robot.
+ 
+\end_layout
+
+\begin_layout Standard
+Resulta importante mencionar que el cubrimiento inútil no representa el
+ porcentaje de cubrimiento realizado por el robot fuera de la zona útil,
+ si no el porcentaje cubierto de la zona inútil .
+\change_deleted -1785986595 1339549261
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted 2090252569 1339380289
+tapoco se entiende
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+ Esta métrica fue elegida sobre la otra considerando escenarios en los que
+ el cubrimiento fuera de la zona útil pudiera tener una penalización propia,
+ más allá del desperdicio de recursos provocado por recorrer una zona no
+ útil.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento útil total
+\end_layout
+
+\begin_layout Standard
+Esta métrica cuenta las casillas visitadas dentro de la zona útil, con la
+ salvedad que cuenta varias veces cada casilla visitada.
+ Esta métrica busca medir cuánto cubrimiento útil logró hacer el sistema
+ en toda la corrida, sin importar si este visitaba dos veces la misma zona.
+ 
+\end_layout
+
+\begin_layout Standard
+Mientras que la métrica de cubrimiento útil busca contabilizar las casillas
+ visitadas alguna vez, la métrica de cubrimiento útil total busca contabilizar
+ cuántas veces es visitada cada casilla.
+ Es decir que una clasifica las casillas de la zona útil como visitadas
+ o no visitadas, mientras que la otra guarda para cada 
+\change_deleted -1785986595 1341358348
+casilla
+\change_inserted -1785986595 1341358349
+celda
+\change_unchanged
+ la cantidad de veces que esta fue visitada.
+\end_layout
+
+\begin_layout Standard
+Esta métrica también es normalizada, en base a la cantidad de casillas de
+ la zona útil.
+ Si bien el número obtenido representa una proporción, esta no está directamente
+ relacionada con la cantidad de veces que se recorre completamente el entorno.
+ Esto se debe a que el conteo se realiza con cada posición obtenida del
+ Doraemon, lo que lleva a que usualmente una casilla sea contabilizada más
+ de una vez en una misma pasada del robot.
+ Sin embargo, los autores entienden que el valor es útil para comparar dos
+ cubrimientos cualesquiera, ya que esté conteo por demás debería ocurrir
+ en la misma proporción para cualquier ejecución de cualquiera de los dos
+ sistemas.
+\end_layout
+
+\begin_layout Paragraph
+Eficiencia del recorrido
+\end_layout
+
+\begin_layout Standard
+Esta métrica se define como el cociente entre el cubrimiento útil total
+ y la distancia recorrida por el robot, a fin de medir la relación entre
+ consumo de recursos, por ejemplo batería y tiempo, y el trabajo efectivo
+ realizado.
+ Es decir:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+EficienciaRecorrido=CubrimientoUtilTotal/DistanciaRecorrida
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, esta métrica mide el cubrimiento útil obtenido por unidad
+ de desplazamiento, dando una noción de eficiencia en los recursos invertidos
+ en el desplazamiento del robot.
+\end_layout
+
+\begin_layout Standard
+Dado que esta métrica se basa en el cubrimiento útil total, presenta el
+ mismo problema en cuanto al porcentaje obtenido.
+ Nuevamente, si bien este porcentaje no corresponde a una proporción real
+ de cubrimiento, los autores consideran la métrica apropiada para la comparación.
+\end_layout
+
+\begin_layout Paragraph
+Error medio en la estimación de la posición o Error RMS
+\end_layout
+
+\begin_layout Standard
+Esta métrica evalúa directamente el error en la estimación de la posición
+ realizada por los sistemas de localización (SLAM y Odometría), tomando
+ como referencia la posición brindada por el sistema Doraemon.
+\end_layout
+
+\begin_layout Standard
+Para estas pruebas se utilizó un indicador utilizado en la literatura de
+ SLAM denominado RMS
+\change_inserted 2090252569 1339778195
+,
+\change_unchanged
+ del inglés 
+\emph on
+root-mean squared
+\emph default
+.
+ Esta consta de tomar la 
+\change_deleted 2090252569 1339778126
+raiz
+\change_inserted 2090252569 1339778126
+raíz
+\change_unchanged
+ cuadrada del promedio
+\change_deleted 2090252569 1339776996
+ 
+\change_unchanged
+ del cuadrado de los errores
+\change_deleted 2090252569 1339778258
+ y aplicarle a esto 
+\change_unchanged
+.
+ Es decir:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+RMS=\sqrt{\frac{1}{n}\sum_{1}^{n}(x_{estimada}-x_{Doraemon})^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Ejecución efectuada con éxito o errónea
+\end_layout
+
+\begin_layout Standard
+Esta métrica cualitativa mide el éxito de la ejecución de la prueba.
+ Esta métrica indica si la ejecución terminó debido a errores cometidos
+ por el robot o simplemente debido a que se cumplió el tiempo destinado
+ a la ejecución.
+\end_layout
+
+\begin_layout Standard
+Puede interpretarse esta métrica como una medida de la robustez del sistema
+ o su capacidad de operar en forma continua sin cometer errores que lo saquen
+ del entorno de ejecución.
+\end_layout
+
+\begin_layout Paragraph
+Evolución del cubrimiento útil total
+\end_layout
+
+\begin_layout Standard
+Para esta métrica en particular se decidió estudiar su evolución con el
+ paso del tiempo, para determinar las condiciones o el momento en las que
+ un sistema pudiera tornarse más eficiente que otro.
+\end_layout
+
+\begin_layout Subsubsection
+Ajustes a los datos
+\end_layout
+
+\begin_layout Standard
+Es importante notar que los datos de posición del sistema de visión global
+ debieron ser filtrados para poder estimar la distancia recorrida.
+ Esto se debió a dos causas:
+\end_layout
+
+\begin_layout Itemize
+Sobre
+\change_deleted -1785986595 1341358360
+ 
+\change_unchanged
+estimación de la distancia recorrida y el cubrimiento realizado
+\change_deleted 2090252569 1339778459
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Outliers
+\emph default
+ en la posición entregada por Doraemon
+\change_deleted 2090252569 1339778461
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Paragraph
+Sobre
+\change_deleted -1785986595 1341358369
+ 
+\change_unchanged
+estimación
+\end_layout
+
+\begin_layout Standard
+Oscilaciones en la posición entregada por el sistema Doraemon hacían que
+ la simple suma de distancias entre una posición y otra fallara como estimador
+ de la distancia recorrida, debido a que esta aumentaba aún cuando el robot
+ se encontraba detenido.
+ 
+\end_layout
+
+\begin_layout Standard
+Dado que ambos sistemas presentan diferentes relaciones entre el tiempo
+ en movimiento y tiempo detenidos, no resulta equitativo ignorar este error.
+ Por lo tanto se realizó un análisis de los datos otorgados por el sistema
+ de visión global para encontrar un umbral mínimo de distancia
+\change_deleted 2090252569 1339777000
+ 
+\change_unchanged
+ entre una posición y la siguiente que permita asegurar que el cambio no
+ corresponde a una oscilación del Doraemon.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Distancia-recorrida-según"
+
+\end_inset
+
+ se observa como a partir de un umbral de 10 milímetros, la distancia recorrida
+ por ambos conjuntos de datos permanece relativamente constante.
+ Se atribuye este comportamiento a que a partir de este umbral, las oscilaciones
+ quedan descartadas y los cambios de posición registrados constan de un
+ movimiento real del robot.
+ Luego, el aumento leve del umbral no afecta apreciablemente a la medida
+ de distancia recorrida y esta permanece relativamente constante.
+ Por esto se decidió utilizar 10 milímetros como umbral de filtro de los
+ datos de posición del Doraemon.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename plots/distRecorrida.png
+	width 40text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename plots/distRecorrida2.png
+	width 40text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Distancia recorrida según el umbral definido.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Distancia-recorrida-según"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Además, para evitar que durante los periodos de quietud del robot, las mismas
+ casillas sean contabilizadas varias veces para la métrica de cubrimiento
+ útil total, solo se realizó el conteo en los pasos en los que se supera
+ este umbral de distancia mínimo establecido.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+Outliers
+\end_layout
+
+\begin_layout Standard
+Adicionalmente, durante el análisis de los datos se detectó que los datos
+ proporcionados por Doraemon presentaban 
+\emph on
+outliers
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Outlier:"
+description "Observación que se encuentra numéricamente distante del resto de los datos"
+
+\end_inset
+
+
+\emph default
+ esporádicos.
+ En función de esto se decidió filtrar los datos utilizando un modelo de
+ velocidad constante.
+ En este modelo, se descartan todos los datos que impliquen que el robot
+ viajó a una distancia mayor a 
+\begin_inset Formula $1$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $m/s$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang spanish
+, umbral que resulta sumamente conservador, pero permite filtrar los datos
+ inconsistentes.
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Filtrado-de-la"
+
+\end_inset
+
+ se puede observar el incremento en la distancia recorrida para una de las
+ ejecuciones tomada como caso de estudio para el filtrado de los datos.
+ Se incluyen las gráficas sin filtrado y con filtrado para apreciar la diferenci
+a en la calidad de los datos luego de filtrados.
+ 
+\end_layout
+
+\begin_layout Standard
+Los 
+\emph on
+outliers
+\emph default
+ provocan saltos en la gráfica de suma de distancias, debido a que la posición
+ cambia a un punto distante repentinamente.
+ Se observa en las gráficas que existen varios saltos en los datos sin filtrar
+ y solo un salto en los datos filtrados.
+\end_layout
+
+\begin_layout Standard
+Se observa que si bien existe un salto en la gráfica filtrada, este corresponde
+ con un periodo en el que Doraemon perdió la pista del robot, y cuando lo
+ ubicó nuevamente, el robot había viajado una distancia considerable.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/distSinFiltro.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Datos de suma de distancia sin filtrar 
+\emph on
+outliers.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/distConFiltro.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Datos de suma de distancia luego de realizar el filtro de 
+\emph on
+ouliers
+\emph default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Filtrado de la información para descartar 
+\emph on
+outliers
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Filtrado-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Resultados
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Resultados"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se presentan los resultados correspondientes a las pruebas de cubrimiento
+ con un límite de tiempo de ejecución de 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos, y luego un segundo conjunto de pruebas de 
+\begin_inset Formula $100$
+\end_inset
+
+ minutos de duración por ejecución.
+\end_layout
+
+\begin_layout Subsubsection
+Pruebas de cubrimiento de 20 minutos
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una tabla resumiendo los resultados según las
+ métricas planteadas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="30text%">
+<column alignment="center" valignment="middle" width="15text%">
+<column alignment="center" valignment="middle" width="15text%">
+<column alignment="center" valignment="middle" width="15text%">
+<column alignment="center" valignment="middle" width="15text%">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Integración de Odometría
+\change_inserted -1785986595 1339609928
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SLAM
+\change_inserted -1785986595 1339609953
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610007
+Métrica
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339609988
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339609994
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339609995
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339609998
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cubrimiento Útil (% total útil promedio)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $92,24\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610641
+\begin_inset Formula $3.23\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $86,82\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610662
+\begin_inset Formula $2.23\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cubrimiento Inútil (% total inútil promedio)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $14,50\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610644
+\begin_inset Formula $3.28\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4,64\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610660
+\begin_inset Formula $1.74\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cubrimiento Útil Total (% total útil promedio)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2035,92\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610646
+\begin_inset Formula $935.82\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1788,30\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610657
+\begin_inset Formula $46.11\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Eficiencia de Recorrido (% total útil promedio / metro)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $73,86\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610648
+\begin_inset Formula $3.48\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $79,82\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610655
+\begin_inset Formula $0.72\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ejecuciones terminadas por error
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4/5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339610432
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0/5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Resultados de pruebas de 20 minutos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una breve interpretación de los resultados para
+ cada una de las métricas.
+\end_layout
+
+\begin_layout Standard
+En estas pruebas no se realizó una comparación de la estimación de la posición.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento Útil
+\end_layout
+
+\begin_layout Standard
+Al diseñar los experimentos, se esperaba que la corrección del error realizada
+ por el sistema de SLAM contribuyera a la obtención de un cubrimiento útil
+ más alto por parte de este.
+ Sin embargo, atribuimos los resultados 
+\change_deleted -1785986595 1341358390
+contradictorios 
+\change_unchanged
+principalmente a dos factores:
+\end_layout
+
+\begin_layout Itemize
+El sistema de SLAM necesita de un tiempo considerable de ejecución para
+ permitir que el mapa converja.
+ En este periodo, se observa como el robot deja 
+\begin_inset Quotes eld
+\end_inset
+
+huecos
+\begin_inset Quotes erd
+\end_inset
+
+ en el recorrido del entorno debido a sucesivas correcciones de la posición,
+ que lo llevan a correcciones de la trayectoria, como se muestra en la figura
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cubrimiento-de-una"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+El sistema de SLAM toma demasiado tiempo para realizar el sensado de las
+ marcas utilizando la cámara.
+ Debido a esto, no logra recorrer tanta distancia como el sistema de odometría.
+\end_layout
+
+\begin_layout Standard
+En consecuencia, se decidió realizar un segundo conjunto de ejecuciones
+ de mayor duración, que permitieran al sistema de SLAM converger a un mapa
+ y proporcionar un estimado estable de la posición al sistema de recorrido.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/huecosRecorrido.png
+	width 40theight%
+	BoundingBox 0bp 0bp 880bp 768bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Cubrimiento de una recorrida de SLAM.
+ 
+\change_deleted -1785986595 1341358405
+En gris las casillas cubiertas.
+ Pueden observarse los espacios vacíos dejados durante la primera recorrida,
+ debido a constantes correcciones en la posición.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cubrimiento-de-una"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341358407
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341358407
+En gris las casillas cubiertas.
+ Pueden observarse los espacios vacíos dejados durante la primera recorrida,
+ debido a constantes correcciones en la posición.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento Inútil
+\end_layout
+
+\begin_layout Standard
+Esta métrica refleja los resultados esperados.
+ Debido a que el sistema basado en odometría tiende a acumular los errores
+ cometidos en la estimación del movimiento, es de esperar que se salga de
+ la zona útil de cubrimiento con más frecuencia.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento Útil Total
+\end_layout
+
+\begin_layout Standard
+A pesar de que es esperable que el cubrimiento útil total sea mayor para
+ el sistema de odometría, dado que el cubrimiento útil es también mayor,
+ observamos que esto ocurrió aún cuando 4 de 5 corridas del sistema de odometría
+ terminaron por errores del robot antes de tiempo.
+ Esto indica que el sistema de odometría es sensiblemente más eficiente
+ que el de SLAM en términos de tiempo, cuando se lo acota a un periodo de
+ 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos.
+\end_layout
+
+\begin_layout Paragraph
+Eficiencia de Recorrido
+\end_layout
+
+\begin_layout Standard
+Esta métrica muestra como, a pesar de las diferencias de eficiencia en relación
+ al tiempo (velocidad), ambos sistemas resultaron equivalentes en relación
+ a la eficiencia en función de la distancia recorrida.
+ Atribuimos la leve diferencia en esta métrica al cubrimiento inútil realizado
+ por el sistema de odometría.
+\end_layout
+
+\begin_layout Paragraph
+Ejecuciones Terminadas por Error
+\end_layout
+
+\begin_layout Standard
+Esta métrica refleja la robustez proporcionada por el sistema de SLAM, que
+ mantiene al robot dentro de la zona útil, no permitiendo que este salga
+ del entorno del trabajo.
+ El sistema de odometría, en cambio, acumula error en la estimación de la
+ posición, lo que provoca un error creciente en la orientación del robot
+ que causa que este se acerque a las paredes con ángulos demasiado oblicuos,
+ no pudiendo sensarlas, provocando que este salga del entorno.
+\end_layout
+
+\begin_layout Paragraph
+Evolución del Cubrimiento Útil
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-cubrimiento-1"
+
+\end_inset
+
+ se puede observar cómo el cubrimiento de odometría crece rápidamente hasta
+ alcanzar tempranamente un tope mientras que el de SLAM mantiene un crecimiento
+ constante pero no llega a estacionarse.
+ Se atribuye esto a dos factores principales:
+\end_layout
+
+\begin_layout Itemize
+La demora causada por la observación de las marcas en el sistema de SLAM
+ entorpece el cubrimiento del terreno y lo hace más lento, no llegando a
+ su máximo en el tiempo estipulado
+\change_deleted 2090252569 1339778859
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+El sistema de odometría cubre rápidamente la zona útil.
+ El quiebre en el crecimiento observado alrededor del minuto 4 se atribuye
+ a que el sistema de odometría llega rápidamente a hacer una pasada de la
+ zona útil y comienza a recorrer entornos ya visitados
+\change_deleted 2090252569 1339778863
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubriCorto.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del cubrimiento útil promedio para ambos sistemas.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-cubrimiento"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Además, se estudió la evolución del cubrimiento útil total con el paso del
+ tiempo.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-cubrimiento-1"
+
+\end_inset
+
+ se puede observar como, de forma coherente con la evolución del cubrimiento
+ útil, el cubrimiento útil total del sistema de SLAM aumenta de forma constante,
+ mientras que el del sistema de Odometría presenta un quiebre luego de crecer
+ más rápidamente que el de SLAM.
+ Se atribuye este quiebre a la terminación temprana de varias de las ejecuciones.
+ Si bien se proyecta en el largo plazo el cubrimiento útil total del sistema
+ de SLAM superaría al de Odometría, el tiempo adjudicado a estas pruebas
+ no es suficiente para comprobarlo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubriCortoTot.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del cubrimiento útil total promedio para los sistemas de SLAM
+ y Odometría.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-cubrimiento-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Pruebas de cubrimiento de 100 minutos
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una tabla resumiendo los resultados para las métricas
+ planteadas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="30text%">
+<column alignment="center" valignment="middle" width="15text%">
+<column alignment="center" valignment="middle" width="15text%">
+<column alignment="center" valignment="middle" width="15text%">
+<column alignment="center" valignment="middle" width="15text%">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Integración de Odometría
+\change_inserted -1785986595 1339611978
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SLAM
+\change_inserted -1785986595 1339611998
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612018
+Métrica
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612020
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612024
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612029
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612032
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cubrimiento Útil (% total útil prom.)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $95,13\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612229
+\begin_inset Formula $3.61\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $96,25\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612214
+\begin_inset Formula $1.17\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cubrimiento Inútil (% total inútil prom.)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $24,39\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612228
+\begin_inset Formula $4.31\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $20,27\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612215
+\begin_inset Formula $1.35\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cubrimiento Útil Total (% total útil prom.)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4218,16\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612227
+\begin_inset Formula $2146.22\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9320,36\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612216
+\begin_inset Formula $1427.16\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Eficiencia de Recorrido (% total útil prom.
+ / metro)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $65.22\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612226
+\begin_inset Formula $5.55\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $72.83\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612217
+\begin_inset Formula $1.87\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ejecuciones terminadas por error
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5/5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612129
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0/5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612220
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Error RMS (metros)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.64$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1339612225
+\begin_inset Formula $0.26$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.42$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.18$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Resultados de pruebas de 100 minutos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A fin de facilitar la comparación de resultados con las pruebas de 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos, se incluyen en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comparación-de-resultados"
+
+\end_inset
+
+ gráficos de comparación de los resultados de ambas pruebas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubUtil.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Cubrimiento Útil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubInutil.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Cubrimiento Inútil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubUtilTotal.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Cubrimiento Útil Total
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/eficRecorrida.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Eficiencia de Recorrido
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/ejecError.jpeg
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecuciones con error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Comparación de resultados entre pruebas de 20 minutos y 100 minutos.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Comparación-de-resultados"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una breve interpretación de los resultados de
+ cada una de las métricas, comparando con los resultados obtenidos en las
+ pruebas de 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento Útil
+\end_layout
+
+\begin_layout Standard
+Con el aumento del límite de tiempo, el sistema de SLAM logró alcanzar el
+ rendimiento del sistema de odometría.
+ Si bien el rendimiento final es aún mayor, se considera que la diferencia
+ es 
+\change_deleted -1785986595 1341358444
+despreciable
+\change_inserted -1785986595 1341358445
+marginal
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento Inútil
+\end_layout
+
+\begin_layout Standard
+Con respecto a esta métrica se observa un incremento en ambos sistemas,
+ que se adjudica al incremento en el tiempo de ejecución.
+ Se observa que el sistema de SLAM sufrió un incremento netamente mayor,
+ creciendo al cuádruple de su valor anterior, mientras que el incremento
+ del sistema de odometría fue menor al doble.
+ Adjudicamos este hecho a que el incremento en el tiempo de ejecución total
+ del sistema de SLAM fue mucho mayor, y así también el recorrido total.
+ 
+\end_layout
+
+\begin_layout Standard
+Se observa, sin embargo, que la relación entre
+\change_inserted 2090252569 1339781755
+ 
+\change_unchanged
+cubrimiento inútil y cubrimiento útil total disminuyó en ambos casos, como
+ se puede observar en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Relación-entre-cubrimiento"
+
+\end_inset
+
+.
+ Además, se observa que la mejor relación entre estas métricas ocurre en
+ el sistema de SLAM ejecutando durante 
+\begin_inset Formula $100$
+\end_inset
+
+ minutos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/inutilSobreTotal.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Relación entre cubrimiento inútil y cubrimiento útil total.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Relación-entre-cubrimiento"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Cubrimiento Útil Total
+\end_layout
+
+\begin_layout Standard
+Esta métrica refleja un gran cambio en los resultados como fruto del incremento
+ del límite de tiempo de ejecución de las pruebas.
+ Se observa que el sistema de SLAM obtuvo un incremento considerable del
+ cubrimiento útil total, superando al sistema de odometría.
+ Se adjudica esta diferencia a que el sistema de SLAM se mantuvo ejecutando
+ los 
+\begin_inset Formula $100$
+\end_inset
+
+ minutos, mientras las pruebas de odometría terminaron todas tempranamente.
+\end_layout
+
+\begin_layout Paragraph
+Eficiencia de Recorrido
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341358468
+Entendemos
+\change_inserted -1785986595 1341358470
+Los autores entienden
+\change_unchanged
+ que las diferencias en la eficiencia de recorrido son despreciables.
+
+\change_inserted -1785986595 1341358554
+ Se adjudica la leve disminución de la eficiencia a la acumulación de pequeños
+ errores que provocaron que el robot cubriera pequeñas porciones de zona
+ inútil.
+ Al realizar un recorrido significativamente mayor, estos errores 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Paragraph
+Ejecuciones terminadas por error
+\end_layout
+
+\begin_layout Standard
+En este caso, se observó que todas las ejecuciones del sistema de Odometría
+ terminaron por error, siendo el promedio de duración de estas 
+\begin_inset Formula $23,56$
+\end_inset
+
+ minutos.
+ Todas las ejecuciones del sistema de SLAM terminaron a los 
+\begin_inset Formula $100$
+\end_inset
+
+ minutos.
+\end_layout
+
+\begin_layout Paragraph
+Error RMS
+\end_layout
+
+\begin_layout Standard
+Se observa una mejor estimación de la posición por parte del sistema de
+ SLAM.
+ Sin embargo, e
+\change_inserted 2090252569 1339779029
+l
+\change_deleted 2090252569 1339779029
+s
+\change_unchanged
+ error RMS obtenido se considera demasiado alto para las dimensiones del
+ entorno navegado.
+ Atribuimos este resultado a un fenómeno observado durante la ejecución
+ de las pruebas.
+ Se observó que en alguna de las ejecuciones, el mapa construido por el
+ sistema de SLAM mantenía un buen estimado de la relación espacial entre
+ las marcas, pero el mapa como un conjunto se encontraba transportado y
+ rotado con respecto al real, como puede observarse en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mapa-real-y"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/mapaOrig.png
+	lyxscale 50
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Mapa real del entorno.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/mapaRotado.png
+	lyxscale 50
+	width 40text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Mapa construido por el sistema SLAM durante la ejecución de las pruebas.
+ Se observa una rotación entre los estimados de las marcas (cuadrados de
+ color) y su posición real (cuadrados grises).
+ La cruz verde corresponde a la posición brindada por 
+\change_deleted 2090252569 1339779316
+d
+\change_inserted 2090252569 1339779317
+D
+\change_unchanged
+oraemon.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Mapa real y mapa construido por el sistema de SLAM.
+ Se observa que el mapa está rotado en sentido anti-horario y transportado
+ levente hacia arriba.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mapa-real-y"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Al existir una diferencia tan grande entre el mapa construido y el mapa
+ real, el estimado de la posición se encontrará siempre a una gran distancia
+ de la posición real, a pesar de ser coherente con el mapa construido.
+\end_layout
+
+\begin_layout Standard
+A fin de profundizar en la causa de este alto error RMS se realizó un estudio
+ del error cometido en la estimación.
+ En las figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-error"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-rotacion"
+
+\end_inset
+
+ se puede observar la evolución del error cometido por la estimación.
+ En la primera se muestra la distancia lineal entre la estimación de la
+ posición y la real.
+ En la segunda se muestra la rotación relativa entre estos dos puntos.
+\end_layout
+
+\begin_layout Standard
+Con estas gráficas se busca determinar si el error cometido en la estimación
+ se debe a la diferencia entre los marcos de referencia del sistema de SLAM
+ y el del Doraemon.
+ De ser así, la estimación de la posición debería converger a una traslación
+ de la posición real, que reflejaría la diferencia entre los sistemas de
+ coordenadas.
+ Por ende, la diferencia de distancia lineal y ángulo relativo debería converger
+ a valores relativamente constantes.
+\end_layout
+
+\begin_layout Standard
+En el caso de las tres primeras ejecuciones, tanto la distancia lineal como
+ la rotación relativa parecen converger a un valor relativamente constante.
+ Esto podría corresponderse a que el error en la estimación está realmente
+ causado por un cambio en el sistema de coordenadas del sistema de SLAM
+ con respecto al original.
+\end_layout
+
+\begin_layout Standard
+El error de la 
+\change_deleted 2090252569 1339779487
+ejecución 
+\change_unchanged
+cuarta
+\change_inserted 2090252569 1339779492
+ ejecución
+\change_unchanged
+ no pareciera corresponderse solo a una diferencia en el marco de referencia.
+ También podría considerarse así para la quinta ejecución, que parece mostrar
+ una convergencia en la rotación relativa pero no hay ningún signo de estabiliza
+ción de la distancia lineal.
+ No es posible concluir que el gran error RMS se debe solo a una traslación
+ del marco de referencia, para estas últimas dos ejecuciones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorDist1.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 1.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorDist2.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 2.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorDist3.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 3.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorDist4.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 4.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorDist5.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 5.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del error promedio de estimación.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorRot1.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 1.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorRot2.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 2.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorRot3.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 3.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorRot4.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 4.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename plots/evolErrorRot5.png
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución 5.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución de la rotación relativa entre la estimación de la posición y la
+ real.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-rotacion"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se concluye que este tipo de métrica no resulta adecuada a este contexto,
+ pues compara la estimación de la posición en un sistema de coordenadas
+ con la posición brindada por la visión global, en otro sistema de coordenadas.
+ No resulta posible, sin embargo, concluir que el gran error RMS se corresponde
+ solo con este factor.
+\end_layout
+
+\begin_layout Paragraph
+Evolución del cubrimiento útil
+\end_layout
+
+\begin_layout Standard
+En las figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-cubrimiento-2"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-cubrimiento-1-1"
+
+\end_inset
+
+ se puede observar como se cumplieron las hipótesis planteadas luego de
+ obtenidos los resultados de las pruebas de 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos.
+ Existe un punto de corte mayor a 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos en el que el sistema de SLAM se vuelve más eficaz en el cubrimiento
+ útil y cubrimiento útil total.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubriLargo.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del cubrimiento útil promedio para ambos sistemas.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-cubrimiento-2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubriLargoTot.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del cubrimiento útil total promedio para los sistemas de SLAM
+ y Odometría.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-cubrimiento-1-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Pruebas cualitativas de mapa generado
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Pruebas-cualitativas-de"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Debido a que durante el desarrollo de las pruebas de cubrimiento se observó
+ que los mapas generados por el sistema de SLAM presentaban distorsiones,
+ se realizaron pruebas adicionales.
+\end_layout
+
+\begin_layout Standard
+Se planteó la hipótesis que debido a que el robot realiza un gran recorrido
+ entre que observa las primeras marcas la primera y la segunda vez, la calidad
+ del mapa generado se ve afectada, porque el espacio de búsqueda puede ser
+ demasiado grande para la cantidad de partículas utilizadas.
+ Este fenómeno es comparable con el problema de cerrado de ciclos de
+\change_inserted 2090252569 1339779616
+l
+\change_unchanged
+ SLAM (en inglés
+\emph on
+, loop closure
+\emph default
+).
+ 
+\end_layout
+
+\begin_layout Subsection
+Metodología
+\end_layout
+
+\begin_layout Standard
+En consecuencia se planteó realizar un recorrido diseñado 
+\emph on
+a priori
+\emph default
+ con el fin de permitir al robot elaborar un mejor mapa.
+ Este recorrido intenta visitar varias veces seguidas las marcas de un subconjun
+to de las marcas totales, sin realizar un gran recorrido.
+ De esta forma, la información de relación entre las marcas se propagaría
+ rápidamente sin dejar lugar a la generación de errores por la presencia
+ de estos 
+\begin_inset Quotes eld
+\end_inset
+
+ciclos
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Luego de realizado el recorrido, el robot continuaría con su tarea de cubrimient
+o partiendo del lugar donde se encuentra al finalizarlo.
+\end_layout
+
+\begin_layout Subsection
+Resultados
+\end_layout
+
+\begin_layout Standard
+Luego de realizar 3 ejecuciones de 100 minutos utilizando este recorrido
+ no se observaron grandes mejoras en el mapa generado.
+ 
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Mapa-obtenido-luego"
+
+\end_inset
+
+ se puede observar un mapa generado en una de estas ejecuciones.
+ En este mapa se observa también una rotación con respecto al mapa real
+ y una leve traslación en el sentido creciente del eje 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/mapaPreRecorrido.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Mapa obtenido luego de realizar el recorrido programado 
+\emph on
+a priori
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Mapa-obtenido-luego"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusiones de las pruebas
+\end_layout
+
+\begin_layout Standard
+Basándonos en los resultados de la prueba de 
+\begin_inset Formula $20$
+\end_inset
+
+ minutos es posible concluir que el sistema de odometría resulta más eficiente
+ para realizar un rápido recorrido del terreno.
+ El sistema de SLAM resulta ineficiente en un principio debido a las demoras
+ producidas por las observaciones de la cámara y a la inestabilidad en la
+ posición estimada, antes de que el mapa construido converja.
+\end_layout
+
+\begin_layout Standard
+La información de corrección del error del sistema de SLAM le permite evitar
+ mejor el recorrido de zonas no útiles.
+ 
+\end_layout
+
+\begin_layout Standard
+También se observó que el sistema de SLAM presenta un mayor nivel de robustez
+ en estas pruebas, terminando todas las corridas sin salirse del entorno
+ a recorrer.
+\end_layout
+
+\begin_layout Standard
+De las pruebas de 
+\begin_inset Formula $100$
+\end_inset
+
+ minutos se concluye que el sistema de SLAM permite realizar la tarea designada
+ de forma robusta y finalmente con mayor eficacia y precisión.
+\end_layout
+
+\begin_layout Standard
+Del análisis cualitativo de los mapas se concluye que las transformaciones
+ de traslación y rotación que presentan los mapas construidos no se debe
+ a la existencia de grandes ciclos en el recorrido.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document

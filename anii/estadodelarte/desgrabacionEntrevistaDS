@@ -1,0 +1,143 @@
+D: una aplicación que se me ocurre es la de mataderos robotizados
+M: si, yo había leído de eso, incluso en un momento había leído que el congreso de Australia como que había cortado la idea porque uno de los congresistas había hecho una entrevista y era como macabro, zarpado
+D: Ah, si?
+M: Y si, porque es como ahora, nada más que todo automatizado, y no les gustó la idea y lo habían cortado
+D: No pero está funcionando, porque justamente un directivo nuestro estuvoe el año pasado, funciona en la segunda parte, la parte que se llama el cuarteo, despues de que está la carcaza colgando. Pero no, vamos a sacar la parte industrial entonces.
+M: Si, si querés te oriento, yo tengo algunas ideas para discutir. Una pregunta que a mi me tiene intrigado... los tractores, por que no se manejan solos?
+D: por que la tecnología te permitiría hacerlo?
+M: en un principio si, lo que es automovil sin manejar se esta desarrollando, recien el año pasado y este, ya es común. pero en general manejar el tractor es mucho más simple que manejar un auto en una ciudad, muchas veces la tarea del tractor es ir en linea recta, doblar, ir en linea recta, doblar, no?
+D: Si, si, lo que pasa es que muchas veces la lineas rectas no son rectas.
+M: ah, hay que reaccionar a las cosas? a las piedras?
+D: si, a las piedras, o hay veces que no hay piedras pero hay curvas de nivel, que normalmente se marcan las isolineas y el tractor sigue las curvas esas. O no son perfectamente un damero. Entoces, hay todo un desarrollo de lo que se llama agricultura de presición que combina más que robótica todo lo que es comunicación satelital con analisis de suelo, y con, ahi si es robótica, de micro relieve del suelo. Entonces por ejemplo es una sembradora y tienen un detector de como viene el relieve y ajusta la presión en base a eso. Te adelanto que mi especialidad es la producción animal y la agricultura no, pero ta, soy ingeniero agrónomo y conozco, y trabajé en la agricultura.
+M: seguro que más que yo sabes, así que vos tranquilo.
+Risas
+D: Pero además ha avanzado tanto, yo hace 20 años que no estoy en la parte de campo. Ha avanzado muchisimo, todo lo que es agricultura de presición, va en ese camino. Por un lado la ubicación satelital, el mapeo de chacras satelitalmente, hay una empresa en Uruguay que se está dedicando a eso, a agricultura de presición.
+M: Sabes que tipo de GPS usan, si usan GPS diferencial con una antena local o si usan un receptor pelado nomás.
+D: No, no se. 
+M: El nombre de la empresa:
+D: Te la puedo conseguir.
+M: Te mando un mail.
+D: Dale, mandame un mail, porque conozco un técnico que hace un año que está trabajando en la empresa.
+M: Y mapeo de la granja, que quiere decir?
+D: Mapeo, coordenadas y análisis de suelo entonces vos tomas las decisiónes de las dosis de fertilizante, la profundidad del suelo y esas cosas.
+D: A ver, cuando hablamos de agricultura de presición cual es el concepto? Antes tenías una chacra que era de 100 hectáreas y vos asumías, tomabas decisiones, como si las 100 hectareas fueran homogéneas, y es exáctamente al revés. El supuesto de base ya era erroneo. Lo que hace la agricultura de presición es ajustarse lo más que pueda al microrrelieve, a la variación del suelo, el suelo cambia enormemente metro a metro a veces, y entonces hay posibilidades de optimizar. Probablemente lo que estaban haciendo antes era, en algunza zona, echar fertilizante demás, o semilla de más, o profundidad de menos en la siembre y al revés, entonces ahí hay oportunidades de optmizar.
+M: Y eso como lo hacen, es alguien con un gps que va midiendo el suelo?
+D: No se como lo hacen. Está bueno para averiguar.
+M: Si, porque eso sería una buena aplicación, un robot que recorriera todo el campo y que hiciera el análisis.
+D: Si, que muestreara, ahi es como una mecha que saca una muestra, y eso se manda analizar.
+
+D: A ver, después vamos a nivel de ganadería, ahi la ganadería yo la dividiría claramente en lo que es ganadería de carne y lana, extensiva, de lo que es leche. Aplicaciones robóticas para leche en sala de ordeñe hay muchas, y está bueno. 
+M: Había incluso leído de un caso que habían inentado pila de soluciones que arriaran a las vacas al lugar donde las ordeñan y habían encontrado que un método mucho mejor era entrenar a las propias vacas para que vinieran. Es decir, le daban de comer a determinada hora, y si venían a otra hora no les daban de comer, incluso le daban refuerzos negativos, y lograban que las vacas vinieran la que le tocaba a la hora que le tocaba.
+D: Eso está bueno. En realidad, esa cosa de que las vacas vayan, ta bien, puede ser una cosa, pero como que, digamos, ahi yo te diría que todo lo que hay más avanzado es todo lo union de caravana con microchip y las raciones. En el caso de la vaca lechera, vos podes tomar muchas directivas, podés hacerla pasar por una balanza y pasa el microchip y la pesa, y ya toma decisiones de loteo, o medis la cantidad de leche que está produciendo la baca y en base a eso tomás una decisión de cuanta ración ponerle en la batea cuando la ordeñas. Vos la estás ordeñando y al mismo tiempo la estás alimentando, y la ración que está comiendo y la cantidad que está comiendo la podés decidir. Más que darle a todas pareja. O sea, simepre el concepto es el mismo: es, hasta ahora estabamos tomando decisiones en base a lotes, y el supuesto era que todo el lote es homogeneo, sean animales o de superficies. Y ahora el concepto es el de agricultura de presición, ganadería de presición. Darle a cada individuo para optimizar de acuerdo a su nivel productivo, sus necesidades, eso a nivel de la lechería está muy avanzado, se hace, pero hay camino para avanzar y se está avanzando. En Nueva Zelanda sobretodo, que es el país lider en esto, tienen salas de ordeñe robotizadas.
+M: robotizadas quiere decir que nadie hace nada?
+D: y prácticamente, muy poco, hay un operario. Mira, nosotros teníamos una persona que trabaja con nosotros que tenemos un tambo allá y el solo trabajaba en un tambo que ordeñaba mil vacas. Cuando entró, dijo yo no puedo hacer esto, y después se dió cuenta que sí, que estaba todo robotizado, todas las desiciones esas, inclusive creo que las pesoneras, creo no, el trabajo principal ahí es limpiar las ubres, colocar la pesonera, sacarla y sellarla, lo que se llama sellar que es también otra limpieza.
+M: Ahi es bien robotica en el sentido que la vaca nunca va a estar parada en el mismo sentido, se mueve.. No es lo mismo que un brazo que siempre hace lo mismo.
+D: No, si, eso no es robótica, es mecánica, no?
+M: Si.
+
+D: Creo que hay un monton de cosas mucho más sensillas, por ejemplo en base a caravanas con chip electŕonico podés tomar desiciones sorprendentes. Por ejemplo, se programa muy simple, una vez que vos tenés todas las vacas lecheras, el ganado caravaneado, la haces pasar por un tubo y tomás decisiones en base al peso o a las caravas, en una laptop vos podés poner "caravana del 1 al 100 que vaya para tal potrero" y ahi hay un separador que ta. Lo que normalmente te puede llevar una mañana.
+M: Si, una mañana y tres personas.
+D: Si, todo lo que sea la union de acciones unido a una caravana con chip.
+M: Puede ser el sistema de paco mejorado. Claro, esa idea que manejas de romper con la hipótesis de homogeneidad está super buena.
+D: Ese es el concepto central de la agricultura de presición. Cualquier cosa que vos apliques ahi, yo creo que va a estar bueno. A ver, después por ejemplo.
+M: Otra que tenés, a la hora de ir a buscar un bicho. A mi me ha pasado. Yo tenía una ex novia que tenía campo, y hemos salido a buscar bichos que se perdieron en una crecida, tres días a caballo. Sería redituable implementar un helicóptero chiquito, por ejemplo, para ir a buscar bichos.
+D: No no, porque acá las decisiones las tomás en base a decisiones económicas. Si la vaca vale 500 dólares...
+M: Bueno, pero el helicóptero podría valer 500 dólares también.
+D: Ah, bueno, si es así si. Pero a su vez tenés que tener una vaca con una caravana que emita una señal o algo.
+M: Bueno, en realidad la idea es otra. El tema de las caravanas es una solución que enfrentaba la incapacidad de la gente de distinguir una vaca visualmente, hoy en día ese temá ya esta, no cumplido, pero muy cumplido. Incluso arriesgaría a decir que uno podría identificar qué vaca está viendo, por los patrones y eso.
+D: Si? 
+
+D: Yo creo que ahí hay muchas oportunidades. Ahora, robótica más fina, por ejemplo un robot que esquilara una oveja, eso es la revolución.
+M: Se intentó hacer en un momento y... Lo que pasó es que en nueva zelanda y Australia hubo un boom en 1995, por ahi, y medio como que se llegó a una desilución porque las capacidades de cómputo y de procesamiento de imágenes en aquel momento no eran tan buenas. Y bueno, se llegó a hacer un robot que esquilaba una oveja pero no era tan performante como los locos que son una máquina viste? que te esquilan con los ojos cerrados igual. Pero dice que lo que si se logró fue que apartir de ese momento el precio del gremio de esquiladores se mantuvo un poco porque los locos como que vieron que ya no estaban solo.
+D: Ese es un problema que se está enfrentando en todo el mundo porque el costo de la esquila es... Bueno, por suerte los seres humanos agregan cada vez más valor, entonces el trabajo vale cada vez más, pero desde el punto de vista del productor está complicado. Eso sería una revolución, porque además hoy las cosas están tan tan difíciles que por ejemplo desde acá sale gente todos los años que va a esquilar a españa. Cuadrillas de gente a esquilar a españa. Esto marca la dificultad que hay.
+
+D: Después hay un área de la que yo desconozco pero te puedo dar los titulares, todo lo que habla de cosecha mecánica de frutales. Ahi hay un campo...
+M: Y eso en qué esta? Yo he visto cosechadoras de nueces que lo que hacen es sacudir el arbol.
+D: Claro, para aceitunas se hace lo mismo también. La cosecha del olivo es un problema en todo el mundo. Ahora, yo no se que es lo que pasa con esto, con la cosecha diferenciada, es decir cuando vos tenés un periodo de maduración prolongado y tenés que cosechar solo las maduras.
+M: Eso es un problema super abierto que está re presente en las competencias de robótica. El año pasado una de las competencias de robótica de latinoamérica era un desafío que tenías que cosechar granos de cafe, que eran pelotas de golf que tenías que cosechar de acuerdo al grado de maduración, del color.
+D: Ahí hay todo un área impresionante.
+M: Bueno, una aplicación que se habla de ubicación de robots y construcción de mapas es también por el tema de relacionar el producto... Se habla de que si uno cosechara nueces, las cosecha del suelo con algo automático, tendría que saber de qué árbol viene esa nuez, con una tag rfid, porque puede haber árboles de diferente calidad e interesa mantener esa trazabilidad. Y bueno, ahí está el problema de que el GPS en esos ambientes empieza a tener error, porque estás abajo de un arbol.
+D: Ahi hay un capítulo gigante. Yo te estoy tirando solo los titulares. Hay un capítulo enorme por el problema que enfrenta la agricultura, digamos la fruticultura en el mundo, que es el costo de la cosecha, que es impresionante. Debe haber cosas del estado del arte que yo desconozco, porque además, acá en uruguay la fruticultura está atrasadisima.
+M: Si?
+D: Está 40 años atrasada. Estamos trabajando como trabajaban en Europa hace 40 años. Por lo menos.
+
+D: Te digo más, otra que es pos cosecha, yo me imagino que ha habido aplicaciones de robótica, que es toda la parte de clasificación de frutas. La uva por ejemplo, vos vas a una vendimia y es una cinta en la que hay 5 mujeres de cada lado sacando uvas, que eso lo podría hacer una máquina. Por color, tamaño, se me ocurre. 
+D: Pasa lo mismo con la naranja, citrus y uva. 
+
+D: Después, a nivel de ganadería, yo creo que a nivel de ganadería. Tareas, que vos dijeras posible de robotizar, la esquila, pero creo que eso es como la cumbre. Después hay que pensar en todo una serie de decisiones que se podrían tomar en la medida que estén asociados a una caraban. Porteras que se abran, acceso a una determinada comida o no. 
+D: Te voy a contar una cosa que hicieron los australianos, que es revolucionaria, todavía no está acá. Es una pavada. Uno de los problemas a nivel de las cabañas y sobre todo el mejoramiento genético es que vos necesitas identivicar madre e hijo. A nivel de ovino, eso es complicado porque tenés mucho número y no es tan sensillo como parece. Entonces, estos que hicieron, caravanearon todo, y entonces las ovejas cuando iban naciendo las iban caravaneando con caravana con chip, y restringían el acceso al agua siempre a través de un portal que tenía un lector. Y desarrollaron un software tan simple como que mide la frecuencia con la que dos o más caravanas pasan juntas. Después de dos semanas qué pasa? Fulano es el hijo de mengano, se acabo. Y eso te permite identificar pareja madre hijo en 2000 ovejas sin ningún costo. Eso no está en Uruguay. Es una pavada pero mirá que está muy bueno. 
+M: Por qué no está?
+D: Porque eso lo acaban de desarrollar en Australia. No hay nadie pensando. El que tiene que estár pensando en eso sos tu. Tenés que desarrollar, tan simple como eso. Te digo más, el método ese para encontrar la maternidad es más preciso que el ojo humano. El método tradicional cual es, es una persona que va recorriendo y mirando quien mama de quien. Pero los corderos a veces maman cruzado, entonces hay errores. Eso se ha identificado a través de ADN y se sabe el porcentaje de error que hay. El ojo humano le erra bastante por eso, se cruzan, mientras que parece que el método este es mucho más exacto.
+M: Maman cruzado pero siempre van al agua con la madre.
+D: Claro. Esos ejemplos que pueden ser para ovinos o para vacunos están muy buenos. Estoy seguro que acá podemos desarrollarlo y a un costo que te permita aplicarlo a nivel productivo. Te estoy hablando del estado del arte en austrália, no es que se aplique en todo el mundo. No. Y eso está ahi al alcance, nosotros averiguamos ahora caravanas electrónicas y están a dolar y medio. No para un productor en general, pero para una cabaña que mide la genética, ahí hay oportunidades.
+
+M: Qué es lo que falta para que las cosas que se desarrollan en Nueva Zelanda se apliquen enseguida acá? Es por plata, por falta de innovadores?
+D: Falta de innovadores. Nosotros ahora tenemos un gran proyecto acá en central lanera, que es una coperativa de productores. Vamos a traer algunas cosas de Australia y Nueva Zelanda para facilitar el trabajo. Mecánica pero muy sensilla. Que faciliten el trabajo, que no haya que estar agarrando la oveja...
+
+D: Y lo otro, después de ese proyecto, es que vamos a ofrecer masivamente perros ovejeros entrenados. 
+M: Está el border coli.
+D: Claro, está el border coli, pero vos querés un ovejero entrenado pero no existe el producto. Tenés que comprar un cachorro por un lado, y ta, y entrenarlo. Te digo porque nosotros todo los años rifamos un border coli entrenado y no existe el producto. Si sos productor y querés comprar un ovejero entrenado, tengo que comprar un cachorro, y esperar 14 meses a que lo entrenen. Hay un gap enorme. Yo te diría que acá hay una oportunidad para gastar en tecnología. O desarrollar copiando. Metete en páginas de Australia o Nueva Zelanda, me parece que hay y hay.
+M: Tenés el nombre de alguna página.
+D: Te averiguo algo, un provedor de maquinaria, con sensores y alguna cosa.
+
+D: Aparte, cuál es la diferencia, por que ellos tienen y nosotros no. Ellos tienen la facultad de ingeniería de allá tienen grupos pensando en cómo armar cosas para el agro. Y acá la facultad de ingeniería está a años luz. Mirá que yo fui docente universitario hace años, estuve en la universidad en otras partes del mundo y se como trabajan.
+M: Pero no es un tema de plata? 
+D: No, y te diría que con la relación del dolar no. Para nada. Australia tiene un producto interno per cápita casi 3 veces más que el Uruguay, viven mejor, está claro. Vos ves que los montos de los proyectos son equivalentes. Nosotros trabajamos con un asesor que vive ne malasia y tiene un proyecto en Australia, y que una vez por año viene a trabajar con nosotros y está en el estado del arte en un monton de cosas, y los montos que maneja en proyectos universitarios de investigación, el es investigador senior, y no no. El hecho de poner una persona como vos a pensar en esas cosas hace la diferencia.
+M: Bueno, yo desgraciadamente no, porque me voy a Estados Unidos en un mes.
+D: A sí, mira, a donde te vas?
+M: A Florida, Tampa.
+D: Ah, mira, yo estuve en la Universidad de Florida. Fuimos 3 o 4 días. Tenían un grupo muy bueno en carne. 
+M: No sabía que hacian carne allá, pensé que esa zona era medio...
+D: No no. En USA hay 3 o 4 grupos fuertes en carne y uno de ellos está justamente ahi. Muy bueno.
+M: Agricultura hay ahí?
+D: Ahí hay un fuerte en citrus. Hay caña de azucar porque es tropical, hay ganadería subtropical. 
+
+D: Bueno lo que hay que hacer es acercarse y pensar en los problemas. Si vos pensas, creo que acá hay dos conceptos grandes. Uno es el de la agricultura de precisión que te dije, y el otro es "cómo identificar variación", visualmente, con detectores, que es lo que hizo paco. Cómo, identificar variación. Cuál es el problema de la agroindustria? Vos tenés un producto biológico, y como tal es variable. No son todos cubos ni son todos cilindros. Entonces necesitas que alguien o algo identifique la variación. Por qué? Para tomar desiciones para adelante en el proceso industrial y para tomar decisiones para atrás en la cadena para pagar diferencialmente a los productores, proveedores. Ahi está el problema. Ahí, con esas dos cosas.
+D: Paco, fue a hablar conmigo por lo de la lana, yo terminé diciendole lo de la carne. Pero es lo mismo que el packing de naranjas o en la uva, qué estás haciendo? Identificar colores. El concepto ese de que vos tenes un producto biológico que es muy variable que necesitas clasificarlo por las dos razones, porque para adelante en el proceso industrial tenés que tomar decisiones, y por otro lado tenés que pagar diferencialmente para poder crear un círculo virtuoso por donde yo mando señales claras via pago, entonces producen lo que yo necesito y agrega más valor al producto. Para mi eso está claro. Entonces es eso, meterse donde estás tomando decisiones en conjunto y poder tomar decisiones más micro y de forma de optimizar los procesos. Porque además hay un encarecimiento de los insumos y hay un uso mucho más intensivo de los insumos entonces hay oportunidades enormes de tomar mejores decisiones. Ahorrar.
+
+M: Una última pregunta. Ponele que alguien implementara una esquiladora automática, como ves la inserción de eso a un mercado uruguayo, sobre todo con respecto a la reacción de los trabajadores y gremios, no se si leiste Asimov, pero lo presenta como un problema de la robotica.
+D: No lo leí. Pero a ver, yo no creo que haya un problema. La esquila es un proceso necesario para un negocio o para una actividad, que no te digo qeu es inhumano, pero hay un esfuerzo físico muy importante. Es más, una persona no puede esquilar toda la vida. Vos ves un veterano esquilador y siempre tiene problemas de cintura, cadera. Y bueno, tenemos que resolver esos problemas, que van más allá, hay que mirar, elevar la vista, y si, probablemente los monteadores al principio, cuando se inventó la motosierra protestarían y querrían seguir cortando con hacha, pero era inhumano. Y claro, eso es el progreso. Es dejar el buey por el tractor y probablemente lleguemos a un tractor manejado solo. Pero viste que la persona que está manejando atras, todo, porque por suerte siempre atrás hay un humano. Mirá, nosotros tenemos una fábrica de lavado y peinado de lana, que son 8 mil metros cuadrados y en cada turno trabajan 16 personas. Vos entrás y no hay nadie. Eso permite que las personas que están, ganen mejor. Eso es lo que tenemos que lograr en Uruguay. Lograr que cada vez tengamos gente más capacitada por un lado y a su vez haya cada vez más agregado de valor y más tecnología e inversión, eso es el progreso. Pero además, la esquila en definitiva, por ejemplo es un decisión que toman los productores. Si el productor le dice a su proveedor, "mira, no, el año que viene yo no voy a trabajar más con ustedes", no hay ningún compromiso.
+
+D: Después, hay un buen ejemplo que son los perros ovejeros, nunca vi a ningún trabajador ponerse en contra de los perros ovejeros entrenados. Si yo como trabajador, para trabajar con 2 mil ovejas necesito 3 personas, y resulta que las 2 mil ovejas con media persona me puedo manejar, entonces esa persona va a ganar más. Si no, esa parsona se va a ir a trabajar a otra industria. Entonces el productor se queda sin la posibilidad de tener las dos mil ovejas y la persona si la posibilidad de vivir mejor.
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

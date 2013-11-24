@@ -1,0 +1,16 @@
+#!/bin/gnuplot
+
+set terminal png
+set output "evolRms.png"
+set title "Error promedio"
+set key bottom right
+set auto x
+set style data line
+#set xtic rotate by -45 scale 0 font ",8"
+set grid
+
+#set key autotitle columnheader
+plot "./odomlargo.rms" u (s=($1+$2+$3+$4+$5)/5) w lines t "odom", "./slamlargo.rms" u (s=($1+$2+$3+$4+$5)/5) w lines t "slam"
+
+#pause -1
+#

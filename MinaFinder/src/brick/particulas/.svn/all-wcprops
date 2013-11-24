@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/particulas
+END
+MCLParticleSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/particulas/MCLParticleSet.java
+END
+MCLPoseProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/particulas/MCLPoseProvider.java
+END
+UpdateCmdMarcas.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/ens/svn/repos/pgslam/!svn/ver/138/MinaFinder/src/brick/particulas/UpdateCmdMarcas.java
+END
+Command.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/190/MinaFinder/src/brick/particulas/Command.java
+END
+MCLParticle.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/particulas/MCLParticle.java
+END
+ApplyMoveCmd.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/ens/svn/repos/pgslam/!svn/ver/116/MinaFinder/src/brick/particulas/ApplyMoveCmd.java
+END
+ProxyMoveProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/particulas/ProxyMoveProvider.java
+END
+CmdProxy.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/particulas/CmdProxy.java
+END
+TruePosCmd.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/133/MinaFinder/src/brick/particulas/TruePosCmd.java
+END
+UpdateCmd.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/116/MinaFinder/src/brick/particulas/UpdateCmd.java
+END
+ExitCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/145/MinaFinder/src/brick/particulas/ExitCommand.java
+END

@@ -1,0 +1,107 @@
+package main;
+import java.awt.Point;
+import java.util.Collection;
+import java.util.Iterator;
+
+import javax.microedition.lcdui.Graphics;
+
+import lejos.geom.Line;
+import lejos.nxt.ColorSensor.Color;
+import lejos.robotics.mapping.LineMap;
+import lejos.robotics.navigation.WayPoint;
+import lejos.robotics.pathfinding.FourWayGridMesh;
+import navegador.mapa.MapaIEEE;
+
+/**
+ * Clase que puede ser incluida como canvas para dibujar un mapa de lineas.
+ * Se dibuja en azul el mapa, en gris la grilla generada y en verde la trayectoria establecida.
+ * @author ludo
+ *
+ */
+public class MapCanvasNoParticles extends JComponent {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4310014214639423545L;
+
+	private final int DIMENSION = 800;
+
+	private LineMap map;
+	private FourWayGridMesh mesh = null;
+	private Collection<WayPoint> route;
+	
+	/**
+	 * 
+	 * @param map Mapa de lineas a pintar
+	 * @param mesh Grilla generada para la planificación de la trayectoria
+	 * @param route Routa a graficar
+	 */
+	public MapCanvasNoParticles(LineMap map, FourWayGridMesh mesh, Collection<WayPoint> route){
+		this.map = map;
+		this.mesh = mesh;
+		this.route = route;
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		// draw entire component white
+		g.setColor(Color.white);
+		g.fillRect(0, 0, getWidth(), getHeight());
+
+		g.setColor(Color.blue);
+		// Dibujo cada linea
+		for(Line l : map.getLines()){
+			// Obtengo coordenadas de linea
+			Point p1 = t(l.getP1());
+			Point p2 = t(l.getP2());
+			g.drawLine(p1.x, p1.y, p2.x, p2.y);			
+		}
+		
+		g.setColor(Color.gray);
+		if (mesh != null)
+			for (lejos.robotics.pathfinding.Node n : mesh.getMesh())
+				for(lejos.robotics.pathfinding.Node b : n.getNeighbors()){
+					Point p1 = t(new lejos.geom.Point(n.x, n.y));
+					Point p2 = t(new lejos.geom.Point(b.x, b.y));
+					g.drawLine(p1.x, p1.y, p2.x, p2.y);		
+				}
+					
+		g.setColor(Color.green);
+		if(route != null){
+			Iterator<WayPoint> it = route.iterator();
+			WayPoint ant = it.next();
+			while(it.hasNext()){
+				WayPoint itW = it.next();
+				Point p1 = t(new lejos.geom.Point(itW.x, itW.y));
+				Point p2 = t(new lejos.geom.Point(ant.x, ant.y));
+				g.drawLine(p1.x, p1.y, p2.x, p2.y);		
+				ant = itW;
+			}
+		}
+		
+	}
+
+	private Point t(lejos.geom.Point point)
+	{
+		Point res = new Point();
+		// Agrando un poco el lado más largo para ver las lineas exteriores
+		double scale = (DIMENSION / (MapaIEEE.getLargerSide()*1.1));
+		res.x = (int) (point.x * scale);
+		res.y = (int) (point.y * scale);
+		return res;
+	}
+
+	public Dimension getPreferredSize() {
+		return new Dimension(DIMENSION, DIMENSION);
+	}
+
+	public Dimension getMinimumSize() {
+		return getPreferredSize();
+	}
+
+	public void setRoute(Collection<WayPoint> route) {
+		this.route = route;
+	}
+} 

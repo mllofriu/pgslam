@@ -1,0 +1,22 @@
+Job Name: paramConParametrizado24
+Working directory: /home/pgslam/ejec2
+Queue: publica
+Cantidad de tasks: 1
+Home: /home/pgslam
+Puerto del MOM: 15003
+Nombre del usuario: pgslam
+Idioma: en_US.UTF-8
+Cookie: 717273206E8764C8D7CCF6E2608D7863
+Offset de numero de nodos: 0
+Shell: /bin/bash
+JobID:
+Host: node01.cluster.fing
+Cola de ejecucion: publica
+Archivo de nodos: /var/spool/pbs/aux//3900590.cluster.fing.edu.uy
+Path: /usr/lib64/lam/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/opt/mpich-ch_p4-gcc-1.2.7/bin:/opt/env-switcher/bin:/opt/pbs/bin:/opt/pbs/lib/xpbs/bin:/opt/maui/bin:/usr/local/ns3/bin:/opt/c3-4/:/home/pgslam/bin
+
+Current path:
+/home/pgslam/ejec2
+
+NODES
+node07.cluster.fing

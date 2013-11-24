@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/utils/calib
+END
+CalibDistPil.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/utils/calib/CalibDistPil.java
+END
+DatosLuz.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/146/MinaFinder/src/brick/utils/calib/DatosLuz.java
+END
+DetectM.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/119/MinaFinder/src/brick/utils/calib/DetectM.java
+END
+TDerecho.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/21/MinaFinder/src/brick/utils/calib/TDerecho.java
+END
+CalibGiroPil.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/ens/svn/repos/pgslam/!svn/ver/147/MinaFinder/src/brick/utils/calib/CalibGiroPil.java
+END
+LightCalib.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/20/MinaFinder/src/brick/utils/calib/LightCalib.java
+END

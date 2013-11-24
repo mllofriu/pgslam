@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project name="" company="" manager="" phase="" project-start="20110308T000000Z" mrproject-version="2" calendar="1">
+  <properties/>
+  <phases/>
+  <calendars>
+    <day-types>
+      <day-type id="0" name="&#xDA;til" description="Um dia &#xFA;til padr&#xE3;o"/>
+      <day-type id="1" name="N&#xE3;o &#xFA;til" description="Um dia n&#xE3;o &#xFA;til padr&#xE3;o"/>
+      <day-type id="2" name="Utiliza base" description="Utiliza o dia a partir de um calend&#xE1;rio base"/>
+    </day-types>
+    <calendar id="1" name="Padr&#xE3;o">
+      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="1" sun="1"/>
+      <overridden-day-types>
+        <overridden-day-type id="0">
+          <interval start="0800" end="1200"/>
+          <interval start="1300" end="1700"/>
+        </overridden-day-type>
+      </overridden-day-types>
+      <days/>
+    </calendar>
+  </calendars>
+  <tasks>
+    <task id="1" name="Investigar E. del Arte" note="" work="2016000" start="20110320T000000Z" end="20110624T170000Z" work-start="20110321T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110320T000000Z"/>
+    </task>
+    <task id="2" name="Estudiar Bibliotecas." note="" work="864000" start="20110615T000000Z" end="20110726T170000Z" work-start="20110615T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110615T000000Z"/>
+    </task>
+    <task id="3" name="Pruebas Robots Reales" note="" work="864000" start="20110715T000000Z" end="20110825T170000Z" work-start="20110715T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110715T000000Z"/>
+    </task>
+    <task id="4" name="Crear Plataforma " note="" work="1728000" start="20110822T000000Z" end="20111111T170000Z" work-start="20110822T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110822T000000Z"/>
+    </task>
+    <task id="5" name="Preparaci&#xF3;n Presentaci&#xF3;n Final" note="" work="432000" start="20111110T000000Z" end="20111130T170000Z" work-start="20111110T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20111110T000000Z"/>
+    </task>
+  </tasks>
+  <resource-groups/>
+  <resources>
+    <resource id="1" name="Federico Andrade" short-name="Fede" type="1" units="0" email="fandrade9@gmail.com" note="" std-rate="0"/>
+    <resource id="2" name="Martin Llofri&#xFA;" short-name="Tincho" type="1" units="0" email="" note="" std-rate="0"/>
+  </resources>
+  <allocations/>
+</project>

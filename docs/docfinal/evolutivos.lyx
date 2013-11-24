@@ -1,0 +1,3913 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Algoritmo 
+\change_deleted -1785986595 1341271150
+Evolutivo
+\change_inserted -1785986595 1341271152
+Genético
+\change_unchanged
+ de 
+\change_deleted -1785986595 1341271155
+Parametrización
+\change_inserted -1785986595 1341271156
+Calibración
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Algoritmo-Evolutivo-de"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este capítulo se presenta 
+\change_inserted -1785986595 1341270831
+un breve resumen del marco teórico de algoritmos evolutivos, y luego una
+ descripción 
+\change_unchanged
+en detalle 
+\change_inserted -1785986595 1341270836
+d
+\change_unchanged
+el algoritmo 
+\change_deleted -1785986595 1341287462
+evolutivo
+\change_inserted -1785986595 1341287463
+genético
+\change_unchanged
+ utilizado para la 
+\change_deleted -1785986595 1341270840
+parametrización 
+\change_inserted -1785986595 1341270842
+calibración 
+\change_unchanged
+del sistema de SLAM.
+ Se detalla la plataforma utilizada, la configuración de los individuos,
+ los operadores utilizados, la función de 
+\emph on
+fitness
+\emph default
+, la generación de la población inicial,
+\change_deleted -1785986595 1341287519
+ y
+\change_unchanged
+ la condición de parada 
+\change_deleted -1785986595 1341287529
+implementados.
+ Luego, se presenta 
+\change_inserted -1785986595 1341287530
+y 
+\change_unchanged
+el proceso de 
+\change_deleted -1785986595 1341287553
+parametrización
+\change_inserted -1785986595 1341287555
+calibración
+\change_unchanged
+ del algoritmo evolutivo 
+\change_deleted -1785986595 1341287546
+en sí
+\change_inserted -1785986595 1341287550
+genético
+\change_unchanged
+.
+ Finalmente, se expone un análisis de los resultados obtenidos.
+\change_inserted -1785986595 1341270848
+
+\end_layout
+
+\begin_layout Section
+
+\change_inserted -1785986595 1341270857
+Marco teórico de Algoritmos Evolutivos
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Algoritmos-Evolutivos"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1341270848
+Introducción
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+El uso de métodos exactos garantiza obtener óptimos globales para un problema
+ dado, pero eso se torna muy difícil a la hora de resolver problemas que
+ crecen en forma exponencial con el tamaño de los datos.
+ Por otro lado, heurísticas específicas suelen ser muy rápidas, aunque las
+ soluciones obtenidas no son de tanta calidad, y tampoco son reutilizables
+ para otro problemas.
+ Luego, existen las metaheurísticas que pretenden ser un punto medio entre
+ ambas propuestas.
+ Las metaheurísticas son técnicas genéricas que encuentran 
+\begin_inset Quotes eld
+\end_inset
+
+buenas
+\begin_inset Quotes erd
+\end_inset
+
+ soluciones (incluso el óptimo global) en tiempo de ejecución moderado.
+ También, se las puede ver como una estrategia de alto nivel, que posee
+ cierta estructura y que especifica como se deben aplicar ciertas operaciones
+ para explorar espacios complejos de muchas dimensiones.
+ Dentro de las metaheurísticas podemos encontrar a los algoritmos evolutivos.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Los algoritmos evolutivos consisten en mantener y evolucionar un conjunto
+ de individuos (soluciones tentativas), imitando el proceso biológico de
+ evolución.
+ Estos realizan un proceso iterativo y estocástico sobre un conjunto de
+ individuos, denominado población, donde cada uno representa una posible
+ solución al problema.
+ Para medir la calidad de cada individuo se utiliza una función de 
+\emph on
+fitness
+\emph default
+.
+ Los algoritmos evolutivos realizan dos tipos de tareas: exploración y explotaci
+ón.
+ En el caso de la exploración se trata de combinar individuos de la población
+ actual utilizando diferentes técnicas para generar nuevos individuos 
+\begin_inset Quotes eld
+\end_inset
+
+distintos
+\begin_inset Quotes erd
+\end_inset
+
+, y eventualmente mejores, que puedan estar más cerca de la solución óptima.
+ Por otro lado, durante el proceso de explotación se intenta mejorar a los
+ mejores individuos de la especie.
+ Parte de la evolución es determinada por selección natural, de forma similar
+ a la supervivencia del más fuerte.
+ Luego, algunos individuos son mejores que otros y esos tienen mayor probabilida
+d de sobrevivir y propagar su material genético
+\begin_inset CommandInset citation
+LatexCommand cite
+key "evolsLuque,evolsBlumMetaHeur"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1341270848
+Componentes de los algoritmos evolutivos
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Los algoritmos evolutivos cuentan con una población inicial que suele ser
+ generada al azar.
+ Por otro lado, existen algunas técnicas para elegir una población inicial
+ que pueda acelerar el proceso de búsqueda de buenas soluciones.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+La evolución de la población consta usualmente de la aplicación estocástica
+ de diferentes operadores: mutación, selección y recombinación sobre sus
+ individuos.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Una función de 
+\emph on
+fitness
+\emph default
+ cuantifica la calidad de un individuo asignándole un valor que permite
+ la comparación con otros individuos.
+ En otras palabras, el valor de 
+\emph on
+fitness
+\emph default
+ representa que tan bueno es el individuo respecto al resto.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Estos algoritmos además cuentan con criterios de parada.
+ Uno de los más comunes es la cantidad de iteraciones, otro suele ser haber
+ encontrado una solución con un error menor que cierta cota.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Los individuos son representados usualmente con cadenas (
+\emph on
+strings
+\emph default
+ binarios, decimales o enteros) o alguna estructura de datos más compleja,
+ como pueden ser árboles.
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1341270848
+Operadores
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Existen tres operadores principales los cuales nos permiten modificar a
+ los individuos de la población: recombinación, mutación y selección.
+\end_layout
+
+\begin_layout Paragraph
+
+\change_inserted -1785986595 1341270848
+Recombinación
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Se utiliza para generar nuevos individuos a partir de dos o más existentes.
+ Esta operación suele consistir en dividir dos individuos en una parte elegida
+ en forma aleatoria y combinar las partes resultantes entre sí para formar
+ dos nuevos individuos.
+\end_layout
+
+\begin_layout Paragraph
+
+\change_inserted -1785986595 1341270848
+Mutación
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Este operador cambia alguna porción (elegido al azar) del individuo de forma
+ de generar más diversidad y potencialmente, mejores individuos.
+\end_layout
+
+\begin_layout Paragraph
+
+\change_inserted -1785986595 1341270848
+Selección
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+Corresponde al principio de supervivencia de los individuos más adaptados
+ (similar al esquema de selección natural).
+ Este operador selecciona a los mejores individuos para formar la siguiente
+ generación.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+
+\end_layout
+
+\begin_layout Subsection
+
+\change_inserted -1785986595 1341270848
+Seudocódigo
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+A continuación presentamos el seudocódigo de un algoritmo evolutivo, en
+ el cual se pueden apreciar todos los conceptos mencionados anteriormente.
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341270848
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+P = GenerarPoblacionInicial()
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+mientras no alcance la condición de fin do
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+	P' = SeleccionarPadres(P)
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+	P' = AplicarOperadoresVariación(P')
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+	Evaluar(P')
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+	P = SeleccionarNuevaPoblación(P, P')
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+fin mientras
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+retornar la mejor solución encontrada
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341270848
+Seudocódigo de un Algoritmo Evolutivo.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Section
+Algoritmo 
+\change_deleted -1785986595 1341287587
+Evolutivo
+\change_inserted -1785986595 1341287590
+Genético implementado
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Algoritmo-Evolutivo"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se describen las principales características del algoritmo
+ 
+\change_deleted -1785986595 1341287596
+evolutivo
+\change_inserted -1785986595 1341287597
+genético
+\change_unchanged
+ utilizado.
+\end_layout
+
+\begin_layout Subsection
+Plataforma utilizada
+\end_layout
+
+\begin_layout Standard
+Se utilizó la plataforma JGAP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jgap"
+
+\end_inset
+
+ basada en Java.
+ Se eligió esta plataforma debido a que:
+\end_layout
+
+\begin_layout Itemize
+Se integraba fácilmente con la solución desarrollada al momento, dado que
+ ambos sistemas fueron implementados utilizando el lenguaje Java.
+\end_layout
+
+\begin_layout Itemize
+
+\change_deleted -1785986595 1341287606
+La plataforma es fácil
+\change_inserted -1785986595 1341287608
+Facilidad
+\change_unchanged
+ de 
+\change_deleted -1785986595 1341287611
+utilizar
+\change_inserted -1785986595 1341287611
+uso
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Itemize
+
+\change_deleted -1785986595 1341287624
+Los autores ya habían realizado implementaciones utilizando esta
+\change_inserted -1785986595 1341287633
+Conocimiento previo de la
+\change_unchanged
+ plataforma
+\change_inserted -1785986595 1341287671
+ por parte de los integrantes del equipo
+\change_deleted -1785986595 1341287637
+, por lo que existía experiencia previa en el equipo
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Subsection
+
+\change_deleted -1785986595 1341287675
+Individuos
+\change_inserted -1785986595 1341287678
+Representación
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Los individuos del algoritmo evolutivo consisten en cuatro alelos de tipo
+ entero, correspondientes a cada uno de los parámetros 
+\change_deleted -1785986595 1341287702
+a utilizar
+\change_inserted -1785986595 1341287712
+que utiliza el sistema de SLAM
+\change_unchanged
+:
+\end_layout
+
+\begin_layout Enumerate
+
+\change_inserted -1785986595 1341287757
+Un alelo que corresponde al valor del 
+\change_deleted -1785986595 1341287761
+El 
+\change_unchanged
+parámetro de error de desplazamiento
+\change_inserted -1785986595 1341287796
+ multiplicado por cien
+\change_unchanged
+.
+
+\change_deleted -1785986595 1341287775
+ Este se calcula como el valor del alelo divido entre cien
+\change_deleted 2090252569 1339774952
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Enumerate
+
+\change_inserted -1785986595 1341287784
+Un alelo que corresponde al valor del 
+\change_deleted -1785986595 1341287785
+El 
+\change_unchanged
+parámetro de error de rotación
+\change_inserted -1785986595 1341287802
+ multiplicado por cien
+\change_unchanged
+.
+ 
+\change_deleted -1785986595 1341287791
+El parámetro se calcula como el valor del alelo dividido entre cien
+\change_deleted 2090252569 1339774953
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Enumerate
+
+\change_inserted -1785986595 1341287819
+Un alelo correspondiente al valor 
+\change_deleted -1785986595 1341287820
+El 
+\change_inserted -1785986595 1341287821
+del 
+\change_unchanged
+parámetro de actualización al sensar una marca, correspondiente a la varianza
+ del modelo de sensado.
+ 
+\change_deleted -1785986595 1341287826
+Este parámetro corresponde al valor del alelo, tal como está
+\change_deleted 2090252569 1339774955
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Enumerate
+
+\change_inserted -1785986595 1341287839
+Un alelo correspondiente al 
+\change_deleted -1785986595 1341287840
+El 
+\change_unchanged
+parámetro que establece la mínima varianza de pesos requerida para realizar
+ el 
+\emph on
+resampling
+\emph default
+ (en adelante, parámetro de 
+\emph on
+resampling
+\emph default
+)
+\change_inserted -1785986595 1341287864
+, multiplicado por mil
+\change_unchanged
+.
+
+\change_deleted -1785986595 1341287866
+ Se calcula como el valor del alelo dividido entre mil
+\change_deleted 2090252569 1339774956
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+La transformación que se hace a los valores del modelo de desplazamiento
+ y 
+\emph on
+resampling 
+\emph default
+(parámetros 1, 2 y 4) se realiza de modo de aumentar la resolución de búsqueda
+ y ajustar las cotas de estos parámetros.
+ Además, se definieron restricciones de validez para los individuos que
+ acotan el espacio de búsqueda de parámetros.
+ 
+\end_layout
+
+\begin_layout Standard
+En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Cotas-y-resolución"
+
+\end_inset
+
+ se presenta la resolución de búsqueda y las cotas inferiores y superiores
+ elegidas para cada parámetro.
+ Estas se eligieron basándose en estimados conservativos, derivados de razonamie
+ntos sobre posibles cotas y resoluciones adecuadas.
+ Se entiende que esto no representa un sesgo, pues es posible realizar nuevos
+ experimentos de parametrización en caso
+\change_deleted -1785986595 1341466696
+ de
+\change_unchanged
+ que el valor óptimo de un parámetro se encuentre cerca de las fronteras
+ definidas, así como también experimentos para aumentar la resolución de
+ búsqueda en un entorno de la solución hallada en una primera instancia.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parámetro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cota Inferior
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cota Superior
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resolución
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ruido Desp.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ruido Rot.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Act.
+ Marca
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\emph on
+Resampling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\change_deleted -1785986595 1341287891
+1000
+\change_inserted -1785986595 1341287892
+0.001
+\change_unchanged
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Cota
+\change_deleted -1785986595 1341287908
+s
+\change_inserted -1785986595 1341287923
+ superior, cota inferior
+\change_unchanged
+ y resolución elegida para cada parámetro
+\change_inserted -1785986595 1341287931
+ del sistema de SLAM
+\change_unchanged
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Cotas-y-resolución"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Función de 
+\emph on
+fitness
+\end_layout
+
+\begin_layout Standard
+Se implementó una función de 
+\emph on
+fitness
+\emph default
+ que consiste en ejecutar el filtro de partículas implementado, con los
+ parámetros correspondientes al individuo, utilizando los conjuntos de datos
+ recabados
+\change_inserted -1785986595 1341287980
+ (ver sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Parametrización"
+
+\end_inset
+
+)
+\change_unchanged
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, se calcula la mediana de los errores promedio cometidos en la estimación
+ de la ubicación para cada conjunto de datos, y se toma como valor de fitness
+ el inverso de este número:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+fitness=mediana\left(error_{i}\right)^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+error_{i}=\frac{\sum_{j}(\bar{x_{j}},x_{j})}{\eta_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ corresponde a la posición brindada por el Doraemon 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bar{x_{j}}$
+\end_inset
+
+ corresponde a la posición estimada por el filtro de partículas 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta_{i}$
+\end_inset
+
+ corresponde al número de comparaciones de
+\change_inserted 2090252569 1339775122
+ 
+\change_unchanged
+
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ y 
+\begin_inset Formula $\bar{x_{j}}$
+\end_inset
+
+ realizadas durante cada ejecución del filtro de partículas, con cada conjunto
+ de datos
+\change_inserted -1785986595 1341288156
+ 
+\begin_inset Formula $i$
+\end_inset
+
+
+\change_unchanged
+.
+\change_inserted -1785986595 1341418491
+
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1785986595 1341418549
+La mediana es calculada ordenando los datos de menor a mayor y se toma el
+ dato de la mitad de la lista.
+ En caso de existir una cantidad par de datos, se toma el promedio entre
+ los dos elementos más cercanos al medio de la lista.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341288127
+En el caso que la sumatoria de error fuese igual a cero, se asigna al individuo
+ un valor de fitness alto elegido arbitrariamente.
+ 
+\change_unchanged
+Esta función de 
+\emph on
+fitness
+\emph default
+ fue definida acorde a la métrica elegida para evaluar el rendimiento de
+ una ejecución del algoritmo de SLAM, según se detalla en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Métrica-de-rendimiento"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Resulta importante notar que la función de 
+\emph on
+fitness
+\emph default
+ construida posee una componente randómica, heredada del filtro de partículas
+\change_deleted -1785986595 1341288196
+, utilizada en su implementación.
+ Esto
+\change_inserted -1785986595 1341288196
+ que
+\change_unchanged
+ implica que un mismo individuo puede ser evaluado con diferentes valores
+ de rendimiento en 
+\change_deleted -1785986595 1341288211
+cada evaluación de su función de 
+\emph on
+fitness
+\change_inserted -1785986595 1341288213
+
+\emph default
+distintos momentos
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, para evaluar un individuo, es decir una 
+\change_inserted -1785986595 1341288252
+calibración dada del sistema de
+\change_deleted -1785986595 1341288247
+parametrización del
+\change_unchanged
+ SLAM, el filtro de partículas es ejecutado 
+\begin_inset Formula $10$
+\end_inset
+
+ veces por conjunto de datos, tomando el valor medio del error cometido.
+ Esto se realiza buscando que el azar de una ejecución del algoritmo no
+ favorezca 
+\change_inserted -1785986595 1341288283
+injustamente 
+\change_unchanged
+un juego de parámetros sobre otro.
+\end_layout
+
+\begin_layout Standard
+Además, una vez calculado el valor de 
+\emph on
+fitness
+\emph default
+ para un individuo, este es almacenado 
+\change_deleted -1785986595 1341418621
+en un diccionario 
+\change_unchanged
+para evitar calcularlo nuevamente más adelante.
+ Esto
+\change_inserted -1785986595 1341418593
+, aparte de
+\change_unchanged
+ aumenta
+\change_inserted -1785986595 1341418594
+r
+\change_unchanged
+ la eficiencia del algoritmo
+\change_inserted -1785986595 1341418599
+, 
+\change_deleted -1785986595 1341418602
+ y 
+\change_unchanged
+evita que un individuo presente diferentes valores de 
+\emph on
+fitness
+\emph default
+ en una misma ejecución del algoritmo evolutivo.
+\change_inserted -1785986595 1341288646
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\change_inserted -1785986595 1341288673
+Individuos no factibles
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341288739
+No se realiza un tratamiento de individuos correspondientes a soluciones
+ no factibles (valores de alelos fuera de los rangos permitidos) en la implement
+ación de la función de fitness.
+ Esto se debe a que, como se verá en seguida, la generación de la población
+ inicial como los operadores de mutación y cruzamiento no generan este tipo
+ de individuos.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Operadores
+\end_layout
+
+\begin_layout Standard
+Se utilizaron operadores de 
+\change_deleted -1785986595 1341418636
+mutación y 
+\change_unchanged
+cruzamiento de un punto
+\change_inserted -1785986595 1341418641
+ y mutación
+\change_unchanged
+.
+
+\change_inserted -1785986595 1341418653
+ No se utilizaron operadores ad-hoc.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsubsection
+Operador de mutación
+\end_layout
+
+\begin_layout Standard
+Se utilizó el operador de mutación implementado en la plataforma JGAP.
+ Este operador de mutación recibe un parámetro que indica la proporción
+ esperada 
+\change_inserted -1785986595 1341288368
+
+\begin_inset Formula $p_{m}$
+\end_inset
+
+ 
+\change_unchanged
+de alelos que debe mutar.
+\end_layout
+
+\begin_layout Standard
+Cuando corresponde, el operador de mutación asigna un valor al azar dentro
+ del rango válido definido para el alelo.
+\end_layout
+
+\begin_layout Subsubsection
+Operador de cruzamiento
+\end_layout
+
+\begin_layout Standard
+El operador de cruzamiento utilizado selecciona dos individuos de la población
+ al azar.
+ Luego, se elige un alelo al azar.
+ Este alelo y todos los siguientes son intercambiados entre los individuos
+ elegidos.
+ Los dos nuevos individuos generados son agregados a la población candidata
+ a la selección.
+\end_layout
+
+\begin_layout Standard
+Este operador recibe un parámetro indicando la proporción de la población
+ esperada
+\change_inserted -1785986595 1341288384
+ 
+\begin_inset Formula $p_{c}$
+\end_inset
+
+
+\change_unchanged
+ de individuos a cruzar.
+\change_inserted -1785986595 1341418709
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341418804
+A modo de ejemplo, si se tienen dos individuos a cruzar:
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341418780
+\begin_inset Formula 
+\[
+A=\{a_{1},a_{2},a_{3},a_{4}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341418806
+\begin_inset Formula 
+\[
+B=\{b_{1},b_{2},b_{3},b_{4}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341418912
+Se sortea un índice aleatorio entre 
+\begin_inset Formula $0$
+\end_inset
+
+ y 
+\begin_inset Formula $4$
+\end_inset
+
+ no inclusive.
+ Si este número sorteado resulta ser 
+\begin_inset Formula $2$
+\end_inset
+
+, se generan dos nuevos individuos con la configuración siguiente:
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341418912
+\begin_inset Formula 
+\[
+C=\{a_{1},a_{2},b_{3},b_{4}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341418912
+\begin_inset Formula 
+\[
+D=\{b_{1},b_{2},a_{3},a_{4}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Generación de la población inicial
+\end_layout
+
+\begin_layout Standard
+La población inicial se generó totalmente al azar
+\change_inserted -1785986595 1341288435
+, mas respetando los rangos de validez de los alelos
+\change_unchanged
+, de modo de no sesgar el proceso de búsqueda.
+\change_inserted -1785986595 1341288610
+
+\end_layout
+
+\begin_layout Subsection
+Criterio de parada
+\end_layout
+
+\begin_layout Standard
+Se utilizó como criterio de parada del algoritmo evolutivo la convergencia
+ 
+\change_deleted -1785986595 1341288453
+de la función 
+\change_unchanged
+de
+\change_inserted -1785986595 1341288454
+l
+\change_unchanged
+ 
+\emph on
+fitness
+\emph default
+ del mejor individuo de la población.
+\end_layout
+
+\begin_layout Standard
+Para esto, se estableció un número arbitrario de diez ciclos de evolución,
+ luego de los cuales, si la función de 
+\emph on
+fitness
+\emph default
+ del mejor individuo permanecía constante, se terminaba la búsqueda.
+ 
+\change_inserted -1785986595 1341418996
+El mejor valor de fitness se consideró constante si no cambiaba 
+\change_deleted -1785986595 1341419002
+Se consideró como constante un valor de 
+\emph on
+fitness 
+\emph default
+si su valor no incrementaba 
+\change_unchanged
+en un 
+\begin_inset Formula $1\%$
+\end_inset
+
+ luego de las diez iteraciones.
+\end_layout
+
+\begin_layout Subsection
+
+\change_deleted -1785986595 1341288508
+Parametrización
+\change_inserted -1785986595 1341288510
+Calibración
+\change_unchanged
+ del algoritmo 
+\change_deleted -1785986595 1341288512
+evolutivo
+\change_inserted -1785986595 1341288513
+genético
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341419024
+Tomando en cuenta lo expuesto anteriormente, s
+\change_inserted -1785986595 1341419024
+S
+\change_unchanged
+e observa que el algoritmo 
+\change_deleted -1785986595 1341288555
+evolutivo
+\change_inserted -1785986595 1341288557
+genético
+\change_unchanged
+ depende de tres parámetros:
+\end_layout
+
+\begin_layout Itemize
+Probabilidad de cruzamiento
+\end_layout
+
+\begin_layout Itemize
+Probabilidad de mutación
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1785986595 1341288572
+Tamaño de la p
+\change_deleted -1785986595 1341288572
+P
+\change_unchanged
+oblación 
+\change_deleted -1785986595 1341288570
+del algoritmo
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Para hallar los valores óptimos para estos parámetros, se definieron conjuntos
+ de valores posibles, uno para cada parámetro, acorde a los 
+\change_deleted -1785986595 1341288775
+utilizados normalmente
+\change_inserted -1785986595 1341288776
+citados
+\change_unchanged
+ en la literatura.
+ En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Valores-elegidos-para"
+
+\end_inset
+
+ se pueden observar los valores escogidos para cada uno de los parámetros.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Cruzamiento
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Mutación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cant.
+ Individuos
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Valores 
+\change_inserted -1785986595 1341288797
+posibles 
+\change_unchanged
+elegidos para la 
+\change_deleted -1785986595 1341288784
+parametrización
+\change_inserted -1785986595 1341288786
+calibración
+\change_unchanged
+ del algoritmo evolutivo.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Valores-elegidos-para"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego, se realizaron ejecuciones del algoritmo 
+\change_deleted -1785986595 1341288808
+evolutivo
+\change_inserted -1785986595 1341288810
+genético
+\change_unchanged
+ para probar su eficiencia utilizando cada combinación de los valores de
+ los parámetros, resultado de realizar el producto cartesiano entre los
+ conjuntos de valores posibles.
+\end_layout
+
+\begin_layout Standard
+La evaluación de cada conjunto de valores de parámetros consistió en la
+ ejecución del algoritmo 
+\change_deleted -1785986595 1341288816
+evolutivo
+\change_inserted -1785986595 1341288818
+genético
+\change_unchanged
+ sobre 
+\begin_inset Formula $2$
+\end_inset
+
+ conjuntos de datos de
+\change_inserted 2090252569 1339775347
+l
+\change_unchanged
+ SLAM de los 
+\begin_inset Formula $12$
+\end_inset
+
+ recabados.
+ Se realizaron 
+\begin_inset Formula $10$
+\end_inset
+
+ ejecuciones del algoritmo 
+\change_deleted -1785986595 1341288827
+evolutivo
+\change_inserted -1785986595 1341288828
+genético
+\change_unchanged
+ por conjunto de datos, a fin de evitar que el azar de una ejecución sesgara
+ el proceso de parametrización.
+ Finalmente, de estas 
+\begin_inset Formula $10$
+\end_inset
+
+ ejecuciones, se tomó el valor medio del mejor individuo de cada ejecución,
+ como el individuo obtenido para los parámetros correspondientes.
+\end_layout
+
+\begin_layout Subsubsection
+Resultado de la 
+\change_deleted -1785986595 1341288837
+parametrización 
+\change_inserted -1785986595 1341288839
+calibración 
+\change_unchanged
+del algoritmo 
+\change_deleted -1785986595 1341288833
+evolutivo
+\change_inserted -1785986595 1341288835
+genético
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Conjunto-de-parámetros"
+
+\end_inset
+
+ se pueden observar los parámetros óptimos encontrados.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Cruzamiento
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Mutación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tam.
+ Población
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Conjunto de parámetros óptimo del algoritmo 
+\change_deleted -1785986595 1341288843
+evolutivo
+\change_inserted -1785986595 1341288845
+genético
+\change_unchanged
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Conjunto-de-parámetros"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Resultados arrojados
+\end_layout
+
+\begin_layout Standard
+Luego de 
+\change_deleted -1785986595 1341288865
+parametrizado 
+\change_inserted -1785986595 1341288867
+calibrado 
+\change_unchanged
+el algoritmo 
+\change_deleted -1785986595 1341288860
+evolutivo
+\change_inserted -1785986595 1341288862
+genético
+\change_unchanged
+, se realizaron 
+\begin_inset Formula $30$
+\end_inset
+
+ ejecuciones para encontrar los parámetros del algoritmo de SLAM que minimizan
+ el error cometido sobre 
+\begin_inset Formula $8$
+\end_inset
+
+ de los 
+\begin_inset Formula $12$
+\end_inset
+
+ juegos de datos.
+ En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Valores-que-minimizan"
+
+\end_inset
+
+ se pueden observar los valores encontrados por el algoritmo 
+\change_deleted -1785986595 1341288875
+evolutivo
+\change_inserted -1785986595 1341288876
+genético
+\change_unchanged
+.
+ Se incluyen los valores para el mejor individuo
+\change_inserted -1785986595 1341288888
+,
+\change_unchanged
+ y la media y varianza por parámetro.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mejor Individuo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ de Traslación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,067
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ de Rotación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,035
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ de Sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7158
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7920,5 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990,32
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ 
+\emph on
+Resampling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,071
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,45 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,30
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Valores 
+\change_inserted -1785986595 1341419771
+de los parámetros de SLAM 
+\change_unchanged
+que minimizan el error cometido en el conjunto de datos recabados.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Valores-que-minimizan"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341419078
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Valores-de-Fitness"
+
+\end_inset
+
+ se incluyen los valores de fitness y error medio obtenido en las ejecuciones.
+ Acorde a la definición de la función de 
+\emph on
+fitness
+\emph default
+, el error incluido en la tabla corresponde al inverso del valor de 
+\emph on
+fitness
+\emph default
+.
+ Se incluye el valor del mejor individuo, así como la media y varianza de
+ los valores de 
+\emph on
+fitness
+\emph default
+ y error obtenidos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mejor Individuo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fitness
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,005339783 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,0049437784 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,0001918224 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Error
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+187,2735290527 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+202,2744750977
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ 8,2333059004
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Valores de fitness obtenidos.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Valores-de-Fitness"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Interpretación
+\end_layout
+
+\begin_layout Standard
+Al interpretar los parámetros arrojados por el sistema se observa que el
+ error de desplazamiento y rotación encontrados como óptimos son relativamente
+ altos.
+ Los parámetros encontrados implican que el óptimo consta de considerar
+ un error mayor o igual al 
+\begin_inset Formula $10\%$
+\end_inset
+
+ en cada movimiento realizado.
+\end_layout
+
+\begin_layout Standard
+Los valores del parámetro de sensado encontrados fueron también más altos
+ de lo esperado.
+ Este alto valor refleja la baja confianza depositada en la estimación de
+ la posición de las marcas por parte del sistema de sensado.
+ Este valor óptimo resultó ser mucho más alto del elegido por los autores
+ durante las pruebas iniciales.
+\end_layout
+
+\begin_layout Standard
+El parámetro de 
+\emph on
+resampling
+\emph default
+ también constituyó una sorpresa para los autores, debido a que el retornado
+ por el algoritmo evolutivo resulta particularmente bajo.
+ Empíricamente se observó que con un valor como el retornado, el sistema
+ realiza el paso de 
+\emph on
+resampling
+\emph default
+ prácticamente en cada iteración, 
+\change_deleted -1785986595 1341350427
+salvando
+\change_inserted -1785986595 1341350430
+exceptuando
+\change_unchanged
+ algunos casos en los que se realizan sucesivas observaciones de una misma
+ marca desde una misma posición, que aportan relativamente poca información
+ al sistema.
+\end_layout
+
+\begin_layout Standard
+Con respecto a los valores de error obtenido
+\change_inserted -1785986595 1341350442
+s
+\change_unchanged
+, los autores los consideran 
+\change_deleted -1785986595 1341419830
+aceptables
+\change_inserted -1785986595 1341419831
+razonables
+\change_unchanged
+, tomando en cuenta que existen varios factores que no permiten una ubicación
+ perfecta, más allá del software utilizado:
+\end_layout
+
+\begin_layout Itemize
+La naturaleza de la cámara utilizada y el consecuente error cometido en
+ la estimación de la distancia y ángulo a las marcas
+\change_deleted 2090252569 1339775715
+.
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+El error cometido por el sistema de visión global
+\change_deleted 2090252569 1339775717
+.
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Presencia de observaciones con id de marca falsos, que viola las hipótesis
+ de trabajo del sistema implementado
+\change_deleted 2090252569 1339775718
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341352641
+Además
+\change_inserted -1785986595 1341352648
+Más allá de estos factores de error
+\change_unchanged
+, como se comenta en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Validación-de-los"
+
+\end_inset
+
+, se observó que los mapas generados por el sistema de SLAM presentan transforma
+ciones de rotación y traslación que afectan al error en la estimación con
+ respecto a un marco absoluto (el sistema de visión global utilizado).
+
+\change_inserted -1785986595 1341352707
+ Esto introduciría un error constante en la estimación de la ubicación,
+ correspondiente a la transformación entre un marco de referencia y otro.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsubsection
+Varianza
+\end_layout
+
+\begin_layout Standard
+Se observó una alta varianza en todos los parámetros encontrados 
+\change_deleted -1785986595 1341352730
+por
+\change_inserted -1785986595 1341352731
+durante
+\change_unchanged
+ las 
+\begin_inset Formula $30$
+\end_inset
+
+ ejecuciones del algoritmo 
+\change_deleted -1785986595 1341352737
+evolutivo
+\change_inserted -1785986595 1341352738
+genético
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Correlación-de-los"
+
+\end_inset
+
+ se puede observar la matriz de correlación de los parámetros obtenidos
+ por ejecución del algoritmo 
+\change_deleted -1785986595 1341352746
+evolutivo
+\change_inserted -1785986595 1341352785
+genético (relación lineal entre los parámetros)
+\change_unchanged
+.
+ Allí se observa una correlación leve entre el parámetro de rotación y de
+ 
+\emph on
+resampling
+\emph default
+.
+ Entendemos que esta correlación podría explicar la alta varianza de los
+ parámetros arrojados por el algoritmo 
+\change_deleted -1785986595 1341352799
+evolutivo
+\change_inserted -1785986595 1341352801
+genético
+\change_unchanged
+.
+ Esto se debe a que la solución óptima podría no constar de un punto en
+ el espacio de búsqueda
+\change_inserted 2090252569 1339775794
+,
+\change_unchanged
+ si no de un subespacio que relaciona el valor del parámetro de 
+\emph on
+resampling
+\emph default
+ con el de rotación.
+\end_layout
+
+\begin_layout Standard
+Sin embargo, entendemos que los valores de correlación no son lo suficientemente
+ fuertes para una conclusión definitiva.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/paramsEvols.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Correlación de los parámetros obtenidos por corrida del 
+\change_deleted -1785986595 1341352936
+evolutivo
+\change_inserted -1785986595 1341352937
+AG
+\change_unchanged
+.
+ 
+\change_deleted -1785986595 1341352942
+Se puede observar una leve correlación del parámetro de rotación y 
+\emph on
+resampling
+\emph default
+.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Correlación-de-los"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341352947
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341352947
+Se puede observar una leve correlación del parámetro de rotación y 
+\emph on
+resampling
+\emph default
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Descomposición de los datos
+\end_layout
+
+\begin_layout Standard
+Si 
+\change_deleted -1785986595 1341352954
+descomponemos
+\change_inserted -1785986595 1341352957
+se descompone
+\change_unchanged
+ el conjunto de datos utilizado y 
+\change_deleted -1785986595 1341352964
+evaluamos
+\change_inserted -1785986595 1341352967
+se evalúa
+\change_unchanged
+ el rendimiento 
+\change_inserted -1785986595 1341352975
+de la localización 
+\change_unchanged
+sobre cada conjunto de datos
+\change_inserted -1785986595 1341352985
+,
+\change_unchanged
+ correspondiente a la ejecución del robot por 
+\begin_inset Formula $10$
+\end_inset
+
+ minutos, obtenemos la gráfica de la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Error-cometido-por"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/corridasEvolsSeparadas.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Error cometido por ejecución del robot.
+ 
+\change_deleted -1785986595 1341356395
+Se toma la media y varianza entre todas las ejecuciones del algoritmo evolutivo.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Error-cometido-por"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341356396
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341356397
+Se toma la media y varianza entre todas las ejecuciones del algoritmo evolutivo.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se observa que los diferentes conjuntos de datos implican diferentes desafíos
+ para el algoritmo.
+ Esto se atribuyó a la presencia de algunos juegos de datos que corresponden
+ a ejecuciones donde el robot comete grandes errores en los movimientos
+ y la recuperación de la localización se torna más compleja, o aquellas
+ en las que existen observaciones con id de marca erróneo.
+\end_layout
+
+\begin_layout Section
+Validación de los parámetros de SLAM obtenidos 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Validación-de-los"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A fin de validar los resultados obtenidos utilizando el algoritmo 
+\change_deleted -1785986595 1341356401
+evolutivo
+\change_inserted -1785986595 1341356409
+genético
+\change_unchanged
+, es decir la parametrización del algoritmo de SLAM, se utilizaron los datos
+ de dos ejecuciones adicionales, que fueron dejadas de lado durante el proceso
+ de 
+\change_deleted -1785986595 1341356415
+parametrización
+\change_inserted -1785986595 1341356418
+calibración
+\change_unchanged
+ y ejecución del evolutivo.
+ 
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una gráfica de error medio y varianza para 10
+ ejecuciones del algoritmo de SLAM sobre cada juego de datos, ver figura
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Media-y-varianza"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/corridasEvalEvolsSeparadas.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Media y varianza del error cometido en los juegos de datos de evaluación.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Media-y-varianza"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se observa un error similar al cometido por el sistema sobre los datos utilizado
+s para la ejecución del algoritmo 
+\change_deleted -1785986595 1341356424
+evolutivo
+\change_inserted -1785986595 1341356425
+genético
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Subsection
+Mapas generados
+\end_layout
+
+\begin_layout Standard
+Al igual que en la ejecución del algoritmo evolutivo, se observó una diferencia
+ importante en el error cometido entre una ejecución y otra.
+ A fin de explicar esta diferencia, se estudiaron los mapas generados por
+ una ejecución del algoritmo
+\change_inserted 2090252569 1339776011
+ de
+\change_unchanged
+ SLAM parametrizado sobre estos juegos de datos.
+\end_layout
+
+\begin_layout Standard
+Al utilizar el juego de datos 1 se observa que el mapa generado se corresponde
+ bastante con el mapa real del entorno.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-mapa-1"
+
+\end_inset
+
+ 
+\change_inserted -1785986595 1341357263
+y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Evolución-del-mapa"
+
+\end_inset
+
+ 
+\change_unchanged
+se observa la evolución del mapa a medida que se procesan los datos de movimient
+o y sensado
+\change_inserted -1785986595 1341357277
+ para los dos conjuntos de datos utilizados
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_27_40.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Marca inicial.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_36_40.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Se añade la segunda marca.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_36_56.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Se añaden dos marcas.
+ 
+\change_deleted -1785986595 1341357196
+El error en la estimación aumenta y con este la dispersión de las estimaciones
+ de las marcas.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341357198
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341357198
+El error en la estimación aumenta y con este la dispersión de las estimaciones
+ de las marcas.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_37_16.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+El robot observa nuevamente la marca inicial.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_37_31.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Se observan más marcas y la dispersión de la estimación aumenta.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_37_59.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Mapa final.
+
+\change_deleted -1785986595 1341357177
+ El mapa converge a un mapa rotado con respecto al mapa real, pero mantiene
+ sus proporciones.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341357179
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341357179
+El mapa converge a un mapa rotado con respecto al mapa real, pero mantiene
+ sus proporciones.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del mapa del conjunto de datos 1.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-mapa-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_27_40.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Marca inicial.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_27_52.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Se añade la segunda marca.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_28_06.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Se añaden dos marcas.
+ El error en la estimación aumenta y con este la dispersión de las estimaciones
+ de las marcas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_28_29.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ocurre un falso positivo, se observa una marca y se infiere mal su id.
+ Esto perjudica gravemente al algoritmo.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/analisisEvalEvols/Screenshot from 2012-05-24 16_28_50.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Mapa final.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Evolución del mapa del conjunto de datos 2.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Evolución-del-mapa"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Tiempos de ejecución
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye un reporte de los tiempos de ejecución de la etapa
+ de parametrización y ejecución del algoritmo 
+\change_deleted -1785986595 1341356847
+evolutivo
+\change_inserted -1785986595 1341356850
+genético
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Subsection
+Plataforma utilizada
+\end_layout
+
+\begin_layout Standard
+Para la ejecución del algoritmo 
+\change_deleted -1785986595 1341356842
+evolutivo
+\change_inserted -1785986595 1341356844
+genético
+\change_unchanged
+ se utilizaron máquinas class0 del cluster de Facultad de Ingeniería
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cluster"
+
+\end_inset
+
+.
+ Estas máquinas presentan las siguientes características:
+\end_layout
+
+\begin_layout Itemize
+CPU: Quad core Xeon E5430, 2x6 MB caché, 2.66GHz, 1.333 MHz FSB 
+\end_layout
+
+\begin_layout Itemize
+RAM: 8 GB
+\end_layout
+
+\begin_layout Itemize
+Arquitectura de 64 bits
+\end_layout
+
+\begin_layout Itemize
+SO: Linux
+\end_layout
+
+\begin_layout Itemize
+Java: OpenJDK Runtime Environment (IcedTea6 1.9.10)
+\end_layout
+
+\begin_layout Subsection
+
+\change_deleted -1785986595 1341357089
+Parametrización
+\change_inserted -1785986595 1341357091
+Calibración
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+El proceso de parametrización constó de 
+\begin_inset Formula $100$
+\end_inset
+
+ pruebas del algoritmo para cada juego de parámetros del algoritmo 
+\change_deleted -1785986595 1341357094
+evolutivo
+\change_inserted -1785986595 1341357095
+genético
+\change_unchanged
+, que constó de 
+\begin_inset Formula $10$
+\end_inset
+
+ ejecuciones del algoritmo 
+\change_deleted -1785986595 1341357098
+evolutivo
+\change_inserted -1785986595 1341357099
+genético
+\change_unchanged
+.
+ En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Media-y-varianza"
+
+\end_inset
+
+ se incluye el tiempo promedio y varianza del tiempo de ejecución por prueba.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1844,73 s.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1396,24 s.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Media y varianza del tiempo de ejecución de las pruebas de parametrización
+ en segundos.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Media-y-varianza"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Atribuimos la alta varianza a las diferentes poblaciones utilizadas en las
+ diferentes pruebas.
+\end_layout
+
+\begin_layout Subsection
+Ejecuciones
+\end_layout
+
+\begin_layout Standard
+En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Media-y-varianza-1"
+
+\end_inset
+
+ se presenta el tiempo de ejecución de las 30 ejecuciones del algoritmo
+ evolutivo parametrizado.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7021,03 s.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+400,18 s.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Media y varianza del tiempo de ejecución de las corridas del algoritmo evolutivo
+ parametrizado en segundos.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Media-y-varianza-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

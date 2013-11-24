@@ -1,0 +1,1928 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author -1571385475 "fede,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Arquitectura
+\change_inserted -1571385475 1331593190
+
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Arquitectura"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1571385475 1331593980
+En este capítulo se desarrollan en profundidad las características más relevante
+s de la arquitectura del sistema robótico.
+ 
+\change_unchanged
+S
+\change_inserted -1571385475 1331593980
+e presenta una breve descripción de los módulos más importantes y finalmente
+ se explica como se distribuye la arquitectura.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Section
+Requerimientos de la arquitectura
+\end_layout
+
+\begin_layout Standard
+El sistema desarrollado tiene el requerimiento principal de proveer
+\change_deleted -1571385475 1331824064
+ 
+\change_unchanged
+ localización continua basándose en 
+\change_deleted -1571385475 1331592184
+en 
+\change_unchanged
+la información 
+\change_deleted -1571385475 1331592199
+sensorial 
+\change_unchanged
+resultante del sensado de las l
+\change_inserted -1571385475 1333064811
+í
+\change_deleted -1571385475 1333064812
+i
+\change_unchanged
+neas negras dispuestas en el entorno y 
+\change_inserted -1571385475 1331592244
+d
+\change_unchanged
+e
+\change_deleted -1571385475 1331592245
+l
+\change_unchanged
+ 
+\change_inserted -1571385475 1333064829
+la orientación global del robot
+\change_deleted -1571385475 1333064839
+sensor de brújula
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+Además, se establecieron requerimientos secundarios para el sistema, que
+ se detallan a continuación
+\change_inserted -1571385475 1331592402
+:
+\end_layout
+
+\begin_layout Itemize
+
+\change_deleted -1571385475 1331592394
+.
+\change_inserted -1571385475 1331592672
+generar una plataforma flexible
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1571385475 1333064872
+ejecutar todo el sistema embebido en el robot
+\change_unchanged
+ 
+\change_deleted -1571385475 1333064876
+(
+\emph on
+in situ
+\emph default
+)
+\change_inserted -1571385475 1331592686
+
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1571385475 1331592709
+desacoplamiento de módulos
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1571385475 1331592919
+fácil de depurar
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1571385475 1331593124
+experimentos reproducibles
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1571385475 1333064925
+Estos puntos se desarrollan continuación.
+\end_layout
+
+\begin_layout Subsection
+Generar una plataforma flexible
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Generar-una-plataforma"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Debido a que este desarrollo 
+\change_deleted -1571385475 1333065049
+consta de
+\change_inserted -1571385475 1333065049
+es
+\change_unchanged
+ un hito intermedio en
+\change_deleted -1571385475 1333065069
+ el proceso de desarrollo d
+\change_unchanged
+el sistema final 
+\change_inserted -1571385475 1333065147
+(que se desarrollará en el marco de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamwiki"
+
+\end_inset
+
+) 
+\change_unchanged
+de SLAM, 
+\change_inserted -1571385475 1333065171
+es apropiado
+\change_deleted -1571385475 1331595352
+se deberá 
+\change_inserted -1571385475 1331595354
+ 
+\change_unchanged
+generar código reutilizable.
+ Más específicamente, se intenta que la arquitectura permita reutilizar
+ el sistema de localización generado para la implementación de u
+\change_inserted -1571385475 1331327184
+n
+\change_unchanged
+ sistema de localización y armado de mapas utilizando, en lugar de los sensores
+ de luz y brújula, una cámara como único sensor.
+\end_layout
+
+\begin_layout Standard
+Además, 
+\change_deleted -1571385475 1331595572
+la generación de
+\change_inserted -1571385475 1331595635
+crear
+\change_unchanged
+ una plataforma flexible está 
+\change_deleted -1571385475 1331327294
+alineado
+\change_inserted -1571385475 1331327295
+dentro de
+\change_deleted -1571385475 1331327298
+ con 
+\change_inserted -1571385475 1331327299
+ 
+\change_unchanged
+los objetivos
+\change_inserted -1571385475 1331595624
+ planteados en el proyecto de grado del SLAM.
+
+\change_deleted -1571385475 1331595628
+ de generación de una plataforma flexible de SLAM.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Ejecución 
+\change_inserted -1571385475 1333065191
+
+\emph on
+embebida en el robot
+\change_deleted -1571385475 1333065193
+in situ
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Ejecución-in-situ"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que 
+\change_inserted -1571385475 1331595684
+con 
+\change_deleted -1571385475 1331595686
+los
+\change_inserted -1571385475 1331595687
+el
+\change_unchanged
+ sistema
+\change_deleted -1571385475 1331595690
+s
+\change_unchanged
+ a implementar 
+\change_inserted -1571385475 1331595693
+se 
+\change_unchanged
+pretende
+\change_deleted -1571385475 1331595695
+n dotar de mayor autonomía al robot
+\change_inserted -1571385475 1331595700
+ desarrollar un robot autónomo
+\change_unchanged
+, 
+\change_deleted -1571385475 1333065244
+entendemos que el 
+\change_inserted -1571385475 1333065247
+ este 
+\change_deleted -1571385475 1331327945
+sistema a desarrollar 
+\change_inserted -1571385475 1331327964
+se 
+\change_unchanged
+debe ejecutar por completo en el robot.
+
+\change_deleted -1571385475 1331595741
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Este requerimiento se respetará siempre y cuando 
+\change_deleted -1571385475 1331595999
+la plataforma
+\change_inserted -1571385475 1331596013
+el hardware utilizado
+\change_unchanged
+ lo permita
+\change_inserted -1571385475 1331595904
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lego"
+
+\end_inset
+
+
+\change_unchanged
+, teniendo en cuenta que la plataforma utilizada para el prototipado no
+ posee un poder de cómputo 
+\change_deleted -1571385475 1331596112
+n
+\change_unchanged
+comparable al de los sistemas finales 
+\change_inserted -1571385475 1333065285
+encontrados durante el relevamiento 
+\change_unchanged
+del estado del arte
+\change_inserted -1571385475 1331596150
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331596155
+ref - subir el docu a la wiki
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+, como por ejemplo el robot Khepera III
+\begin_inset CommandInset citation
+LatexCommand cite
+key "khepe"
+
+\end_inset
+
+.
+\change_deleted -1785986595 1331585459
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+referencia
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1571385475 1333065311
+
+\end_layout
+
+\begin_layout Subsection
+Desacoplamiento
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Desacoplamiento"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1571385475 1331596189
+Dado
+\change_inserted -1571385475 1331596191
+Teniendo en cuenta
+\change_unchanged
+ que el sistema de localización pertenece a un sistema de navegación
+\change_deleted -1785986595 1331763392
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+
+\change_inserted -1571385475 1331598287
+ 
+\change_deleted -1571385475 1331596645
+,
+\change_inserted -1571385475 1331596646
+(
+\change_deleted -1571385475 1331596647
+ 
+\change_unchanged
+que es una actividad deliberativa)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+, consideramos importante desacoplar el sistema generado de los sistemas
+ de 
+\change_deleted -1571385475 1331597374
+navegación
+\change_inserted -1571385475 1331597383
+operación
+\change_unchanged
+ básicos 
+\change_deleted -1571385475 1333065353
+(reactivos) 
+\change_unchanged
+del robot.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+paradigma reactivo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Específicamente, se desea que el sistema sea capaz de mantener un estimado
+ de la posición independientemente de la actividad desarrollada por el robot,
+ sin que este tenga que modificar su comportamiento para que el sistema
+ de localización
+\change_inserted -1571385475 1331596744
+ funcione correctamente
+\change_unchanged
+, ni que el comportamiento dependa totalmente del estimado proporcionado
+ por el sistema de localización.
+\change_deleted -1785986595 1331763418
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+También
+\change_inserted -1571385475 1331596759
+ 
+\change_deleted -1571385475 1331596758
+ 
+\change_unchanged
+en este caso, el cumplimiento de este objetivo 
+\change_inserted -1571385475 1331596803
+permite reutilizar la arquitecutra 
+\change_deleted -1571385475 1331596806
+servirá 
+\change_inserted -1571385475 1331596809
+para 
+\change_deleted -1571385475 1331596813
+para 
+\change_unchanged
+la implementación del sistema final de SLAM, que posee requerimientos similares.
+\end_layout
+
+\begin_layout Standard
+Este requerimiento tuvo 
+\change_deleted -1571385475 1331596864
+un 
+\change_unchanged
+gran impacto en la arquitectura final implementada, como se 
+\change_inserted -1571385475 1333065608
+en las secciones siguientes
+\change_deleted -1571385475 1333065614
+verá más adelante
+\change_unchanged
+.
+\change_deleted -1785986595 1331585484
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+referencia cruzada
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Depuración
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Depuración"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1571385475 1331598775
+Dada
+\change_inserted -1571385475 1331598780
+Para contemplar
+\change_unchanged
+ la complejidad del proceso de depuración del sistema de localización a
+ implementar, se desea que la arquitectura permita el envío de información
+ de depuración a una PC
+\change_inserted -1571385475 1331598829
+ 
+\change_deleted -1571385475 1331598829
+,
+\change_unchanged
+ utilizando protocolos inalámbricos.
+\end_layout
+
+\begin_layout Standard
+Este protocolo también está alineado a la reutilización del sistema a desarrolla
+r como punto de partida del sistema final de SLAM, que resultan igualmente
+ difíciles de depurar.
+\change_deleted -1571385475 1331328827
+.
+
+\change_inserted -1571385475 1333066035
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331328838
+poner fotarda de las particulas y el canvas
+\change_inserted -1785986595 1331585509
+, vale, pero más adelante
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1571385475 1333066110
+A través de este protocolo se realiza el envío de los comandos que son ejecutado
+s y procesados en el robot (movimientos realizados y detección de marcas)
+ de forma de reproducir en la PC el procesamiento que se realiza en el robot.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Facilitar la investigación
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Facilitar-la-investigación"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que el desarrollo forma parte de un proyecto de investigación, se desea
+ que la arquitectura del sistema a desarrollar facilite la investigación
+\change_inserted -1571385475 1331598962
+ de las técnicas utilizadas en el SLAM
+\change_unchanged
+.
+\change_inserted -1571385475 1331599375
+
+\end_layout
+
+\begin_layout Standard
+Como objetivos específicos, se proponen:
+\end_layout
+
+\begin_layout Itemize
+Facilitar la reproducción de experimentos para
+\change_inserted -1571385475 1331600965
+ comprender 
+\change_deleted -1571385475 1331600971
+ facilitar la comprehensión
+\change_inserted -1571385475 1331600975
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331599417
+comprehensión!! jaja
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+ 
+\change_deleted -1571385475 1331600976
+ d
+\change_unchanged
+el funcionamiento 
+\change_deleted -1571385475 1331600983
+a fondo 
+\change_unchanged
+del sistema
+\change_inserted -1571385475 1331601001
+ con mayor sencillez
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1571385475 1331601015
+Simplificar
+\change_deleted -1571385475 1331601009
+Facilitar
+\change_unchanged
+ los procesos de optimización del sistema, como la parametrización y estudio
+ del uso de diferentes opciones utilizadas
+\change_inserted -1571385475 1333066253
+ en
+\change_unchanged
+ los sistemas actuales.
+\end_layout
+
+\begin_layout Section
+Descripción de la arquitectura
+\end_layout
+
+\begin_layout Standard
+Para mayor comprensión del sistema a desarrollar, se incluye un diagrama
+ 
+\change_inserted -1571385475 1333066311
+de componentes 
+\change_unchanged
+de 
+\change_inserted -1571385475 1333066316
+la 
+\change_unchanged
+arquitectura en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-clases"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diaClases.dia
+	lyxscale 10
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de clases del sistema.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-clases"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Subsistemas
+\end_layout
+
+\begin_layout Standard
+El sistema se divide en los 
+\change_deleted -1571385475 1331601303
+sub
+\change_unchanged
+siguientes subsistemas, correspondientes a l
+\change_inserted -1571385475 1333066342
+as componentes 
+\change_deleted -1571385475 1333066345
+os paquetes
+\change_unchanged
+ presentad
+\change_inserted -1571385475 1333066348
+a
+\change_deleted -1571385475 1333066348
+o
+\change_unchanged
+s en el diagrama de clases:
+\end_layout
+
+\begin_layout Subsubsection
+Partículas
+\end_layout
+
+\begin_layout Standard
+Este subsistema es el encargado de llevar el estimado de la posición del
+ robot.
+ 
+\change_deleted -1571385475 1333066473
+Esto s
+\change_inserted -1571385475 1333066473
+S
+\change_unchanged
+e implementa utilizando un filtro de partículas, descrito en mayor profundidad
+ en el capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:El-sistema-de"
+
+\end_inset
+
+.
+ Encapsula toda la funcionalidad referente a los procesos de 
+\change_inserted -1571385475 1333066566
+
+\emph on
+actualización basado en la observación (
+\change_unchanged
+update
+\change_inserted -1571385475 1333066569
+)
+\change_unchanged
+, 
+\change_inserted -1571385475 1333066528
+generación de nuevas partículas (
+\change_unchanged
+resampling
+\change_inserted -1571385475 1333066531
+)
+\change_unchanged
+ 
+\emph default
+y
+\emph on
+ 
+\change_inserted -1571385475 1333066507
+estimación del movimiento (
+\change_unchanged
+predict
+\change_inserted -1571385475 1333066510
+
+\emph default
+)
+\change_unchanged
+, escenciales para los filtros de partículas
+\emph on
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "probrob"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+La lógica 
+\change_inserted -1571385475 1333066607
+relacionada con
+\change_deleted -1571385475 1333066609
+de 
+\change_inserted -1571385475 1333066610
+ 
+\change_unchanged
+los modelos de sensado y movimiento es delegado a otro subsistema, haciendo
+ al filtro más genérico.
+ 
+\end_layout
+
+\begin_layout Standard
+Este subsistema se implementó tomando como base la implementación de partículas
+ de LeJOS
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lejos"
+
+\end_inset
+
+.
+\change_deleted -1785986595 1331585544
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+referencia?
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Como se puede observar en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-partículas."
+
+\end_inset
+
+, el subsistema consta de tres clases que es explican a continuación.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+MCLPoseProvider
+\end_layout
+
+\begin_layout Standard
+Esta clase es la interfaz del sistema.
+ Centraliza las funcionalidades de interacción, como el ingreso de información
+ de odometría y sensado.
+ También centraliza los cálculos de posiciones a partir de las partículas
+ actuales.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+MCLParticleSet
+\end_layout
+
+\begin_layout Standard
+Esta clase maneja el conjunto de partículas.
+ Centraliza los procesos de iteración sobre las partículas necesarios en
+ los pasos de 
+\emph on
+update 
+\emph default
+y 
+\emph on
+predict.
+
+\emph default
+ También se encarga de serializar
+\change_inserted -1785986595 1331763815
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+El proceso de serialización permite convertir una estructura de datos en
+ un arreglo de bytes para ser transmitido por un canal de comunicación.
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+ el conjunto de partículas para ser transmitido, funcionalidad implementada
+ acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+ para enviar las partículas como información de depuración.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+MCLParticle
+\end_layout
+
+\begin_layout Standard
+Esta clase mantiene una referencia 
+\change_inserted -1571385475 1333066839
+a 
+\change_unchanged
+la posición estimada y 
+\change_deleted -1571385475 1333066851
+a 
+\change_unchanged
+los modelos de sensado y movimiento.
+ Encapsula la funcionalidad de las operaciones necesarias por partícula
+ para las operaciones de 
+\emph on
+update 
+\emph default
+y 
+\emph on
+predict
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename particulas.dia
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de partículas.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-partículas."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Modelos
+\end_layout
+
+\begin_layout Standard
+Este subsistema encapsula la lógica de los modelos de sensado y movimiento.
+ Se implementó de forma genérica para que pueda ser reutilizado en el sistema
+ 
+\change_deleted -1571385475 1333066879
+final que implementa una cámara, 
+\change_unchanged
+acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Generar-una-plataforma"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Utilizando las clases de este subsistema (ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-modelos"
+
+\end_inset
+
+) es posible 
+\change_deleted -1571385475 1331601952
+reutilizar
+\change_inserted -1571385475 1333066909
+aprovechar 
+\change_unchanged
+lo implementadopara 
+\change_deleted -1571385475 1333066920
+la implementación
+\change_inserted -1571385475 1333066922
+el desarrollo
+\change_unchanged
+ futur
+\change_inserted -1571385475 1333066931
+o
+\change_deleted -1571385475 1333066931
+a
+\change_unchanged
+ de sistemas de localización basados en otros sensores (requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Generar-una-plataforma"
+
+\end_inset
+
+)
+\change_inserted -1571385475 1331602003
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1331602015
+a que nos referimos con 
+\begin_inset Quotes eld
+\end_inset
+
+la plataforma robotica
+\begin_inset Quotes erd
+\end_inset
+
+?
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename modelos.dia
+	lyxscale 50
+	width 75text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de modelos de sensado y movimiento.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-modelos"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este sistema busca desacoplar también el mapa del 
+\change_deleted -1571385475 1331602032
+sistema
+\change_inserted -1571385475 1331602191
+módulo
+\change_unchanged
+ de partículas en si.
+ Esto persigue el objetivo de hacer más fácil la implementación del sistema
+ final de SLAM (requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Generar-una-plataforma"
+
+\end_inset
+
+), 
+\change_inserted -1571385475 1331602163
+simplemente 
+\change_unchanged
+agregando un módulo de manejo de mapas, sin hacer grandes cambios en el
+ sistema de partículas y localización.
+\end_layout
+
+\begin_layout Standard
+Además del subsistema genérico de modelos, se implementaron dos modelos
+ específicos para la solución de localización implementada:
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+GaussianMModel
+\end_layout
+
+\begin_layout Standard
+Un modelo de movimiento que toma como entrada la posición y el movimiento
+ realizado por el robot, devolviendo como salida una muestra de la distribución
+ de probabilidad de la nueva posición del robot.
+ Se profundizará sobre este tema en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modelo-de-movimiento"
+
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+referencia un articulo que use algo asi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+LineOrientSModel
+\end_layout
+
+\begin_layout Standard
+Un modelo de observación que combina la información de orientación, la posición
+ del robot y el mapa para determinar la verosimilitud de la posición estimada
+ con respecto a lo sensado.
+ Se profundizará sobre este tema en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modelo-de-sensado"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+referencia a un articulo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Desacoplamiento
+\end_layout
+
+\begin_layout Standard
+Este subsistema se encarga de las funcionalidades de desacoplamiento del
+ módulo de partículas del comportamiento del robot.
+\end_layout
+
+\begin_layout Standard
+Para esto se implementó un sistema de comandos (Patrón de diseño 
+\emph on
+Command
+\emph default
+) que son ejecutados de forma asincrónica (ver figura 
+\change_inserted -1571385475 1331602362
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-desacoplamiento."
+
+\end_inset
+
+)
+\change_unchanged
+.
+ Estos comandos se corresponden a los pasos de 
+\emph on
+update
+\emph default
+ y 
+\emph on
+predict
+\emph default
+.
+ Cuando el robot sensa información o termina un movimiento, avisa al sistema
+ de desacoplamiento de esta información, quien encola los comandos correspondien
+tes, para su posterior procesamiento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename desacoplamiento.dia
+	lyxscale 10
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de desacoplamiento.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-desacoplamiento."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Debido a que el sistema de partículas se ejecuta en un ladrillo diferente
+ al que posee los sensores, estos comandos son serializados por el 
+\emph on
+CmdProxy
+\emph default
+ y enviados al ladrillo que posee el sistema de partículas.
+ Allí, los comandos son recibidos por 
+\emph on
+CmdPoseProvider
+\emph default
+ y encolados para su ejecución, cuando el subsistema de partículas esté
+ pronto para recibir nueva información.
+\end_layout
+
+\begin_layout Standard
+La clase 
+\emph on
+CmdProxy 
+\emph default
+recibe información por dos canales:
+\end_layout
+
+\begin_layout Itemize
+Mediante la implementación de un patrón 
+\emph on
+Observer
+\emph default
+.
+ La clase 
+\emph on
+CmdProxy 
+\emph default
+escucha los eventos generados por las clases 
+\emph on
+MoveProvider
+\emph default
+ del sistema de LeJOS.
+ Estos eventos se corresponden con el inicio y fin de un movimiento del
+ robot.
+ De esta forma, la clase 
+\emph on
+CmdProxy
+\emph default
+ puede realizar las operaciones correspondientes a un 
+\emph on
+applyMove
+\emph default
+ (
+\emph on
+predict)
+\emph default
+.
+\begin_inset Newline newline
+\end_inset
+
+Además, se incluye una clase intermedia en esta operación de 
+\emph on
+Observer
+\emph default
+, la clase 
+\emph on
+ProxyMoveProvider
+\emph default
+.
+ Esta clase tiene como fin generar eventos de movimiento intermedios cada
+ una cantidad fija de segundos, cuando el robot realiza largos movimiento
+ en linea recta.
+ Esto tiene como cometido aumentar la tasa de llamadas a operaciones de
+ 
+\emph on
+predict 
+\emph default
+manteniendo más actualizada la posición estimada por el filtro de partículas.
+\end_layout
+
+\begin_layout Itemize
+Mediante llamadas explícitas del comportamiento del robot a operaciones
+ de 
+\emph on
+update
+\emph default
+.
+ Si bien esto viola el desacoplamiento, tomando en cuenta que estos llamados
+ son asincrónicos, no se introducen demoras o cambios en el comportamiento
+ del robot por este acoplamiento.
+ Se implementó de esta manera debido a que el comportamiento del robot dependía
+ del sensado de las lineas negras en el entorno, por lo que los momentos
+ en los que se debía llamar a las operaciones 
+\emph on
+update 
+\emph default
+ya era detectado en el código.
+ 
+\begin_inset Newline newline
+\end_inset
+
+En la implementación del sistema final, se prevee eliminar este acoplamiento,
+ colocando la cámara en el ladrillo que contiene el sistema de partículas.
+\end_layout
+
+\begin_layout Subsubsection
+Comunicación
+\end_layout
+
+\begin_layout Standard
+El subsistema de comunicación fue implementado para cumplir con el requerimiento
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+.
+ Como se puede ver en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-comunicación."
+
+\end_inset
+
+, el sistema utiliza patrones 
+\emph on
+Observer
+\emph default
+ para detectar cambios en los objetos de interés, serializarlos y enviarlos
+ hacia la PC.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename comunicacion.dia
+	lyxscale 50
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de comunicación.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-comunicación."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se implementó el sistema buscando centralizar todas las operaciones comunes
+ al envio y recepción de información en una misma clase, que luego es heredada
+ por cada clase específica, para el ladrillo o el PC.
+ 
+\end_layout
+
+\begin_layout Standard
+Inicialmente se utilizaban cadenas de texto para serializar los objetos,
+ pero se agregó una operación para el envío de un arreglo de bytes, en pos
+ de un uso eficienciente del flujo de datos sobre bluetooth.
+\end_layout
+
+\begin_layout Subsubsection
+Utilidades PC
+\end_layout
+
+\begin_layout Standard
+Este subsistema recibe datos del robot y los utiliza para diferentes funciones
+ (ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-utilidadespc."
+
+\end_inset
+
+
+\change_inserted -1571385475 1331602736
+)
+\change_unchanged
+:
+\end_layout
+
+\begin_layout Itemize
+Desplegar las partículas actuales sobre el mapa del entorno (
+\emph on
+MapCanvas
+\emph default
+ y 
+\emph on
+PartUpdater
+\emph default
+).
+ Ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Interfaz-de-una"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Guardar los datos de los comandos del 
+\emph on
+CmdPoseProvider 
+\emph default
+para uso posterior en los procesos de parametrización (
+\emph on
+LoggerRecorrida
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename utilidadespc.dia
+	lyxscale 50
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de utilidadespc.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-utilidadespc."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1331586242
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1331586298
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1331586409
+\begin_inset Graphics
+	filename images/utilidadespc.png
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Interfaz de una aplicación del subsistema de utilidades PC, utilizada para
+ depuración.
+ En la imagen es posible observar un conjunto de partículas graficadas (rojo)
+ sobre el mapa del entorno.
+ La cruz verde representa la última posición obtenida del sistema de visión.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Interfaz-de-una"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\emph on
+Random
+\end_layout
+
+\begin_layout Standard
+Este subsistema se implementó acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Facilitar-la-investigación"
+
+\end_inset
+
+.
+ 
+\change_inserted -1571385475 1331602866
+Posee 
+\change_deleted -1571385475 1331602870
+Este subsistema de
+\change_unchanged
+ una única clase 
+\change_inserted -1571385475 1331602874
+y 
+\change_unchanged
+tiene como cometido centralizar la generación de número
+\change_inserted -1571385475 1331602894
+s
+\change_unchanged
+ aleatorios.
+ Mediante esta centralización se torna más fácil el proceso de reproducción
+ de experimentos, utilizando una única semilla (
+\emph on
+seed
+\emph default
+) centralizada
+\change_inserted -1571385475 1331602915
+ y conocida
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Subsection
+Despliegue de subsistemas
+\end_layout
+
+\begin_layout Standard
+La arquitectura
+\change_inserted -1571385475 1331603266
+ 
+\change_deleted -1571385475 1331603265
+ 
+\change_unchanged
+del sistema
+\change_inserted -1571385475 1331603271
+ es distribuída y
+\change_unchanged
+ se despliega en tres plataformas de cómputo, dos ladrillos de procesamiento
+ de 
+\change_inserted -1571385475 1331328790
+L
+\change_deleted -1571385475 1331328789
+l
+\change_unchanged
+ego y una PC de propósito general.
+\end_layout
+
+\begin_layout Subsubsection
+La PC
+\end_layout
+
+\begin_layout Standard
+La inclusión de la PC como parte del sistema responde a:
+\end_layout
+
+\begin_layout Enumerate
+El requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+: la PC cumple la función de receptora de los datos de depuración enviados.
+\end_layout
+
+\begin_layout Enumerate
+El requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Facilitar-la-investigación"
+
+\end_inset
+
+: la implementación de los sistemas desplegados en la PC permiten interpretar
+ los datos producidos en los procesos de parametrización y los experimentos
+ para la comprensión del sistema.
+\end_layout
+
+\begin_layout Subsubsection
+Dos ladrillos NXT
+\end_layout
+
+\begin_layout Standard
+Originalmente, el sistema constaba de un único ladrillo.
+ Sin embargo, la implementación de modificaciones en el software para satisfacer
+ algunos de los requerimientos, forzaron la inclusión de otro ladrillo
+\change_inserted -1571385475 1331603369
+ y
+\change_unchanged
+,
+\change_inserted -1571385475 1331603369
+ en consecuencia
+\change_unchanged
+,
+\change_inserted -1571385475 1331603369
+ a la distribución de al arquitectura
+\change_unchanged
+.
+ A continuación se incluye una descripción de estos cambios:
+\end_layout
+
+\begin_layout Enumerate
+La implementación del sistema de desacoplamiento para cumplir con el requerimien
+to 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Desacoplamiento"
+
+\end_inset
+
+ tuvo como consecuencia la inclusión de un hilo más
+\change_inserted -1785986595 1331585867
+.
+
+\change_unchanged
+ El aumento de la utilización del CPU ocasionada por este nuevo hilo aportó
+ a la necesidad de agregar un segundo ladrillo.
+\end_layout
+
+\begin_layout Enumerate
+El envío de la información de depuración implementado para cumplir con el
+ requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+ implicó una carga adicional al consumo de CPU, que contribuyó también a
+ la necesidad de agregar otro ladrillo de procesamiento, dedicado exclusivamente
+ a ejecutar los algoritmos de localización.
+\change_deleted -1785986595 1331764716
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Enumerate
+La ejecución 
+\emph on
+in
+\emph default
+ 
+\emph on
+situ
+\emph default
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+autocontenida?si, puede ser
+\end_layout
+
+\end_inset
+
+, acorde al requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Ejecución-in-situ"
+
+\end_inset
+
+, implicó un aumento considerable del consumo de poder de cómputo y memoria,
+ que contribuyó también a la necesidad de agregar otro ladrillo de procesamiento.
+\end_layout
+
+\begin_layout Standard
+En función de todo el aumento de consumo de 
+\change_deleted -1571385475 1331603514
+poder de cómputo
+\change_inserted -1571385475 1331603516
+procesamiento
+\change_unchanged
+, se decidió agregar
+\change_deleted -1571385475 1331603534
+le
+\change_unchanged
+ un ladrillo más al sistema
+\change_inserted -1571385475 1331329110
+ para duplicar los recursos
+\change_unchanged
+.
+ Luego, la arquitectura desplegada posee:
+\end_layout
+
+\begin_layout Itemize
+Un ladrillo dedicado a las tareas de control
+\change_inserted -1571385475 1331329124
+ (
+\change_unchanged
+exploración
+\change_inserted -1571385475 1331329124
+)
+\change_unchanged
+ del robot y sensado del ambiente, denominado 'proy'.
+\end_layout
+
+\begin_layout Itemize
+Un ladrillo dedicado a la ejecución del sistema de localización implementado,
+ denominado 'monty'.
+\end_layout
+
+\begin_layout Standard
+Ambos ladrillos ejecutan en paralelo y se comunican utilizando
+\change_inserted -1571385475 1333067490
+ el protocolo que se menciono anteriormente en 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1333067477
+poner una ref a comunicación
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_deleted -1571385475 1333067506
+ flujos de datos sobre un protocolo privado de
+\change_inserted -1571385475 1333067515
+ sobre 
+\change_deleted -1571385475 1333067529
+ NXT que utiliza un puerto de sensores de cada ladrillo
+\change_unchanged
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+referencia
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Configuración de despliegue
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye la descripción del despliegue de cada subsistema
+ en cada unidad de hardware:
+\end_layout
+
+\begin_layout Itemize
+Ladrillo proy: Aquí se despliegan las funciones de exploración, ajenas al
+ subsistema de desacoplamiento y una pequeña porción del subsistema de partícula
+s dedicado al envío de mensajes al subsistema de partículas en el ladrillo
+ de localización.
+\end_layout
+
+\begin_layout Itemize
+Ladrillo de localización: Aquí se despliegan los subsistemas de desacoplamiento,
+ partículas, modelos, comunicación (la parte del ladrillo) y el de random.
+\end_layout
+
+\begin_layout Itemize
+PC: Aquí se despliegan los subsistemas de comunicación (la parte del PC)
+ y utilidades PC.
+\end_layout
+
+\end_body
+\end_document

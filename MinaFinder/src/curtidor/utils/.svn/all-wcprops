@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/utils
+END
+SyncDiffPilot.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/utils/SyncDiffPilot.java
+END
+PoseStr.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/curtidor/utils/PoseStr.java
+END
+WayPointOrden.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/190/MinaFinder/src/curtidor/utils/WayPointOrden.java
+END
+DelayNavPathController.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/utils/DelayNavPathController.java
+END
+WayPointGen.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/curtidor/utils/WayPointGen.java
+END
+Arbitrator.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/utils/Arbitrator.java
+END
+WayPointListenerInicio.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/curtidor/utils/WayPointListenerInicio.java
+END

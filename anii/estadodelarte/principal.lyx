@@ -1,0 +1,3981 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Estado del arte de SLAM para el entorno agropecuario
+\end_layout
+
+\begin_layout Author
+Martin Llofriu
+\end_layout
+
+\begin_layout Chapter
+Introducción
+\end_layout
+
+\begin_layout Section
+Objetivo
+\end_layout
+
+\begin_layout Standard
+El objetivo de este documento es resumir el estudio realizado del estado
+ del arte de SLAM aplicado al ámbito agropecuario.
+ Durante el estudio se priorizó la identificación de los problemas que presenta
+ el ámbito agropecuario a un análisis exhaustivo de las soluciones disponibles.
+\end_layout
+
+\begin_layout Standard
+Además, se plantea evaluar la factibilidad de soluciones de SLAM en el sector
+ agropecuario uruguayo, para lo que se sostuvo una entrevista con un ingeniero
+ agrónomo para comenzar este trabajo.
+\end_layout
+
+\begin_layout Section
+Organización del documento
+\end_layout
+
+\begin_layout Standard
+Luego de este capítulo introductorio, los capítulos segundo y tercero se
+ dedican a introducir el problema de SLAM y su marco teórico, para sentar
+ las bases de los siguientes capítulos.
+ Para más información en estos aspectos se sugiere consultar los documentos
+ disponibles en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslam"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+El resto del documento se organiza de forma de cubrir el estado del arte
+ relevado en torno a los problemas mencionados en la sección inmediatamente
+ anterior.
+\end_layout
+
+\begin_layout Standard
+Se dedica el cuarto capítulo a describir la tecnología de GPS (del inglés
+ Global Positioning System) desde un punto de vista de usuario y profundizar
+ sobre su relación con los sistemas de localización y de SLAM relevados.
+\end_layout
+
+\begin_layout Standard
+Luego, en el capítulo quinto se tratan los problemas que supone la realización
+ de SLAM y navegación en general en entorno abiertos no estructurados, y
+ se mencionan algunos casos particulares de trabajos que enfrentan estos
+ desafíos.
+\end_layout
+
+\begin_layout Standard
+Finalmente se incluye un breve análisis de una entrevista con un ingeniero
+ agrónomo realizada como parte del relevamiento del estado del arte de la
+ robótica agropecuaria en Uruguay y posibles aplicaciones de SLAM a este
+ sector productivo en el país.
+\end_layout
+
+\begin_layout Chapter
+El problema del SLAM
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+Este capítulo comienza presentando la definición de robot autónomo, las
+ motivaciones que llevan a los investigadores a trabajar en el problema
+ del SLAM y finalmente se introduce el problema del SLAM propiamente dicho.
+ Sobre el final de esta primera parte se exponen las principales dificultades
+ que tiene este problema en la robótica.
+ 
+\end_layout
+
+\begin_layout Section
+Robots Autónomos
+\end_layout
+
+\begin_layout Standard
+Existen diversas definiciones para el significado de robot autónomo o de
+ funcionamiento autónomo.
+ A continuación citamos dos definiciones de autores destacados en el área:
+\end_layout
+
+\begin_layout Itemize
+Funcionar autónomamente implica que un robot puede operar, autocontenido
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Un robot autocontenido es aquel que posee todo lo necesario para desempeñar
+ sus tareas en el propio robot.
+ Es decir, que no depende de elementos externos que realicen tareas, por
+ ejemplo, realizar cálculos fuera del robot.
+\end_layout
+
+\end_inset
+
+, en variadas condiciones y sin necesidad de supervisión humana.
+ Que un robot sea autónomo significa que puede adaptarse a los cambios en
+ el ambiente (p.e.
+ que se apaguen las luces) o a problemas en sí mismo (p.e.
+ si se rompe alguna de sus partes) sin dejar de conseguir su objetivo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Un sistema es autónomo en la medida en que su comportamiento está determinado
+ por su propia experiencia (en el largo o mediano plazo)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NorvingRussell2003"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+De las definiciones se desprende que la capacidad de navegar en ambientes
+ desconocidos forma una parte importante de lo que significa un robot autónomo
+ móvil.
+ En este sentido, uno de los principales problemas con los que se tiene
+ que enfrentar un investigador o desarrollador de robots móviles, es el
+ problema conjunto de la localización y armado de mapas del entorno.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:robotmovil"
+
+\end_inset
+
+ se observa un robot autónomo creado por la NASA
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "NASA"
+description "Agencia Nacional de Administración del Espacio (en españo)."
+
+\end_inset
+
+, que se encuentra en un ambiente desconocido y sin  información precisa
+ sobre su ubicación, sin embargo, la principal tarea de este robot es la
+ navegación, y para realizar dicha actividad en forma eficiente y eficaz,
+ se necesita conocer el mapa del entorno y la ubicación del robot en dicho
+ mapa.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !hbt
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../../docs/estadodelarte/est_arte_en_serio/images/oportunity.jpg
+	width 50text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Imagen del robot Oportunity de la NASA en el planeta Marte.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:robotmovil"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Motivación del Problema del SLAM
+\end_layout
+
+\begin_layout Standard
+Existen ocasiones en las que se conoce de antemano el entorno en el cual
+ se moverá el robot y es posible proporcionarle un mapa del mismo.
+ Puede tomarse como ejemplo un agente
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "agente"
+description "Se entiende por agente como una entidad capaz de percibir y modificar su entorno."
+
+\end_inset
+
+ robótico que debe limpiar un apartamento completo, utilizando un mapa de
+ este para llevar cuenta de las habitaciones visitadas.
+\end_layout
+
+\begin_layout Standard
+Por otro lado, existen situaciones en las que un agente robótico debe moverse
+ en un entorno desconocido, pero cuenta con información precisa sobre su
+ ubicación.
+ Para conocer su ubicación el agente puede utilizar, por ejemplo, visión
+ global o un sistema GPS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "GPS"
+description "Sistema que permite conocer la posición de un objeto móvil gracias a la recepción de señales emitidas por una red de satélites."
+
+\end_inset
+
+, como ocurre en las competencias robóticas como el sumo
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Competencia robótica inspirada en el deporte de mismo nombre, que consiste
+ en que dos robots se saquen uno al otro de un dohyo.
+ Por ejemplo http://www.fing.edu.uy/inco/eventos/sumo.uy/
+\end_layout
+
+\end_inset
+
+ o fútbol de robots
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Versión robótica del fútbol.
+ Por ejemplo www.robocup.org/
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Sin embargo, existen casos aún más complejos que los mencionados, en los
+ que no se conoce el entorno y tampoco se tiene información sobre la ubicación
+ exacta del robot.
+ En este caso, el robot deberá generar un mapa del entorno y mantener su
+ ubicación en el mismo de forma simultánea.
+ Esta tarea resulta compleja debido a que para poder localizarse de forma
+ precisa se necesita un mapa, y por otro lado, para poder crear un mapa
+ es menester estar localizado en forma exacta.
+ Esta es la tarea que estudia el SLAM, localización y armado de mapas en
+ simultáneo.
+ Algunos ejemplos, en los cuales es puede ser útil realizar SLAM, son:
+\end_layout
+
+\begin_layout Itemize
+Exploración espacial 
+\end_layout
+
+\begin_layout Itemize
+Rescate en zonas afectadas por catástrofes 
+\end_layout
+
+\begin_layout Itemize
+Tareas domésticas 
+\end_layout
+
+\begin_layout Itemize
+Conducir un automóvil
+\end_layout
+
+\begin_layout Itemize
+Tareas agropecuarias
+\end_layout
+
+\begin_layout Section
+El problema del SLAM
+\end_layout
+
+\begin_layout Standard
+Tomando en cuenta lo expuesto, es fácil deducir que el problema del SLAM
+ aplica cuando el robot no tiene acceso a un mapa del entorno ni conoce
+ tampoco su posición en el mismo.
+ Un ejemplo de estas situaciones puede observare en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:irobotjapon"
+
+\end_inset
+
+, donde un robot es utilizado para tareas de rescate luego de un accidente,
+ en una zona donde el humano no puede acceder debido a los elevados niveles
+ de radiactividad.
+ En este ejemplo, el ambiente puede haber cambiado a causa del accidente
+ y no reflejar lo señalado en los mapas disponibles.
+ Adicionalmente la localización del robot no puede ser determinada con sistemas
+ de GPS debido a que se trata de un entorno cerrado.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, el robot solo dispone de la información proporcionada por las medidas
+ obtenidas de los sensores y la noción del movimiento propio.
+ El agente robótico intentará obtener un mapa del entorno y simultáneamente
+ localizarse en relación a dicho mapa
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !hbt
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../../docs/estadodelarte/est_arte_en_serio/images/irobotjapon.jpg
+	width 60text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Robot 
+\begin_inset Formula $\mathit{Packbot}$
+\end_inset
+
+ enviado por la empresa IRobot luego del terremoto en Japón, para realizar
+ tareas de asistencia en las plantas nucleares 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "irobot"
+
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ieeespectrumjapon"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:irobotjapon"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Dificultades que presenta el SLAM
+\end_layout
+
+\begin_layout Standard
+A continuación se presentan los principales desafíos que tiene el problema
+ del SLAM.
+\end_layout
+
+\begin_layout Subsection
+Manejo de incertidumbre
+\end_layout
+
+\begin_layout Standard
+Como se mencionó anteriormente, determinar la posición exacta del robot
+ localmente requiere una buena estimación del mapa en el cual el robot se
+ mueve.
+ Por otro lado, la determinación del mapa del entorno requiere conocimiento
+ de la posición exacta del agente.
+ Dado que el agente no posee inicialmente ninguno de estos datos, y dado
+ que la incertidumbre de su posición aumenta con su movimiento, el algoritmo
+ de SLAM debe ser capaz de manejar cierto error en los datos que son computados.
+ Esta incertidumbre debe ser manejada de forma tal que el error en las estimacio
+nes no crezca constantemente (de manera de evitar una divergencia en la
+ estimación de la posición del robot y del mapa).
+ 
+\end_layout
+
+\begin_layout Subsection
+Sensores
+\end_layout
+
+\begin_layout Standard
+Los sensores son dispositivos utilizados para obtener información del estado
+ del entorno, o del robot mismo.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sensor"
+
+\end_inset
+
+  se observa un sensor láser que tiene la capacidad de realizar barridos
+ de 180° y medidas a distancias hasta de 100 metros
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Dato obtenido de www.sick.com
+\end_layout
+
+\end_inset
+
+.
+ Los sensores son limitados en lo que pueden percibir y no son totalmente
+ precisos en sus medidas.
+ Éstas restricciones vienen dadas por muchos factores.
+ El rango y la resolución de un sensor están sujetos a limitaciones físicas.
+ Un claro ejemplo son las cámaras, cuya calidad de imagen está condicionada
+ por el hardware.
+ 
+\end_layout
+
+\begin_layout Standard
+Además, los sensores  están sujetos a ruido estocástico, lo que perturba
+ las medidas de formas impredecibles.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, de lo mencionado anteriormente se desprende que los datos obtenidos
+ de un sensor deben ser manipulados con cuidado para extraer información
+ útil.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../../docs/estadodelarte/est_arte_en_serio/images/sick.jpg
+	width 40text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Sensor láser comúnmente utilizado para hacer SLAM.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "robotsinsearch.com"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sensor"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Movimiento del robot
+\end_layout
+
+\begin_layout Standard
+Mientras el robot se mueve en el entorno, se envían órdenes de movimiento
+ al robot, que comprenden información del cambio en la posición del robot.
+ Esta información luego se procesará para actualizar la estimación de la
+ posición del robot.
+ Un problema puede ocurrir cuando, por ejemplo, una de las ruedas del robot
+ queda en el aire o resbala, lo que implica que el robot no cambió su posición,
+ o lo hizo pero en menor medida que lo reportado por los motores.
+ En este sentido la estimación de la posición del robot será errónea si
+ se basa solamente en esta información.
+\end_layout
+
+\begin_layout Subsection
+Cerrar ciclos
+\end_layout
+
+\begin_layout Standard
+Cerrar ciclos refiere a la situación en que el robot debe poder reconocer
+ cuando pasa por un lugar que ya ha sido visitado.
+ Realizar esta tarea con éxito se vuelve primordial en los mapas que poseen
+ algún cruce para poder armar el mapa correctamente.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:loop"
+
+\end_inset
+
+ se puede apreciar un escenario típico donde se presenta el problema del
+ cierre de ciclos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement !hbt
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename ../../docs/estadodelarte/est_arte_en_serio/images/cerradoCiclosRobot.png
+	width 50text%
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+\begin_layout Plain Layout
+La figura muestra el recorrido que hizo un robot que comienza en la cocina
+ (donde se encuentra el punto azul).
+ Éste sale de la habitación, recorre una sala y entra nuevamente en la cocina.
+ Para que el algoritmo de SLAM arme el mapa correctamente deberá reconocer
+ que la cocina en la que entró en segundo lugar es la misma de donde partió.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "loop"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:loop"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Asociación incorrecta
+\end_layout
+
+\begin_layout Standard
+El algoritmo de SLAM debe ser lo suficientemente preciso como para no confundir
+ dos lugares diferentes de forma que lo lleve a creer que son el mismo.
+ En caso de que el robot estime que dos lugares diferentes con características
+ similares son efectivamente el mismo, cerrará un ciclo donde no lo hay
+ y generará un mapa incorrecto del entorno.
+\end_layout
+
+\begin_layout Subsection
+Capacidad de cómputo
+\end_layout
+
+\begin_layout Standard
+Una gran limitación que encuentran los investigadores y desarrolladores
+ a la hora de resolver un problema de SLAM es el procesamiento de los datos.
+ Los algoritmos de SLAM suelen realizar tareas de procesamiento intensas
+ debido a la densidad de la representación del mapa y a la complejidad de
+ los cálculos involucrados en la estimación de la posición.
+ Esto muchas veces hace difícil el procesamiento dentro del robot y obliga
+ a extraer los datos sensados para ser procesados afuera de este.
+\end_layout
+
+\begin_layout Section
+Problemas particulares de SLAM en el ámbito agropecuario
+\end_layout
+
+\begin_layout Standard
+El ámbito agropecuario presenta al mismo tiempo fuertes desafíos y algunas
+ facilidades al momento de aplicar sistemas de SLAM.
+ 
+\end_layout
+
+\begin_layout Standard
+Una pregunta natural que surge al momento de revisar la aplicabilidad de
+ SLAM a este ámbito es cuál es la relación de SLAM con los sistemas de GPS
+ disponibles.
+ Como se verá más adelante, estos sistemas complementan a los de SLAM, no
+ siendo ninguno una sustitución completa del otro.
+\end_layout
+
+\begin_layout Standard
+Por otro lado, el ámbito agropecuario presenta problemas adicionales al
+ problema de SLAM, en comparación con las condiciones en las que este problema
+ suele investigarse.
+ 
+\end_layout
+
+\begin_layout Standard
+En particular, los ambientes abiertos presentan problemas variados como
+ cambios de iluminación, temperatura y viento que afectan los procesos de
+ sensado del robot.
+ 
+\end_layout
+
+\begin_layout Standard
+Además, este ámbito no cumple con una hipótesis usualmente asumida en el
+ problema de SLAM, la de operación del robot en un plano.
+ El hecho de que el robot se mueva en un suelo no plano presenta un desafío
+ no menor para la aplicación de SLAM al entorno.
+\end_layout
+
+\begin_layout Chapter
+Marco Teórico
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Marco-Teórico"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+El problema del SLAM puede dividirse en varios módulos o subproblemas, siendo
+ cada uno de estos un campo de investigación en sí.
+ Este capítulo se organiza de la siguiente manera: se dedica una sección
+ a la revisión de los dos principales enfoques de la solución del SLAM,
+ bioinspirados y probabilísticos.
+ Luego se dedican las siguientes secciones a la discusión de los subproblemas
+ más importantes y sus soluciones más comunes en los sistemas SLAM probabilístic
+os relevados.
+\end_layout
+
+\begin_layout Section
+Enfoques
+\end_layout
+
+\begin_layout Standard
+Existen dos grandes enfoques para la solución del problema del SLAM, bioinspirad
+os y probabilísticos.
+ Estos enfoques difieren principalmente en la forma en que procesan la informaci
+ón de entrada, de modo de encontrar una buena estimación de la ubicación
+ del robot y mapa del entorno.
+\end_layout
+
+\begin_layout Standard
+Actualmente, el enfoque probabilístico domina el campo y ha logrado implementaci
+ones que escalan a ambientes grandes y complejos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ratslam2"
+
+\end_inset
+
+.
+ Sin embargo, la gran capacidad de navegar que poseen mamíferos como las
+ ratas, simios y seres humanos han motivado la investigación y desarrollo
+ de sistemas que imitan los mecanismos biológicos de navegación de estos
+ animales.
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una descripción del enfoque bioinspirado seguida
+ de una del probabilístico.
+ En el caso del enfoque bioinspirado solamente se hace una breve reseña
+ ya que no está dentro del alcance de este proyecto.
+\end_layout
+
+\begin_layout Subsection
+Bioinspirados
+\end_layout
+
+\begin_layout Standard
+Desde la década de 1970, el entendimiento del funcionamiento del cerebro
+ mamífero vinculado a las actividades de navegación y confección de mapas
+ del entorno ha ido aumentando.
+ Sin embargo, descubrimientos a partir del año 2005 en adelante han cambiado
+ la forma en que se conciben los mecanismos mentales utilizados por los
+ mamíferos para estas actividades.
+ Estos descubrimientos corresponden al hallazgo de células especializadas
+ en las actividades de navegación y reconocimiento del entorno, principalmente
+ ubicadas en el hipotálamo
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "hipotálamo"
+description "Región del encéfalo situada en la base cerebral, unida a la hipófisis por un tallo nervioso y en la que residen centros importantes de la vida vegetativa."
+
+\end_inset
+
+.
+ Estas células evidencian la existencia de una representación interna del
+ entorno.
+\end_layout
+
+\begin_layout Standard
+Los sistemas de SLAM bioinspirados buscan reproducir en modelos computacionales
+ los circuitos neuronales que dan sustento a esta representación espacial
+ del cerebro.
+\end_layout
+
+\begin_layout Standard
+No se entra en detalle del tema ya que el mismo fue desarrollado en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamEsArt"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+SLAM Probabilísticos
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:SLAM-Probabilísticos"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se comentó en la introducción, en el contexto del SLAM existen diversas
+ fuentes de incertidumbre, es decir, factores que incrementan la dificultad
+ de estimar la ubicación y armar un mapa del entorno correcto.
+ Algunos de estos factores son:
+\end_layout
+
+\begin_layout Itemize
+Ruido en la información sensada
+\end_layout
+
+\begin_layout Itemize
+Imprecisión en el desplazamiento
+\end_layout
+
+\begin_layout Itemize
+Simetrías en el entorno
+\end_layout
+
+\begin_layout Itemize
+Observabilidad parcial
+\end_layout
+
+\begin_layout Itemize
+Entorno dinámico
+\end_layout
+
+\begin_layout Standard
+En pos de adaptarse a esta incertidumbre, gran parte de las soluciones del
+ SLAM plantean la estimación de la posición del robot y el mapa del entorno
+ como una distribución de probabilidad.
+\end_layout
+
+\begin_layout Standard
+Estos métodos se concentran en encontrar la distribución de probabilidad
+ de la posición del robot y del mapa del entorno a través del tiempo.
+ Para ilustrar este concepto de estimación como una distribución de probabilidad
+, resulta conveniente analizar la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Thrun1"
+
+\end_inset
+
+.
+ En esta figura se puede observar un robot que navega en un entorno unidimension
+al con tres puertas como únicos objetos distinguibles.
+ En la parte inferior se despliega la estimación de la posición del robot
+ como una distribución de probabilidad, en este caso una distribución gaussiana,
+ donde se le asigna a cada intervalo del eje 
+\begin_inset Formula $x$
+\end_inset
+
+ una probabilidad de que el robot se encuentre en dicho intervalo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../../../../../proyecto/pgslam/docs/estadodelarte/est_arte_en_serio/images/thrun1.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Un agente se mueve en un entorno con tres objetos distinguibles, las puertas.
+ La estimación de su ubicación se representa como una distribución de probabilid
+ad como la graficada en la parte inferior.
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Thrun1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Luego, se definen tres variables estocásticas involucradas en el modelo
+ de SLAM probabilístico, que se explican a continuación.
+\end_layout
+
+\begin_layout Subsubsection
+Variables
+\end_layout
+
+\begin_layout Paragraph
+Estado oculto
+\end_layout
+
+\begin_layout Standard
+La variable 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ modela el valor a estimar en el instante de tiempo 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Para el caso del SLAM, esta variable puede representar la posición del
+ robot, el mapa, o ambos.
+ En ocasiones, esta variable se separa en la posición del robot 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ y el mapa 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+, en otras 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ involucra ambos conceptos.
+ Esta variable suele recibir el nombre de 
+\begin_inset Quotes eld
+\end_inset
+
+estado oculto
+\begin_inset Quotes erd
+\end_inset
+
+ debido a que su valor no es directamente observable (no puede ser directamente
+ sensada) y, por eso, debe estimarse en función de las restantes variables
+ observables.
+\end_layout
+
+\begin_layout Paragraph
+Observación
+\end_layout
+
+\begin_layout Standard
+La variable 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ modela la observación realizada en el instante 
+\begin_inset Formula $i.$
+\end_inset
+
+ Esta observación puede constar de una medida, un conjunto de medidas o
+ una observación de alto nivel de abstracción, como puede ser 
+\begin_inset Quotes eld
+\end_inset
+
+el objeto distinguible 1 está a 3 metros de distancia y a 30 grados hacia
+ la izquierda
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Movimiento
+\end_layout
+
+\begin_layout Standard
+La variable 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ modela la información del movimiento realizado desde el instante 
+\begin_inset Formula $i-1$
+\end_inset
+
+ al instante 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Algunos ejemplos son los comando enviados al robot, como la velocidad (lineal
+ o angular) del robot, la velocidad enviada a cada motor individualmente,
+ o la distancia a recorrer por el robot.
+ Estos comandos brindan información preliminar sobre el movimiento efectivamente
+ realizado por el robot.
+\end_layout
+
+\begin_layout Standard
+Otra fuente de información que es modelada utilizando esta variable es la
+ información de sensores introspectivos como encoders
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "encoders"
+description "Sensores que permiten conocer la posición del eje de un motor"
+
+\end_inset
+
+ o sensores de inercia, que brindan nociones del movimiento propio al robot,
+ ya que estos sensores también proporcionan información preliminar sobre
+ el movimiento propio del robot.
+ 
+\end_layout
+
+\begin_layout Standard
+Si bien en este caso, la información proviene de sensores, suele diferenciarse
+ de las medidas 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ debido a que las últimas refieren a medidas sobre el entorno y no a información
+ introspectiva.
+ En general, cuando se hable de información sensada, se estará haciendo
+ referencia al sensado del entorno 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Esta variable recibe varios nombres en la literatura, como por ejemplo informaci
+ón de controles o información de odometría
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "odometría"
+description "La odometría se basa en poder obtener el desplazamiento realizado por la rueda asociada a un motor a partir de la medición de la vueltas realizada por el mismo.\\\\"
+
+\end_inset
+
+.
+ En este documento se utilizarán indistintamente.
+\end_layout
+
+\begin_layout Paragraph
+El tiempo
+\end_layout
+
+\begin_layout Standard
+Todas las variables estocásticas toman sus valores en diferentes instantes
+ de tiempo.
+ Se considera la variable adicional de tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+, que suele tomarse como un conjunto discreto de instantes, que suelen coincidir
+ con los instantes en los que el robot recibe información de odometría o
+ sensado.
+ Los subíndices en las variables estocásticas 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ y 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ corresponden al instante de tiempo al que están asociadas estas variables.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Formulación del problema
+\end_layout
+
+\begin_layout Standard
+Tomando en cuenta las variables arriba definidas, la distribución de probabilida
+d a estimar para solucionar el problema del SLAM puede formularse como:
+\begin_inset Formula 
+\[
+p(x_{1:t}|z_{1:t},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, la distribución de probabilidad de estado 
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+ (
+\begin_inset Formula $x_{1}$
+\end_inset
+
+..
+\begin_inset Formula $x_{t}$
+\end_inset
+
+) que se adapta mejor a las observaciones 
+\begin_inset Formula $z_{1:t}$
+\end_inset
+
+ y controles 
+\begin_inset Formula $u_{1:t}.$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Alternativamente se puede encontrar en la literatura esta probabilidad represent
+ada como 
+\begin_inset Formula 
+\[
+bel(x_{1:t}|z_{1:t},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+para hacer énfasis en el hecho de que es la creencia (
+\emph on
+belief
+\emph default
+) del robot sobre el estado del sistema.
+ Se utilizan en este texto ambas notaciones indiferentemente.
+\end_layout
+
+\begin_layout Standard
+En conclusión, resolver el problema de SLAM implica estimar la distribución
+ de probabilidad para la variable que representa el estado del sistema 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ en cada instante de tiempo discreto del 
+\begin_inset Formula $1$
+\end_inset
+
+ al 
+\begin_inset Formula $t$
+\end_inset
+
+, es decir la variable 
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Redes de Bayes
+\end_layout
+
+\begin_layout Standard
+Para realizar la estimación de 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ se modela a esta variable de acuerdo a la red bayesiana incluida en la
+ figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:La-red-bayesiana-1"
+
+\end_inset
+
+.
+ En esta red se observa la relación de dependencia entre las variables involucra
+das en el problema de SLAM, donde una flecha de una variable 
+\begin_inset Formula $A$
+\end_inset
+
+ a una 
+\begin_inset Formula $B$
+\end_inset
+
+ indica que la primera incide en la segunda, es decir que 
+\begin_inset Formula $p(B|A)$
+\end_inset
+
+ y 
+\begin_inset Formula $p(B)$
+\end_inset
+
+ no son necesariamente iguales (
+\begin_inset Formula $A$
+\end_inset
+
+ y 
+\begin_inset Formula $B$
+\end_inset
+
+ no son independientes).
+ Las variables del estado 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ afectan solamente a la observación correspondiente 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ y al estado siguiente 
+\begin_inset Formula $x_{i+1}$
+\end_inset
+
+.
+ Los controles 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ afectan solamente al estado correspondiente 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Finalmente, como es coherente, todas las observaciones 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ están influenciadas también por el mapa real del entorno 
+\begin_inset Formula $m.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una conclusión interesante que se desprende de aplicar el teorema de la
+ manta de Markov
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+El teorema de la manta de Markov (Markov Blanket) permite establecer relaciones
+ de independencia condicional entre variables aplicando ciertas reglas sobre
+ el grafo de la red bayesiana.
+\end_layout
+
+\end_inset
+
+ a este modelo es que dado el valor de una de las variables de estado 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, todas las variables correspondientes al pasado (
+\begin_inset Formula $u_{1:i-1},$
+\end_inset
+
+ 
+\begin_inset Formula $z_{1:i-1},$
+\end_inset
+
+ 
+\begin_inset Formula $x_{1:i-1}$
+\end_inset
+
+) son independientes de las variables en el futuro (
+\begin_inset Formula $u_{i-1:t},$
+\end_inset
+
+ 
+\begin_inset Formula $z_{i-1:t},$
+\end_inset
+
+ 
+\begin_inset Formula $x_{i-1:t}$
+\end_inset
+
+).
+ En particular, implica que observaciones 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ y controles 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ anteriores a este instante no afectan el estado del sistema en instantes
+ posteriores, conocido el estado del sistema 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Esto es llamado 
+\begin_inset Quotes eld
+\end_inset
+
+Asunción de Markov
+\begin_inset Quotes erd
+\end_inset
+
+ (Markov Assumption) en la literatura y puede verse violada por algunos
+ factores en la práctica
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+, por ejemplo por componentes no modelados en la dinámica del sistema a
+ modelar 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Al existir componentes dinámicos no modelados (p.
+ e.
+ personas) la independencia entre medidas 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ deja de cumplirse.
+ 
+\end_layout
+
+\begin_layout Standard
+También se infiere otro hecho interesante de la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:La-red-bayesiana-1"
+
+\end_inset
+
+.
+ Existe un vínculo que relaciona las medidas 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+, a través del tiempo.
+ Este vínculo se realiza a través de la trayectoria del robot, es decir
+ 
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+.
+ En la práctica, esto implica que las diferentes partes del mapa sensadas
+ se van correlacionando por medio de la trayectoria del robot.
+ Esta correlación torna computacionalmente más costosa la aplicación del
+ algoritmo, debido a que es necesario actualizar todo el mapa luego de realizar
+ cambios en una localidad.
+ Sin embargo, esta correlación es, de hecho, lo que permite que la estimación
+ del mapa converja, es decir que su incertidumbre disminuya por debajo de
+ un valor definido, a pesar de la incertidumbre en la trayectoria.
+ Esto se debe a que la correlación hace que la incertidumbre sobre la distancia
+ relativa entre partes del mapa disminuya
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SLAMReviewI"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../../../../../proyecto/pgslam/docs/estadodelarte/est_arte_en_serio/images/bayes.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+La red bayesiana que modela el problema de estimación probabilística del
+ SLAM.
+ En gris se muestran las variables ocultas a estimar, compuestas por la
+ posición 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ y el mapa 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Los círculos celestes corresponden a las variables cuyo valor puede ser
+ observado.
+ La figura ha sido extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:La-red-bayesiana-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Filtros de Bayes
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Filtros-de-Bayes"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Algunas soluciones del SLAM se basan en el procesamiento dato a dato de
+ la información.
+ Este procesamiento tiene como marco teórico los Filtros
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+De la literatura del procesamiento de señales con ruido es que viene el
+ término de filtro.
+ Estas herramientas intentan solucionar el problema de estimar una señal
+ original x(t) cuando sólo es posible observar 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(t)=x(t)+r(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+donde r(t) es una señal de ruido no conocida.
+ Muchas soluciones a este problema buscan encontrar el x*(t) óptimo tal
+ de maximizar la probabilidad
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $p(x(t)|y(0)\ldots y(h))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ de Bayes, por lo que resulta pertinente explicar este tema.
+\end_layout
+
+\begin_layout Standard
+Los Filtros de Bayes son algoritmos genéricos que permiten estimar el estado
+ del sistema oculto 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ en función del estado anterior 
+\begin_inset Formula $x_{t-1}$
+\end_inset
+
+, en este caso tomando la información de sensado 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ y odometría 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ más recientes.
+\end_layout
+
+\begin_layout Standard
+Para explicar estos algoritmos conviene extender la notación 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $bel(x_{1:t}|z_{1:t},u_{1:t})$
+\end_inset
+
+,
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ agregando un nuevo término:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\overline{bel}(x_{1:t}|z_{1:t-1},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+que designa la creencia del estado del sistema incluyendo solo la información
+ de odometría en el tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+ y no la de sensado.
+\end_layout
+
+\begin_layout Standard
+Mediante manipulación matemática, en la que no entraremos en detalle, es
+ posible llegar a una definición recursiva de 
+\begin_inset Formula $bel$
+\end_inset
+
+ en función de 
+\begin_inset Formula $\overline{bel}$
+\end_inset
+
+ y viceversa:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\overline{bel}(x_{t})=\int p(x_{t}|u_{t},x_{t-1}).bel(x_{t-1})dx_{t-1}\label{eq:belover}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+bel(x_{t})=\eta p(z_{t}|x_{t})\overline{bel}(x_{t})\label{eq:bel}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De las ecuaciones 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:belover"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:bel"
+
+\end_inset
+
+ puede deducirse que es posible obtener la distribución de probabilidad
+ del estado en el tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+ (
+\begin_inset Formula $bel(x_{t})$
+\end_inset
+
+) a partir del estado en el tiempo 
+\begin_inset Formula $t-1$
+\end_inset
+
+(
+\begin_inset Formula $bel(x_{t-1})$
+\end_inset
+
+) utilizando como paso intermedio el cálculo de 
+\begin_inset Formula $\overline{bel}(x_{t})$
+\end_inset
+
+.
+ Esto resulta interesante pues permite mantener una distribución de probabilidad
+ de estado oculto, procesando la información de sensado y odometría de a
+ una a la vez.
+\end_layout
+
+\begin_layout Chapter
+GPS
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+GPS es un sistema destinado a proporcional localización en cualquier parte
+ del planeta.
+\end_layout
+
+\begin_layout Standard
+Históricamente, la determinación de la posición propia en el globo ha sido
+ un desafío para el hombre.
+ Antes del surgimiento del GPS, esta actividad era llevada a cabo utilizando
+ técnicas de astronomía que estimaban la posición del observador en base
+ a ángulos relativos a cuerpos astronómicos.
+\end_layout
+
+\begin_layout Standard
+Estos métodos pueden estimar la posición del observador con errores del
+ orden de cientos de metros.
+ Por lo tanto, no resultan aplicables a problemas como la agricultura de
+ precisión.
+\end_layout
+
+\begin_layout Standard
+Este capítulo se basa en el texto de Hofmann
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gnss"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Mecanismo de GPS
+\end_layout
+
+\begin_layout Standard
+La localización mediante GPS se basa en la intersección de espacios geométricos
+ derivados de las distancias a objetos con posición conocida.
+\end_layout
+
+\begin_layout Standard
+Para bajar ideas, se considera una persona 
+\begin_inset Formula $P$
+\end_inset
+
+ que es capaz de observar simultáneamente cuatro satélites 
+\begin_inset Formula $S1$
+\end_inset
+
+, 
+\begin_inset Formula $S2$
+\end_inset
+
+, 
+\begin_inset Formula $S3$
+\end_inset
+
+, 
+\begin_inset Formula $S4$
+\end_inset
+
+ de ubicación conocida.
+ 
+\end_layout
+
+\begin_layout Standard
+Si la persona 
+\begin_inset Formula $P$
+\end_inset
+
+ es capaz de estimar la distancia 
+\begin_inset Formula $d_{1}$
+\end_inset
+
+ a 
+\begin_inset Formula $S1$
+\end_inset
+
+, sabrá que se encuentra en una esfera de centro 
+\begin_inset Formula $S1$
+\end_inset
+
+ y radio 
+\begin_inset Formula $d_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Si estima enseguida la distancia 
+\begin_inset Formula $d_{2}$
+\end_inset
+
+ a S2, sabrá que se encuentra también en una esfera de centro 
+\begin_inset Formula $S2$
+\end_inset
+
+ y radio 
+\begin_inset Formula $d_{2}$
+\end_inset
+
+.
+ Por lo tanto, su posición estará en la intersección de estas dos esferas,
+ que forman un círculo.
+\end_layout
+
+\begin_layout Standard
+En este paso se observa como la nueva medida de distancia disminuye la incertidu
+mbre de la posición del observador, siendo la estimación inicial una esfera
+ y luego un círculo, producto de la intersección entre dos esferas.
+\end_layout
+
+\begin_layout Standard
+Si se toma una nueva medida de distancia a 
+\begin_inset Formula $S3$
+\end_inset
+
+, se reducirán las posibles posiciones a dos puntos posibles (la intersección
+ entre una esfera y un círculo).
+ Luego, tomando una cuarta medida a 
+\begin_inset Formula $S4$
+\end_inset
+
+, se logrará eliminar completamente la incertidumbre y la ubicación del
+ observador quedará determinada.
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Esquema-del-funcionamiento"
+
+\end_inset
+
+ se ilustra lo expuesto al momento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename gpsSphere.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Esquema del funcionamiento del sistema satelital de localización.
+ Imagen extraída de ausairpower.net.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Esquema-del-funcionamiento"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Estimación de la distancia
+\end_layout
+
+\begin_layout Standard
+La estimación de la distancia se realiza utilizando un sistema de relojes
+ sincronizados.
+ 
+\end_layout
+
+\begin_layout Standard
+Los satélites colocados en órbita contienen un reloj atómico.
+ Este reloj se utiliza para modular una señal emitida por el satélite y
+ recibida por el dispositivo GPS.
+ 
+\end_layout
+
+\begin_layout Standard
+De este modo, el dispositivo GPS es capaz de conocer el retardo con el que
+ le llega el mensaje emitido por el satélite.
+ Conociendo la velocidad de propagación de la señal, el dispositivo es capaz
+ de medir la distancia viajada por el mensaje, que es la distancia relativa
+ a la que se encuentra el satélite.
+\end_layout
+
+\begin_layout Section
+Fuentes de error
+\end_layout
+
+\begin_layout Standard
+Existen varias fuentes de error asociadas a la estimación de la distancia
+ relativa a cada satélite.
+ Las más importantes son:
+\end_layout
+
+\begin_layout Subsection
+Demoras atmosféricas
+\end_layout
+
+\begin_layout Standard
+La velocidad de propagación de la señal enviada por el satélite se ve afectada
+ por varios factores ambientales.
+ 
+\end_layout
+
+\begin_layout Standard
+Cuando la señal atraviesa la ionosfera, su velocidad baja por la interacción
+ con la materia presenta en esta capa de la atmósfera.
+ Las ondas electromagnéticas solo viajan a la velocidad de la luz en el
+ vació.
+\end_layout
+
+\begin_layout Standard
+Además, dado que las condiciones de la atmósfera no son constantes, este
+ factor de modificación de la velocidad de propagación no permanece constante
+ en el tiempo.
+ 
+\end_layout
+
+\begin_layout Subsection
+Errores de reloj
+\end_layout
+
+\begin_layout Standard
+Si bien los relojes utilizados en los satélites de GPS son muy precisos,
+ en el orden de nanosegundos, estos pueden presentar un leve corrimiento.
+ Los relojes de los receptores también son propensos a errores.
+\end_layout
+
+\begin_layout Standard
+Un error en un reloj del sistema implica que se cometerá un error en el
+ cálculo de la distancia viajada por la señal, lo que deriva en un error
+ en la estimación de la posición del receptor.
+\end_layout
+
+\begin_layout Subsection
+Errores multi-camino
+\end_layout
+
+\begin_layout Standard
+Cuando un receptor recibe una señal de un satélite, estando próximo a una
+ superficie reflectiva, puede recibir la señal directamente, luego de reflejada
+ o ambas.
+ Ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Error-producido-por"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename multipath.xcf
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Error producido por multi-camino.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Error-producido-por"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Estas superficies pueden ser edificios altos o grandes planos reflectivos,
+ como lagos.
+\end_layout
+
+\begin_layout Standard
+Si se capta una señal luego de que esta fue reflejada, el largo del camino
+ recorrido por la señal no corresponde con la distancia relativa del observador
+ al satélite.
+\end_layout
+
+\begin_layout Subsection
+Dilusión de la precisión
+\end_layout
+
+\begin_layout Standard
+Al momento de estimar la incertidumbre de la medida realizada, es decir
+ cuánto error puede cometer esta estimación, es importante considerar la
+ posición relativa entre los satélites utilizados para realizar la estimación.
+\end_layout
+
+\begin_layout Standard
+Dado un mismo error en la estimación de las distancias relativas a los satélites
+, el error en la estimación de la posición por triangulación puede variar.
+\end_layout
+
+\begin_layout Standard
+Si los satélites utilizados en la estimación se encuentran lejanos entre
+ sí, las regiones donde puede estar el receptor en función de cada medida
+ serán diferentes, por lo que la intersección del posible error será pequeña.
+ En cambio, si los satélites se encuentran cercanos uno a otro, las regiones
+ determinadas por cada satélite tendrán una intersección de mayor tamaño.
+ En al figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Dilusión-del-error."
+
+\end_inset
+
+ se ilustra esta idea.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename dilution2.xcf
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Los satélites se encuentran cercanos y la dilusión de la precisión es mayor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename dilution1.xcf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Los satélites se encuentran cercanos y la dilusión de la precisión es mayor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Dilusión del error.
+ Imágen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "leica"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Dilusión-del-error."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Degradación del servicio
+\end_layout
+
+\begin_layout Standard
+Existen diferentes formas de degradación intencional del servicio brindado
+ por el sistema GPS, realizado por parte del Departamento de Defensa de
+ Estados Unidos.
+ A continuación se incluye una breve reseña de estos errores.
+\end_layout
+
+\begin_layout Subsubsection
+Selected Availability
+\end_layout
+
+\begin_layout Standard
+En su versión inicial, el sistema GPS tenía una degradación intencional
+ de los relojes de los satélites y la órbitas calculadas para cada uno de
+ ellos.
+ 
+\end_layout
+
+\begin_layout Standard
+Como consecuencia, la estimación de la distancia relativa se veía afectada,
+ causando un error en la estimación de la posición del receptor.
+\end_layout
+
+\begin_layout Standard
+Esta degradación solo era aplicada a los servicios brindados a la población
+ civil, dado que los receptores GPS militares de Estados Unidos tenían embebido
+ el conocimiento de como corregir el error provocado por esta degradación.
+\end_layout
+
+\begin_layout Standard
+En el año 2000, esta característica fue deshabilitada por completo por parte
+ del Departamento de Defensa, aumentando la precisión del sistema GPS civil
+ por un factor de 10.
+\end_layout
+
+\begin_layout Standard
+Estos errores eran ampliamente corregidos utilizando dos medidas simultáneas
+ en puntos diferentes, como se verá más adelante en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modos-de-medición"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Restricción del código P
+\end_layout
+
+\begin_layout Standard
+Además de la señal emitida por los satélites para uso general, denominada
+ L1, existe una segunda señal de naturaleza similar, denominada L2.
+ Estas señales trabajan a diferente frecuencia.
+\end_layout
+
+\begin_layout Standard
+El contenido que viaja por la señal L2 es cifrado por parte del cuerpo militar
+ estadounidense.
+ Esto implica que solo los receptores militares de dicho país pueden acceder
+ al contenido de esta señal.
+\end_layout
+
+\begin_layout Standard
+El acceso al contenido de ambas señales permite realizar comparaciones en
+ las distancias relativas calculadas utilizando cada señal.
+ Esto facilita la corrección de algunos de los errores provocados por los
+ factores arriba mencionados.
+\end_layout
+
+\begin_layout Standard
+En este sentido, si bien el sistema GPS contempla el uso de dos señales
+ para la estimación de la posición, existe una degradación del servicio
+ que solo permite el acceso a una de ellas.
+\end_layout
+
+\begin_layout Section
+Modos de medición y su error asociado
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Modos-de-medición"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Existen diferentes técnicas de utilización de la información de distancias
+ relativas para estimar la posición del receptor.
+ 
+\end_layout
+
+\begin_layout Subsection
+Triangulación simple
+\end_layout
+
+\begin_layout Standard
+Este método de medida consta de tomar cada una de las distancias relativas
+ y calcular la intersección de las esferas correspondientes para obtener
+ la posición del receptor.
+ Esta forma de medir está sujeto a los errores causados por el entorno (muliti-c
+amino, atmósfera, etc) y a las degradaciones del servicio de Selected Availabili
+ty (no vigente).
+\end_layout
+
+\begin_layout Standard
+Si solo se toma en cuenta la información brindada por las señales de los
+ satélites, sin considerar los factores externos que afectan la estimación,
+ se puede derivar un error promedio de 
+\begin_inset Formula $13m$
+\end_inset
+
+ con un 
+\begin_inset Formula $95\%$
+\end_inset
+
+ de probabilidad.
+\end_layout
+
+\begin_layout Subsection
+GPS Diferencial
+\end_layout
+
+\begin_layout Standard
+Buscando resolver el problema de Selected Availability y errores debido
+ al entorno se elaboraron técnicas avanzadas que van más allá de la simple
+ triangulación de las señales individuales.
+ 
+\end_layout
+
+\begin_layout Standard
+Las técnicas diferenciales de GPS (DGPS) constan de la toma de medidas en
+ simultaneo desde dos puntos separados.
+ Uno de los puntos se encuentra normalemente en reposo, y sirve de marco
+ de referencia.
+ Este es denominado baseline y se asume de coordenadas conocidas.
+ El otro punto es de coordenadas desconocidas, usualmente denominado rover.
+\end_layout
+
+\begin_layout Standard
+Al tomar medidas desde la baseline de coordenadas conocidas, es posible
+ calcular factores de corrección de la estimación de las distancias relativas
+ en la baseline.
+ Como estas medidas son tomadas en simultáneo, estos factores de corrección
+ pueden ser aplicados a las medidas tomadas por el rover.
+\end_layout
+
+\begin_layout Standard
+Las correcciones aplicadas pueden realizarse a posteriori, en una etapa
+ de post-procesamiento de los datos, o en linea.
+ Para realizar las correcciones en linea, el rover debe estar comunicado
+ con la baseline para recibir en vivo los factores de corrección calculados,
+ por una línea de datos dedicada.
+\end_layout
+
+\begin_layout Subsubsection
+DGPS de código y de fase
+\end_layout
+
+\begin_layout Standard
+Existen dos técnicas de DGPS, de código y de fase.
+ Para explicarlas, es necesario entender un poco más la naturaleza de la
+ señal enviada por los satélites.
+\end_layout
+
+\begin_layout Standard
+Cada satélite GPS trasmite una señal sinusoidal de alta frecuencia.
+ Esta señal es denominada señal portadora, correspondientes a la L1 y L2
+ arriba mencionadas.
+ 
+\end_layout
+
+\begin_layout Standard
+A su vez, esta señal portadora es utilizada para transmitir un código de
+ baja frecuencia 
+\begin_inset Formula $c(t)$
+\end_inset
+
+, que varía con el tiempo periódicamente, conocido tanto por el satélite
+ como por el receptor.
+ Para trasmitir este código, la fase de la señal portadora es modulada,
+ técnica que es conocida como modulación de fase.
+\end_layout
+
+\begin_layout Standard
+El código transmitido suele ser la fuente de información utilizada para
+ deducir la distancia relativa.
+ Para esto, el receptor calcula la diferencia de tiempo entre la llegada
+ de un segmento del código y su emisión conocida a priori (porque el receptor
+ conoce 
+\begin_inset Formula $c(t)$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Los DGPS de código siguen esta linea tomando medidas desde dos puntos para
+ calcular los factores de corrección.
+\end_layout
+
+\begin_layout Standard
+Por otro lado, las técnicas de fase utilizan la señal portadora en lugar
+ del código.
+ Dado que la señal portador oscila a una frecuencia mucho mayor, el largo
+ de un periodo de la señal es sustancialmente menor y el error en la estimación
+ de la distancia puede ser determinado con mayor precisión.
+ 
+\end_layout
+
+\begin_layout Standard
+Sin embargo, dado que la señal portadora varía uniformemente, existe una
+ ambigüedad al determinar la distancia viajada por la señal.
+ Esta ambigüedad debe ser resuelta por la estación de coordenadas conocidas
+ (baseline), y transmitida al rover.
+\end_layout
+
+\begin_layout Subsubsection
+Error del DGPS
+\end_layout
+
+\begin_layout Standard
+El error teórico de estos sistemas es menor que el del GPS convencional,
+ siendo menor a 
+\begin_inset Formula $10m$
+\end_inset
+
+ para el DGPS de código y menor a 
+\begin_inset Formula $0.1m$
+\end_inset
+
+ para el de fase.
+\end_layout
+
+\begin_layout Section
+GPS y SLAM
+\end_layout
+
+\begin_layout Standard
+Los sistemas de GPS y SLAM suelen verse como dos soluciones diferentes al
+ mismo problema, sobre todo cuando se trata del entorno agropecuario.
+\end_layout
+
+\begin_layout Standard
+En general, GPS suele verse como un sistema de localización de implementación
+ más fácil que SLAM, de uso más general y con un error menor en la estimación.
+\end_layout
+
+\begin_layout Standard
+Por otro lado, es usual encontrar en la literatura que SLAM permite una
+ operación más robusta ante los errores de disponibilidad de GPS por obstáculos
+ en la visibilidad de los satélites.
+ Esto los hace una solución más genérica al problema de localización.
+\end_layout
+
+\begin_layout Standard
+Además se suele alegar que los sistemas de localización basados en SLAM
+ son menos costosos que la implementación de GPS para los casos en los que
+ se requiere un error equivalente a los sistemas de DGPS.
+ En estos casos suele considerarse también que los sistemas basados en SLAM
+ son más autónomos en el sentido que no dependen de la conexión con la estación
+ baseline para una correcta operación.
+\end_layout
+
+\begin_layout Standard
+El autor considera que ambos sistemas no deberían contraponerse.
+ En cambio, deben considerarse como soluciones complementarias.
+ Se señala incluso que existen soluciones que combinan la información de
+ GPS y otras fuentes de información en un sistema de SLAM
+\begin_inset CommandInset citation
+LatexCommand cite
+key "GPSSlam"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Los campos de la balística y aviación han desarrollado sistemas de navegación
+ basados en GPS y sensores de inercia (INS+GPS).
+ En los casos en los que los sistemas de SLAM son utilizados solo para obtener
+ una ubicación fiable, estos presentan una funcionalidad equivalente a la
+ de los sistemas de navegación INS+GPS.
+ De hecho, el proceso de fusión de estos dos sensores puede implementarse
+ utilizando las técnicas utilizadas para SLAM, como filtros de partículas
+ o filtros de Kalman, y eventualmente incluir otra información sensada al
+ sistema.
+\end_layout
+
+\begin_layout Chapter
+SLAM en ambientes abiertos
+\end_layout
+
+\begin_layout Standard
+La aplicación de SLAM suele desarrollarse e investigarse en entornos cerrados,
+ planares y estructurados, por lo que su aplicación al aire libre requiere
+ de la adaptación de ciertos componentes a nuevos desafíos.
+\end_layout
+
+\begin_layout Section
+Sensado en ambientes abiertos
+\end_layout
+
+\begin_layout Standard
+La utilización de algunos sensores al aire libre resulta más complejo en
+ entornos cerrados.
+ Un ejemplo claro es el sensor Kinect de Microsoft.
+ La utilización de este sensor para SLAM en ambientes abiertos presenta
+ problemas por la presencia de abundante luz infrarroja que interfiere con
+ el mecanismo del sensor
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorRGBD"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Estructura de los ambientes abiertos
+\end_layout
+
+\begin_layout Standard
+Además, la falta de estructura de los ambientes abiertos torna más difícil
+ el reconocimiento de patrones.
+ Usualmente, los sistemas de SLAM basados en aspectos distinguibles del
+ entorno suelen buscar lineas, ángulos, paredes, etc.
+ Es decir, elementos con estructura.
+\end_layout
+
+\begin_layout Standard
+Para solucionar este problema es posible desarrollar algoritmos de detección
+ de aspectos distinguibles en entornos no estructurados
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorSalient"
+
+\end_inset
+
+.
+ Otra solución más trivial consta en colocar objetos distinguibles artificiales
+ en el ambiente en el que operará el robot
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorArtificialLaser"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Homogeneidad del ambiente
+\end_layout
+
+\begin_layout Standard
+Además de falta de estructura, los entornos abiertos, en especial en el
+ ámbito agropecuario, suelen presentar cierta monotonía.
+\end_layout
+
+\begin_layout Standard
+La falta de diversidad en el paisaje suele afectar la cantidad de objetos
+ distinguibles e identificables presentes en el entorno.
+ Esto quiere decir que suele ser difícil encontrar objetos que sean distinguible
+s de otros con tan solo observarlos.
+\end_layout
+
+\begin_layout Standard
+En consecuencia, el sistema de SLAM debe manejar un mayor grado de ambigüedad
+ y se deben tomar medidas para que esto no afecte la calidad de la solución.
+ Una solución posible es realizar la identificación de los objetos distinguibles
+ de a varios al mismo tiempo, bajando la probabilidad de falsas identificaciones
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorBailey"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Lejanía entre objetos distinguibles
+\end_layout
+
+\begin_layout Standard
+Otra consecuencia de la homogeneidad del paisaje suele ser una gran separación
+ entre objetos distinguibles.
+ 
+\end_layout
+
+\begin_layout Standard
+Si los objetos distinguibles se encuentran lejos unos de otros, algunas
+ hipótesis consideradas a la hora de desarrollar los algoritmos de SLAM
+ dejan de cumplirse
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorBailey"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Navegabilidad del suelo
+\end_layout
+
+\begin_layout Standard
+Este problema trasciende al SLAM, siendo un problema de escala mayor, un
+ problema de navegación.
+ 
+\end_layout
+
+\begin_layout Standard
+Al aplicar una solución de navegación con SLAM dentro de un edificio, la
+ navegabilidad del suelo no suele ser un problema.
+ Se asume la hipótesis de que siempre se puede navegar entre dos espacios
+ conectados por un camino sin obstáculos.
+\end_layout
+
+\begin_layout Standard
+En los entornos agrícolas, es usual tener grandes extensiones de suelo no
+ navegable, por ejemplo por la presencia de desperdicios acumulados de talas
+ o cosechas.
+ 
+\end_layout
+
+\begin_layout Standard
+Cuando se navega en un entorno agrícola se debe planificar más a largo plazo.
+ Esto se debe a que un enfoque de navegación reactiva puede llevar al robot
+ a un sitio sin salida, aún cuando no existen 
+\begin_inset Quotes eld
+\end_inset
+
+paredes
+\begin_inset Quotes erd
+\end_inset
+
+ visibles en el entorno.
+ 
+\end_layout
+
+\begin_layout Standard
+Para realizar esta planificación, el robot debe ser capaz de identificar
+ las zonas navegables del terreno distante.
+ 
+\end_layout
+
+\begin_layout Standard
+La solución de este problema suele involucrar algoritmos de aprendizaje
+ automático supervisados que combinan sensores láser y cámara para estimar
+ a distintas distancias y distinto nivel de confianza
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorTerrainClasif"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+SLAM en seis dimensiones
+\end_layout
+
+\begin_layout Standard
+Uno de los mayores desafíos de la realización de SLAM en ambientes no estructura
+dos es el incumplimiento de la hipótesis de operación en un plano.
+ Cuando se trabaja en suelos naturales, es usual encontrar irregularidades.
+ Estas irregularidades dificultan la estimación de la posición y la construcción
+ de mapas debido a que agregan tres dimensiones al problema de estimación,
+ las rotaciones del robot en torno a los ejes 
+\begin_inset Formula $x$
+\end_inset
+
+ e 
+\begin_inset Formula $y$
+\end_inset
+
+ y la posición en el eje 
+\begin_inset Formula $z$
+\end_inset
+
+.
+ En consecuencia, existen el doble de grados de libertad a considerar en
+ la estimación del estado oculto que un problema de operación en un plano.
+\end_layout
+
+\begin_layout Standard
+Adicionalmente, algunos sensores que son muy propicios para el SLAM en un
+ plano, por ejemplo los sensores láser 2d, no resultan tan útiles en estos
+ ambientes.
+ Los sensores laser 2d obtienen información de un corte planar del entorno,
+ donde la orientación de este plano depende de la orientación del sensor
+ y el robot.
+ Cuando esta orientación cambia rápidamente, se torna difícil realizar los
+ procesos de registración o scan-matching, es decir aquellos que consisten
+ en vincular un sensado y el subsiguiente para encontrar el desplazamiento
+ real realizado por el robot.
+\end_layout
+
+\begin_layout Standard
+Parte de estos problemas han sido afrontados en algoritmos de SLAM que utilizan
+ sensores laser 2d montados sobre un servomotor que mueve el sensor en torno
+ a un eje
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Outdoor6d"
+
+\end_inset
+
+.
+ Se relevó un trabajo que utiliza este enfoque en ambientes abiertos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Outdoor3dOut"
+
+\end_inset
+
+, pero los resultados no muestran la madurez de un algoritmo de SLAM en
+ ambientes estructurados.
+\end_layout
+
+\begin_layout Chapter
+Entrevista a un ingeniero agrónomo
+\end_layout
+
+\begin_layout Standard
+Como parte del trabajo de relevamiento se realizó una entrevista al ingeniero
+ agrónomo Diego Saavedra que trabaja para Central Lanera Uruguaya, una cooperati
+va de productores ovinos del Uruguay.
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye un análisis de los puntos tratados más destables
+ de la entrevista, cuya desgrabación se puede encontrar en el apéndice 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Desgrabación-de-la"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Concepto de agricultura o ganadería de precisión
+\end_layout
+
+\begin_layout Standard
+En la entrevista se expone el concepto de agricultura de precisión.
+ La idea central sería romper con la hipótesis de homogeneidad de la tierra
+ y los animales al momento de tomar decisiones.
+ 
+\end_layout
+
+\begin_layout Standard
+A modo de ejemplo se puede considerar la forestación de 100 hectáreas.
+ Muchas variables, como el método de forestación, el tipo de árbol a utilizar
+ y la cantidad de fertilizante a utilizar deben ser establecidas tomando
+ en cuenta la naturaleza del suelo a forestar.
+ Una primera aproximación de solución sería realizar mediciones del suelo
+ en un punto del campo y considerar las 100 hectáreas como homogéneas.
+ Por lo tanto, utilizar el mismo tipo de árbol, método de forestación y
+ cantidad de fertilizante en las 100 hectáreas.
+\end_layout
+
+\begin_layout Standard
+Otro método más sofisticado, el de agricultura de precisión consistiría
+ en dividir estas 100 hectáreas en parcelas de menor tamaño, estudiando
+ su composición individualmente y tomando medidas para optimizar el rendimiento
+ de la forestación de acuerdo a la naturaleza individual de cada parcela.
+\end_layout
+
+\begin_layout Standard
+Entonces, la agricultura de precisión busca romper con la hipótesis de homogenei
+dad en busca de optimizar lo más posible las técnicas utilizadas a las variacion
+es locales en un entorno.
+\end_layout
+
+\begin_layout Standard
+La ganadería de precisión resulta similar, donde se considera a cada animal
+ como un individuo diferente a los demás, adaptando la ración brindada,
+ los tratos veterinarios y otras decisiones a la naturaleza particular del
+ individuo.
+\end_layout
+
+\begin_layout Section
+Pago diferencial
+\end_layout
+
+\begin_layout Standard
+El rompimiento de la hipótesis de heterogeneidad aplica también al momento
+ de vender el individuo al mercado.
+ La detección de variación permite pagar de forma diferencial a los proveedores
+ que son capaces de producir lo que el mercado precisa, estableciendo un
+ 
+\begin_inset Quotes eld
+\end_inset
+
+círculo virtuoso
+\begin_inset Quotes erd
+\end_inset
+
+ en el que se 
+\begin_inset Quotes eld
+\end_inset
+
+agrega cada vez más valor
+\begin_inset Quotes erd
+\end_inset
+
+ al producto generado.
+\end_layout
+
+\begin_layout Section
+La robótica como un medio de obtención de información
+\end_layout
+
+\begin_layout Standard
+Muchas veces se piensa en una aplicación de robótica agropecuaria como una
+ solución que substituya al hombre en tareas complejas.
+ En este caso, puede ocurrir que el grado de madurez de la disciplina de
+ robótica no sea lo suficientemente alto como para brindar las herramientas
+ necesarias para su implementación.
+ Este caso de algunas implementaciones estudiadas en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Acorde a los conceptos presentados arriba, existen en el ámbito agropecuario
+ problemas de recolección de información de forma eficiente.
+ Estas podrían implementarse como un sistema robótico que actuara como un
+ observador pasivo, brindando de manera eficiente la información necesaria
+ para realizar agricultura y ganadería de precisión.
+\end_layout
+
+\begin_layout Standard
+De esta forma, al no tener que interactuar con animales pesados, utilizar
+ herramientas peligrosas, o realizar tareas de gran carga energética, los
+ robots implementados pueden ser de tamaño pequeño, resultando más inofensivos
+ y menos costosos.
+ Además, las tareas pueden realizarse de forma cooperativa, brindando una
+ mayor robustez antes fallas, atributo que resulta de gran importancia en
+ este sector, debido a la distancia que suele existir entre los centros
+ de servicio técnico y los lugares de aplicación
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A continuación se incluyen algunos ejemplos de posibles implementaciones
+ manejados en la entrevista.
+\end_layout
+
+\begin_layout Subsection
+Mapeo de chacras
+\end_layout
+
+\begin_layout Standard
+Recientemente se estableció una empresa en Uruguay dedicad a la actividad
+ denominada 
+\begin_inset Quotes eld
+\end_inset
+
+mapeo de chacras
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Esta actividad consiste en realizar análisis de tierra en varios puntos
+ de una chacra, para determinar las diferencias en la naturaleza de la tierra
+ en los diferentes sectores del campo.
+ Se realiza con el fin de obtener información necesaria para realizar agricultur
+a de precisión.
+\end_layout
+
+\begin_layout Standard
+Para realizar la tarea, se toman muestras de la tierra con la ayuda de un
+ dispositivo GPS, que permite establecer la relación entre la muestra y
+ la ubicación absoluta donde fue tomada.
+ Luego, las muestras son enviadas a un laboratorio, donde son analizadas
+ una a una.
+ La información resultante es utilizada para construir mapas con información
+ de composición del suelo de la chacra.
+\end_layout
+
+\begin_layout Standard
+Una posible solución robótica a este problema sería la implementación de
+ un robot que tome las muestras de manera automática, grabando para cada
+ muestra la ubicación absoluta de donde fue tomada.
+ Esta ubicación podría ser obtenida de un dispositivo GPS, un sistema de
+ SLAM o una combinación de ambos.
+\end_layout
+
+\begin_layout Subsection
+Robot localizador de animales
+\end_layout
+
+\begin_layout Standard
+Es usual en los campos grandes perder animales debido a que estos salen
+ del área delimitada donde se los deja pastando.
+ 
+\end_layout
+
+\begin_layout Standard
+Durante la entrevista se habló de un costo aproximado de 500 dolares para
+ un bovino.
+ Tomando en cuenta la reducción de costos de los sistemas computacionales
+ y robóticos en los últimos años, tal vez sería factible la implementación
+ de un sistema robótico que fuera capaz de identificar animales perdidos
+ y reportar su ubicación.
+ 
+\end_layout
+
+\begin_layout Standard
+Este sistema podría estar implementado en base a un helicóptero quad-rotor
+ como el utilizado en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OutdoorDenseRec"
+
+\end_inset
+
+ e implementar un sistema de SLAM/GPS que permitiera establecer su ubicación
+ al momento de ubicar un animal.
+ Además, debería implementar un sistema de visión que le permitiera distinguir
+ animales, con la característica opcional de distinguir un animal de manera
+ univoca con solo observarlo.
+\end_layout
+
+\begin_layout Section
+Problemas abiertos de robótica
+\end_layout
+
+\begin_layout Standard
+Se identificaron también problemas abiertos de aplicación de robótica en
+ el agro, que van más allá de la obtención de información para la práctica
+ de ganadería y agricultura de precisión.
+ A continuación se incluye una descripción de los problemas mencionados.
+\end_layout
+
+\begin_layout Subsection
+Esquilador automático
+\end_layout
+
+\begin_layout Standard
+Se señalo la falta de una máquina de esquilar robótica.
+ Se mencionó que este trabajo resulta insalubre debido a la excesiva fuerza
+ que hay que aplicar al realizarlo.
+ Además, se consideró que los costos de esquila son muy altos desde el punto
+ de vista del productor, considerando el precio final del producto obtenido
+ (la lana).
+\end_layout
+
+\begin_layout Standard
+Se mencionó que existen antecedentes de implementaciones de este tipo de
+ solución
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Cosechador y clasificador de frutales
+\end_layout
+
+\begin_layout Standard
+Se mencionó el problema de cosecha y clasificación de productos frutales.
+ 
+\end_layout
+
+\begin_layout Standard
+Se citó el ejemplo de clasificación de uvas, donde varios trabajadores deben
+ dedicarse a la tarea repetitiva de clasificar los racimos de uva acorde
+ a formas y colores.
+\end_layout
+
+\begin_layout Standard
+Por otro lado se señaló el problema de cosecha de frutas donde existe un
+ prolongado periodo de maduración, y solo deben cosecharse los frutos maduros.
+\end_layout
+
+\begin_layout Standard
+Eventualmente, el problema de clasificación y cosecha selectiva podrían
+ implementarse como soluciones robóticas.
+\end_layout
+
+\begin_layout Standard
+Debería investigarse sobre el estado del arte en este campo, ya que ambos
+ participantes desconocían su estado actual.
+\end_layout
+
+\begin_layout Standard
+Este problema podría implementarse también desde un punto de vista puramente
+ observador.
+ Un robot podría recorrer los campos tomando imágenes de los árboles frutales
+ para brindar la información al productor.
+ Eventualmente, podría realizarse un procesamiento de las imágenes para
+ brindar información más resumida.
+\end_layout
+
+\begin_layout Section
+La brecha entre el estado del arte y la situación de Uruguay
+\end_layout
+
+\begin_layout Standard
+Se discutió la razón por la cual el Uruguay se encuentra atrasado con respecto
+ al estado del arte en cuanto al estadio tecnológico de la producción agropecuar
+ia.
+\end_layout
+
+\begin_layout Standard
+Diego Saavedra descartó un posible motivo de fondos.
+ Se hablo de una equivalencia de montos de los proyectos de investigación
+ uruguayos y neozelandeses o australianos.
+ 
+\end_layout
+
+\begin_layout Standard
+Se adjudicó la brecha a la falta de innovadores desde la perspectiva presentada
+ por Arocena, donde los innovadores constituyen el vínculo entre la academia,
+ la financiación y la sociedad para generar soluciones a los problemas de
+ esta última
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Arocena2003"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Inserción de soluciones robóticas al mercado laboral
+\end_layout
+
+\begin_layout Standard
+Se trató el tema de la posible reacción de los trabajadores a la inserción
+ de soluciones robóticas al ámbito agropecuario, como por ejemplo una máquina
+ de esquilar automática.
+\end_layout
+
+\begin_layout Standard
+Se descartaron posibles problemas, tomando el punto de vista que la máquina
+ sería una herramienta que permitiría al trabajador ser más eficiente, y
+ por lo tanto cobrar más por su trabajo.
+ Se lo comparó con la relación entre una motosierra y un leñador.
+\end_layout
+
+\begin_layout Standard
+Además, se señaló que son necesarias herramientas que hagan más saludable
+ el trabajo del obrero, y este tipo de tecnologías podrían significar una
+ solución a varios problemas recurrentes de salud de los trabajadores agropecuar
+ios.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter*
+\start_of_appendix
+Desgrabación de la entrevista con un ingeniero agrónomo
+\begin_inset CommandInset label
+LatexCommand label
+name "Desgrabación-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye la desgrabación de la entrevista realizada.
+ Se marca con la letra D las intervenciones realizadas por Diego Saavedra
+ y con M las realizadas por el autor.
+\end_layout
+
+\begin_layout Standard
+En la entrevista se menciona un trabajo realizado por Juan Saavedra, referido
+ como Paco 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tipica12"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Entrevista
+\end_layout
+
+\begin_layout Standard
+M: Para arrancar a hablar, podemos discutir un poco posibles soluciones
+ robotizadas que conozcas o se te ocurran para el entorno agropecuario
+\end_layout
+
+\begin_layout Standard
+D: una aplicación que se me ocurre es la de mataderos robotizados 
+\end_layout
+
+\begin_layout Standard
+M: si, yo había leído de eso, incluso en un momento había leído que el congreso
+ de Australia como que había cortado la idea porque uno de los congresistas
+ había hecho una entrevista y era como macabro, zarpado 
+\end_layout
+
+\begin_layout Standard
+D: Ah, si? 
+\end_layout
+
+\begin_layout Standard
+M: Y si, porque es como ahora, nada más que todo automatizado, y no les
+ gustó la idea y lo habían cortado 
+\end_layout
+
+\begin_layout Standard
+D: No pero está funcionando, porque justamente un directivo nuestro estuve
+ el año pasado, funciona en la segunda parte, la parte que se llama el cuarteo,
+ después de que está la carcaza colgando.
+ Pero no, vamos a sacar la parte industrial entonces.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Si, si querés te oriento, yo tengo algunas ideas para discutir.
+ Una pregunta que a mi me tiene intrigado...
+ los tractores, por que no se manejan solos? 
+\end_layout
+
+\begin_layout Standard
+D: por que la tecnología te permitiría hacerlo? 
+\end_layout
+
+\begin_layout Standard
+M: en un principio si, lo que es automóvil sin manejar se esta desarrollando,
+ recién el año pasado y este, ya es común.
+ pero en general manejar el tractor es mucho más simple que manejar un auto
+ en una ciudad, muchas veces la tarea del tractor es ir en linea recta,
+ doblar, ir en linea recta, doblar, no? 
+\end_layout
+
+\begin_layout Standard
+D: Si, si, lo que pasa es que muchas veces la lineas rectas no son rectas.
+ 
+\end_layout
+
+\begin_layout Standard
+M: ah, hay que reaccionar a las cosas? a las piedras? 
+\end_layout
+
+\begin_layout Standard
+D: si, a las piedras, o hay veces que no hay piedras pero hay curvas de
+ nivel, que normalmente se marcan las isolineas y el tractor sigue las curvas
+ esas.
+ O no son perfectamente un damero.
+ Entonces, hay todo un desarrollo de lo que se llama agricultura de precisión
+ que combina más que robótica todo lo que es comunicación satelital con
+ análisis de suelo, y con, ahí si es robótica, de micro relieve del suelo.
+ Entonces por ejemplo es una sembradora y tienen un detector de como viene
+ el relieve y ajusta la presión en base a eso.
+ Te adelanto que mi especialidad es la producción animal y la agricultura
+ no, pero ta, soy ingeniero agrónomo y conozco, y trabajé en la agricultura.
+ 
+\end_layout
+
+\begin_layout Standard
+M: seguro que más que yo sabes, así que vos tranquilo.
+\end_layout
+
+\begin_layout Standard
+D: Pero además ha avanzado tanto, yo hace 20 años que no estoy en la parte
+ de campo.
+ Ha avanzado muchísimo, todo lo que es agricultura de precisión, va en ese
+ camino.
+ Por un lado la ubicación satelital, el mapeo de chacras satelitalmente,
+ hay una empresa en Uruguay que se está dedicando a eso, a agricultura de
+ precisión.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Sabes que tipo de GPS usan, si usan GPS diferencial con una antena local
+ o si usan un receptor pelado nomás.
+ 
+\end_layout
+
+\begin_layout Standard
+D: No, no se.
+ 
+\end_layout
+
+\begin_layout Standard
+M: El nombre de la empresa: 
+\end_layout
+
+\begin_layout Standard
+D: Te la puedo conseguir.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Te mando un mail.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Dale, mandame un mail, porque conozco un técnico que hace un año que
+ está trabajando en la empresa.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Y mapeo de la granja, que quiere decir? 
+\end_layout
+
+\begin_layout Standard
+D: Mapeo, coordenadas y análisis de suelo entonces vos tomas las decisiones
+ de las dosis de fertilizante, la profundidad del suelo y esas cosas.
+ 
+\end_layout
+
+\begin_layout Standard
+D: A ver, cuando hablamos de agricultura de precisión cual es el concepto?
+ Antes tenías una chacra que era de 100 hectáreas y vos asumías, tomabas
+ decisiones, como si las 100 hectáreas fueran homogéneas, y es exactamente
+ al revés.
+ El supuesto de base ya era erróneo.
+ Lo que hace la agricultura de precisión es ajustarse lo más que pueda al
+ microrrelieve, a la variación del suelo, el suelo cambia enormemente metro
+ a metro a veces, y entonces hay posibilidades de optimizar.
+ Probablemente lo que estaban haciendo antes era, en alguna zona, echar
+ fertilizante demás, o semilla de más, o profundidad de menos en la siembre
+ y al revés, entonces ahí hay oportunidades de optimizar.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Y eso como lo hacen, es alguien con un GPS que va midiendo el suelo?
+ 
+\end_layout
+
+\begin_layout Standard
+D: No se como lo hacen.
+ Está bueno para averiguar.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Si, porque eso sería una buena aplicación, un robot que recorriera todo
+ el campo y que hiciera el análisis.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Si, que muestreara, ahí es como una mecha que saca una muestra, y eso
+ se manda analizar.
+\end_layout
+
+\begin_layout Standard
+D: A ver, después vamos a nivel de ganadería, ahí la ganadería yo la dividiría
+ claramente en lo que es ganadería de carne y lana, extensiva, de lo que
+ es leche.
+ Aplicaciones robóticas para leche en sala de ordeñe hay muchas, y está
+ bueno.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Había incluso leído de un caso que habían inventado pila de soluciones
+ que arriaran a las vacas al lugar donde las ordeñan y habían encontrado
+ que un método mucho mejor era entrenar a las propias vacas para que vinieran.
+ Es decir, le daban de comer a determinada hora, y si venían a otra hora
+ no les daban de comer, incluso le daban refuerzos negativos, y lograban
+ que las vacas vinieran la que le tocaba a la hora que le tocaba.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Eso está bueno.
+ En realidad, esa cosa de que las vacas vayan, ta bien, puede ser una cosa,
+ pero como que, digamos, ahí yo te diría que todo lo que hay más avanzado
+ es todo lo unión de caravana con microchip y las raciones.
+ En el caso de la vaca lechera, vos podes tomar muchas directivas, podés
+ hacerla pasar por una balanza y pasa el microchip y la pesa, y ya toma
+ decisiones de loteo, o medís la cantidad de leche que está produciendo
+ la baca y en base a eso tomás una decisión de cuanta ración ponerle en
+ la batea cuando la ordeñas.
+ Vos la estás ordeñando y al mismo tiempo la estás alimentando, y la ración
+ que está comiendo y la cantidad que está comiendo la podes decidir.
+ Más que darle a todas pareja.
+ O sea, siempre el concepto es el mismo: es, hasta ahora estábamos tomando
+ decisiones en base a lotes, y el supuesto era que todo el lote es homogéneo,
+ sean animales o de superficies.
+ Y ahora el concepto es el de agricultura de precisión, ganadería de precisión.
+ Darle a cada individuo para optimizar de acuerdo a su nivel productivo,
+ sus necesidades, eso a nivel de la lechería está muy avanzado, se hace,
+ pero hay camino para avanzar y se está avanzando.
+ En Nueva Zelanda sobretodo, que es el país líder en esto, tienen salas
+ de ordeñe robotizadas.
+ 
+\end_layout
+
+\begin_layout Standard
+M: robotizadas quiere decir que nadie hace nada? 
+\end_layout
+
+\begin_layout Standard
+D: y prácticamente, muy poco, hay un operario.
+ Mira, nosotros teníamos una persona que trabaja con nosotros que tenemos
+ un tambo allá y el solo trabajaba en un tambo que ordeñaba mil vacas.
+ Cuando entró, dijo yo no puedo hacer esto, y después se dió cuenta que
+ sí, que estaba todo robotizado, todas las decisiones esas, inclusive creo
+ que las pesoneras, creo no, el trabajo principal ahí es limpiar las ubres,
+ colocar la pesonera, sacarla y sellarla, lo que se llama sellar que es
+ también otra limpieza.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Ahí es bien robótica en el sentido que la vaca nunca va a estar parada
+ en el mismo sentido, se mueve..
+ No es lo mismo que un brazo que siempre hace lo mismo.
+ 
+\end_layout
+
+\begin_layout Standard
+D: No, si, eso no es robótica, es mecánica, no? 
+\end_layout
+
+\begin_layout Standard
+M: Si.
+\end_layout
+
+\begin_layout Standard
+D: Creo que hay un montón de cosas mucho más sencillas, por ejemplo en base
+ a caravanas con chip electrónico podés tomar decisiones sorprendentes.
+ Por ejemplo, se programa muy simple, una vez que vos tenés todas las vacas
+ lecheras, el ganado caravaneado, la haces pasar por un tubo y tomás decisiones
+ en base al peso o a las caravanas, en una laptop vos podés poner "caravana
+ del 1 al 100 que vaya para tal potrero" y ahí hay un separador que ta.
+ Lo que normalmente te puede llevar una mañana.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Si, una mañana y tres personas.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Si, todo lo que sea la unión de acciones unido a una caravana con chip.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Puede ser el sistema de Paco mejorado.
+ Claro, esa idea que manejas de romper con la hipótesis de homogeneidad
+ está super buena.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Ese es el concepto central de la agricultura de precisión.
+ Cualquier cosa que vos apliques ahí, yo creo que va a estar bueno.
+ A ver, después por ejemplo.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Otra que tenés, a la hora de ir a buscar un bicho.
+ A mi me ha pasado.
+ Yo tenía una ex novia que tenía campo, y hemos salido a buscar bichos que
+ se perdieron en una crecida, tres días a caballo.
+ Sería redituable implementar un helicóptero chiquito, por ejemplo, para
+ ir a buscar bichos.
+ 
+\end_layout
+
+\begin_layout Standard
+D: No no, porque acá las decisiones las tomás en base a decisiones económicas.
+ Si la vaca vale 500 dólares...
+ 
+\end_layout
+
+\begin_layout Standard
+M: Bueno, pero el helicóptero podría valer 500 dólares también.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Ah, bueno, si es así si.
+ Pero a su vez tenés que tener una vaca con una caravana que emita una señal
+ o algo.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Bueno, en realidad la idea es otra.
+ El tema de las caravanas es una solución que enfrentaba la incapacidad
+ de la gente de distinguir una vaca visualmente, hoy en día ese tema ya
+ esta, no cumplido, pero muy cumplido.
+ Incluso arriesgaría a decir que uno podría identificar qué vaca está viendo,
+ por los patrones y eso.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Si? 
+\end_layout
+
+\begin_layout Standard
+D: Yo creo que ahí hay muchas oportunidades.
+ Ahora, robótica más fina, por ejemplo un robot que esquilara una oveja,
+ eso es la revolución.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Se intentó hacer en un momento y...
+ Lo que pasó es que en Nueva Zelanda y Australia hubo un boom en 1995, por
+ ahí, y medio como que se llegó a una desilusión porque las capacidades
+ de cómputo y de procesamiento de imágenes en aquel momento no eran tan
+ buenas.
+ Y bueno, se llegó a hacer un robot que esquilaba una oveja pero no era
+ tan performante como los locos que son una máquina viste? que te esquilan
+ con los ojos cerrados igual.
+ Pero dice que lo que si se logró fue que a partir de ese momento el precio
+ del gremio de esquiladores se mantuvo un poco porque los locos como que
+ vieron que ya no estaban solo.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Ese es un problema que se está enfrentando en todo el mundo porque el
+ costo de la esquila es...
+ Bueno, por suerte los seres humanos agregan cada vez más valor, entonces
+ el trabajo vale cada vez más, pero desde el punto de vista del productor
+ está complicado.
+ Eso sería una revolución, porque además hoy las cosas están tan tan difíciles
+ que por ejemplo desde acá sale gente todos los años que va a esquilar a
+ España.
+ Cuadrillas de gente a esquilar a España.
+ Esto marca la dificultad que hay.
+\end_layout
+
+\begin_layout Standard
+D: Después hay un área de la que yo desconozco pero te puedo dar los titulares,
+ todo lo que habla de cosecha mecánica de frutales.
+ Ahí hay un campo...
+ 
+\end_layout
+
+\begin_layout Standard
+D: Claro, para aceitunas se hace lo mismo también.
+ La cosecha del olivo es un problema en todo el mundo.
+ Ahora, yo no se que es lo que pasa con esto, con la cosecha diferenciada,
+ es decir cuando vos tenés un periodo de maduración prolongado y tenes que
+ cosechar solo las maduras.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Y eso en qué esta? Yo he visto cosechadoras de nueces que lo que hacen
+ es sacudir el árbol.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Eso es un problema super abierto que está re presente en las competencias
+ de robótica.
+ El año pasado una de las competencias de robótica de latino américa era
+ un desafío que tenías que cosechar granos de café, que eran pelotas de
+ golf que tenías que cosechar de acuerdo al grado de maduración, del color.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Ahí hay todo un área impresionante.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Bueno, una aplicación que se habla de ubicación de robots y construcción
+ de mapas es también por el tema de relacionar el producto...
+ Se habla de que si uno cosechara nueces, las cosecha del suelo con algo
+ automático, tendría que saber de qué árbol viene esa nuez, con una tag
+ RFID, porque puede haber árboles de diferente calidad e interesa mantener
+ esa trazabilidad.
+ Y bueno, ahí está el problema de que el GPS en esos ambientes empieza a
+ tener error, porque estás abajo de un árbol.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Ahí hay un capítulo gigante.
+ Yo te estoy tirando solo los titulares.
+ Hay un capítulo enorme por el problema que enfrenta la agricultura, digamos
+ la fruticultura en el mundo, que es el costo de la cosecha, que es impresionant
+e.
+ Debe haber cosas del estado del arte que yo desconozco, porque además,
+ acá en Uruguay la fruticultura está atrasadísima.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Si?
+\end_layout
+
+\begin_layout Standard
+D: Está 40 años atrasada.
+ Estamos trabajando como trabajaban en Europa hace 40 años.
+ Por lo menos.
+\end_layout
+
+\begin_layout Standard
+D: Te digo más, otra que es pos cosecha, yo me imagino que ha habido aplicacione
+s de robótica, que es toda la parte de clasificación de frutas.
+ La uva por ejemplo, vos vas a una vendimia y es una cinta en la que hay
+ 5 mujeres de cada lado sacando uvas, que eso lo podría hacer una máquina.
+ Por color, tamaño, se me ocurre.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Pasa lo mismo con la naranja, citrus y uva.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Después, a nivel de ganadería, yo creo que a nivel de ganadería.
+ Tareas, que vos dijeras posible de robotizar, la esquila, pero creo que
+ eso es como la cumbre.
+ Después hay que pensar en todo una serie de decisiones que se podrían tomar
+ en la medida que estén asociados a una caravana.
+ Porteras que se abran, acceso a una determinada comida o no.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Te voy a contar una cosa que hicieron los australianos, que es revolucionaria
+, todavía no está acá.
+ Es una pavada.
+ Uno de los problemas a nivel de las cabañas y sobre todo el mejoramiento
+ genético es que vos necesitas identificar madre e hijo.
+ A nivel de ovino, eso es complicado porque tenes mucho número y no es tan
+ sencillo como parece.
+ Entonces, estos que hicieron, caravanearon todo, y entonces las ovejas
+ cuando iban naciendo las iban caravaneando con caravana con chip, y restringían
+ el acceso al agua siempre a través de un portal que tenía un lector.
+ Y desarrollaron un software tan simple como que mide la frecuencia con
+ la que dos o más caravanas pasan juntas.
+ Después de dos semanas qué pasa? Fulano es el hijo de mengano, se acabo.
+ Y eso te permite identificar pareja madre hijo en 2000 ovejas sin ningún
+ costo.
+ Eso no está en Uruguay.
+ Es una pavada pero mirá que está muy bueno.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Por qué no está? 
+\end_layout
+
+\begin_layout Standard
+D: Porque eso lo acaban de desarrollar en Australia.
+ No hay nadie pensando.
+ El que tiene que estar pensando en eso sos tu.
+ Tenés que desarrollar, tan simple como eso.
+ Te digo más, el método ese para encontrar la maternidad es más preciso
+ que el ojo humano.
+ El método tradicional cual es, es una persona que va recorriendo y mirando
+ quien mama de quien.
+ Pero los corderos a veces maman cruzado, entonces hay errores.
+ Eso se ha identificado a través de ADN y se sabe el porcentaje de error
+ que hay.
+ El ojo humano le erra bastante por eso, se cruzan, mientras que parece
+ que el método este es mucho más exacto.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Maman cruzado pero siempre van al agua con la madre.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Claro.
+ Esos ejemplos que pueden ser para ovinos o para vacunos están muy buenos.
+ Estoy seguro que acá podemos desarrollarlo y a un costo que te permita
+ aplicarlo a nivel productivo.
+ Te estoy hablando del estado del arte en Australia, no es que se aplique
+ en todo el mundo.
+ No.
+ Y eso está ahí al alcance, nosotros averiguamos ahora caravanas electrónicas
+ y están a dolar y medio.
+ No para un productor en general, pero para una cabaña que mide la genética,
+ ahí hay oportunidades.
+\end_layout
+
+\begin_layout Standard
+M: Qué es lo que falta para que las cosas que se desarrollan en Nueva Zelanda
+ se apliquen enseguida acá? Es por plata, por falta de innovadores? 
+\end_layout
+
+\begin_layout Standard
+D: Falta de innovadores.
+ Nosotros ahora tenemos un gran proyecto acá en central lanera, que es una
+ cooperativa de productores.
+ Vamos a traer algunas cosas de Australia y Nueva Zelanda para facilitar
+ el trabajo.
+ Mecánica pero muy sencilla.
+ Que faciliten el trabajo, que no haya que estar agarrando la oveja...
+\end_layout
+
+\begin_layout Standard
+D: Y lo otro, después de ese proyecto, es que vamos a ofrecer masivamente
+ perros ovejeros entrenados.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Tenés el nombre de alguna página.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Está el border coli.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Claro, está el border coli, pero vos querés un ovejero entrenado pero
+ no existe el producto.
+ Tenés que comprar un cachorro por un lado, y ta, y entrenarlo.
+ Te digo porque nosotros todo los años rifamos un border coli entrenado
+ y no existe el producto.
+ Si sos productor y querés comprar un ovejero entrenado, tengo que comprar
+ un cachorro, y esperar 14 meses a que lo entrenen.
+ Hay un gap enorme.
+ Yo te diría que acá hay una oportunidad para gastar en tecnología.
+ O desarrollar copiando.
+ Metete en páginas de Australia o Nueva Zelanda, me parece que hay y hay.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Te averiguo algo, un proveedor de maquinaria, con sensores y alguna cosa.
+\end_layout
+
+\begin_layout Standard
+D: Aparte, cuál es la diferencia, por que ellos tienen y nosotros no.
+ Ellos tienen la facultad de ingeniería de allá tienen grupos pensando en
+ cómo armar cosas para el agro.
+ Y acá la facultad de ingeniería está a años luz.
+ Mirá que yo fui docente universitario hace años, estuve en la universidad
+ en otras partes del mundo y se como trabajan.
+\end_layout
+
+\begin_layout Standard
+M: Pero no es un tema de plata?
+\end_layout
+
+\begin_layout Standard
+D: No, y te diría que con la relación del dolar no.
+ Para nada.
+ Australia tiene un producto interno per capita casi 3 veces más que el
+ Uruguay, viven mejor, está claro.
+ Vos ves que los montos de los proyectos son equivalentes.
+ Nosotros trabajamos con un asesor que vive ne malasia y tiene un proyecto
+ en Australia, y que una vez por año viene a trabajar con nosotros y está
+ en el estado del arte en un montón de cosas, y los montos que maneja en
+ proyectos universitarios de investigación, el es investigador senior, y
+ no no.
+ El hecho de poner una persona como vos a pensar en esas cosas hace la diferenci
+a.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Bueno, yo desgraciadamente no, porque me voy a Estados Unidos en un mes.
+ 
+\end_layout
+
+\begin_layout Standard
+D: A sí, mira, a donde te vas?
+\end_layout
+
+\begin_layout Standard
+M: A Florida, Tampa.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Ah, mira, yo estuve en la Universidad de Florida.
+ Fuimos 3 o 4 días.
+ Tenían un grupo muy bueno en carne.
+ 
+\end_layout
+
+\begin_layout Standard
+M: No sabía que hacían carne allá, pensé que esa zona era medio...
+ 
+\end_layout
+
+\begin_layout Standard
+D: No no.
+ En USA hay 3 o 4 grupos fuertes en carne y uno de ellos está justamente
+ ahí.
+ Muy bueno.
+ 
+\end_layout
+
+\begin_layout Standard
+M: Agricultura hay ahí? 
+\end_layout
+
+\begin_layout Standard
+D: Ahí hay un fuerte en citrus.
+ Hay caña de azúcar porque es tropical, hay ganadería subtropical.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Bueno lo que hay que hacer es acercarse y pensar en los problemas.
+ Si vos pensás, creo que acá hay dos conceptos grandes.
+ Uno es el de la agricultura de precisión que te dije, y el otro es "cómo
+ identificar variación", visualmente, con detectores, que es lo que hizo
+ Paco.
+ Cómo, identificar variación.
+ Cuál es el problema de la agroindustria? Vos tenés un producto biológico,
+ y como tal es variable.
+ No son todos cubos ni son todos cilindros.
+ Entonces necesitas que alguien o algo identifique la variación.
+ Por qué? Para tomar decisiones para adelante en el proceso industrial y
+ para tomar decisiones para atrás en la cadena para pagar diferencialmente
+ a los productores, proveedores.
+ Ahí está el problema.
+ Ahí, con esas dos cosas.
+ 
+\end_layout
+
+\begin_layout Standard
+D: Paco, fue a hablar conmigo por lo de la lana, yo terminé diciéndole lo
+ de la carne.
+ Pero es lo mismo que el packing de naranjas o en la uva, qué estás haciendo?
+ Identificar colores.
+ El concepto ese de que vos tenes un producto biológico que es muy variable
+ que necesitas clasificarlo por las dos razones, porque para adelante en
+ el proceso industrial tenés que tomar decisiones, y por otro lado tenés
+ que pagar diferencialmente para poder crear un círculo virtuoso por donde
+ yo mando señales claras vía pago, entonces producen lo que yo necesito
+ y agrega más valor al producto.
+ Para mi eso está claro.
+ Entonces es eso, meterse donde estás tomando decisiones en conjunto y poder
+ tomar decisiones más micro y de forma de optimizar los procesos.
+ Porque además hay un encarecimiento de los insumos y hay un uso mucho más
+ intensivo de los insumos entonces hay oportunidades enormes de tomar mejores
+ decisiones.
+ Ahorrar.
+\end_layout
+
+\begin_layout Standard
+M: Una última pregunta.
+ Ponele que alguien implementara una esquiladora automática, como ves la
+ inserción de eso a un mercado uruguayo, sobre todo con respecto a la reacción
+ de los trabajadores y gremios, no se si leíste Asimov, pero lo presenta
+ como un problema de la robótica.
+ 
+\end_layout
+
+\begin_layout Standard
+D: No lo leí.
+ Pero a ver, yo no creo que haya un problema.
+ La esquila es un proceso necesario para un negocio o para una actividad,
+ que no te digo que es inhumano, pero hay un esfuerzo físico muy importante.
+ Es más, una persona no puede esquilar toda la vida.
+ Vos ves un veterano esquilador y siempre tiene problemas de cintura, cadera.
+ Y bueno, tenemos que resolver esos problemas, que van más allá, hay que
+ mirar, elevar la vista, y si, probablemente los monteadores al principio,
+ cuando se inventó la moto-sierra protestarían y querrían seguir cortando
+ con hacha, pero era inhumano.
+ Y claro, eso es el progreso.
+ Es dejar el buey por el tractor y probablemente lleguemos a un tractor
+ manejado solo.
+ Pero viste que la persona que está manejando atrás, todo, porque por suerte
+ siempre atrás hay un humano.
+ Mirá, nosotros tenemos una fábrica de lavado y peinado de lana, que son
+ 8 mil metros cuadrados y en cada turno trabajan 16 personas.
+ Vos entrás y no hay nadie.
+ Eso permite que las personas que están, ganen mejor.
+ Eso es lo que tenemos que lograr en Uruguay.
+ Lograr que cada vez tengamos gente más capacitada por un lado y a su vez
+ haya cada vez más agregado de valor y más tecnología e inversión, eso es
+ el progreso.
+ Pero además, la esquila en definitiva, por ejemplo es un decisión que toman
+ los productores.
+ Si el productor le dice a su proveedor, "mira, no, el año que viene yo
+ no voy a trabajar más con ustedes", no hay ningún compromiso.
+\end_layout
+
+\begin_layout Standard
+D: Después, hay un buen ejemplo que son los perros ovejeros, nunca vi a
+ ningún trabajador ponerse en contra de los perros ovejeros entrenados.
+ Si yo como trabajador, para trabajar con 2 mil ovejas necesito 3 personas,
+ y resulta que las 2 mil ovejas con media persona me puedo manejar, entonces
+ esa persona va a ganar más.
+ Si no, esa persona se va a ir a trabajar a otra industria.
+ Entonces el productor se queda sin la posibilidad de tener las dos mil
+ ovejas y la persona si la posibilidad de vivir mejor.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "biblio"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

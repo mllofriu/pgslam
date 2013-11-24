@@ -1,0 +1,175 @@
+\chapter{Introducción}
+
+\section{Robots Autónomos}
+
+Hoy en día, cada vez con más fuerza, la comunidad científica al igual que la industria privada avanza en la búsqueda de robots que funcionen de forma autónoma [ROOMBA],[DARPA CHALLENGE],[GOOGLE CAR]. En este sentido, uno de los principales problemas con los que tiene que se tiene que enfrentar un investigador o desarrollador de robots móviles es el problemas de la localización. 
+\\
+\\
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/oportunity.jpg}
+  \caption{Imagen del robot Oportunity de la NASA en un entorno marciano}
+  \label{fig:robotmovil}
+\end{figure}
+
+Existen muchas ocasiones en las que se conoce de antemano el entorno en el cual se moverá el robot y se le puede proporcionar un mapa del mismo. Un ejemplo podría ser un agente que siempre limpia la misma habitación. Nótese que en este caso se debe realizar la tarea previa de crear un mapa.
+\\
+\\
+Por otro lado hay situaciones en las que el agente robótico debe moverse en un entorno desconocido pero cuenta con información precisa sobre su ubicación (en adelante \emph{pose}, compuesta por \emph{x} , \emph{y} y \emph{rotación}). Para conocer su ubicación se puede utilizar visión global o gps[SUMO, FUTBOLDEROBOTS], entre otras posibilidades. En este caso, el robot deberá armár un mapa del entorno apoyandose constantemente en la información de su ubicación para tener mayores probabilidades de éxito.
+\\
+\\
+Sin embargo, existes casos, aún más complejos que los mencionados, en los que no se conoce el entorno y tampoco se tiene información sobre la ubicación exacta del robot. En este caso el robot deberá generar un mapa y mantener su ubicación en el mismo, todo a la vez. Esta tarea resulta compleja por el hecho que para poder localizarse de forma precisa se necesita un mapa y por otro lado, para poder crear un mapa es menester estar localizado en forma precisa. Esta es la tarea que estudia el SLAM, localización y armado de mapas simultaneo. Algunos ejemplos en los cuales es importante realizar SLAM son:
+
+%poner mas ejemplos
+\begin{itemize}
+	\item exploración espacial
+	\item rescate en zonas modificadas por catástrofes
+	\item robots que realizan tareas domésticas
+	\item autos dirigidos de forma autónoma
+\end{itemize}
+
+
+
+\section{El problema del SLAM}
+
+El problema del SLAM (en español: Localización y armado de mapas simultaneo) comienza cuando el robot no tiene acceso a un mapa del entorno y tampoco conoce su pose en el mismo. El robot solamente posee medidas \begin{math}z_{1:t}\end{math} obtenidas de los sensores y controles \begin{math}u_{1:t}\end{math} con los cuales puede actuar sobre el ambiente. El agente intentará obtener un mapa del entorno y simultaneamente localizarse relativo a dicho mapa[handbook].
+\\
+\\
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/irobotjapon.jpg}
+  \caption{Robot de la empresa IRobot realizando un rescate en un área de catástrofe}
+  \label{fig:irobotjapon}
+\end{figure}
+
+En la actualidad existen métodos de SLAM robustos para mapear ambientes estáticos, estructurados y de tamaño limitado. Realizar SLAM en entornos dinámicos, espacialmente grandes y desestructurados sigue siendo un problema abierto a la investigación.
+%no se a que se refiere el libro con estructurados. Supongo que habla de ambientes con paredes y cajas en lugar de
+%ambiente con piedras totalmente irregulares, pero no estoy seguro, sino lo sacamos
+
+\section{Desafíos}
+
+A continuación se presentan los principales desafíos que tiene el problema del SLAM.
+
+\subsection{Incertidumbre}
+
+Como se mencionó anteriormente, determinar la posición exacta del robot requiere conocimiento sobre la posición exacta de 
+%no se dijo nada aun de que el entorno se ve como un conjunto de caracteristicas
+las características del entorno. Por otro lado, la determinación de la posición exacta de las características del entorno requiere conocimiento de la posición exacta del agente. Dado que el agente no posee inicialmente ninguno de estos datos, y dado que la incertudimbre de su posición aumenta con su movimiento, el algoritmo de SLAM debe ser capaz de manejar cierto error en los datos que son computados.
+\\
+\\
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/navibot.jpg}
+  \caption{Imagen de un robot móvil situado en una posición inicial desconocida y en un ambiente desconocido}
+  \label{fig:slam}
+\end{figure}
+
+Esta incertidumbre debe ser manejada de forma tal que el error en las estimaciones no crezca constantemente (de manera de evitar una divergencia en la estimación de la posición del robot y las características de su entorno).
+
+\subsection{Sensores}
+
+Los sensores son limitados en lo que pueden percibir y poco precisos en sus medidas. Estas limitaciones vienen dadas por muchos factores. El rango y la resolución de un sensor está sujeto a limitaciones físicas. Un claro ejemplo son las cámaras cuya calidad de imágen es limitada. Los sensores además están sujetos a ruido estocástico, lo que perturba las medidas de formas impredecibles y hace que la información extraída sea poco confiable. Otro problema que incrementa el ruido en los sensores es el hecho de realizar medidas con el robot en movimiento, hecho que genera mayor error en las medidas de los sensores.
+\\
+\\
+\begin{figure}
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/sick.jpg}
+  \caption{Sensor laser comunmente utilizado para hacer SLAM}
+  \label{fig:sensor}
+\end{figure}
+
+Finalmente, lo sensores pueden sufrir daños, y detectar una falla de este tipo puede ser extremadamente difícil.
+
+
+
+\subsection{Controles}
+
+En la fase de exploración del SLAM (sea activo o pasivo, ver \ref{activovspasivo}) se envían ordenes de movimiento al robot, conocidos como controles. Una vez que se le envia una orden de movimiento al robot, los sensores en los motores (odometría) permiten conocer cual ha sido el movimiento que hizo el robot a partir de la orden que fue solicitada. Esta información luego se procesará para actualizar la posición del robot. El problema ocurre cuando una de las ruedas del robot queda en el aire o simplemente resbala sobre una superficie con baja adeherencia lo que implica que el robot no cambió su posición, o lo hizo pero en menor medida de la esperada, sin embargo los datos devueltos por los sensores de odometría indican que el movimiento fue completo. Esto genera un error entre la pose real del robot y su creencia de la posición.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/roomba.jpg}
+  \caption{Imagen de un robot utilizado para limpieza doméstica subiendo una alfombra, caso típico de quedar con una rueda en el aire o patinar}
+  \label{fig:roomba}
+\end{figure}
+
+\subsection{Ciclos}
+
+Cerrar ciclos quiere decir que el robot debe poder reconocer cuando pasa por un lugar que ya ha sido visitado. Realizar esta tarea con éxito se vuelve primordial en los mapas que poseen muchos cruces.
+
+\begin{figure}[!hbt]
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/loopclosure.jpg}
+  \caption{Típico escenario de pruebas donde el robot deberá tener un buen sistema para cerrar ciclos}
+  \label{fig:loop}
+\end{figure}
+
+\subsection{Asociación incorrecta}
+
+El agoritmo de SLAM debe ser lo suficientemente robusto como para no confundir dos lugares diferentes de forma que lo lleve a creer ques son el mismo. En caso de que el robot piense que dos lugares diferentes con características similares son efectivamente el mismo, cerrará un ciclo donde no lo hay y generará un mapa incorrecto del entorno lo cual puede llevar a errores catastróficos.
+
+\subsection{Capacidad de cómputo}
+
+Una gran limitación del SLAM es el procesamiento. Los algorítmos de SLAM suelen realizar tareas de procesamiento pesadas debido a la cantidad de caracterísitcas del ambiente que manejan (que suelen incrementarse con el paso del tiempo), el mapa y la estimación de la posición. Esto muchas veces hace dificil el procesamiento dentro del robot y obliga a extraer los datos sensados para ser procesados afuera.
+
+
+\section{Clasificaciones de SLAM} %esto es parte del problema o de la solucion?
+
+Los problemas de SLAM se mueven sobre muchas dimensiones diferentes. Los artículos más importantes identifican los tipos de problemas definiendo en cual de estas dimensiones trabajan. A continuación presentamos las distinciones más importantes sobre el problema del SLAM.
+
+\subsection{Full vs. Online}
+
+Desde el punto de vista probabilístico existen dos enfoques del problema del SLAM. Uno de ellos es el Online SLAM que se trata de la estimación de la posterior %(explicar q es esto)
+basado en la posición actual
+\\
+\\
+\begin{math}
+	\Pr(x_t, m \mid z_{1:t}, u_{1:t})
+\end{math}
+\\
+\\
+Donde \begin{math}x_t\end{math} es la pose en el tiempo t, m es el mapa y \begin{math}z_{1:t}\end{math} y \begin{math}u_{1:t}\end{math} son las medidas obtenidas de los sensores y los controles respectivamente. Muchos algoritmos de online SLAM son incrementales, es decir que descartan medidas anteriores una vez que fueron procesadas.
+
+En el caso del full SLAM se busca calcular la posterior sobre todas las posiciones anteriores \begin{math}x_{1:t}\end{math} en el mapa, en lugar de utilizar solamente la posición actual \begin{math}x_t\end{math}.
+\\
+\\
+\begin{math}
+	\Pr(x_{1:t}, m \mid z_{1:t}, u_{1:t})
+\end{math}
+\\
+\\
+En la práctica, realizar full SLAM es inviable.
+
+\subsection{Offline vs. Online}
+
+En el caso del SLAM online se procesa la información en el mismo robot mientras este navega en el entorno. Por otro lado, en el offline se realiza SLAM sobre un conjunto de datos que previamente fueron recuperados con algún robot, tanto de la medida de sus sensores como las medidas de odometría (movimiento).  
+
+\subsection{Topológico vs. Métrico}
+
+Algunas técnicas de armado de mapas solamente mantienen la descripción de algunas características del entorno, que caracteriza la relación entre lugares. Estos métodos son conocidos como topológicos. Un mapa topológico se define por un conjunto de lugares diferentes y otro conjutno que caracterizan las relaciones entre estos. Por otro lado, los métodos métricos proveen información métrica entre los lugares. En los últimos años los métodos topológicos han pasado de moda apesar de la amplia evidencia de que los humanos utilizan a menudo información topológica. 
+
+\subsection{Activo vs. Pasivo}\label{activovspasivo}
+
+En los algoritmos de SLAM pasivos es otra entidad quien se encarga de controlar el robot, mientras que el algoritmo pasivo es puramente observador. La gran mayoría de los algoritmos de SLAM son de este tipo. En el caso de los algoritmos activos, el robot explora de forma activa en entorno en busca de conseguir un mapa mas preciso en el menor tiempo posible. Existen técnicas hibridas donde el algoritmo de SLAM solo controla la dirección de los sensores y otra entidad se encarga de la dirección del movimiento del robot.
+
+\subsection{Estático vs. Dinámico}
+
+En el caso del SLAM estático se asume que el entorno no cambia con el tiempo a diferencia de los métodos dinámicos que sí lo hacen. La gran mayoría de la literatura asume entornos estáticos. 
+
+
+\subsection{Volumétrico vs. Basado en marcas}
+
+En SLAM volumétrico, el mapa es muestreado a una resolución que permite una reconstrucción fotográfica del entorno. En este caso el costo computacional es alto. Por otro lado, en el SLAM basado en marcas se extraen características de las medidas de los sensores de forma de armar el mapa en base a características dispersas. Las técnicas que utilizan SLAM basado en marcas suelen ser mas eficientes ya que se descarta información de los sensores. 
+
+\subsection{Correspondencia conocida vs. Desconocida}
+
+El problema de correspondencia es el problema de realacionar la identidad de marcas sensadas en el pasado con marcas sensadas actualmente. Algunos algoritmos de SLAM asumen que la correspondencia es conocida, esto implica que cuando se está midiendo una marca alguna entidad provee al núcleo del SLAM la información de que marca es la que se está midiendo. Los algoritmos que no asumen la correspondencia proveen mecanismos para estimar la correspondencia de las medidas con las marcas previamente observadas en el mapa. El problema de estimar la correspondencia es conocido como \it{problema de asociación de datos}, y es uno de los más difíciles en el SLAM.
+
+\subsection{SLAM con un solo robot vs. Multirobot}
+
+La gran parte de los problemas están definidos para un solo robot, sin embargo, recientemente el problema de trabajar con más de un robot ha ganado mucha popularidad. Los problemas para multirobots vienen de muchas maneras. En algunos casos los robots son capaces de observarse entre ellos, mientras que otros no. También se distinguen por el tipo de comunicación que utilizan. Los más realistas permiten que solamente los robots que estan más cerca se puedan comunicar entre ellos.
+
+\subsection{Manejo de mucha incertidumbre vs. poca incertidumbre}
+
+Estos algoritmos se distinguen por la cantidad de incertidumbre que pueden manejar. Los más simples solo pueden manejar poca incertidumbre en la localización. Son útiles para los casos en los cuales un camino no se intersecta a sí mismo. En cambio para los mapas los cuales tienen lugares que se pueden alcanzar de muchas maneras (ver \ref{fig:loop}) es necesario que el robot pueda manejar mucha incertidumbre en su posición. La incertidumbre puede ser disminuida si el robot puede sensar información sobre su posición de forma absoluta. Un ejemplo puede ser mediante el uso sistema de posicionamiento global (GPS).

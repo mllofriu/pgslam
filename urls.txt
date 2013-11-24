@@ -1,0 +1,4 @@
+SLAM Benchmarking
+
+http://www.heronrobots.com/EuronGEMSig/Downloads/Prague/GEMBenchForum-SLAM.pdf
+http://www-mip.onera.fr/annonces/CAR09/Jaulmes.pdf

@@ -1,0 +1,397 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 2cm
+\secnumdepth 2
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1571385475 "fede,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+
+\change_inserted -1571385475 1333057698
+El presente documeto describe la los aspectos más destacados de un sistema
+ robótico 
+\change_deleted -1571385475 1333057703
+Se elaboró un sistema robótico c
+\change_inserted -1571385475 1333057704
+c
+\change_unchanged
+apaz de realizar localización continua.
+ 
+\change_deleted -1571385475 1333057716
+El sistema toma como entrada la información de un sensor brújula instalado
+ en el robot y la información de sensado de lineas negras colocadas en el
+ ambiente de trabajo para realizar la localización.
+ Tanto el mapa describiendo el patrón de lineas negras como la posición
+ inicial son ingresadas como datos 
+\emph on
+a priori
+\emph default
+ al algoritmo
+\change_unchanged
+.
+
+\change_inserted -1571385475 1331823118
+ En el capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Introducción-a-Romina"
+
+\end_inset
+
+ se presentan las generalidades y principales componentes del sitema robótico
+ desarrollado.
+ Además se hace una breve introducción a la parametrización y los pasos
+ futuros.
+\end_layout
+
+\begin_layout Abstract
+
+\change_inserted -1571385475 1333057844
+En el capítulo 2 se introduce el diseño de la arquitectura.
+ Luego, en el capítulo 3 se exponen las principales compontentes del filtro
+ de partículas utilizado.
+\end_layout
+
+\begin_layout Abstract
+
+\change_inserted -1571385475 1331822954
+Además, 
+\change_deleted -1571385475 1331822955
+S
+\change_inserted -1571385475 1331822955
+s
+\change_unchanged
+e realizaron experimentos donde el agente robótico navega en modo 
+\change_deleted -1571385475 1333057860
+de 
+\change_unchanged
+exploración manteniendo un estimado correcto de su posición en todo momento
+ del experimento.
+
+\change_inserted -1571385475 1331823444
+ Este experimento fue realizado procurando optimzar los parámetros requeridos
+ por el sistema de localización.
+ Existe una sección exclusiva dedicada a explicar la parametrización, presentada
+ en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Parametrización"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Abstract
+
+\change_deleted -1571385475 1333057802
+Este sistema está enmarcado en el proyecto de grado pgSLAM
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamwiki"
+
+\end_inset
+
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Abstract
+
+\change_deleted -1571385475 1331822971
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+describir documento
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+addcontentsline{toc}{chapter}{
+\end_layout
+
+\end_inset
+
+Lista de Figuras
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+addcontentsline{toc}{chapter}{
+\end_layout
+
+\end_inset
+
+Lista de Algoritmos
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList algorithm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+plain
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "elrobot.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "laarquitectura.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "lasparticulas.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "experimentos.lyx"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%Now display headings: headings / fancy / ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "biblio"
+options "bibtotoc,plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

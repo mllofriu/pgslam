@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/particulas
+END
+InfoCanvas.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/121/MinaFinderPC/src/pc/particulas/InfoCanvas.java
+END
+PartLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/particulas/PartLog.java
+END
+MapCanvas.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinderPC/src/pc/particulas/MapCanvas.java
+END
+CamMeassureUpdater.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/particulas/CamMeassureUpdater.java
+END
+HeadingCanvas.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/particulas/HeadingCanvas.java
+END
+WayPointProxy.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/ens/svn/repos/pgslam/!svn/ver/189/MinaFinderPC/src/pc/particulas/WayPointProxy.java
+END
+CmdProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/particulas/CmdProvider.java
+END
+GraphicUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/23/MinaFinderPC/src/pc/particulas/GraphicUtils.java
+END
+ParticleFrame.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/ens/svn/repos/pgslam/!svn/ver/194/MinaFinderPC/src/pc/particulas/ParticleFrame.java
+END
+SocketCliCom.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/particulas/SocketCliCom.java
+END
+MarcasMapCanvas.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/particulas/MarcasMapCanvas.java
+END
+SocketSrvCom.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/particulas/SocketSrvCom.java
+END
+MontyFox.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinderPC/src/pc/particulas/MontyFox.java
+END

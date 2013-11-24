@@ -1,0 +1,1067 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author -1571385475 "fede,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Introducción
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Introducción-a-Romina"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+En este capítulo se describen características relevantes del sistema robótico
+ que se desarrolló.
+ Al inicio del
+\change_deleted -1785986595 1331672857
+ 
+\change_unchanged
+ capítulo se presentan los objetivos y una descripción general del sistema.
+ Luego, se explica
+\change_inserted -1571385475 1331823547
+n
+\change_unchanged
+ los aspectos de sof
+\change_inserted -1571385475 1333061568
+t
+\change_unchanged
+ware y hardware del diseño del sistema.
+ Finalmente se describe el diseño mecánico y los 
+\change_inserted -1571385475 1333061603
+trabajos futuros sobre la plataforma robótica
+\change_deleted -1571385475 1333061593
+próximos pasos a seguir
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Section
+Objetivos del sistema desarrollado
+\end_layout
+
+\begin_layout Standard
+Este sistema se desarrolla con el objetivo principal de realizar un robot
+ móvil sobre el cual implementar
+\change_inserted -1571385475 1333061658
+ y
+\change_deleted -1571385475 1331823605
+ y
+\change_unchanged
+ probar un filtro de partículas en un ambiente conocido (el mapa del entorno
+ es conocido)
+\change_deleted -1571385475 1331823587
+.
+
+\change_unchanged
+ y que sirva de base para implementar Localización y Armado de Mapas 
+\change_inserted -1571385475 1333061633
+en 
+\change_unchanged
+Simultaneo (SLAM)
+\change_inserted -1571385475 1333061674
+,
+\change_unchanged
+ posteriormente.
+ Existen además objetivos secundarios que se presentan a continuación:
+\end_layout
+
+\begin_layout Itemize
+disminuír los riesgos técnicos
+\end_layout
+
+\begin_layout Itemize
+interiorizarse en el funcionamiento de los filtros de partículas
+\end_layout
+
+\begin_layout Itemize
+optimizar el filtro de partículas para un número de fijo de partículas
+\end_layout
+
+\begin_layout Itemize
+realizar una versión que sirva como base para el sitema final
+\end_layout
+
+\begin_layout Section
+Descripción del sistema robótico
+\end_layout
+
+\begin_layout Standard
+Se desarrolló un sistema robótico móvil que posee la capacidad de realizar
+ localización continua utilizando un filtro de partículas.
+ El agente robótico es capaz de navegar de forma autónoma
+\change_inserted -1785986595 1331673303
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Ambicioso
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+ en un escenario conocido que se describirá en detalles en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Escenario"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Es importante destacar que el sistema de navegación y el de localización
+ son módulos independientes pudiendo ser intercambiados según interés del
+ usuario.
+ Además
+\change_inserted -1571385475 1333061698
+,
+\change_unchanged
+ en el software 
+\change_deleted -1571385475 1333061711
+que fue diseñado e implemetado 
+\change_unchanged
+conviven otros subsistemas como sistema de sensado, sistema de control y
+ sistema de comunicación.
+
+\change_deleted -1571385475 1333061728
+ Todo e
+\change_inserted -1571385475 1333061731
+ E
+\change_unchanged
+sto se explica 
+\change_inserted -1571385475 1333061757
+con mayor profundidad 
+\change_deleted -1571385475 1333061739
+ampliamente 
+\change_unchanged
+en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Diseño-del-software"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+El robot posee una geometría similar a la de un 
+\begin_inset Quotes eld
+\end_inset
+
+carrito
+\begin_inset Quotes erd
+\end_inset
+
+ (más detalles en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Diseño-mecánico"
+
+\end_inset
+
+) sobre el cual están montados dos sensores de luz, una brújula y dos placas
+ de entrada/salida que forman parte del Kit LEGO NXT.
+ El sistema operativo de las placas de entrada/salida y entorno de desarrollo
+ que se utiliza es leJOS versión 0.9.1
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lejos"
+
+\end_inset
+
+.
+ Las características del hardware que se utiliza se ven en detalle en la
+ sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Hardware"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+La mecánica del robot fue desarrollada con piezas 
+\change_inserted -1571385475 1333061802
+LEGO
+\change_deleted -1571385475 1333061804
+lego 
+\change_inserted -1571385475 1333061805
+ 
+\change_unchanged
+del kit mencionado
+\change_inserted -1571385475 1333061826
+ y se detalla en
+\change_deleted -1571385475 1333061830
+, esto de desarrolla en
+\change_unchanged
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Diseño-mecánico"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Diseño del software
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Diseño-del-software"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El software diseñado está compuesto por varios
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+cuántos?|Yo dejaría varios, no me convence pero podemos entregar asi y decirilo
+ para en el docu final
+\end_layout
+
+\end_inset
+
+ subsistemas que cumplen diferentes tareas.
+ Estos sistemas se 
+\change_deleted -1571385475 1333061848
+puntualizan
+\change_inserted -1571385475 1333061849
+listan
+\change_unchanged
+ a continuación:
+\end_layout
+
+\begin_layout Itemize
+exploración
+\end_layout
+
+\begin_layout Itemize
+localización
+\end_layout
+
+\begin_layout Itemize
+comunicación
+\end_layout
+
+\begin_layout Itemize
+monitoreo
+\end_layout
+
+\begin_layout Standard
+En el sistema es posible encontrar 
+\change_deleted -1571385475 1333062116
+encontrar 
+\change_unchanged
+un subsistema de exploración que 
+\change_deleted -1571385475 1333062126
+presenta
+\change_inserted -1571385475 1333062127
+basado en
+\change_unchanged
+ un algoritmo 
+\change_deleted -1571385475 1333062168
+aleatorio
+\change_inserted -1571385475 1333062170
+randómico
+\change_unchanged
+ 
+\change_deleted -1571385475 1333062181
+que busca
+\change_inserted -1571385475 1333062183
+procurando lograr
+\change_unchanged
+ una recorrida completa del escenario.
+ Por otro lado existe una componente de localización cuyo núcleo es un filtro
+ de partículas.
+ Además, existe un sistema de comunicación que encapsula 
+\change_inserted -1571385475 1333062235
+el 
+\change_deleted -1571385475 1333062218
+un 
+\change_unchanged
+protocolo
+\change_inserted -1571385475 1333062297
+ de comunicación 
+\change_deleted -1571385475 1333062297
+, 
+\change_unchanged
+que permite el intercambio de mensajes entre las unidades de procesamiento
+ del robot y también entre 
+\change_deleted -1571385475 1331823835
+las 
+\change_unchanged
+estas y la pc.
+ Finalmente el sistema posee un módulo de monitoreo que permite depurar
+ la actividad de todas las componentes mencionadas anteriormente.
+\end_layout
+
+\begin_layout Standard
+La arquitectura fue pensada 
+\change_deleted -1571385475 1333062348
+de forma de que exista el mínimo
+\change_inserted -1571385475 1333062350
+para reducir el
+\change_unchanged
+ acoplamiento entre las componentes de software
+\change_deleted -1571385475 1333062379
+ mencionadas
+\change_unchanged
+.
+ Esto facilita
+\change_inserted -1571385475 1333062468
+ la experimentación al hacer posible el intercambio de módulos
+\change_deleted -1571385475 1333062475
+ el intercambio de los módulos facilitando los experimentos
+\change_unchanged
+.
+ En particular, se procuró desacoplar los sistemas dedicados a la localización
+ del sistema de 
+\change_inserted -1571385475 1333062497
+los 
+\change_unchanged
+comportamientos (exploración).
+ Esto se detallará más adelante en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Desacoplamiento"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La arquitectura del sistema y el detalle de cada uno de estos módulos se
+ presenta en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Arquitectura"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Diseño mecánico
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Diseño-mecánico"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El robot se diseñó con forma de 
+\begin_inset Quotes eld
+\end_inset
+
+carrito
+\begin_inset Quotes erd
+\end_inset
+
+ para darle movilidad.
+ Éste fue diseñado con piezas del Kit LEGO NXT
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mindstorm"
+
+\end_inset
+
+.
+ El mismo tiene un eje sobre el cual estan montados dos motores y a cada
+ uno de estos está acoplada una rueda.
+ Existe una tercera rueda que forma el tercer vértice del triángulo formado
+ por las ruedas y oficia 
+\change_inserted -1571385475 1333062992
+exclusivamente 
+\change_unchanged
+como punto de apoyo
+\change_deleted -1571385475 1333063042
+.
+ Esta rueda
+\change_unchanged
+ 
+\change_inserted -1571385475 1333063054
+(
+\change_unchanged
+no está acoplada a ningún motor
+\change_inserted -1571385475 1333063057
+)
+\change_unchanged
+ 
+\change_inserted -1571385475 1333063072
+permitiendo 
+\change_deleted -1571385475 1333063076
+sino que es una rueda 
+\begin_inset Quotes eld
+\end_inset
+
+loca
+\begin_inset Quotes erd
+\end_inset
+
+ que permite 
+\change_unchanged
+que el agente robótico pueda rotar
+\change_inserted -1571385475 1331823912
+ libremente
+\change_unchanged
+.
+ 
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:dismecanico-1"
+
+\end_inset
+
+ se pueden observar
+\change_inserted -1571385475 1331823930
+ 
+\change_unchanged
+cuatro vistas del robot desde diferentes ángulos.
+ En ellas se observa la disposición de 
+\change_inserted -1571385475 1333063203
+los dos 
+\begin_inset Quotes eld
+\end_inset
+
+ladrillos
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_inserted -1571385475 1333063242
+Placas de control según las convenciónes de LEGO
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+.
+\change_deleted -1571385475 1333063173
+las dos placas de control que forman parte del robot.
+ Siguiendo las convenciones de Lego NXT, llamaremos a estas placas 
+\begin_inset Quotes eld
+\end_inset
+
+ladrillos
+\begin_inset Quotes erd
+\end_inset
+
+.
+
+\change_unchanged
+ Éstos fueron colocad
+\change_inserted -1571385475 1331823946
+o
+\change_deleted -1571385475 1331823945
+a
+\change_unchanged
+s lo más cerca del eje posible de forma de llevar el centro de masa hacia
+ el eje de las ruedas motorizadas.
+ Además se dejó un espacio en la parte frontal
+\change_inserted -1571385475 1333063325
+ previendo la ubicación de una cámara para desarrollos futuros (SLAM basado
+ en líneas y marcas).
+
+\change_deleted -1571385475 1333063333
+ para poder ubicar la cámara que se utilizará como sensor para desarrollos
+ futuros.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+En el frente del robot se colocaron sensores de luz para poder detectar
+ las lineas negras que delimitan el escenario (ver sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Escenario"
+
+\end_inset
+
+).
+ Además se colocó una brújula en la parte superior del robot que permite
+ sensar la orientación del robot con respecto al campo magnético de la tierra.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robot1.png
+	lyxscale 10
+	width 40text%
+	height 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista lateral donde se pueden ver amb
+\change_inserted -1571385475 1333063609
+o
+\change_deleted -1571385475 1333063608
+a
+\change_unchanged
+s ladrillos (2 y 3), un sensor de luz (4) y la brújula(1).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robot2.png
+	lyxscale 10
+	width 40text%
+	height 40text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista frontal del robot donde se destacan los sensores de luz (1 y 2) y
+ uno de los ladrillos (3).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robot3.png
+	lyxscale 10
+	width 40text%
+	height 40text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista panorámica del robot.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robot4.png
+	lyxscale 10
+	width 40text%
+	height 40text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista inferior del robot donde se observa 
+\change_inserted -1571385475 1333063650
+la disposición triangular de
+\change_deleted -1571385475 1333063651
+el triángulo formado entre 
+\change_inserted -1571385475 1333063654
+ 
+\change_unchanged
+las ruedas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vistas del diseño mecánico del robot.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Hardware
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Hardware"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El robot cuenta con siete componentes de 
+\change_inserted -1571385475 1333063359
+electrónicos
+\change_deleted -1571385475 1333063356
+hardware
+\change_unchanged
+ obtenid
+\change_deleted -1571385475 1333063366
+a
+\change_inserted -1571385475 1333063368
+o
+\change_unchanged
+s del Kit LEGO NXT 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mindstorm"
+
+\end_inset
+
+.
+ Estas son:
+\end_layout
+
+\begin_layout Itemize
+2 ladrillos
+\end_layout
+
+\begin_layout Itemize
+2 sensores de luz
+\end_layout
+
+\begin_layout Itemize
+1 brújula
+\end_layout
+
+\begin_layout Itemize
+2 motores
+\end_layout
+
+\begin_layout Standard
+Cada uno de los ladrillos que forman parte del robot cuentan con las siguientes
+ características 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lego"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+32-bit ARM7 microprocesador
+\end_layout
+
+\begin_layout Itemize
+soporte para comunicación via bluetooth
+\end_layout
+
+\begin_layout Itemize
+4 puert
+\change_deleted -1571385475 1331824006
+a
+\change_inserted -1571385475 1331824006
+o
+\change_unchanged
+s de entrada
+\end_layout
+
+\begin_layout Itemize
+3 puertos de salida
+\end_layout
+
+\begin_layout Standard
+La brújula 
+\change_deleted -1571385475 1333063480
+es un sensor capaz de medir el campo magnético de la tierra y calcular el
+ ángulo que tiene con respecto a uno de los polos.
+ La misma 
+\change_unchanged
+está ubicada en la parte más alta del robot a una distancia de 17 cm.
+ de los bricks de forma de que el campo magnético generado por estos no
+ interfieran es las medidas.
+ 
+\end_layout
+
+\begin_layout Standard
+Además el robot cuenta con dos sensores de 
+\change_deleted -1571385475 1333063449
+escala de grises
+\change_inserted -1571385475 1333063449
+luz
+\change_unchanged
+ que se utilizan para sensar las lineas negras que delimitan el escenario
+ blanco sobre el cual se mueve el robot.
+ Este 
+\change_inserted -1571385475 1333063460
+tipo de 
+\change_unchanged
+sensor permite distinguir la intensidad de la luz 
+\change_inserted -1571385475 1333063520
+reflejada por una superficie 
+\change_unchanged
+permitiendo 
+\change_inserted -1571385475 1333063544
+distinguir las líneas negras 
+\change_deleted -1571385475 1333063550
+sensar tonalidades de grises 
+\change_unchanged
+del suelo del entorno..
+\end_layout
+
+\begin_layout Subsection
+Escenario
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Escenario"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El escenario
+\change_inserted -1571385475 1333063759
+,
+\change_unchanged
+ como se aprecia en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:escenario"
+
+\end_inset
+
+
+\change_inserted -1571385475 1333063777
+, 
+\change_deleted -1571385475 1333063777
+ 
+\change_unchanged
+está conformado por un rectángulo de 2m x 1,2m.
+ Todo el escenario es de color blanco y posee cinta adhesiva negra marca
+ 3M delimitando el perímetro.
+ Dentro del rectángulo se encuentran dos pequeños rectángulos de 0.020m x
+ 0.045m también delimitados con cinta negra en su perímetro.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\lang english
+\begin_inset Graphics
+	filename images/escenario.png
+	lyxscale 20
+	scale 10
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang english
+\begin_inset Caption
+
+\begin_layout Plain Layout
+El la figura de la izquierda se observa una foto panóramica del escenacio.
+ En la de la derecha tenemos una perspectiva frontal de la misma
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:escenario"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_deleted -1571385475 1333063821
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1571385475 1333063938
+Parametrización
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1571385475 1333063938
+Se hizo un estudio de la parametrización en el cual se busco 
+\begin_inset Quotes eld
+\end_inset
+
+mejorar
+\begin_inset Quotes erd
+\end_inset
+
+ los parámetros de forma de optimizar el sistema minimizando el error en
+ la localización.
+ Los parámetros tratados, el método de ralizar la optimización y la métrica
+ elegida para calcular el error se detalla en el capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Parametrización"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Section
+Próximos pasos
+\end_layout
+
+\begin_layout Standard
+Se implementó un sistema de localización basado en un filtro de partículas
+ cuya arquitectura es distribuída.
+ El sistema fue concebido pensando en la extensibilidad.
+ Esto se logra gracias a las diferentes componentes de software que pueden
+ ser sustituidas como el modelo de sensado o el modelo de movimiento y la
+ facilidad con la que se pueden agregar nuevas componentes.
+\end_layout
+
+\begin_layout Standard
+Por lo mencionado antes, el sistema podrá pasar de un sistema de localización
+ a uno de SLAM.
+ El próximo paso que se dará con este sistema es sustituir el modelo de
+ sensado por uno que utilice el sensor cámara.
+ Además se incluirá una componente que mantenga y gestione un mapa del escenario.
+\end_layout
+
+\begin_layout Standard
+En cuanto a la optimización se seguirá profundizando en el uso de algorítmos
+ evolutivos sobre el sitema final y se estudiará la posibilidad de optimizar
+ con el método 
+\begin_inset Quotes eld
+\end_inset
+
+Varible Neighborhood Search
+\begin_inset Quotes erd
+\end_inset
+
+ (VNS).
+\end_layout
+
+\end_body
+\end_document

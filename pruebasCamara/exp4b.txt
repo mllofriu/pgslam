@@ -1,0 +1,57 @@
+Found NXT: roMINAClasif 00165305C1A6
+leJOS NXJ> Connected to roMINAClasif
+Connected to roMINAClasif 00165305C1A6
+Console open
+Comenzando a capturar...
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|Cubo en (12,90,3,11) de color 0|
+Cubo en (12,15,29,11) de color 2|Cubo en (12,0,13,15) de color 2|Cubo en (116,59,9,11) de color 0|Cubo en (116,70,8,11) de color 1|Cubo en (116,50,8,11) de color 2|

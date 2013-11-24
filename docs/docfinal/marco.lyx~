@@ -1,0 +1,4331 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\begin_preamble
+\interfootnotelinepenalty=10000
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Fundamentos teóricos de la soluciones de SLAM
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Marco-Teórico"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+El problema del SLAM
+\change_inserted -1785986595 1341412481
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "SLAM:"
+description "Localización y construcción de mapas en simultáneo, del inglés Simultaneous Localization And Mapping."
+
+\end_inset
+
+
+\change_unchanged
+ puede dividirse en varios módulos o subproblemas, siendo cada uno de estos
+ un campo de investigación en sí.
+ Este capítulo se organiza de la siguiente manera: se dedica una sección
+ a la revisión de los dos principales enfoques de la solución del SLAM,
+ bioinspirados y probabilísticos.
+ Luego se dedican las siguientes secciones a la discusión de los subproblemas
+ más importantes
+\change_inserted -1785986595 1341501065
+,
+\change_unchanged
+ y sus soluciones más comunes
+\change_inserted -1785986595 1341501067
+,
+\change_unchanged
+ en los sistemas SLAM probabilísticos relevados.
+\end_layout
+
+\begin_layout Section
+Enfoques
+\end_layout
+
+\begin_layout Standard
+Existen dos grandes enfoques para la solución del problema de
+\change_inserted 2090252569 1339722421
+l
+\change_unchanged
+ SLAM, bioinspirados y probabilísticos.
+ Estos enfoques difieren principalmente en la forma en que procesan la informaci
+ón de entrada, de modo de encontrar una buena estimación de la ubicación
+ del robot y mapa del entorno.
+\end_layout
+
+\begin_layout Standard
+Actualmente, el enfoque probabilístico domina el campo y ha logrado implementaci
+ones que escalan a ambientes grandes y complejos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ratslam2"
+
+\end_inset
+
+.
+ Sin embargo, la gran capacidad de navegar que poseen mamíferos como las
+ ratas, simios y seres humanos han motivado la investigación y desarrollo
+ de sistemas que imitan los mecanismos biológicos de navegación de estos
+ animales.
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341333054
+A continuación se incluye una descripción del enfoque bioinspirado seguida
+ de una del probabilístico.
+ En este documento se hace incapié en el enfoque probabilístico, debido
+ a que fue el utilizado en la solución implementada.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+Bioinspirados
+\end_layout
+
+\begin_layout Standard
+Desde la década de 1970, el entendimiento del funcionamiento del cerebro
+ mamífero vinculado a las actividades de navegación y confección de mapas
+ del entorno ha ido aumentando.
+ Sin embargo, descubrimientos a partir del año 2005 en adelante han cambiado
+ la forma en que se conciben los mecanismos mentales utilizados por los
+ mamíferos para estas actividades.
+ Estos descubrimientos corresponden al hallazgo de células especializadas
+ en las actividades de navegación
+\change_inserted -1785986595 1341412596
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Navegación:"
+description "Disciplina de la robótica que incluye la localización, la construcción de mapas, la planificación de movimientos y la selección de objetivos."
+
+\end_inset
+
+
+\change_unchanged
+ y reconocimiento del entorno, principalmente ubicadas en el 
+\change_deleted 2090252569 1341381261
+hipotálamo
+\change_inserted 2090252569 1341381262
+hipocampo
+\change_deleted 2090252569 1341381267
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Hipotálamo:"
+description "Región del encéfalo situada en la base cerebral, unida a la hipófisis por un tallo nervioso y en la que residen centros importantes de la vida vegetativa."
+
+\end_inset
+
+
+\change_unchanged
+.
+ Estas células evidencian la existencia de una representación interna del
+ entorno.
+\end_layout
+
+\begin_layout Standard
+Los sistemas de SLAM bioinspirados buscan reproducir en modelos computacionales
+ los circuitos neuronales que dan sustento a esta representación espacial
+ del cerebro.
+\change_inserted -1785986595 1341333051
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341333051
+Para una descripción más detallada del enfoque bioinspirado pueden consultarse
+ documentos anteriores del proyecto
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamEsArt"
+
+\end_inset
+
+.
+\change_deleted -1785986595 1341272533
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341272529
+No se entra en detalle del tema ya que el mismo fue desarrollado en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamEsArt"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Subsection
+SLAM Probabilísticos
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:SLAM-Probabilísticos"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341272545
+Como se comentó en la introducción, e
+\change_inserted -1785986595 1341272545
+E
+\change_unchanged
+n el contexto del SLAM existen diversas fuentes de incertidumbre, es decir
+\change_inserted 2090252569 1339723793
+,
+\change_unchanged
+ factores que incrementan la dificultad de estimar la ubicación y armar
+ un mapa del entorno correcto.
+ Algunos de estos factores son:
+\end_layout
+
+\begin_layout Itemize
+Ruido en la información sensada
+\end_layout
+
+\begin_layout Itemize
+Imprecisión en el desplazamiento
+\end_layout
+
+\begin_layout Itemize
+Simetrías en el entorno
+\change_deleted 2090252569 1339723860
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Observabilidad parcial
+\change_deleted 2090252569 1339723862
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted -1785986595 1341272580
+Dinamismo del entorno
+\change_deleted -1785986595 1341272576
+Entorno dinámico
+\change_deleted 2090252569 1339723864
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+En pos de adaptarse a esta incertidumbre, gran parte de las soluciones de
+\change_inserted 2090252569 1339724023
+l
+\change_unchanged
+ SLAM plantean la estimación de la posición del robot y el mapa del entorno
+ como una distribución de probabilidad.
+\end_layout
+
+\begin_layout Standard
+Estos métodos se concentran en encontrar la distribución de probabilidad
+ de la posición del robot y del mapa del entorno a través del tiempo.
+ Para ilustrar este concepto de estimación como una distribución de probabilidad
+, resulta conveniente analizar la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Thrun1"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339724119
+ 
+\change_unchanged
+.
+ En esta figura se puede observar un robot que navega en un entorno unidimension
+al con tres puertas como únicos objetos distinguibles.
+ En la parte inferior se despliega la estimación de la posición del robot
+ como una distribución de probabilidad, en este caso una distribución gaussiana,
+ donde se le asigna a cada intervalo del eje 
+\begin_inset Formula $x$
+\end_inset
+
+ una probabilidad 
+\change_deleted -1785986595 1341466386
+de 
+\change_unchanged
+que el robot se encuentre en dicho intervalo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/thrun1.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Un agente se mueve en un entorno con tres objetos distinguibles, las puertas.
+ La estimación de su ubicación se representa
+\change_inserted -1785986595 1341333079
+da
+\change_unchanged
+ como una distribución de probabilidad
+\change_inserted -1785986595 1341333085
+,
+\change_unchanged
+ como la graficada en la parte inferior
+\change_inserted -1785986595 1341333091
+ de la imágen
+\change_unchanged
+.
+
+\change_deleted -1785986595 1341333104
+ Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Thrun1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341333106
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+\change_inserted -1785986595 1341333106
+Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+Luego, se definen tres variables estocásticas involucradas en el modelo
+ de SLAM probabilístico, que se explican a continuación.
+\end_layout
+
+\begin_layout Subsubsection
+Variables
+\end_layout
+
+\begin_layout Paragraph
+Estado oculto
+\change_inserted -1785986595 1341412745
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Estado oculto:"
+description "Variables a estimar que no pueden ser sensadas directamente. En SLAM estas son las referentes a la posición del robot y el mapa."
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+La variable 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ modela el valor a estimar en el instante de tiempo 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Para el caso del SLAM, esta variable puede representar la posición del
+ robot, el mapa, o ambos.
+ En ocasiones, esta variable se separa en la posición del robot 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ y el mapa 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+, en otras 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ involucra 
+\change_deleted 2090252569 1339724552
+a 
+\change_unchanged
+ambos conceptos
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+quedo como repetido lo de que involucra ambos conceptos
+\end_layout
+
+\end_inset
+
+.
+ Esta variable suele recibir el nombre de 
+\begin_inset Quotes eld
+\end_inset
+
+estado oculto
+\begin_inset Quotes erd
+\end_inset
+
+ debido a que su valor no es directamente observable (no puede ser directamente
+ sensada) y, por eso, debe estimarse en función de las restantes variables
+ observables.
+\end_layout
+
+\begin_layout Paragraph
+Observación
+\end_layout
+
+\begin_layout Standard
+La variable 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ modela la observación realizada en el instante 
+\begin_inset Formula $i.$
+\end_inset
+
+ Esta observación puede constar de una medida, un conjunto de medidas o
+ una observación de alto nivel de abstracción, como puede ser 
+\begin_inset Quotes eld
+\end_inset
+
+el objeto distinguible 1 está a 3 metros de distancia y a 30 grados hacia
+ la izquierda
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Movimiento
+\end_layout
+
+\begin_layout Standard
+La variable 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ modela la información del movimiento realizado desde el instante 
+\begin_inset Formula $i-1$
+\end_inset
+
+ al instante 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Algunos ejemplos son los comando enviados al robot, como la velocidad (lineal
+ o angular) del robot, la velocidad enviada a cada motor individualmente,
+ o la distancia a recorrer por el robot.
+ Estos comandos brindan información preliminar sobre el movimiento efectivamente
+ realizado por el robot.
+\end_layout
+
+\begin_layout Standard
+Otra fuente de información que es modelada utilizando esta variable es la
+ información de sensores 
+\change_deleted -1785986595 1341272637
+intros
+\change_inserted -1785986595 1341272640
+propiose
+\change_unchanged
+p
+\change_deleted -1785986595 1341272643
+ec
+\change_unchanged
+tivos como encoders
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Encoders:"
+description "Sensores que permiten conocer la posición del eje de un motor"
+
+\end_inset
+
+ o sensores de inercia
+\change_inserted -1785986595 1341412819
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Sensor de inercia:"
+description "Senor que permite conocer la aceleración instantánea del robot."
+
+\end_inset
+
+
+\change_unchanged
+, que brindan nociones del movimiento propio al robot, ya que estos sensores
+ también proporcionan información preliminar sobre el movimiento propio
+ del robot.
+ 
+\end_layout
+
+\begin_layout Standard
+Si bien en este caso, la información proviene de sensores, suele diferenciarse
+ de las medidas 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ debido a que las últimas refieren a medidas sobre el entorno y no a información
+ introspectiva.
+ En general, cuando se hable de información sensada, se estará haciendo
+ referencia al sensado del entorno 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Esta variable recibe varios nombres en la literatura, como por ejemplo informaci
+ón de controles o información de odometría
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Odometría:"
+description "La odometría se basa en poder obtener el desplazamiento realizado por la rueda asociada a un motor a partir de la medición de la vueltas realizada por el mismo\\\\"
+
+\end_inset
+
+.
+ En este documento se utilizarán
+\change_inserted -1785986595 1341272656
+ ambas
+\change_unchanged
+ indistintamente.
+\end_layout
+
+\begin_layout Paragraph
+El tiempo
+\end_layout
+
+\begin_layout Standard
+Todas las variables estocásticas toman sus valores en diferentes instantes
+ de tiempo.
+ Se considera la variable adicional de tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+, que suele tomarse como un conjunto discreto de instantes, que suelen coincidir
+ con los instantes en los que el robot recibe información de odometría
+\change_inserted 2090252569 1339722131
+ 
+\change_unchanged
+o sensado.
+ Los subíndices en las variables estocásticas 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ y 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ corresponden al instante de tiempo al que están asociadas estas variables.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Formulación del problema
+\end_layout
+
+\begin_layout Standard
+Tomando en cuenta las variables arriba definidas, la distribución de probabilida
+d a estimar para solucionar el problema de
+\change_inserted 2090252569 1339729919
+l
+\change_unchanged
+ SLAM puede formularse como:
+\begin_inset Formula 
+\[
+p(x_{1:t}|z_{1:t},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, la distribución de probabilidad de estado 
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+ (
+\begin_inset Formula $x_{1}$
+\end_inset
+
+..
+\begin_inset Formula $x_{t}$
+\end_inset
+
+) que se adapta mejor a las observaciones 
+\begin_inset Formula $z_{1:t}$
+\end_inset
+
+ y controles 
+\begin_inset Formula $u_{1:t}.$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Alternativamente se puede encontrar en la literatura esta probabilidad represent
+ada como 
+\begin_inset Formula 
+\[
+bel(x_{1:t}|z_{1:t},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+para hacer énfasis en el hecho
+\change_deleted -1785986595 1341466379
+ de
+\change_unchanged
+ que es la creencia (
+\emph on
+belief
+\emph default
+) del robot sobre el estado del sistema.
+ Se utilizan en este texto ambas notaciones indiferentemente.
+\end_layout
+
+\begin_layout Standard
+En conclusión, resolver el problema de SLAM implica estimar la distribución
+ de probabilidad para la variable que representa el estado del sistema 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ en cada instante de tiempo discreto del 
+\begin_inset Formula $1$
+\end_inset
+
+ al 
+\begin_inset Formula $t$
+\end_inset
+
+, es decir la variable 
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Redes de Bayes
+\end_layout
+
+\begin_layout Standard
+Para realizar la estimación de 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ se modela a esta variable de acuerdo a la red bayesiana
+\change_inserted -1785986595 1341412930
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Red bayesiana:"
+description "Grafo correspondiente a variables estocásticas y su relación de dependencia. Puede representarse gráficamente."
+
+\end_inset
+
+
+\change_unchanged
+ incluida en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:La-red-bayesiana-1"
+
+\end_inset
+
+.
+ En esta red se observa la relación de dependencia entre las variables involucra
+das en el problema de SLAM, donde una flecha de una variable 
+\begin_inset Formula $A$
+\end_inset
+
+ a una 
+\begin_inset Formula $B$
+\end_inset
+
+ indica que la primera incide en la segunda, es decir que 
+\begin_inset Formula $p(B|A)$
+\end_inset
+
+ y 
+\begin_inset Formula $p(B)$
+\end_inset
+
+ no son necesariamente iguales (
+\begin_inset Formula $A$
+\end_inset
+
+ y 
+\begin_inset Formula $B$
+\end_inset
+
+ no son independientes).
+ Las variables del estado 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ afectan solamente a la observación correspondiente 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ y al estado siguiente 
+\begin_inset Formula $x_{i+1}$
+\end_inset
+
+.
+ Los controles 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ afectan solamente al estado correspondiente 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Finalmente, como es coherente, todas las observaciones 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ están influenciadas también por el mapa real del entorno 
+\begin_inset Formula $m.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341333599
+Una conclusión interesante que se desprende de aplicar el teorema de la
+ manta de Markov a este modelo
+\change_inserted -1785986595 1341333971
+Las flechas de dependencia entre variables puede verse como un flujo de
+ información.
+ El valor que toma una variable precedente afecta al posible valor que toma
+ la subsiguiente, y de esta forma la información de esta variable es propagada
+ por la red.
+ Si se observa la estructura de la red de la figura
+\change_unchanged
+ 
+\change_inserted -1785986595 1341334007
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:La-red-bayesiana-1"
+
+\end_inset
+
+, puede observarse que toda la información de variables del pasado (
+\begin_inset Formula $u_{1:i-1},$
+\end_inset
+
+ 
+\begin_inset Formula $z_{1:i-1},$
+\end_inset
+
+ 
+\begin_inset Formula $x_{1:i-1}$
+\end_inset
+
+) afecta a las variables del futuro (
+\begin_inset Formula $u_{i+1:t},$
+\end_inset
+
+ 
+\begin_inset Formula $z_{i+1:t},$
+\end_inset
+
+ 
+\begin_inset Formula $x_{i+1:t}$
+\end_inset
+
+), solo a través de la estimación del estado en el presente 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Si el valor de 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ es conocido, la información del pasado pierde relevancia, pues no afecta
+ al posible valor que puede tomar esta variable, porque el mismo está ya
+ determinado (no hay especulación).
+\change_deleted -1785986595 1341333863
+es que dado el valor de una de las variables de estado 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, todas las variables correspondientes al pasado (
+\begin_inset Formula $u_{1:i-1},$
+\end_inset
+
+ 
+\begin_inset Formula $z_{1:i-1},$
+\end_inset
+
+ 
+\begin_inset Formula $x_{1:i-1}$
+\end_inset
+
+) son independientes de las variables en el futuro (
+\begin_inset Formula $u_{i+1:t},$
+\end_inset
+
+ 
+\begin_inset Formula $z_{i+1:t},$
+\end_inset
+
+ 
+\begin_inset Formula $x_{i+1:t}$
+\end_inset
+
+).
+
+\change_unchanged
+ 
+\change_deleted -1785986595 1341333922
+En particular,
+\change_inserted -1785986595 1341333923
+Esto
+\change_unchanged
+ implica que observaciones 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ y controles 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ anteriores a este instante no afectan el estado del sistema en instantes
+ posteriores, conocido el estado del sistema 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Esto es llamado 
+\begin_inset Quotes eld
+\end_inset
+
+Asunción de Markov
+\begin_inset Quotes erd
+\end_inset
+
+ (Markov Assumption) en la literatura y puede verse violada por algunos
+ factores en la práctica
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+, por ejemplo por componentes no modelados 
+\change_deleted -1785986595 1341272863
+en
+\change_inserted -1785986595 1341333845
+correspondientes a
+\change_unchanged
+ la dinámica del sistema a modelar 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Al existir componentes dinámicos no modelados (p.
+ e.
+ personas) la independencia
+\change_inserted -1785986595 1341333845
+ condicional
+\change_unchanged
+ entre medidas 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ deja de cumplirse
+\change_inserted -1785986595 1341334115
+, debido a que el sensado de una persona en un momento 
+\begin_inset Formula $i-1$
+\end_inset
+
+ implica que es probable que se sense nuevamente la persona en el instante
+ 
+\begin_inset Formula $i$
+\end_inset
+
+, aún cuando el estado 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ es conocido, porque este no modela la persona sensada.
+\change_deleted -1785986595 1341334032
+.
+
+\change_unchanged
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted 2090252569 1339735874
+También se infiere otro hecho interesante 
+\change_deleted 2090252569 1339735837
+D
+\change_inserted 2090252569 1339735837
+d
+\change_unchanged
+e la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:La-red-bayesiana-1"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339735853
+ también se infiere otro hecho interesante
+\change_unchanged
+.
+ Existe un vínculo que relaciona las medidas 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+, a través del tiempo.
+ Este vínculo se realiza a través de la trayectoria del robot, es decir
+ 
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+.
+ En la práctica, esto implica que las diferentes partes del mapa sensadas
+ se van correlacionando por medio de la trayectoria del robot.
+ Esta correlación torna computacionalmente más costosa la aplicación del
+ algoritmo, debido a que es necesario actualizar todo el mapa luego de realizar
+ cambios en una localidad.
+ Sin embargo, esta correlación es, de hecho, lo que permite que la estimación
+ del mapa converja,
+\change_inserted 2090252569 1339736547
+ 
+\change_unchanged
+es decir que su incertidumbre disminuya por debajo de un valor definido,
+ a pesar de la incertidumbre en la trayectoria.
+ Esto se debe a que la correlación hace que la incertidumbre sobre la distancia
+ relativa entre partes del mapa disminuya
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SLAMReviewI"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Filtros de Bayes
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Filtros-de-Bayes"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se verá más adelante en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Procesamiento-de-la"
+
+\end_inset
+
+, algunas soluciones de
+\change_inserted 2090252569 1339736945
+l
+\change_unchanged
+ SLAM se basan en el procesamiento dato a dato de la información.
+ Este procesamiento tiene como marco teórico los 
+\change_deleted 2090252569 1339737623
+f
+\change_inserted 2090252569 1339737625
+F
+\change_unchanged
+iltros
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341273108
+El término de filtro tiene sus orígenes 
+\change_deleted -1785986595 1341273109
+De
+\change_inserted -1785986595 1341273110
+en
+\change_unchanged
+ la literatura del procesamiento de señales con ruido
+\change_deleted -1785986595 1341502131
+ es que viene el término de filtro
+\change_unchanged
+.
+ Estas herramientas intentan solucionar el problema de estimar una señal
+ original x(t)
+\change_inserted -1785986595 1341273155
+, en línea,
+\change_unchanged
+ cuando sólo es posible observar 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(t)=x(t)+r(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+donde r(t) es una señal de ruido no conocida.
+ Muchas soluciones a este problema buscan encontrar el x*(t) óptimo tal
+ de maximizar la probabilidad
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $p(x(t)|y(0)\ldots y(h))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ de Bayes
+\change_inserted -1785986595 1341413070
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Filtro de Bayes:"
+description "Conjunto de relaciones matemáticas que permiten resolver la estimación de un estado oculto de manera recursiva, procesando la información en línea."
+
+\end_inset
+
+
+\change_unchanged
+, por lo que resulta pertinente explicar este tema.
+\end_layout
+
+\begin_layout Standard
+Los 
+\change_deleted 2090252569 1339737674
+f
+\change_inserted 2090252569 1339737675
+F
+\change_unchanged
+iltros de Bayes son algoritmos genéricos que permiten estimar el estado
+ del sistema oculto 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ en función del estado anterior 
+\begin_inset Formula $x_{t-1}$
+\end_inset
+
+, en este caso tomando la información de sensado 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ y odometría 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ más recientes.
+\end_layout
+
+\begin_layout Standard
+Para explicar estos algoritmos conviene extender la notación 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $bel(x_{1:t}|z_{1:t},u_{1:t})$
+\end_inset
+
+,
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ agregando un nuevo término:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\overline{bel}(x_{1:t}|z_{1:t-1},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+que designa la creencia del estado del sistema incluyendo solo la información
+ de odometría en el tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+ y no la de sensado.
+\end_layout
+
+\begin_layout Standard
+Mediante manipulación matemática, 
+\change_deleted -1785986595 1341273207
+en la que no entraremos en detalle
+\change_inserted -1785986595 1341273222
+cuyo desarrollo puede consultarse en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+
+\change_unchanged
+, es posible llegar a una definición recursiva de 
+\begin_inset Formula $bel$
+\end_inset
+
+ en función de 
+\begin_inset Formula $\overline{bel}$
+\end_inset
+
+ y viceversa:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\overline{bel}(x_{t})=\int p(x_{t}|u_{t},x_{t-1}).bel(x_{t-1})dx_{t-1}\label{eq:belover}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+bel(x_{t})=\eta p(z_{t}|x_{t})\overline{bel}(x_{t})\label{eq:bel}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De las ecuaciones 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:belover"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:bel"
+
+\end_inset
+
+ puede deducirse que es posible obtener la distribución de probabilidad
+ del estado en el tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+ (
+\begin_inset Formula $bel(x_{t})$
+\end_inset
+
+) a partir del estado en el tiempo 
+\begin_inset Formula $t-1$
+\end_inset
+
+(
+\begin_inset Formula $bel(x_{t-1})$
+\end_inset
+
+) utilizando como paso intermedio el cálculo de 
+\begin_inset Formula $\overline{bel}(x_{t})$
+\end_inset
+
+.
+ Esto resulta interesante pues permite mantener una distribución de probabilidad
+ de estado oculto, procesando la información de sensado y odometría de a
+ una a la vez.
+\end_layout
+
+\begin_layout Standard
+El problema vinculado a la utilización de los 
+\change_deleted 2090252569 1339737683
+f
+\change_inserted 2090252569 1339737683
+F
+\change_unchanged
+iltros de Bayes como solución de SLAM radica en que las operaciones de integraci
+ón en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:belover"
+
+\end_inset
+
+ y multiplicación en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:bel"
+
+\end_inset
+
+ no son fácilmente resolubles.
+ Se profundizará más en este punto en las subsecciones 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Filtros-de-Kalman2"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Partículas"
+
+\end_inset
+
+, ya que los 
+\change_deleted 2090252569 1339737640
+f
+\change_inserted 2090252569 1339737640
+F
+\change_unchanged
+iltros de Bayes son el marco teórico que sostiene lo allí presentado.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/bayes.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+La red bayesiana que modela el problema de estimación probabilística del
+ SLAM.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:La-red-bayesiana-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+En gris 
+\change_inserted -1785986595 1341422933
+oscuro 
+\change_unchanged
+se muestran las variables ocultas a estimar, compuestas por la posición
+ 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ y el mapa 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Los círculos 
+\change_deleted -1785986595 1341422936
+celestes 
+\change_inserted -1785986595 1341422938
+en gris claro 
+\change_unchanged
+corresponden a las variables cuyo valor puede ser observado.
+ La figura ha sido extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:4135858"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Representación del mapa
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Representación-del-mapa"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Un algoritmo de SLAM puede llevar una representación o mapa de su ambiente
+ de diversas maneras.
+ Cada uno de estos tipos de mapas tienen sus ventajas y desventajas asociadas.
+ Al momento de elegir una representación de mapa a implementar, se deben
+ tener en cuenta las siguientes preguntas:
+\end_layout
+
+\begin_layout Itemize
+¿Es necesario mantener en el mapa nociones métricas?
+\end_layout
+
+\begin_layout Itemize
+¿Cuál es el uso que se le dará al mapa?
+\end_layout
+
+\begin_layout Itemize
+¿El entorno es dinámico?
+\end_layout
+
+\begin_layout Itemize
+¿De qué sensores se dispone?
+\end_layout
+
+\begin_layout Itemize
+¿De cuánto poder de cómputo se dispone?
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted 2090252569 1339738478
+Se desarrolla, 
+\change_deleted 2090252569 1339738480
+D
+\change_inserted 2090252569 1339738480
+d
+\change_unchanged
+e las representaciones relevadas, solamente 
+\change_deleted 2090252569 1339738484
+desarrollaremos aquí 
+\change_unchanged
+la representación de mapa basada en marcas, ya que fue la utilizada en la
+ solución implementada.
+\end_layout
+
+\begin_layout Subsection
+Mapa basado en marcas
+\end_layout
+
+\begin_layout Standard
+Una representación ampliamente utilizada en los sistemas relevados es la
+ de un mapa compuesto por un conjunto de marcas
+\change_inserted -1785986595 1341413203
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Marca:"
+description "Objeto distinguible en el entorno. Son utilizadas en la navegación como objetos de referencia."
+
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "2DI-SLSJF,cekfSLAM,EKFMonoSLAM,iSAM,slom,robotvision,TreeMap"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Una marca es una o más características
+\change_deleted -1785986595 1341273683
+ 
+\change_inserted -1785986595 1341273685
+ de interés 
+\change_unchanged
+perceptualmente distinguibles
+\change_deleted -1785986595 1341273680
+ de interés
+\change_unchanged
+, ubicadas en un objeto o un lugar de interés 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La mayoría de los sistemas basados en marcas usan una cámara como sensor
+ principal.
+ Sin embargo pueden distinguirse marcas utilizando otros tipos de sensores.
+ Por ejemplo
+\change_inserted 2090252569 1339739166
+,
+\change_unchanged
+ con múltiples medidas de un sonar o un sensor láser es posible identificar
+ esquinas, puertas, columnas y ventanas que pueden servir como marcas.
+ Se relevó, incluso, un sistema
+\begin_inset CommandInset citation
+LatexCommand cite
+key "treesslam"
+
+\end_inset
+
+ que utiliza las medidas de un sensor láser para obtener perfiles de los
+ árboles presentes en el entorno y utilizarlos como marcas.
+\end_layout
+
+\begin_layout Standard
+Un mapa de marcas consta de un conjunto de coordenadas que indican la posición
+ de cada marca en el entorno de trabajo.
+ 
+\end_layout
+
+\begin_layout Standard
+Los mapas de marcas no contienen información detallada o volumétrica
+\change_inserted -1785986595 1341413325
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Volumétrico:"
+description "Representación del entorno que lo modela como un conjunto denso de puntos o celdas."
+
+\end_inset
+
+
+\change_unchanged
+ del entorno.
+ Esto hace que la representación sea compacta.
+ Por otro lado, debido a esta falta de información, no es posible realizar
+ tareas de planificación de 
+\change_deleted -1785986595 1341334199
+caminos
+\change_inserted -1785986595 1341334200
+movimientos
+\change_unchanged
+ utilizando este tipo de mapas.
+\end_layout
+
+\begin_layout Standard
+Las marcas pueden ser perfectamente identificables, es decir que es posible
+ saber de cuál marca se trata con tan solo observa
+\change_inserted 2090252569 1339722087
+r
+\change_unchanged
+la.
+ También existen sistemas donde esta correspondencia no puede ser determinada
+ con seguridad.
+ En los casos en los que las marcas no son perfectamente distinguibles,
+ el algoritmo que utilice este mapa deberá tomar en cuenta esta fuente de
+ incertidumbre.
+\end_layout
+
+\begin_layout Standard
+En el contexto del SLAM, los mapas de marcas suelen representarse, en vez
+ de con un conjunto de coordenadas, con las distribuciones de probabilidad
+ de la ubicación de cada marca.
+ De esta forma es posible representar la incertidumbre en la posición de
+ las marcas, que puede ser actualizada a medida que se navega por el entorno.
+ Tomando como ejemplo el sistema implementado, para cada marca se almacenan
+ los dos parámetros de una gaussiana correspondiente, la media
+\change_inserted -1785986595 1341413453
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Media:"
+description "Parámetro de una distribución de probabilidad correspondiente al valor esperado. "
+
+\end_inset
+
+
+\change_unchanged
+ 
+\begin_inset Formula $\mu$
+\end_inset
+
+ y la varianza
+\change_inserted -1785986595 1341413482
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Varianza:"
+description "Parámetro de una distribución de probabilidad que puede ser interpretado como una medida de la dispersión de la distribución. "
+
+\end_inset
+
+
+\change_unchanged
+ 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+.
+ Esto puede representarse gráficamente, para el caso de un entorno de trabajo
+ de dos dimensiones, como un conjunto de 
+\change_deleted -1785986595 1341273712
+óvalos
+\change_inserted -1785986595 1341273713
+elipses
+\change_unchanged
+, donde el centro indica la media de la gaussiana y los ejes los vectores
+ propios de su matriz de covarianza
+\change_inserted -1785986595 1341413587
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Covarianza:"
+description "Matriz que contiene la covarianza entre los elementos de un vector, uno a uno."
+
+\end_inset
+
+
+\change_unchanged
+, ver
+\change_inserted 2090252569 1339739483
+ figura
+\change_unchanged
+ 
+\change_deleted 2090252569 1339739486
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:Marcas"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339739496
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Marcas"
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/marcas.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Representación gráfica de un conjunto de marcas.
+ Cada marca es representada por una elipse.
+ La linea marca la trayectoria del robot.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Marcas"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Sensado
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Sensado"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cuando un robot sensa el ambiente, recibe información del entorno.
+ Tanto la actualización del mapa como la localización del robot requieren
+ relacionar la información sensada con el mapa actual.
+ Para esto, se definen distribuciones de probabilidad de lo sensado en función
+ de cierta configuración del entorno, o cierto mapa, y la posición del robot.
+ Estas distribuciones de probabilidad llevan el nombre de 
+\emph on
+modelo de sensado
+\change_inserted -1785986595 1341414150
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Modelo de sensado:"
+description "Distribución de probabilidad que vincula el estado oculto (posición y mapa) con la información a sensar. Establece la probabilidad de sensar una medida z en función de la posición del robot y el mapa."
+
+\end_inset
+
+
+\change_unchanged
+
+\emph default
+ y pueden escribirse como
+\change_inserted -1785986595 1341502429
+:
+\change_deleted -1785986595 1341502428
+,
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(z_{i}|x_{i},m)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La representación de estos modelos como distribuciones de probabilidad permite
+ 
+\change_deleted -1785986595 1341334226
+modelar
+\change_inserted -1785986595 1341334228
+contemplar
+\change_unchanged
+ las fuentes de ruido que hacen que el sensor no sea un instrumento completament
+e fiable.
+ De esta manera, los posibles errores cometidos por el sensor son modelados
+ naturalmente en la solución del SLAM, tomándolos como parte de la incertidumbre
+ a manejar en el proceso de estimación del estado del sistema 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Resulta importante recalcar que 
+\change_deleted -1785986595 1341273734
+este
+\change_inserted -1785986595 1341273734
+el
+\change_unchanged
+ modelo de sensado 
+\change_deleted -1785986595 1341273745
+es fijo
+\change_inserted -1785986595 1341273746
+se fija
+\change_unchanged
+ para un sistema de SLAM dado y forma parte de su 
+\change_deleted -1785986595 1341282127
+parametrización
+\change_inserted -1785986595 1341282128
+calibración
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+Naturalmente, el modelo de sensado dependerá del sensor y representación
+ del mapa utilizado.
+ A continuación 
+\change_deleted -1785986595 1341273756
+describiremos
+\change_inserted -1785986595 1341273758
+se describe
+\change_unchanged
+ uno de los modelos relevados, que fue el utilizado en el prototipo final.
+ Se pueden encontrar otros modelos en el documento de
+\change_inserted -1785986595 1341273773
+ relevamiento del
+\change_deleted -1785986595 1341273767
+l
+\change_unchanged
+ estado del arte
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamEsArt"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+
+\emph on
+Pinhole Model
+\change_inserted -1785986595 1341413673
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Pinhole Model:"
+description "Modelo de cámara que permite relacionar la distancia a un objeto y sus tamaños reales y de imágen."
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Este modelo es utilizado por las soluciones de SLAM que utilizan cámaras
+ para la extracción de marcas (ver 
+\change_deleted 2090252569 1339740025
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Representación-del-mapa"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339740041
+sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Representación-del-mapa"
+
+\end_inset
+
+
+\change_unchanged
+).
+ Este modelo 
+\change_inserted 2090252569 1341381718
+se basa en el el funcionamiento básico de una 
+\change_deleted 2090252569 1341381722
+considera a la 
+\change_unchanged
+cámara
+\change_inserted 2090252569 1341381768
+ tradicional, 
+\change_deleted 2090252569 1341381726
+ como 
+\change_unchanged
+una caja con un orificio diminuto por donde entra la luz que es interpretada
+ como una imagen, ver
+\change_inserted 2090252569 1339740093
+ figura
+\change_unchanged
+ 
+\change_deleted 2090252569 1339740095
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:Modelo-de-la"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339740102
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Modelo-de-la"
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+El modelo Pinhole permite relacionar parámetros de la imagen proyectada
+ y parámetros intrínsecos de la cámara con las medidas y posición de los
+ objetos observados.
+ Por ejemplo, realizando un análisis geométrico basado en triángulos homomórfico
+s
+\change_deleted 2090252569 1339722043
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+mepa que no dá pa definir triángulos homomorficos
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+ es posible derivar la relación:
+\begin_inset Formula 
+\[
+d/D=f/Z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde 
+\begin_inset Formula $d$
+\end_inset
+
+ corresponde al tamaño del objeto en la imagen, 
+\begin_inset Formula $D$
+\end_inset
+
+ al tamaño real, 
+\begin_inset Formula $f$
+\end_inset
+
+ a la distancia entre el orificio y el plano de proyección (este parámetro
+ es conocido como 
+\emph on
+focal lenght
+\emph default
+) y 
+\begin_inset Formula $Z$
+\end_inset
+
+ es la distancia al objeto, ver
+\change_inserted 2090252569 1339740190
+ figura 
+\change_deleted 2090252569 1339740192
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:Modelo-de-la"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339740197
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Modelo-de-la"
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+También permite inferir el ángulo relativo de una marca con respecto al
+ robot, aplicando derivaciones similares, basándose en la hipótesis
+\change_deleted -1785986595 1341466356
+ de
+\change_unchanged
+ que la cámara consta de un orificio pequeño y un plano de proyección.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/pinhole.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Modelo de la cámara 
+\emph on
+pinhole
+\emph default
+ con los parámetros f, Z, d y D asociados.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Modelo-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este modelo es utilizado ampliamente por su simplicidad, aún siendo un modelo
+ básico.
+ Algunas implementaciones agregan a este modelo la noción de distorsión
+ causada por los lentes
+\begin_inset CommandInset citation
+LatexCommand cite
+key "EKFMonoSLAM"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Movimiento
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Movimiento"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para mantener un estimado de la ubicación del robot es importante mantener
+ una noción del movimiento propio del robot.
+ Como se observó anteriormente, el movimiento del robot no es un proceso
+ determinista, debido a que, por ejemplo, si las ruedas resbalan sobre el
+ suelo, el robot se desplazará menos de lo 
+\change_deleted 2090252569 1341381933
+planificado
+\change_inserted 2090252569 1341381935
+esperado
+\change_unchanged
+.
+ Por esto, el modelado del movimiento propio del robot se realiza, al igual
+ que en los modelos de sensado, con distribuciones de probabilidad.
+ Se define el 
+\emph on
+modelo de movimiento
+\change_inserted -1785986595 1341414218
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Modelo de movimiento:"
+description "Distribución de probabilidad que vincula el estado oculto (posición y mapa) en un instante con el siguiente, tomando en cuenta la última información de movimiento propioceptivo disponible."
+
+\end_inset
+
+
+\change_unchanged
+
+\emph default
+ o modelo de transición como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(x_{t}|x_{t-1},u_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, la probabilidad 
+\change_deleted -1785986595 1341466362
+de 
+\change_unchanged
+que el sistema se encuentre en determinado estado 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+, dado que se encontraba en el estado 
+\begin_inset Formula $x_{t-1}$
+\end_inset
+
+ y aplica los controles 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+.
+ 
+\change_inserted -1785986595 1341282047
+Es importante recordar que la variable 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ puede modelar la posición del robot únicamente, o la posición del robot
+ y el mapa conjuntamente.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Este modelo de transición también modelará como cambia el mapa a través
+ del tiempo, incluso modelando la evolución de la posición de objetos dinámicos
+ en el ambiente.
+ Sin embargo, la mayoría de las implementaciones relevadas consideran el
+ ambiente estático y su modelo de transición se remite a la porción de 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ relacionada con la posición del robot.
+\end_layout
+
+\begin_layout Standard
+Resulta importante recalcar que 
+\change_deleted -1785986595 1341282070
+este
+\change_inserted -1785986595 1341282070
+el
+\change_unchanged
+ modelo de movimiento 
+\change_inserted -1785986595 1341282087
+se
+\change_deleted -1785986595 1341282087
+es
+\change_unchanged
+ fij
+\change_inserted -1785986595 1341282089
+a
+\change_deleted -1785986595 1341282089
+o
+\change_unchanged
+ para un sistema de SLAM dado y forma parte de su 
+\change_deleted -1785986595 1341282112
+parametrización
+\change_inserted -1785986595 1341414269
+calibración
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Calibración:"
+description "Determinación de un conjunto de valores adecuados de parámetros de un sistema para que funcione como se espera."
+
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una descripción del modelo de movimiento denominado
+ 
+\emph on
+modelo de odometría
+\change_inserted -1785986595 1341414332
+
+\emph default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Modelo de odometría:"
+description "Modelo de movimiento que se basa en información de odometría para estimar el movimiento, descomponiendolo en una traslación y dos rotaciónes."
+
+\end_inset
+
+
+\change_unchanged
+, utilizado en la implementación final.
+ Se puede encontrar más información al respecto en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamEsArt"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Modelo de odometría
+\end_layout
+
+\begin_layout Standard
+Este modelo plantea tomar los datos de odometría para calcular el movimiento
+ inmediatamente anterior del robot.
+ Los datos de odometría suelen obtenerse de la integración de la información
+ de los 
+\emph on
+encoders
+\emph default
+ del robot, sin embargo, es posible obtenerla de otras fuentes como:
+\end_layout
+
+\begin_layout Itemize
+Análisis de imágenes consecutivas para detectar cambios que permitan estimar
+ el movimiento propio
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RatSlam"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339740516
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Técnicas de 
+\emph on
+scanmatching
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Scanmatching:"
+description "Refiere a una técnica que consta en encontrar una posición, en un mapa dado, que maximice la verosimilitud de los datos sensados, utilizando normalmente técnicas de hill-climbing"
+
+\end_inset
+
+
+\change_deleted -1785986595 1339387348
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_deleted -1785986595 1339387344
+
+\size normal
+\emph on
+Scanmatching
+\emph default
+ refiere a una técnica que consta en encontrar una posición, en un mapa
+ dado, que maximice la verosimilitud de los datos sensados, utilizando normalmen
+te técnicas de 
+\emph on
+hill-climbing
+\emph default
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\emph default
+ que permiten estimar el movimiento propio respecto a un mapa local
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gmapping,Montemerlo02fastslam:a"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339740518
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Integración de datos provenientes de sensores de inercia
+\change_deleted 2090252569 1339740521
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Este modelo descompone el movimiento realizado en tres componentes (ver
+\change_inserted 2090252569 1339741447
+ figura 
+\change_deleted 2090252569 1339741449
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:OdomModel"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339741456
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:OdomModel"
+
+\end_inset
+
+
+\change_unchanged
+):
+\end_layout
+
+\begin_layout Itemize
+Una rotación inicial de ángulo 
+\begin_inset Formula $\delta_{rot1}$
+\end_inset
+
+
+\change_deleted 2090252569 1339740523
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Una traslación de largo 
+\begin_inset Formula $\delta_{tras}$
+\end_inset
+
+
+\change_deleted 2090252569 1339740524
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Una rotación final de ángulo 
+\begin_inset Formula $\delta_{rot2}$
+\end_inset
+
+
+\change_deleted 2090252569 1339740524
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/descomposicion.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+La descomposición del movimiento en tres
+\change_inserted 2090252569 1339741512
+ submovimientos
+\change_unchanged
+.
+ 
+\change_deleted -1785986595 1341282217
+Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:OdomModel"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1785986595 1341282220
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\change_inserted -1785986595 1341282220
+Imagen extraída de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para representar las estocasticidad del movimiento real del robot, se le
+ agregan a este modelo tres variables que permiten contemplar un posible
+ error en el modelo:
+\end_layout
+
+\begin_layout Itemize
+Una variable 
+\begin_inset Formula $\hat{\delta_{rot1}}$
+\end_inset
+
+ que contempla un error en la primera rotación
+\change_deleted 2090252569 1339740527
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Una  variable 
+\begin_inset Formula $\hat{\delta_{tras}}$
+\end_inset
+
+ que contempla un error en la traslación
+\change_deleted 2090252569 1339740528
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Una  variable 
+\begin_inset Formula $\hat{\delta_{rot2}}$
+\end_inset
+
+ que contempla un error en la rotación final
+\change_deleted 2090252569 1339740529
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Luego, si tomamos como ejemplo el submovimiento de traslación, este será
+ modelado como un movimiento de magnitud lineal 
+\begin_inset Formula $\delta_{tras}+\hat{\delta_{tras}}$
+\end_inset
+
+, donde 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $\delta_{tras}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang spanish
+ es el movimiento reportado y 
+\begin_inset Formula $\hat{\delta_{tras}}$
+\end_inset
+
+ es el error cometido, que es desconocido.
+\end_layout
+
+\begin_layout Section
+Procesamiento de la información
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Procesamiento-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El procesamiento de la información es el proceso central en un algoritmo
+ de SLAM.
+ Este procesamiento es el que convierte la información sensorial y de odometría
+ entrante en un estimado de la posición del robot y el mapa del entorno.
+\end_layout
+
+\begin_layout Subsection
+Taxonomías del procesamiento de información de SLAM
+\end_layout
+
+\begin_layout Standard
+Existen diversas taxonomías para clasificar a este módulo de SLAM, a continuació
+n se detallan algunas de ellas.
+\end_layout
+
+\begin_layout Subsubsection
+Full vs.
+ Online
+\end_layout
+
+\begin_layout Standard
+Existen dos problemas diferentes a resolver en SLAM.
+ El primero consiste en estimar la trayectoria y mapa más verosímil dado
+ un conjunto de observaciones 
+\begin_inset Formula $z_{1:t}$
+\end_inset
+
+ y un conjunto de controles 
+\begin_inset Formula $u_{1:t}$
+\end_inset
+
+.
+ Este problema es conocido como Full SLAM
+\change_inserted -1785986595 1341413770
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Full SLAM:"
+description "Problema de SLAM que consta en determinar la posición y mapa a lo largo del tiempo tomando en cuenta toda la información disponible al momento."
+
+\end_inset
+
+
+\change_unchanged
+ y puede formularse como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(x_{1:t}|z_{1:t},u_{1:t})\label{eq:full}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otro planteo del SLAM probabilista propone procesar la información entrante
+ una a una, hallando la posición más verosímil en cada instante.
+ Este problema es conocido como Online SLAM
+\change_inserted -1785986595 1341413821
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Online SLAM:"
+description "Problema de SLAM que consta en determinar la última posición del robot y mapa, utilizando la posición y mapa anteriores y la última información disponible."
+
+\end_inset
+
+
+\change_unchanged
+ y puede formularse como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(x_{t}|z_{t},u_{t},x_{t-1})\label{eq:online}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Debido a la similitud del problema de Online SLAM con el problema de filtros
+ de información, algunas soluciones al problema de SLAM toman el nombre
+ de filtros (p.e.
+ 
+\change_deleted 2090252569 1339737694
+f
+\change_inserted 2090252569 1339737694
+F
+\change_unchanged
+iltros de Kalman
+\change_inserted -1785986595 1341413889
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Filtro de Kalman:"
+description "Filtro bayesiano que considera que todas las variables relacionadas siguen una distribución gaussiana."
+
+\end_inset
+
+
+\change_unchanged
+, 
+\change_deleted 2090252569 1339741904
+f
+\change_inserted 2090252569 1339741905
+F
+\change_unchanged
+iltros de 
+\change_deleted 2090252569 1339741907
+p
+\change_inserted 2090252569 1339741908
+P
+\change_unchanged
+artículas
+\change_inserted -1785986595 1341413969
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Filtro de Partículas:"
+description "Filtro bayesiano que mantiene una representación de la distribución de probabilidad del estado oculto manteniendo un conjunto grande de muestras de esa distribución."
+
+\end_inset
+
+
+\change_unchanged
+).
+ Estas soluciones del Online SLAM se basan en el 
+\change_deleted 2090252569 1339741912
+f
+\change_inserted 2090252569 1339741913
+F
+\change_unchanged
+iltro de Bayes explicado en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:SLAM-Probabilísticos"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Al observar las ecuaciones 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:full"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:online"
+
+\end_inset
+
+ puede verse que la diferencia entre ellas radica en que Full SLAM toma
+ en cuenta toda la información disponible al momento, mientras que Online
+ SLAM calcula los cambios en el estado oculto 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ de a un paso, tomando s
+\change_inserted -1785986595 1341282191
+ó
+\change_deleted -1785986595 1341282190
+o
+\change_unchanged
+lo la última información disponible.
+ En términos matemáticos, esto puede expresarse como que la diferencia radica
+ en que Online SLAM realiza una marginalización
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Marginalización:"
+description "Aplicado a una distribución de dos variables, el término marginalización refiere a descartar la información de una variable Y en una distribución conjunta p(X,Y), usualmente integrando toda la información aportada por Y para llegar a una distribución de una variable p(X)"
+
+\end_inset
+
+
+\change_deleted -1785986595 1339387644
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_deleted -1785986595 1339387640
+Aplicado a una distribución de dos variables, el término marginalización
+ refiere a descartar la información de una variable Y en una distribución
+ conjunta 
+\begin_inset Formula $p(X,Y)$
+\end_inset
+
+, usualmente integrando toda la información aportada por Y para llegar a
+ una distribución de una variable 
+\begin_inset Formula $p(X)$
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+ de toda la información anterior de sensado en el estado oculto del sistema
+ al momento 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+El problema de Full SLAM suele consumir más recursos.
+ Por otro lado, el problema de Online SLAM es más complejo debido a que
+ debe lograrse una buena marginalización de la información.
+ Aún así, el problema de Online SLAM goza de mayor popularidad debido a
+ que puede ser ejecutado dentro de un robot operando en tiempo real.
+ Estas ideas son 
+\change_deleted -1785986595 1341283922
+ampliadas
+\change_inserted -1785986595 1341283931
+desarrolladas en mayor detalle
+\change_unchanged
+ en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pgslamEsArt"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+En la práctica también existen algoritmos híbridos, combinando Full y Online
+ SLAM, por ejemplo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "iSAM"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Finalmente, resulta importante notar que esta taxonomía es independiente
+ a la clasificación realizada en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Offline-vs.-Online"
+
+\end_inset
+
+, que refiere al momento en que se realiza el procesamiento de la información,
+ y no a la forma
+\change_inserted -1785986595 1341284181
+ de procesamiento y la cantidad de datos tomados en cuenta simultáneamente
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Subsubsection
+Paramétrico
+\change_inserted -1785986595 1341414025
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Distribución de probabilidad paramétrica:"
+description "Distribución de probabilidad que puede ser representada de forma completa utilizando un conjunto reducido de parámetros."
+
+\end_inset
+
+
+\change_unchanged
+ vs.
+ No Paramétrico
+\change_inserted -1785986595 1341414044
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Distribución de probabilidad no paramétrica:"
+description "Distribución de probabilidad que no puede ser representada de forma completa utilizando un conjunto reducido de parámetros."
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Cuando se estima la distribución de probabilidad del estado oculto se busca
+ encontrar una función de densidad de probabilidad, usualmente sobre un
+ espacio de tres o más dimensiones.
+ 
+\change_inserted -1785986595 1341283983
+La memoria necesaria para 
+\change_deleted -1785986595 1341283983
+E
+\change_inserted -1785986595 1341283983
+e
+\change_unchanged
+l almacenamiento 
+\change_inserted -1785986595 1341284006
+de esta distribución 
+\change_unchanged
+y 
+\change_inserted -1785986595 1341284010
+el tiempo necesario para su 
+\change_unchanged
+actualización
+\change_inserted -1785986595 1341284013
+,
+\change_unchanged
+ 
+\change_deleted -1785986595 1341284015
+de esta distribución 
+\change_unchanged
+crece
+\change_inserted -1785986595 1341284025
+n
+\change_unchanged
+ con la resolución con la que se desea modelar
+\change_inserted -1785986595 1341284078
+ a esta distribución
+\change_deleted -1785986595 1341284074
+la
+\change_unchanged
+.
+
+\change_inserted -1785986595 1341284148
+ Es decir, cuanto mayor es la precisión con la que se modela la distribución
+ de probabilidad, mayor es el poder de cómputo necesario para mantener ese
+ mod
+\change_unchanged
+ Por lo tanto, es necesario realizar simplificaciones al modelo, para que
+ la solución sea 
+\change_inserted -1785986595 1341284220
+computable en tiempo razonables con una cantidad de memoria razonable
+\change_deleted -1785986595 1341284201
+computacionalmente factible
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+La simplificación más fuerte que suele hacerse es utilizar distribuciones
+ de probabilidad conocidas que dependan de un conjunto pequeño de parámetros,
+ conocidas como distribuciones paramétricas.
+ El ejemplo más común es la utilización de una distribución gaussiana que
+ puede representarse utilizando la media 
+\begin_inset Formula $\mu$
+\end_inset
+
+ y la varianza 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+, como se verá más adelante en la subsección 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sub:Filtros-de-Kalman2"
+
+\end_inset
+
+.
+ Al utilizar estas distribuciones paramétricas, el algoritmo solo debe trabajar
+ con este conjunto reducido de parámetros para la actualización de su estimado,
+ a medida que llega nueva información.
+\end_layout
+
+\begin_layout Standard
+La gran desventaja que presenta la utilización de distribuciones paramétricas
+ para representar el estado del sistema radica en que sólo es posible representa
+r un conjunto reducido de funciones de densidad posibles.
+ Por ejemplo, en el caso de las distribuciones gaussianas, se observa que
+ estas distribuciones son unimodales, es decir, que tienen un solo máximo
+ local.
+ En la práctica, esto implica que el estimador solo puede representar una
+ única creencia sobre el estado del sistema.
+\end_layout
+
+\begin_layout Standard
+Otros sistemas, como los 
+\change_inserted 2090252569 1339742284
+F
+\change_deleted 2090252569 1339742283
+f
+\change_unchanged
+iltros de 
+\change_inserted 2090252569 1339742286
+P
+\change_deleted 2090252569 1339742287
+p
+\change_unchanged
+artículas (ver sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Partículas"
+
+\end_inset
+
+), son capaces de representar cualquier función de densidad de probabilidad
+ y, por lo tanto, mantener varios máximos locales en su distribución de
+ probabilidad.
+ Esto equivale a mantener varios estimados completamente diferentes del
+ estado del sistema, de forma concurrente.
+ 
+\change_deleted -1785986595 1341284238
+En 
+\change_inserted -1785986595 1341284239
+Como 
+\change_deleted -1785986595 1341284238
+contraste
+\change_inserted -1785986595 1341284236
+contrapartida
+\change_unchanged
+, la actualización de estas distribuciones a partir de la información entrante
+ suele ser más costosa.
+\end_layout
+
+\begin_layout Standard
+Existen sistemas que combinan ambos tipos de distribución, utilizando distribuci
+ones unimodales
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Distribución unimodal:"
+description "Distribución de probabilidad que presenta un solo máximo"
+
+\end_inset
+
+ para algunas variables y multimodales
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Distribución multimodal:"
+description "Distribución de probabilidad que puede presentar  más de un máximo local"
+
+\end_inset
+
+ para otras
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Montemerlo02fastslam:a"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Filtros de Kalman
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Filtros-de-Kalman2"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los 
+\change_deleted 2090252569 1339721962
+f
+\change_inserted 2090252569 1339721963
+F
+\change_unchanged
+iltros de Kalman
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kalman"
+
+\end_inset
+
+ son una solución al problema de Online SLAM.
+ La principal característica de esta solución es el uso de distribuciones
+ gaussianas como estimador.
+ Esta solución se basa en el hecho que al sumar o multiplicar una variable
+ de distribución gaussiana con un número (o matriz en el caso multivariable)
+ se obtiene otra variable de distribución gaussiana.
+ Luego, el algoritmo propone que la evolución del sistema puede modelarse
+ mediante dos ecuaciones lineales, que permiten mantener el estimado del
+ estado del sistema como una distribución gaussiana.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Modelado
+\end_layout
+
+\begin_layout Standard
+El modelado de la evolución del sistema se realiza mediante dos ecuaciones,
+ la ecuación de transición y la ecuación de observación.
+ A continuación se describen ambas ecuaciones.
+\end_layout
+
+\begin_layout Paragraph
+Ecuación de transición
+\end_layout
+
+\begin_layout Standard
+La primera ecuación actualiza el estado del estimado del sistema en función
+ de 
+\change_inserted -1785986595 1341284271
+los cambios 
+\change_deleted -1785986595 1341284265
+una evolución
+\change_unchanged
+ inherente
+\change_inserted -1785986595 1341284274
+s
+\change_unchanged
+ del sistema
+\change_inserted -1785986595 1341284359
+, los cambios que ocurren independientemente de los factores modelados,
+\change_unchanged
+ y otra en función de la información de odometría:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x_{t}=F.x_{t-1}+B.u_{t}+r_{t}\label{eq:trans}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ refiere al estado del sistema a estimar
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+ consta de una matriz que representa el cambio inherente al sistema.
+ Este cambio podría representar, por ejemplo, la evolución de la posición
+ de un objeto del entorno que viaja a velocidad constante
+\change_deleted 2090252569 1339742544
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ representa la información de odometría
+\change_deleted 2090252569 1339742547
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $B$
+\end_inset
+
+ consta de una matriz que representa la transformación de la información
+ de odometría en los cambios producidos en el sistema.
+ Esta matriz representa, de hecho, el concepto de modelo de movimiento del
+ sistema explicado en 
+\change_inserted 2090252569 1339742589
+la sección 
+\change_deleted 2090252569 1339742558
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Movimiento"
+
+\end_inset
+
+
+\change_inserted 2090252569 1339742564
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Movimiento"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339742558
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $r_{t}$
+\end_inset
+
+ es un factor de ruido que representa la naturaleza estocástica de los otros
+ términos de la ecuación.
+ Este ruido es también gaussiano
+\change_deleted 2090252569 1339742575
+.
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Paragraph
+Ecuación de observación
+\end_layout
+
+\begin_layout Standard
+La segunda ecuación propone una relación entre el estado estimado del sistema
+ y la observación a realizar por el robot en un tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ La ecuación puede expresarse como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+z_{t}=H.x_{t}+w_{t}\label{eq:act}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ corresponde a la información de sensado
+\change_deleted 2090252569 1339742739
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $H$
+\end_inset
+
+ consta de una matriz que transforma el estado del sistema en la observación
+ a realizar.
+ Por ejemplo esta matriz podría transformar las coordenadas de una marca
+ en las coordenadas del campo visual del robot (proyección).
+ Esta matriz representa, de hecho, el concepto de modelo de sensado del
+ sistema explicado en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Sensado"
+
+\end_inset
+
+
+\change_deleted 2090252569 1339742742
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $w_{t}$
+\end_inset
+
+ 
+\change_deleted -1785986595 1341284469
+representa el ruido en el otro término de la ecuación.
+ Este término podría
+\change_inserted -1785986595 1341284431
+modela fuentes de ruido como puede ser
+\change_deleted -1785986595 1341284436
+ corresponderse con 
+\change_inserted -1785986595 1341284436
+ 
+\change_unchanged
+el ruido introducido por los sensores del robot
+\change_inserted -1785986595 1341284518
+.
+ Este ruido es también gaussiano
+\change_deleted 2090252569 1339742745
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Paragraph
+Cálculo del estado del sistema
+\end_layout
+
+\begin_layout Standard
+Bajo las condiciones mencionadas, la solución que minimiza el error cuadrático
+ esperado
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\change_deleted -1785986595 1341334314
+Muchos problemas
+\change_inserted -1785986595 1341334316
+Algunos problemas
+\change_unchanged
+ de optimización suelen plantearse como la minimización del error del sistema
+ al cuadrado, donde el error corresponde al valor estimado 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ menos el valor real 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ De otra forma:
+\begin_inset Formula 
+\[
+x_{sol}=\underset{\bar{x}}{\operatorname{argmin}}((\bar{x}-x)^{2})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ del estado del sistema puede calcularse de forma cerrada utilizando un
+ 
+\change_deleted 2090252569 1339721940
+f
+\change_inserted 2090252569 1339721942
+F
+\change_unchanged
+iltro de Kalman
+\begin_inset CommandInset citation
+LatexCommand cite
+key "introkalman"
+
+\end_inset
+
+.
+ Los 
+\change_deleted 2090252569 1339737708
+f
+\change_inserted 2090252569 1339737709
+F
+\change_unchanged
+iltros de Bayes comentados en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Filtros-de-Bayes"
+
+\end_inset
+
+ permiten explicar esta idea de cálculo cerrado.
+ Si se observan las ecuaciones del 
+\change_deleted 2090252569 1339742837
+f
+\change_inserted 2090252569 1339742838
+F
+\change_unchanged
+iltro de Bayes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\overline{bel}(x_{t})=\int p(x_{t}|u_{t},x_{t-1}).bel(x_{t-1})dx_{t-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+bel(x_{t})=\eta p(z_{t}|x_{t})\overline{bel}(x_{t})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+se puede 
+\change_deleted -1785986595 1341284588
+notar
+\change_inserted -1785986595 1341284589
+observar
+\change_unchanged
+ que si:
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted 2090252569 1339742888
+L
+\change_deleted 2090252569 1339742889
+l
+\change_unchanged
+a distribución de probabilidad de 
+\begin_inset Formula $bel(x_{0})$
+\end_inset
+
+ es una distribución gaussiana, 
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted 2090252569 1339742892
+E
+\change_deleted 2090252569 1339742893
+e
+\change_unchanged
+l modelo de movimiento 
+\begin_inset Formula $p(x_{t}|u_{t}x_{t-1})$
+\end_inset
+
+ es lineal en 
+\begin_inset Formula $x_{t-1}$
+\end_inset
+
+, y
+\end_layout
+
+\begin_layout Itemize
+
+\change_inserted 2090252569 1339742895
+E
+\change_deleted 2090252569 1339742896
+e
+\change_unchanged
+l modelo de sensado 
+\begin_inset Formula $p(z_{t}|x_{t})$
+\end_inset
+
+ también es lineal
+\end_layout
+
+\begin_layout Standard
+entonces, las integrales y multiplicaciones pueden calcularse de forma cerrada,
+ es decir, utilizando fórmulas que transforma una gaussiana en otra, manipulando
+ los parámetros de media y varianza.
+\end_layout
+
+\begin_layout Standard
+Por lo tanto, los cálculos de actualización del estado del sistema involucran
+ únicamente operaciones de álgebra lineal para actualizar los estimadores
+ de la posición del sistema (media 
+\begin_inset Formula $\mu$
+\end_inset
+
+ y varianza 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+En contraste, sin las hipótesis de trabajo de modelos lineales y distribuciones
+ gaussianas, las integrales del 
+\change_deleted 2090252569 1339743060
+f
+\change_inserted 2090252569 1339743060
+F
+\change_unchanged
+iltro de Bayes se vuelven 
+\change_deleted -1785986595 1341284567
+insolubles
+\change_inserted -1785986595 1341284570
+irresolubles
+\change_unchanged
+ (
+\emph on
+intractable
+\emph default
+), incluso al tratar problemas simples 
+\change_deleted -1785986595 1341284577
+en
+\change_inserted -1785986595 1341284577
+de
+\change_unchanged
+ pocas dimensiones.
+\end_layout
+
+\begin_layout Standard
+Por más información sobre los 
+\change_deleted 2090252569 1339737714
+f
+\change_inserted 2090252569 1339737714
+F
+\change_unchanged
+iltros de Kalman puede consultarse 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "introkalman,citeulike:560702"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Restricciones del modelo
+\end_layout
+
+\begin_layout Standard
+El algoritmo de Kalman propone la evolución de un sistema, modelado por
+ distribuciones gaussianas, regido por dos ecuaciones lineales.
+ La linealidad de estas ecuaciones representa una restricción importante.
+ Supongamos que nuestras observaciones constan del sensado de la distancia
+ a una determinada marca.
+ La función que toma como entrada las coordenadas del robot y la marca,
+ y retorna la distancia, es decir el modelo de sensado correspondiente a
+ este caso, no es una función lineal.
+ Esto se debe a que la norma euclidiana depende de forma no lineal de sus
+ parámetros (
+\begin_inset Formula $dist=\sqrt{x^{2}+y^{2}}$
+\end_inset
+
+).
+ Por lo tanto, al utilizar este sistema se cometerían sistemáticamente errores
+ por utilizar una función lineal (la más aproximada posible) para la representac
+ión de la función de distancia, que no es lineal.
+\end_layout
+
+\begin_layout Standard
+Además, la utilización de una distribución gaussiana como estimador del
+ estado del sistema implica que sólo es posible mantener un único máximo
+ local en la creencia del estado de este sistema.
+ Esto viola las hipótesis de trabajo necesarias para la marginalización
+ de la información realizada por los filtros, pudiendo en algunos casos
+ hacer que la estimación del estado oculto diverja.
+\end_layout
+
+\begin_layout Subsubsection
+Extensiones a la propuesta
+\end_layout
+
+\begin_layout Standard
+	Para eliminar la restricción de modelos de sensado y transición lineales,
+ se diseñaron extensiones a la propuesta original.
+ En esta variante, conocida como Filtro de Kalman Extendido, se reemplazan
+ los modelos de sensado y odometría para contemplar funciones no lineales.
+ Las ecuaciones 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:trans"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:act"
+
+\end_inset
+
+ quedan:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{t}=f(x_{t-1},u_{t})+r_{t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+z_{t}=h(x_{t})+w_{t}
+\]
+
+\end_inset
+
+donde 
+\begin_inset Formula $f$
+\end_inset
+
+ y 
+\begin_inset Formula $h$
+\end_inset
+
+ son los modelos de transición y sensado no lineales, respectivamente.
+ 
+\end_layout
+
+\begin_layout Standard
+Esta modificación permite la utilización de 
+\change_deleted 2090252569 1339721866
+f
+\change_inserted 2090252569 1339721867
+F
+\change_unchanged
+iltros de Kalman con modelos no lineales.
+ Se logra utilizando un algoritmo similar al original, pero linealizando
+ los modelos de datos utilizando series de Taylor en cada iteración.
+ 
+\end_layout
+
+\begin_layout Standard
+Sin embargo, el nuevo algoritmo no corresponde a la solución cerrada del
+ problema, es decir que la solución no es exacta y el algoritmo puede diverger
+ por problemas vinculados a las linealizaciones realizadas en los modelos.
+\end_layout
+
+\begin_layout Subsubsection
+Costo computacional
+\end_layout
+
+\begin_layout Standard
+El costo computacional de la actualización del 
+\change_deleted 2090252569 1339721858
+f
+\change_inserted 2090252569 1339721859
+F
+\change_unchanged
+iltro de Kalman se puede dividir en dos componentes:
+\end_layout
+
+\begin_layout Itemize
+Un costo asociado a la inversión de una matriz relacionada con la matriz
+ de sensado 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ Utilizando algoritmos eficientes de inversión, esta operación puede realizarse
+ en 
+\begin_inset Formula $O(k^{2.4})$
+\end_inset
+
+, donde 
+\begin_inset Formula $k$
+\end_inset
+
+ es la dimensión del vector de
+\change_inserted -1785986595 1341334373
+ la
+\change_unchanged
+ medida 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+
+\change_deleted 2090252569 1339743865
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Itemize
+Un costo asociado a la multiplicación de dos matrices de dimensión 
+\begin_inset Formula $n\times n$
+\end_inset
+
+, donde 
+\begin_inset Formula $n$
+\end_inset
+
+ es la dimensión del estado oculto, en la práctica aproximadamente proporcional
+ a la cantidad de marcas.
+ Esta operación tiene un costo de 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+
+\change_deleted 2090252569 1339743868
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+En la práctica, el segundo costo suele dominar al primero, debido a que
+ la dimensionalidad del vector de sensado suele ser mucho más pequeño que
+ la cantidad de marcas.
+ Por lo tanto el algoritmo suele tener un costo computacional de 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Filtros de Partículas
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Partículas"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los filtros de partículas intentan aproximar la distribución de probabilidad
+ del estado del sistema 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ utilizando 
+\change_inserted -1785986595 1341414416
+M
+\change_deleted -1785986595 1341414415
+m
+\change_unchanged
+étodos de Montecarlo
+\change_inserted -1785986595 1341414506
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Métodos de Montecarlo:"
+description "Método no determinista de estimación aproximada de valores cuyo cálculo resulta difícil de computar de manera exacta."
+
+\end_inset
+
+
+\change_unchanged
+.
+ Para esto, mantienen un conjunto de partículas que son 
+\begin_inset Formula $N$
+\end_inset
+
+ muestras (
+\emph on
+samples
+\emph default
+) de la distribución de probabilidad del estado del sistema 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Cada una de estas partículas mantiene un estado concreto del sistema, es
+ decir una ubicación del robot y un mapa.
+ El conjunto de estos estados concretos representa la distribución de probabilid
+ad del estado del sistema.
+\end_layout
+
+\begin_layout Standard
+Al igual que el Filtro de Kalman, actualizan esta distribución a medida
+ que se encuentra disponible nueva información de sensado u odometría.
+ Es decir que los filtros de partículas pertenecen a la categoría de Online
+ SLAM.
+\end_layout
+
+\begin_layout Subsubsection
+Actualización de la distribución de probabilidad
+\end_layout
+
+\begin_layout Standard
+La dinámica de actualización de la función de densidad del filtro de partículas
+ es similar al del 
+\change_deleted 2090252569 1339721842
+f
+\change_inserted 2090252569 1339721842
+F
+\change_unchanged
+iltro de Kalman (ver sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Filtros-de-Kalman2"
+
+\end_inset
+
+).
+ Esta actualización consta de dos pasos, el de predicción y el de actualización
+ propiamente dicho.
+\end_layout
+
+\begin_layout Paragraph
+Paso de predicción
+\change_inserted -1785986595 1341414634
+ (
+\emph on
+predict)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Predict:"
+description "Paso de un filtro de partículas que aplica la última información de movimiento para actualizar la distribución de probabilidad del estado oculto."
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+El paso de predicción busca modificar la función de densidad para reflejar
+ un movimiento realizado por el robot.
+ Para esto, se modifica la posición de cada una de las partículas según:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{t}=f(x_{t-1},u_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde 
+\begin_inset Formula $f$
+\end_inset
+
+ representa el modelo de movimiento a utilizar.
+ 
+\end_layout
+
+\begin_layout Standard
+En la
+\change_deleted 2090252569 1341336681
+s
+\change_unchanged
+ figura
+\change_inserted 2090252569 1341336649
+ 
+\change_deleted 2090252569 1341336653
+s 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pasopred1"
+
+\end_inset
+
+,
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pasopred2"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pasopred3"
+
+\end_inset
+
+
+\change_inserted 2090252569 1341336668
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Paso-de-predicción"
+
+\end_inset
+
+
+\change_unchanged
+ se puede observar el efecto de aplicar sucesivamente el paso de predicción
+ a un conjunto de partículas.
+ Las imágenes muestran el efecto de sucesivos movimientos en l
+\change_inserted 2090252569 1341336819
+í
+\change_deleted 2090252569 1341336817
+i
+\change_unchanged
+nea recta seguidos de rotaciones.
+ 
+\end_layout
+
+\begin_layout Standard
+Esta imagen ilustra como este paso del algoritmo aumenta la dispersión de
+ las partículas, y por consiguiente la varianza de la distribución.
+ Esto se debe a que el modelo de movimiento incluye una componente de ruido
+ para modelar la naturaleza estocástica del movimiento del robot.
+ Este ruido se va acumulando en cada paso de predicción y aumenta la incertidumb
+re de la estimación.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/pics_models_motionModel_a.eps
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Movimiento en l
+\change_deleted 2090252569 1341336970
+i
+\change_inserted 2090252569 1341336971
+í
+\change_unchanged
+nea recta
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pasopred1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/pics_models_motionModel_b.eps
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Una rotación de 90 grados y un movimiento en l
+\change_deleted 2090252569 1341336981
+i
+\change_inserted 2090252569 1341336982
+í
+\change_unchanged
+nea recta.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pasopred2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../estadodelarte/est_arte_en_serio/images/pics_models_motionModel_c.eps
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Otra rotación de 90 grados y un movimiento en l
+\change_deleted 2090252569 1341336990
+i
+\change_inserted 2090252569 1341336991
+í
+\change_unchanged
+nea recta.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pasopred3"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Paso de predicción aplicado sucesivas veces.
+
+\change_deleted 2090252569 1341339034
+ Imágenes extraídas de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Paso-de-predicción"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted 2090252569 1341339046
+ Imágenes extraídas de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Paso de actualización
+\change_inserted -1785986595 1341414649
+ (
+\emph on
+update)
+\emph default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Update:"
+description "Paso de un filtro de partículas que aplica la última información de sensado para actualizar la distribución de probabilidad del estado oculto."
+
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset CommandInset label
+LatexCommand label
+name "par:Paso-de-actualización"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este paso busca ajustar la función de densidad a la última información de
+ sensado recibida.
+ Para esto se le asigna a cada partícula un peso 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ proporcional a la verosimilitud de la información de sensado acorde al
+ estado actual del sistema.
+ Es decir
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+w_{i}\sim p(z_{t}|x_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este peso indica, en resumen, cuán verosímil es el modelo representado por
+ la partícula en función de la última información de sensado.
+\end_layout
+
+\begin_layout Standard
+Luego, se realiza un proceso denominado remuestreo (
+\emph on
+resampling
+\emph default
+) en el que se extraen con reposición 
+\begin_inset Formula $N$
+\end_inset
+
+ partículas del conjunto de partículas actuales.
+ Siendo la probabilidad de seleccionar una partícula proporcional a su peso
+ 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+E
+\change_deleted 2090252569 1341337171
+n general, e
+\change_unchanged
+l paso de actualización disminuye la incertidumbre de la estimación.
+ En otras palabras, disminuye la dispersión de las partículas.
+\end_layout
+
+\begin_layout Subsubsection
+El algoritmo
+\end_layout
+
+\begin_layout Standard
+Reuniendo ambos pasos y colocándolos en una iteración infinita, obtenemos
+ el algoritmo de filtro de partículas, según 
+\change_deleted 2090252569 1341337345
+descrito en 
+\change_unchanged
+el algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Algoritmo-de-filtro"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Python,mathescape=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+particulas = random(posicionInicialMedia, varianzaInicial)
+\end_layout
+
+\begin_layout Plain Layout
+
+por siempre:
+\end_layout
+
+\begin_layout Plain Layout
+
+	para cada particula p en particulas:
+\end_layout
+
+\begin_layout Plain Layout
+
+		p = modeloMov(p, $u_t$)
+\end_layout
+
+\begin_layout Plain Layout
+
+		peso = modeloSensado(p, $z_t$)
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	particulas = resample(particulas)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Algoritmo de filtro de partículas.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Algoritmo-de-filtro"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Las partículas son inicializadas en torno a una posición inicial media arbitrari
+a y una varianza que representa la incertidumbre inicial de la ubicación
+ del robot.
+\end_layout
+
+\begin_layout Subsubsection
+Costo computacional
+\end_layout
+
+\begin_layout Standard
+El costo computacional del algoritmo de partículas es proporcional a la
+ cantidad partículas utilizadas 
+\begin_inset Formula $M$
+\end_inset
+
+, es decir 
+\begin_inset Formula $O(M)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+En general se asume que el número de partículas necesario crece exponencialmente
+ con la dimensión del estado a estimar 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Esta idea se deriva intuitivamente de la combinación de:
+\end_layout
+
+\begin_layout Itemize
+
+\change_deleted 2090252569 1339744663
+c
+\change_inserted 2090252569 1339744664
+C
+\change_unchanged
+ada partícula representa un punto en el mapa para el estado oculto, y 
+\end_layout
+
+\begin_layout Itemize
+
+\change_deleted 2090252569 1339744668
+l
+\change_inserted 2090252569 1339744667
+L
+\change_unchanged
+a cantidad de puntos posibles del mapa crece exponencialmente con la dimensión
+ de este.
+\end_layout
+
+\begin_layout Standard
+En conclusión, el costo computacional del algoritmo crece exponencialmente
+ con la dimensión del espacio de búsqueda.
+\end_layout
+
+\end_body
+\end_document

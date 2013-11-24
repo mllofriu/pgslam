@@ -1,0 +1,980 @@
+% This file was created with JabRef 2.7b.
+% Encoding: UTF8
+
+@MISC{OutdoorBailey,
+  author = {Tim Bailey},
+  title = {Mobile Robot Localisation and Mapping in Extensive Outdoor Environments},
+  year = {2002}
+}
+
+@ARTICLE{evolsBlumMetaHeur,
+  author = {Blum, Christian and Roli, Andrea},
+  title = {Metaheuristics in combinatorial optimization: Overview and conceptual
+	comparison},
+  journal = {ACM Comput. Surv.},
+  year = {2003},
+  volume = {35},
+  pages = {268--308},
+  number = {3},
+  month = sep,
+  acmid = {937505},
+  address = {New York, NY, USA},
+  doi = {10.1145/937503.937505},
+  issn = {0360-0300},
+  issue_date = {September 2003},
+  keywords = {Metaheuristics, combinatorial optimization, diversification., intensification},
+  numpages = {41},
+  publisher = {ACM},
+  url = {http://doi.acm.org/10.1145/937503.937505}
+}
+
+@ARTICLE{EKFMonoSLAM,
+  author = {Civera, Javier and Davison, Andrew J},
+  title = {{1-Point RANSAC for EKF Filtering. Application to Real-Time Structure
+	from Motion and Visual Odometry}},
+  journal = {Journal of Field Robotics},
+  year = {2010},
+  volume = {27},
+  pages = {609-631},
+  number = {5},
+  publisher = {Wiley Online Library},
+  url = {http://webdiis.unizar.es/~josemari/civera_etal_jfr10.pdf}
+}
+
+@ARTICLE{SLAMReviewI,
+  author = {Hugh Durrant-Whyte and Tim Bailey},
+  title = {{Simultaneous Localization and Mapping (SLAM): Part I The Essential
+	Algorithms}},
+  journal = {IEEE ROBOTICS AND AUTOMATION MAGAZINE},
+  year = {2006},
+  volume = {2},
+  pages = {2006}
+}
+
+@ARTICLE{occgrids,
+  author = {Elfes, A.},
+  title = {{Sonar-based real-world mapping and navigation}},
+  journal = {Robotics and Automation, IEEE Journal of},
+  year = {1987},
+  volume = {3},
+  pages = {249 -265},
+  number = {3},
+  month = {june },
+  doi = {10.1109/JRA.1987.1087096},
+  issn = {0882-4967},
+  keywords = {Robots, locomotion;Sonar navigation;Terrain mapping;}
+}
+
+@INPROCEEDINGS{DPSLAM20,
+  author = {Eliazar, A. and Parr, R.},
+  title = {{D}{P}-{S}{L}{A}{M} 2.0},
+  booktitle = {IEEE International Conference on Robotics and Automation (ICRA)},
+  year = {2004},
+  month = apr,
+  organization = {IEEE Computer Society Press},
+  citeulike-article-id = {2501832},
+  keywords = {bibtex-import, dp-slam, slam},
+  posted-at = {2008-03-10 16:19:51},
+  priority = {2}
+}
+
+@INPROCEEDINGS{dpslam,
+  author = {Austin Eliazar and Ronald Parr},
+  title = {{DP-SLAM: Fast, Robust Simultaneous Localization and Mapping without
+	Predetermined Landmarks}},
+  booktitle = {in Proc. 18th Int. Joint Conf. on Artificial Intelligence (IJCAI-03)},
+  year = {2003},
+  pages = {1135--1142},
+  publisher = {Morgan Kaufmann}
+}
+
+@INPROCEEDINGS{TreeMap,
+  author = {Udo Frese},
+  title = {{Closing a million-landmarks loop}},
+  booktitle = {In: Proceedings of the IEEE/RSJ International Conference on Intelligent
+	Robots and Systems, Beijing.},
+  year = {2006},
+  pages = {5032--5039}
+}
+
+@ARTICLE{gmapping,
+  author = {Grisetti, G. and Stachniss, C. and Burgard, W.},
+  title = {{Improved Techniques for Grid Mapping With Rao-Blackwellized Particle
+	Filters}},
+  journal = {Robotics, IEEE Transactions on},
+  year = {2007},
+  volume = {23},
+  pages = {34--46},
+  number = {1},
+  month = feb,
+  abstract = {{Recently, Rao-Blackwellized particle filters (RBPF) have been introduced
+	as an effective means to solve the simultaneous localization and
+	mapping problem. This approach uses a particle filter in which each
+	particle carries an individual map of the environment. Accordingly,
+	a key question is how to reduce the number of particles. In this
+	paper, we present adaptive techniques for reducing this number in
+	a RBPF for learning grid maps. We propose an approach to compute
+	an accurate proposal distribution, taking into account not only the
+	movement of the robot, but also the most recent observation. This
+	drastically decreases the uncertainty about the robot's pose in the
+	prediction step of the filter. Furthermore, we present an approach
+	to selectively carry out resampling operations, which seriously reduces
+	the problem of particle depletion. Experimental results carried out
+	with real mobile robots in large-scale indoor, as well as outdoor,
+	environments illustrate the advantages of our methods over previous
+	approaches}},
+  citeulike-article-id = {5207213},
+  citeulike-linkout-0 = {http://dx.doi.org/10.1109/TRO.2006.889486},
+  doi = {10.1109/TRO.2006.889486},
+  keywords = {and, depletion, file-import-09-07-20, filtering, filters, grid, localization,
+	mapping, methodsrao-blackwellized, mobile, numerical, particle, problem,
+	robots, simultaneous, slam},
+  posted-at = {2009-07-20 12:17:47},
+  priority = {2},
+  url = {http://dx.doi.org/10.1109/TRO.2006.889486}
+}
+
+@ARTICLE{cekfSLAM,
+  author = {Jose Guivant and Eduardo Nebot},
+  title = {{Optimization of the Simultaneous Localization and Map Building Algorithm
+	for Real Time Implementation}},
+  journal = {IEEE Transactions on Robotics and Automation},
+  year = {2001},
+  volume = {17},
+  pages = {242-257}
+}
+
+@ARTICLE{treesslam,
+  author = {Jose Guivant and Eduardo Nebot},
+  title = {{Optimization of the Simultaneous Localization and Map Building Algorithm
+	for Real Time Implementation}},
+  journal = {IEEE Transactions on Robotics and Automation},
+  year = {2001},
+  volume = {17},
+  pages = {242--257}
+}
+
+@ARTICLE{grilla:232138,
+  author = {Hafting, Torkel and Fyhn, Marianne and Molden, Sturla and Moser,
+	May-Britt and Moser, Edvard I.},
+  title = {{Microstructure of a spatial map in the entorhinal cortex}},
+  journal = {Nature},
+  year = {2005},
+  volume = {436},
+  pages = {801--806},
+  number = {7052},
+  month = jun,
+  abstract = {{The ability to find one's way depends on neural algorithms that integrate
+	information about place, distance and direction, but the implementation
+	of these operations in cortical microcircuits is poorly understood.
+	Here we show that the dorsocaudal medial entorhinal cortex (dMEC)
+	contains a directionally oriented, topographically organized neural
+	map of the spatial environment. Its key unit is the 'grid cell',
+	which is activated whenever the animal's position coincides with
+	any vertex of a regular grid of equilateral triangles spanning the
+	surface of the environment. Grids of neighbouring cells share a common
+	orientation and spacing, but their vertex locations (their phases)
+	differ. The spacing and size of individual fields increase from dorsal
+	to ventral dMEC. The map is anchored to external landmarks, but persists
+	in their absence, suggesting that grid cells may be part of a generalized,
+	path-integration-based map of the spatial environment.}},
+  citeulike-article-id = {232138},
+  citeulike-linkout-0 = {http://dx.doi.org/10.1038/nature03721},
+  citeulike-linkout-1 = {http://dx.doi.org/10.1038/nature03721},
+  citeulike-linkout-2 = {http://view.ncbi.nlm.nih.gov/pubmed/15965463},
+  citeulike-linkout-3 = {http://www.hubmed.org/display.cgi?uids=15965463},
+  day = {19},
+  doi = {10.1038/nature03721},
+  issn = {0028-0836},
+  keywords = {experiment},
+  pmid = {15965463},
+  posted-at = {2009-01-08 13:56:17},
+  priority = {2},
+  publisher = {Nature Publishing Group},
+  url = {http://dx.doi.org/10.1038/nature03721}
+}
+
+@ARTICLE{gridmapping,
+  author = {Hahnel, D. and Burgard, W. and Fox, D. and Thrun, S.},
+  title = {{An efficient fastSLAM algorithm for generating maps of large-scale
+	cyclic environments from raw laser range measurements}},
+  journal = {Intelligent Robots and Systems, 2003. (IROS 2003). Proceedings. 2003
+	IEEE/RSJ International Conference on},
+  year = {2003},
+  volume = {1},
+  pages = {206--211 vol.1},
+  month = oct,
+  abstract = {{The ability to learn a consistent model of its environment is a prerequisite
+	for autonomous mobile robots. A particularly challenging problem
+	in acquiring environment maps is that of closing loops; loops in
+	the environment create challenging data association problems [J.-S.
+	Gutman et al., 1999]. This paper presents a novel algorithm that
+	combines Rao-Blackwellized particle filtering and scan matching.
+	In our approach scan matching is used for minimizing odometric errors
+	during mapping. A probabilistic model of the residual errors of scan
+	matching process is then used for the resampling steps. This way
+	the number of samples required is seriously reduced. Simultaneously
+	we reduce the particle depletion problem that typically prevents
+	the robot from closing large loops. We present extensive experiments
+	that illustrate the superior performance of our approach compared
+	to previous approaches.}},
+  booktitle = {Intelligent Robots and Systems, 2003. (IROS 2003). Proceedings. 2003
+	IEEE/RSJ International Conference on},
+  citeulike-article-id = {3925911},
+  citeulike-linkout-0 = {http://dx.doi.org/10.1109/IROS.2003.1250629},
+  citeulike-linkout-1 = {http://ieeexplore.ieee.org/xpls/abs\_all.jsp?arnumber=1250629},
+  day = {31},
+  doi = {10.1109/IROS.2003.1250629},
+  keywords = {fastslam, slam},
+  posted-at = {2011-08-22 00:47:16},
+  priority = {2},
+  url = {http://dx.doi.org/10.1109/IROS.2003.1250629}
+}
+
+@MISC{slom,
+  author = {Christoph Hertzberg},
+  title = {{A Framework for Sparse, Non-Linear Least Squares Problems on Manifolds}},
+  howpublished = {Diplomarbeit, Universitat Bremen},
+  year = {2008}
+}
+
+@INPROCEEDINGS{2DI-SLSJF,
+  author = {Shoudong Huang and Zhan Wang and Gamini Dissanayake and Udo Frese},
+  title = {{Iterated SLSJF: A Sparse Local Submap Joining Algorithm with Improved
+	Consistency}},
+  booktitle = {Proceedings of the Australasian Conference on Robotics and Automation,
+	Canberaa},
+  year = {2008}
+}
+
+@MISC{pgslam,
+  author = {Facultad de Ingenier\'ia},
+  title = {{Sitio web de propuestas a proyectos de grado 2011 http://www.fing.edu.uy/inco/cursos/proygrado/bosquejos2011.html}},
+  owner = {fede},
+  timestamp = {2012.04.22},
+  url = {http://www.fing.edu.uy/inco/cursos/proygrado/bosquejos2011.html}
+}
+
+@INPROCEEDINGS{distGismero,
+  author = {M. Jamzad and B. S. Sadjad and V. S. Mirrokni and M. Kazemi and H.
+	Chitsaz and A. Heydarnoori and M. T. Hajiaghai and E. Chiniforooshan},
+  title = {{A fast vision system for middle size robots in robocup}},
+  booktitle = {In 5th International Workshop on RoboCup 2001 (Robot World Cup Soccer
+	Games and Conferences), number 2377 in Lecture Notes in Computer
+	Science},
+  year = {2002},
+  pages = {71--80},
+  publisher = {Springer}
+}
+
+@ARTICLE{setmembership,
+  author = {Luc Jaulin},
+  title = {{Range-Only SLAM With Occupancy Maps: A Set-Membership Approach}},
+  journal = {IEEE Transactions on Robotics},
+  year = {2011},
+  volume = {27},
+  pages = {1004-1010},
+  number = {5},
+  bibsource = {DBLP, http://dblp.uni-trier.de},
+  ee = {http://dx.doi.org/10.1109/TRO.2011.2147110}
+}
+
+@ARTICLE{iSAM,
+  author = {Kaess, M. and Ranganathan, A. and Dellaert, F.},
+  title = {{iSAM: Incremental Smoothing and Mapping}},
+  journal = {Robotics, IEEE Transactions on},
+  year = {2008},
+  volume = {24},
+  pages = {1365 -1378},
+  number = {6},
+  doi = {10.1109/TRO.2008.2006706},
+  issn = {1552-3098},
+  keywords = {data association;incremental matrix factorization;incremental smoothing-mapping;periodic
+	variable reordering;robot trajectory;simultaneous localization and
+	mapping problem;sparse smoothing information matrix;uncertainty estimation;SLAM
+	(robots);matrix decomposition;mobile robots;position control;sensor
+	fusion;smoothing methods;sparse matrices;}
+}
+
+@ARTICLE{kalman,
+  author = {Kalman, Rudolph Emil},
+  title = {{A New Approach to Linear Filtering and Prediction Problems}},
+  journal = {Transactions of the ASME--Journal of Basic Engineering},
+  year = {1960},
+  volume = {82},
+  pages = {35--45},
+  number = {Series D}
+}
+
+@ARTICLE{grid3d,
+  author = {Kwak, N.},
+  title = {{3D grid and particle based SLAM for a humanoid robot}},
+  year = {2009},
+  owner = {fede},
+  timestamp = {2012.05.02}
+}
+
+@INPROCEEDINGS{OnlineEM,
+  author = {Le Corff, S. and Fort, G. and Moulines, E.},
+  title = {{Online Expectation Maximization algorithm to solve the SLAM problem}},
+  booktitle = {Statistical Signal Processing Workshop (SSP), 2011 IEEE},
+  year = {2011},
+  pages = {225 -228},
+  month = {june},
+  doi = {10.1109/SSP.2011.5967666},
+  issn = {pending},
+  keywords = {online EM-SLAM;online expectation maximization algorithm;particle
+	approximation method;robot pose fucntion;simultaneous localization
+	and mapping problem;stochastic approximation version;SLAM (robots);expectation-maximisation
+	algorithm;pose estimation;}
+}
+
+@ARTICLE{pgslamEsArt,
+  author = {Llofriu, M. and Andrade, F.},
+  title = {{Estado del arte del SLAM}},
+  year = {2012},
+  owner = {fede},
+  timestamp = {2012.04.22}
+}
+
+@INPROCEEDINGS{sift,
+  author = {Lowe, David G.},
+  title = {Object Recognition from Local Scale-Invariant Features},
+  booktitle = {Proceedings of the International Conference on Computer Vision-Volume
+	2 - Volume 2},
+  year = {1999},
+  series = {ICCV '99},
+  pages = {1150--},
+  address = {Washington, DC, USA},
+  publisher = {IEEE Computer Society},
+  acmid = {851523},
+  isbn = {0-7695-0164-8},
+  url = {http://dl.acm.org/citation.cfm?id=850924.851523}
+}
+
+@INBOOK{evolsLuque,
+  pages = {107--126},
+  title = {{Parallel Metaheuristics: A New Class of Algorithms}},
+  publisher = {Wiley},
+  year = {2005},
+  editor = {E. Alba},
+  author = {G. Luque and E. Alba and B. Dorronsoro},
+  series = {Wiley Series on Parallel and Distributed Computing}
+}
+
+@ARTICLE{distAlfredo,
+  author = {Adrian Martinez-Gomez and Alfredo Weitzenfeld},
+  title = {{Real time localization in four legged robocup soccer}},
+  journal = {VII SBAI/ II IEEE LARS.},
+  year = {2005},
+  owner = {ludo},
+  timestamp = {2012.05.11}
+}
+
+@INCOLLECTION{ratslam2,
+  author = {Milford, Michael and Wyeth, Gordon},
+  title = {{Spatial Mapping and Map Exploitation: A Bio-inspired Engineering
+	Perspective}},
+  booktitle = {Spatial Information Theory},
+  publisher = {Springer Berlin / Heidelberg},
+  year = {2007},
+  pages = {203-221},
+  affiliation = {Queensland Brain Institute},
+  isbn = {978-3-540-74786-4},
+  keyword = {Computer Science},
+  url = {http://dx.doi.org/10.1007/978-3-540-74788-8\_13}
+}
+
+@ARTICLE{RatSlam,
+  author = {Milford, M J and Wyeth, G F},
+  title = {{Mapping a Suburb With a Single Camera Using a Biologically Inspired
+	SLAM System}},
+  journal = {IEEE Transactions on Robotics},
+  year = {2008},
+  volume = {24},
+  pages = {1038--1053},
+  number = {5},
+  publisher = {IEEE},
+  url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4627450}
+}
+
+@INPROCEEDINGS{fastslam2,
+  author = {Michael Montemerlo and Sebastian Thrun and Daphne Koller and Ben
+	Wegbreit},
+  title = {{FastSLAM 2.0: An Improved Particle Filtering Algorithm for Simultaneous
+	Localization and Mapping that Provably Converges}},
+  booktitle = {In Proc. of the Int. Conf. on Artificial Intelligence (IJCAI)},
+  year = {2003},
+  pages = {1151--1156}
+}
+
+@INPROCEEDINGS{Montemerlo02fastslam:a,
+  author = {Michael Montemerlo and Sebastian Thrun and Daphne Koller and Ben
+	Wegbreit},
+  title = {{FastSLAM: A Factored Solution to the Simultaneous Localization and
+	Mapping Problem}},
+  booktitle = {In Proceedings of the AAAI National Conference on Artificial Intelligence},
+  year = {2002},
+  pages = {593--598},
+  publisher = {AAAI}
+}
+
+@ARTICLE{DBLP:journals/aim/Moravec88,
+  author = {Hans P. Moravec},
+  title = {{Sensor Fusion in Certainty Grids for Mobile Robots}},
+  journal = {AI Magazine},
+  year = {1988},
+  volume = {9},
+  pages = {61-74},
+  number = {2},
+  bibsource = {DBLP, http://dblp.uni-trier.de},
+  ee = {http://www.aaai.org/ojs/index.php/aimagazine/article/view/676}
+}
+
+@BOOK{Murphy:2000:IAR:517685,
+  title = {{Introduction to AI Robotics}},
+  publisher = {MIT Press},
+  year = {2000},
+  author = {Murphy, Robin R.},
+  address = {Cambridge, MA, USA},
+  edition = {1st},
+  isbn = {0262133830}
+}
+
+@ARTICLE{OKeefeDostrovsky1971,
+  author = {O'Keefe, J and Dostrovsky, J},
+  title = {{The hippocampus as a spatial map. Preliminary evidence from unitactivity
+	in the freely-moving rat.}},
+  journal = {Brain Research},
+  year = {1971},
+  volume = {34},
+  pages = {171--175},
+  number = {1},
+  publisher = {Elsevier Science},
+  url = {http://discovery.ucl.ac.uk/95537/}
+}
+
+@ARTICLE{spatialview:3767537,
+  author = {Rolls, E. T.},
+  title = {{Spatial view cells and the representation of place in the primate
+	hippocampus.}},
+  journal = {Hippocampus},
+  year = {1999},
+  volume = {9},
+  pages = {467--480},
+  number = {4},
+  abstract = {{The information represented in the primate hippocampus is being analysed
+	by making recordings in monkeys actively walking in the laboratory.
+	In a sample of 352 cells recorded in this situation, no "place" cells
+	have so far been found. Instead, we have found a considerable population
+	of "spatial view" cells tuned to respond when the monkey looks at
+	small parts of the environment. We have been able to demonstrate
+	(1) that these hippocampal neurons respond to a view of space "out
+	there," not to the place where the monkey is; (2) that the responses
+	depend on where the monkey is looking, by measuring eye position;
+	(3) that the responses in some cases (e.g., CA1 but not CA3) still
+	occur if the view details are obscured with curtains; (4) that the
+	cells (in, e.g., CA1) retain part of their "space" tuning even in
+	complete darkness, for several minutes; and (5) that the spatial
+	representation is allocentric. The spatial representation is, thus,
+	different from that in the rat hippocampus, in which place cells
+	respond based on where the rat is located. The representation is
+	also different from that described in the parietal cortex, where
+	neurons respond in egocentric coordinates. This representation of
+	space "out there" provided by primate spatial view cells would be
+	an appropriate part of a memory system involved in memories of particular
+	events or episodes, for example, of where in an environment an object
+	was seen. Spatial view cells (in conjunction with whole body motion
+	cells in the primate hippocampus, and head direction cells in the
+	primate presubiculum) would also be useful as part of a spatial navigation
+	system, for which they would provide a memory component.}},
+  citeulike-article-id = {3767537},
+  citeulike-linkout-0 = {http://dx.doi.org/10.1002/(SICI)1098-1063(1999)9:4\&lt;467::AID-HIPO13\&gt;3.0.CO;2-F},
+  citeulike-linkout-1 = {http://view.ncbi.nlm.nih.gov/pubmed/10495028},
+  citeulike-linkout-2 = {http://www.hubmed.org/display.cgi?uids=10495028},
+  doi = {10.1002/(SICI)1098-1063(1999)9:4\&lt;467::AID-HIPO13\&gt;3.0.CO;2-F},
+  issn = {1050-9631},
+  keywords = {episodic\_memory, hippocampus, view\_cells},
+  pmid = {10495028},
+  posted-at = {2008-12-10 13:56:50},
+  priority = {3},
+  url = {http://dx.doi.org/10.1002/(SICI)1098-1063(1999)9:4\&lt;467::AID-HIPO13\&gt;3.0.CO;2-F}
+}
+
+@BOOK{NorvingRussell2003,
+  title = {{Artificial Intelligence: A Modern Approach (3rd Edition)}},
+  publisher = {Prentice Hall},
+  year = {2009},
+  author = {Russell, Stuart and Norvig, Peter},
+  edition = {3},
+  month = dec,
+  abstract = {{From the Publisher: The long-anticipated revision of this number
+	1 selling book offers the most comprehensive, state of the art introduction
+	to the theory and practice of artificial intelligence for modern
+	applications. Intelligent Agents. Solving Problems by Searching.
+	Informed Search Methods. Game Playing. Agents that Reason Logically.
+	First-order Logic. Building a Knowledge Base. Inference in First-Order
+	Logic. Logical Reasoning Systems. Practical Planning. Planning and
+	Acting. Uncertainty. Probabilistic Reasoning Systems. Making Simple
+	Decisions. Making Complex Decisions. Learning from Observations.
+	Learning with Neural Networks. Reinforcement Learning. Knowledge
+	in Learning. Agents that Communicate. Practical Communication in
+	English. Perception. Robotics. For computer professionals, linguists,
+	and cognitive scientists interested in artificial intelligence.}},
+  citeulike-article-id = {7119973},
+  citeulike-linkout-0 = {http://www.amazon.ca/exec/obidos/redirect?tag=citeulike09-20\&amp;path=ASIN/0136042597},
+  citeulike-linkout-1 = {http://www.amazon.de/exec/obidos/redirect?tag=citeulike01-21\&amp;path=ASIN/0136042597},
+  citeulike-linkout-10 = {http://www.worldcat.org/oclc/359890490},
+  citeulike-linkout-2 = {http://www.amazon.fr/exec/obidos/redirect?tag=citeulike06-21\&amp;path=ASIN/0136042597},
+  citeulike-linkout-3 = {http://www.amazon.jp/exec/obidos/ASIN/0136042597},
+  citeulike-linkout-4 = {http://www.amazon.co.uk/exec/obidos/ASIN/0136042597/citeulike00-21},
+  citeulike-linkout-5 = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20\&path=ASIN/0136042597},
+  citeulike-linkout-6 = {http://www.worldcat.org/isbn/0136042597},
+  citeulike-linkout-7 = {http://books.google.com/books?vid=ISBN0136042597},
+  citeulike-linkout-8 = {http://www.amazon.com/gp/search?keywords=0136042597\&index=books\&linkCode=qs},
+  citeulike-linkout-9 = {http://www.librarything.com/isbn/0136042597},
+  day = {11},
+  howpublished = {Hardcover},
+  isbn = {0136042597},
+  keywords = {ai, phd},
+  posted-at = {2011-08-22 13:52:29},
+  priority = {0},
+  url = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20\&path=ASIN/0136042597}
+}
+
+@ARTICLE{placecells,
+  author = {Skaggs, W. E. and McNaughton, B. L.},
+  title = {{Replay of neuronal firing sequences in rat hippocampus during sleep
+	following spatial experience.}},
+  journal = {Science (New York, N.Y.)},
+  year = {1996},
+  volume = {271},
+  pages = {1870--1873},
+  number = {5257},
+  month = mar,
+  abstract = {{The correlated activity of rat hippocampal pyramidal cells during
+	sleep reflects the activity of those cells during earlier spatial
+	exploration. Now the patterns of activity during sleep have also
+	been found to reflect the order in which the cells fired during spatial
+	exploration. This relation was reliably stronger for sleep after
+	the behavioral session than before it; thus, the activity during
+	sleep reflects changes produced by experience. This memory for temporal
+	order of neuronal firing could be produced by an interaction between
+	the temporal integration properties of long-term potentiation and
+	the phase shifting of spike activity with respect to the hippocampal
+	theta rhythm.}},
+  address = {Arizona Research Laboratories, Division of Neural Systems, Memory
+	and Aging, University of Arizona, Tucson, 85724, USA.},
+  citeulike-article-id = {1116264},
+  citeulike-linkout-0 = {http://dx.doi.org/10.1126/science.271.5257.1870},
+  citeulike-linkout-1 = {http://view.ncbi.nlm.nih.gov/pubmed/8596957},
+  citeulike-linkout-2 = {http://www.hubmed.org/display.cgi?uids=8596957},
+  day = {29},
+  doi = {10.1126/science.271.5257.1870},
+  issn = {0036-8075},
+  keywords = {for\_replay\_review, replay, slow\_wave\_sleep},
+  pmid = {8596957},
+  posted-at = {2011-01-06 12:41:58},
+  priority = {2},
+  url = {http://dx.doi.org/10.1126/science.271.5257.1870}
+}
+
+@ARTICLE{Solstad19122008,
+  author = {Solstad, Trygve and Boccara, Charlotte N. and Kropff, Emilio and
+	Moser, May-Britt and Moser, Edvard I.},
+  title = {{Representation of Geometric Borders in the Entorhinal Cortex}},
+  journal = {Science},
+  year = {2008},
+  volume = {322},
+  pages = {1865-1868},
+  number = {5909},
+  abstract = {We report the existence of an entorhinal cell type that fires when
+	an animal is close to the borders of the proximal environment. The
+	orientation-specific edge-apposing activity of these 'border cells'
+	is maintained when the environment is stretched and during testing
+	in enclosures of different size and shape in different rooms. Border
+	cells are relatively sparse, making up less than 10% of the local
+	cell population, but can be found in all layers of the medial entorhinal
+	cortex as well as the adjacent parasubiculum, often intermingled
+	with head-direction cells and grid cells. Border cells may be instrumental
+	in planning trajectories and anchoring grid fields and place fields
+	to a geometric reference frame.},
+  doi = {10.1126/science.1166466},
+  eprint = {http://www.sciencemag.org/content/322/5909/1865.full.pdf},
+  url = {http://www.sciencemag.org/content/322/5909/1865.abstract}
+}
+
+@ARTICLE{tinySLAM,
+  author = {Steux, Bruno and El Hamzaoui, O},
+  title = {CoreSLAM: a SLAM Algorithm in less than 200 lines of C code},
+  journal = {Submission ICARCV},
+  year = {2010},
+  url = {http://www-roc.inria.fr/imara/dw/_media/users/oussamaelhamzaoui/coreslam.pdf}
+}
+
+@INPROCEEDINGS{robotvision,
+  author = {H. Strasdat AND J. M. M. Montiel AND A. Davison},
+  title = {{Scale Drift-Aware Large Scale Monocular SLAM}},
+  booktitle = {Proceedings of Robotics: Science and Systems},
+  year = {2010},
+  address = {Zaragoza, Spain},
+  month = {June}
+}
+
+@ARTICLE{springerlink:10.1007/s13218-010-0038-y,
+  author = {Sunderhauf, Niko and Protzel, Peter},
+  title = {{Learning from Nature: Biologically Inspired Robot Navigation and
+	SLAM - A Review}},
+  journal = {KI - Kanstliche Intelligenz},
+  year = {2010},
+  volume = {24},
+  pages = {215-221},
+  affiliation = {Technische UniversitÃ¤t Chemnitz, Reichenhainer Str. 70, 09126 Chemnitz,
+	Germany},
+  issn = {0933-1875},
+  issue = {3},
+  keyword = {Computer Science},
+  publisher = {Springer Berlin / Heidelberg},
+  url = {http://dx.doi.org/10.1007/s13218-010-0038-y}
+}
+
+@ARTICLE{Taube1990a,
+  author = {Taube, J. S. and Muller, R. U. and Ranck, J. B.},
+  title = {{Head-direction cells recorded from the postsubiculum in freely moving
+	rats. I. Description and quantitative analysis.}},
+  journal = {The Journal of neuroscience : the official journal of the Society
+	for Neuroscience},
+  year = {1990},
+  volume = {10},
+  pages = {420--435},
+  number = {2},
+  month = feb,
+  abstract = {{This paper is a study of the behavioral and spatial firing correlates
+	of neurons in the rat postsubiculum. Recordings were made from postsubicular
+	neurons as rats moved freely throughout a cylindrical chamber, where
+	the major cue for orientation was a white card taped to the inside
+	wall. An automatic video/computer system monitored cell discharge
+	while simultaneously tracking the position of 2 colored light emitting
+	diodes (LEDs) secured to the animal's head. The animal's location
+	was calculated from the position of one of the LEDs and head direction
+	in the horizontal plane calculated from the relative positions of
+	the 2 LEDs. Approximately 26\% of the cells were classified as head-direction
+	cells because they discharged as a function of the animal's head
+	direction in the horizontal plane, independent of the animal's behavior,
+	location, or trunk position. For each head-direction cell, vectors
+	drawn in the direction of maximal firing were parallel throughout
+	the recording chamber and did not converge toward a single point.
+	Plots of firing rate versus head direction showed that each firing-rate/head-direction
+	function was adequately described by a triangular function. Each
+	cell's maximum firing rate occurred at only one (the preferred) head
+	direction; firing rates at head directions on either side of the
+	preferred direction decreased linearly with angular deviation from
+	the preferred direction. Results from 24 head-direction cells in
+	7 animals showed an equal distribution of preferred firing directions
+	over a 360 degrees angle. The peak firing rate of head-direction
+	cells varied from 5 to 115 spikes/sec (mean: 35). The range of head-direction
+	angles over which discharge was elevated (directional firing range)
+	was usually about 90 degrees, with little, if any, discharge at head
+	directions outside this range. Quantitative analysis showed the location
+	of the animal within the cylinder had minimal effect on directional
+	cell firing. For each head-direction cell, the preferred direction,
+	peak firing rate, and directional firing range remained stable for
+	days. These results identify a new cell type that signals the animal's
+	head direction in its environment.}},
+  citeulike-article-id = {2570315},
+  citeulike-linkout-0 = {http://www.jneurosci.org/cgi/content/abstract/10/2/420},
+  citeulike-linkout-1 = {http://view.ncbi.nlm.nih.gov/pubmed/2303851},
+  citeulike-linkout-2 = {http://www.hubmed.org/display.cgi?uids=2303851},
+  day = {1},
+  issn = {0270-6474},
+  keywords = {head-direction-cells},
+  pmid = {2303851},
+  posted-at = {2011-04-05 13:38:36},
+  priority = {2},
+  url = {http://www.jneurosci.org/cgi/content/abstract/10/2/420}
+}
+
+@BOOK{citeulike:560702,
+  title = {{Probabilistic Robotics}},
+  publisher = {The MIT Press},
+  year = {2005},
+  editor = {Hardcover},
+  author = {Thrun, Sebastian and Burgard, Wolfram and Fox, Dieter},
+  abstract = {{Probablistic robotics is a growing area in the subject, concerned
+	with perception and control in the face of uncertainty and giving
+	robots a level of robustness in real-world situations. This book
+	introduces techniques and algorithms in the field.}},
+  citeulike-article-id = {560702},
+  citeulike-linkout-0 = {http://www.amazon.ca/exec/obidos/redirect?tag=citeulike09-20\&amp;path=ASIN/0262201623},
+  citeulike-linkout-1 = {http://www.amazon.de/exec/obidos/redirect?tag=citeulike01-21\&amp;path=ASIN/0262201623},
+  citeulike-linkout-10 = {http://www.worldcat.org/oclc/58451645},
+  citeulike-linkout-2 = {http://www.amazon.fr/exec/obidos/redirect?tag=citeulike06-21\&amp;path=ASIN/0262201623},
+  citeulike-linkout-3 = {http://www.amazon.jp/exec/obidos/ASIN/0262201623},
+  citeulike-linkout-4 = {http://www.amazon.co.uk/exec/obidos/ASIN/0262201623/citeulike00-21},
+  citeulike-linkout-5 = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20\&path=ASIN/0262201623},
+  citeulike-linkout-6 = {http://www.worldcat.org/isbn/0262201623},
+  citeulike-linkout-7 = {http://books.google.com/books?vid=ISBN0262201623},
+  citeulike-linkout-8 = {http://www.amazon.com/gp/search?keywords=0262201623\&index=books\&linkCode=qs},
+  citeulike-linkout-9 = {http://www.librarything.com/isbn/0262201623},
+  day = {19},
+  howpublished = {Hardcover},
+  isbn = {0262201623},
+  keywords = {3i, 3r, algorithm-slam, book, exploration, filter-kalman, filter-kalman-extended,
+	filter-kalman-unscented, filter-particle, filtering, localization,
+	mapping, motion, probability, robotics},
+  posted-at = {2007-11-24 06:03:20},
+  priority = {4},
+  url = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20\&path=ASIN#/0262201623#}
+}
+
+@TECHREPORT{introkalman,
+  author = {Welch, Greg and Bishop, Gary},
+  title = {{An Introduction to the Kalman Filter}},
+  year = {1995},
+  address = {Chapel Hill, NC, USA},
+  publisher = {University of North Carolina at Chapel Hill},
+  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Auncch_cs%3AUNCCH_CS%2F%2FTR95-041}
+}
+
+@BOOK{citeulike:4135858,
+  title = {{Springer Handbook of Robotics}},
+  publisher = {Springer},
+  year = {2008},
+  editor = {Siciliano, Bruno and Khatib, Oussama},
+  abstract = {{Reaching for the human frontier, robotics is vigorously engaged in
+	the growing challenges of new emerging domains. Interacting, exploring,
+	and working with humans, the new generation of robots will increasingly
+	touch people and their lives. The credible prospect of practical
+	robots among humans is the result of the scientific endeavour of
+	a half a century of robotic developments that established robotics
+	as a modern scientific discipline. The Springer Handbook of Robotics
+	brings a widespread and well-structured compilation of classic and
+	emerging application areas of robotics. From the foundations to the
+	social and ethical implications of robotics, the handbook provides
+	a comprehensive collection of the accomplishments in the field, and
+	constitutes a premise of further advances towards new challenges
+	in robotics. This handbook, edited by two internationally renowned
+	scientists with the support of an outstanding team of seven part
+	editors and onehundred sixty-four authors, is an authoritative reference
+	for robotics researchers, newcomers to the field, and scholars from
+	related disciplines such as biomechanics, neurosciences, virtual
+	simulation, animation, surgery, and sensor networks among others.}},
+  citeulike-article-id = {4135858},
+  citeulike-linkout-0 = {http://www.libreka.de/9783540239574/},
+  citeulike-linkout-1 = {http://springerlink.com/content/r6m219/},
+  citeulike-linkout-2 = {http://dx.doi.org/10.1007/978-3-540-30301-5},
+  doi = {10.1007/978-3-540-30301-5},
+  keywords = {inverse\_kinematics},
+  posted-at = {2009-03-05 15:47:10},
+  priority = {2},
+  url = {http://www.libreka.de/9783540239574/}
+}
+
+@MISC{cluster,
+  title = {Sitio Web del {C}luster de {F}acultad de {I}ngenier\'ia - www.fing.edu.uy/cluster/},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.05}
+}
+
+@MISC{cyrill,
+  title = {{Juegos de datos del MIT - http://www.informatik.uni-freiburg.de/~stachnis/datasets.html}},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.03.07}
+}
+
+@MISC{DARPA,
+  title = {{Darpa Challenge 2007 - http://archive.darpa.mil/grandchallenge/index.asp}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.02.28}
+}
+
+@MISC{datasets,
+  title = {Sitio Web de {C}onjunto de {D}atos de {F}reiburg - http://kaspar.informatik.uni-freiburg.de/~slamEvaluation/datasets.php},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.11}
+}
+
+@MISC{doraemon,
+  title = {Sitio Web de {D}oraemon - sourceforge.net/projects/robocup-video/},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.05}
+}
+
+@MISC{dpslamsite,
+  title = {{Sitio Web de DP-SLAM - http://www.cs.duke.edu/~parr/dpslam/}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.02},
+  url = {http://www.cs.duke.edu/~parr/dpslam/s}
+}
+
+@MISC{foxboard,
+  title = {Sitio Web de {F}ox{B}oard {G20} - http://www.acmesystems.it/index\_foxg20},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.04.26}
+}
+
+@MISC{GoogleCar,
+  title = {{Google's Car TED Talk - http://www.ted.com/talks/sebastian\_thrun\_google\_s\_driverless\_car.html}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.02.28}
+}
+
+@MISC{iafreiburg,
+  title = {{Sitio Web del grupo de investigacion de IA de la Universidad de
+	Freiburg - http://kaspar.informatik.uni\-freiburg.de/}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.02.28}
+}
+
+@MISC{ieee802,
+  title = {Sitio web del standard {IEEE 802.11} http://www.ieee802.org/},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.05.31}
+}
+
+@MISC{ieeespectrumjapon,
+  title = {{Articulo de la IEEE Spectrum que explica como intervino la empresa
+	IRobot asistiendo luego de los terremotos en Japon - http://spectrum.ieee.org/automaton/robotics/industrial-robots/irobot-sending-packbots-and-warriors-to-fukushima}},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.03.02}
+}
+
+@MISC{irobot,
+  title = {Sitio Web de {iRobot} - www.irobot.com},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.02.28},
+  url = {www.irobot.com}
+}
+
+@MISC{jgap,
+  title = {Sitio Web de {JGAP} - http://jgap.sourceforge.net/},
+  owner = {ludo},
+  timestamp = {2012.03.11}
+}
+
+@MISC{legoEngeen,
+  title = {{Sitio Web con información general de sensores - http://legoengineering.com/nxt-sensors-2.html}},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.04.26}
+}
+
+@MISC{lejos,
+  title = {Sitio web del {Framework leJOS} - http://lejos.sourceforge.net/},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.03.11}
+}
+
+@MISC{loop,
+  title = {Sitio web de planos {CasaConstruir} - http://www.casasconstruir.com/2010/06/arquitectos.html},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.03.02}
+}
+
+@ELECTRONIC{masasyresortes,
+  title = {{Machine Vision and Perception Group WebSite}},
+  note = {[Visitada en Junio 2012]},
+  url = {http://mvp.visual-navigation.com/dhm.html},
+  owner = {ludo},
+  timestamp = {2012.02.14}
+}
+
+@MISC{mindstorm,
+  title = {Kit {LEGO MINDSTORM} versi\'on 2.0 - http://shop.lego.com/en-US/LEGO-MINDSTORMS-NXT-2-0-8547},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.03.11}
+}
+
+@MISC{mindstormSensores,
+  title = {{Sitio Web t\'ecnico de LEGO MINDSTORM - http://mindstorms.lego.com/en-us/support/files/default.aspx}},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.04.26}
+}
+
+@MISC{mitkillian,
+  title = {{Juegos de datos del MIT Killian Court - http://www.ijrr.org/contents/23\_12/abstract/1113.html}},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.03.07}
+}
+
+@MISC{mrpt,
+  title = {{Mobile Robotic Programming Toolkit - http://www.mrpt.org/}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.03}
+}
+
+@MISC{octave,
+  title = {Sitio web de {Octave} - http://www.gnu.org/software/octave/},
+  owner = {fede},
+  timestamp = {2012.07.04}
+}
+
+@MISC{opencv,
+  title = {Sitio web de {OpenCV} - opencv.willowgarage.com},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.06.14}
+}
+
+@MISC{openslam,
+  title = {{Sitio Web de OpenSLAM - openslam.org}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.07}
+}
+
+@MISC{robotsinsearch.com,
+  title = {Sitio Web de {Robots in Search} - robotsinsearch.com},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.02.28}
+}
+
+@MISC{subsumption,
+  title = {Sitio web {leJOS Subsumption} - http://lejos.sourceforge.net/, visita
+	en mayo 2012},
+  note = {[Visitada en Junio 2012]},
+  owner = {fede},
+  timestamp = {2012.05.31}
+}
+
+@MISC{webmachineperception,
+  title = {{Sitio Web del Web Machine Vision and Perception Group - http://robvis01.informatik.tu-muenchen.de/mvp/}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.07}
+}
+
+@MISC{Wordpress.com,
+  title = {{Sitio Web de Wordpress - Wordpress.com}},
+  note = {[Visitada en Junio 2012]},
+  owner = {ludo},
+  timestamp = {2012.03.05}
+}
+
+@comment{jabref-meta: selector_publisher:}
+
+@comment{jabref-meta: selector_author:}
+
+@comment{jabref-meta: selector_keywords:}
+
+@comment{jabref-meta: selector_journal:}
+

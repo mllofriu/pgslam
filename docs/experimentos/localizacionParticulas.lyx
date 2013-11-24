@@ -1,0 +1,317 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Objetivo
+\change_inserted -1785986595 1327692195
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1327692198
+: 
+\change_unchanged
+El objetivo de este experimento fue ejecutar un algoritmo de localización
+ utilizando partículas dentro del robot de forma de apalear
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+toma, maldito riesgo!
+\end_layout
+
+\end_inset
+
+ riesgos técnicos previos a realizar la integración al sistema armado de
+ mapa y visión.
+ 
+\change_inserted -1785986595 1327692221
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1327692222
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1327692233
+Un parrafo sobre el porque de gastar tiempo en esto
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+Estudiar y ajustar los parámetros en busca de optimizar la localización
+ del robot en el entorno elegido.
+\end_layout
+
+\begin_layout Standard
+---Foto del robot
+\end_layout
+
+\begin_layout Section
+Desarrollo
+\change_deleted -1785986595 1327692205
+: 
+\change_inserted -1785986595 1327692205
+
+\end_layout
+
+\begin_layout Standard
+Para este experimento se utilizó un robot 
+\begin_inset Quotes eld
+\end_inset
+
+carrito
+\begin_inset Quotes erd
+\end_inset
+
+ realizado con un Kit Lego NXT v2.0.
+ El escenario de pruebas fue el mismo que se utilizo para la competencia
+ IEEE Open 2011 [poner referencia](consiste en un piso de color blanco con
+ marcas negras que delimitan los lugares transitables)
+\change_inserted -1785986595 1327692087
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1327692088
+explayar
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+.
+ Este mapa tiene la caracteristica de poseer una gran simetría (lo cual
+ dificulta la localización ya que todos los lugares tienen características
+ similares).
+ El desarrollo del experimento consistió en que el robot navegara en el
+ ambiente de forma aleatoria manteniendose 
+\change_deleted -1785986595 1327692205
+en
+\change_unchanged
+ dentro del medio
+\change_inserted -1785986595 1327692079
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1327692081
+explayar
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+.
+ Se realizaron pruebas con 20, 100, 200 partículas.
+ Además se modific
+\change_inserted -1785986595 1327691961
+ó
+\change_deleted -1785986595 1327692205
+aron los
+\change_unchanged
+ 
+\change_deleted -1785986595 1327692205
+parámetros de 
+\emph on
+error de deplazamiento
+\emph default
+ y 
+\emph on
+error de rotación
+\change_inserted -1785986595 1327691939
+
+\emph default
+modelo de desplazamiento
+\change_unchanged
+.
+ En el primer caso se manejaron los valores xx, xx y xxx, mientras que para
+ el segundo caso se contemplo un error que variaba entre 10 y 3 grados.
+\end_layout
+
+\begin_layout Standard
+Mientras el robot realizaba la tarea de localización las particulas generadas
+ por el algoritmo eran trasmitidas via bluetooth para hacer un tracking
+ en tiempo real de las poses de las partículas.
+\end_layout
+
+\begin_layout Standard
+---Foto del mapa con particulas
+\end_layout
+
+\begin_layout Standard
+---Hacer alguna gráfica con la cantidad de partículas, el error y la localizació
+n
+\change_inserted -1785986595 1327692095
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1327692129
+ta buena la idea.
+ Podemos calcular el centroide y ver por cuanto tiempo permanece a menos
+ de X cm de la posición real
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+---Hacer alguna tabla de datos también
+\end_layout
+
+\begin_layout Section
+Conclusión
+\change_deleted -1785986595 1327692244
+: 
+\change_inserted -1785986595 1327692245
+
+\end_layout
+
+\begin_layout Standard
+El algoritmo que utiliza partículas es útil cuando si se hizo un estudio
+ y ajuste previo de los parámetros.
+ Con parámetros erroneos los resultados pueden ser catastróficos.
+ En el caso de este experimento, luego de a
+\change_inserted -1785986595 1327691993
+j
+\change_deleted -1785986595 1327692244
+g
+\change_unchanged
+ustar los parámetros basandonos en errores reales de desplazamiento logramos
+ que el robot se mantenga ubicado en el escenario durante maniobras completas
+ de 10 minutos aproximadamente.
+ El aumentar el error de desplazamiento y rotación en un mapa tan simétrico
+ como el que se utilizó en esta ocasión llevó a que el robot se perdiera
+ facilmente ya que al usar muchas partículas al cabo del tiempo había muchos
+ lugares con la misma probabilidad en los cuales podía estar el robot.
+ Muchas veces cuando se resampleaba se perdía la partícula que tenía la
+ pose 
+\begin_inset Quotes eld
+\end_inset
+
+verdadera
+\begin_inset Quotes erd
+\end_inset
+
+ y sobrevivian otras que estaban lejos de ser la pose correcta.
+\end_layout
+
+\begin_layout Section
+Experimentos futuros
+\change_inserted -1785986595 1327692254
+
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1327692253
+: 
+\change_unchanged
+El proximo paso es integrar el sistema de visión y probar como funciona
+ la localización en ese caso.
+ Luego resta integrar 
+\change_inserted -1785986595 1327692063
+la elaboración del mapa en tiempo de ejecución
+\change_deleted -1785986595 1327692043
+el modelo
+\change_unchanged
+ 
+\change_deleted -1785986595 1327692066
+del mapa
+\change_unchanged
+.
+\end_layout
+
+\end_body
+\end_document

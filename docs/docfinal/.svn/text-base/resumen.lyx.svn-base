@@ -1,0 +1,191 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\begin_preamble
+\def\nompreamble{\addcontentsline{toc}{chapter}{\nomname}\markboth{\nomname}{\nomname}}
+\renewcommand\nomname{Glosario}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter*
+Resumen
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+La creciente demanda de soluciones robóticas ha estimulado el desarrollo
+ de robots capaces de desempeñarse de forma autónoma en terrenos diversos
+ y, 
+\change_deleted 2090252569 1339718193
+a veces
+\change_deleted -1785986595 1341267840
+en ocasiones, desconocidos para los seres humanos.
+ En este contexto, resulta fundamental que el robot sea capaz de explorar
+ y navegar en estos entornos.
+ Para lograr estos cometidos el agente robot debe ser capaz de responder
+ a la siguientes preguntas:
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+
+\emph on
+¿Dónde estoy?
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+
+\emph on
+¿Dónde estuve?
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+
+\emph on
+¿Por dónde voy?
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+Para responder a estas preguntas es crítico tener un mapa del entorno y
+ ubicarse en relación a este.
+
+\change_deleted 2090252569 1339718085
+ 
+\change_deleted -1785986595 1341267840
+ La academia e industria acuden a las técnicas de Localización y Construcción
+ de Mapas en Simultáneo (del inglés Simultaneous Localization and Mapping,
+ en adelante SLAM) como solución estándar al problema de obtención de un
+ mapa y localización en un entorno desconocido..
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+En el presente trabajo se describe el sistema robótico elaborado, capaz
+ de realizar SLAM en el contexto de la solución de un problema que implica
+ cubrir completamente un entorno desconocido para el robot.
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+Para implementarlo, se realizó, en primer lugar,
+\change_deleted 2090252569 1339718486
+primero
+\change_deleted -1785986595 1341267840
+ una investigación 
+\change_deleted 2090252569 1339718464
+ estudio
+\change_deleted -1785986595 1341267840
+sobre 
+\change_deleted 2090252569 1339718468
+d
+\change_deleted -1785986595 1341267840
+el estado del arte del SLAM.
+ Se llevó a cabo un estudio profundo del marco teórico del problema y se
+ relevaron diferentes bibliotecas de investigación de SLAM de código abierto.
+ Sobre esta primera etapa el lector podrá encontrar una descripción general
+ del problema del SLAM junto a
+\change_deleted 2090252569 1339718125
+ 
+\change_deleted -1785986595 1341267840
+ los enfoques y técnicas más destacadas de la literatura estudiada.
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+Luego se implementó el sistema robótico que resuelve el problema planteado.
+ Para esto se implementó un sistema de SLAM basado en FastSLAM y parametrizado
+ utilizando algoritmos evolutivos.
+ Este sistema de SLAM brinda un sistema de localización confiable sobre
+ el que implementar la solución de cubrimiento.
+ Se incluyen en este documento una descripción del algoritmo de SLAM implementad
+o, de la arquitectura del sistema y del proceso de parametrización utilizando
+ algoritmos evolutivos.
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1785986595 1341267840
+Finalmente, se realizaron pruebas de rendimiento comparando contra otro
+ sistema de cubrimiento implementado sobre un sistema de localización basado
+ en integración de movimientos (odometría).
+\change_unchanged
+
+\end_layout
+
+\end_body
+\end_document

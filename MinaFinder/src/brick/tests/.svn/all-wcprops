@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/tests
+END
+TPoly.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/ens/svn/repos/pgslam/!svn/ver/119/MinaFinder/src/brick/tests/TPoly.java
+END
+TestDetector.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/brick/tests/TestDetector.java
+END
+TVision.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/tests/TVision.java
+END
+Simular.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinder/src/brick/tests/Simular.java
+END
+TEstDist.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/ens/svn/repos/pgslam/!svn/ver/176/MinaFinder/src/brick/tests/TEstDist.java
+END
+TestKalman.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/138/MinaFinder/src/brick/tests/TestKalman.java
+END
+CmdUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinder/src/brick/tests/CmdUtils.java
+END
+TEstAng.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/ens/svn/repos/pgslam/!svn/ver/145/MinaFinder/src/brick/tests/TEstAng.java
+END
+BTCamTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/ens/svn/repos/pgslam/!svn/ver/21/MinaFinder/src/brick/tests/BTCamTest.java
+END

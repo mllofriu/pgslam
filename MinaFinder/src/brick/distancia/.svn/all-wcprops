@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/distancia
+END
+EstimadorDistancia.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/ens/svn/repos/pgslam/!svn/ver/176/MinaFinder/src/brick/distancia/EstimadorDistancia.java
+END
+EstPolDist.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/176/MinaFinder/src/brick/distancia/EstPolDist.java
+END
+Pair.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/ens/svn/repos/pgslam/!svn/ver/4/MinaFinder/src/brick/distancia/Pair.java
+END
+DatDistPro.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinder/src/brick/distancia/DatDistPro.java
+END
+MatrixFunctions.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/ens/svn/repos/pgslam/!svn/ver/4/MinaFinder/src/brick/distancia/MatrixFunctions.java
+END
+DatosDistQuieto.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ens/svn/repos/pgslam/!svn/ver/187/MinaFinder/src/brick/distancia/DatosDistQuieto.java
+END

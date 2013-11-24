@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MinaFinder"/>
+	<classpathentry kind="lib" path="/opt/jgap/jgap.jar" sourcepath="/opt/jgap/src"/>
+	<classpathentry kind="lib" path="/opt/jgap/lib/trove-2.0.2.jar"/>
+	<classpathentry kind="lib" path="/opt/lejos_nxj/lib/nxt/classes.jar"/>
+	<classpathentry kind="lib" path="/opt/lejos_nxj/lib/pc/pccomm.jar" sourcepath="/opt/lejos_nxj/projects/pccomms"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

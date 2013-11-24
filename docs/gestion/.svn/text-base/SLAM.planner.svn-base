@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<project name="SLAM" company="" manager="" phase="" project-start="20110308T000000Z" mrproject-version="2" calendar="1">
+  <properties/>
+  <phases/>
+  <calendars>
+    <day-types>
+      <day-type id="0" name="&#xDA;til" description="Um dia &#xFA;til padr&#xE3;o"/>
+      <day-type id="1" name="N&#xE3;o &#xFA;til" description="Um dia n&#xE3;o &#xFA;til padr&#xE3;o"/>
+      <day-type id="2" name="Utiliza base" description="Utiliza o dia a partir de um calend&#xE1;rio base"/>
+    </day-types>
+    <calendar id="1" name="Padr&#xE3;o">
+      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="1" sun="1"/>
+      <overridden-day-types>
+        <overridden-day-type id="0">
+          <interval start="0800" end="1200"/>
+          <interval start="1300" end="1700"/>
+        </overridden-day-type>
+      </overridden-day-types>
+      <days>
+        <day date="20120324" type="day-type" id="0"/>
+        <day date="20110717" type="day-type" id="0"/>
+        <day date="20130331" type="day-type" id="0"/>
+        <day date="20111106" type="day-type" id="0"/>
+        <day date="20120226" type="day-type" id="0"/>
+        <day date="20110611" type="day-type" id="0"/>
+        <day date="20111001" type="day-type" id="0"/>
+        <day date="20110515" type="day-type" id="0"/>
+        <day date="20120121" type="day-type" id="0"/>
+        <day date="20110904" type="day-type" id="0"/>
+        <day date="20111225" type="day-type" id="0"/>
+        <day date="20110409" type="day-type" id="0"/>
+        <day date="20120415" type="day-type" id="0"/>
+        <day date="20110730" type="day-type" id="0"/>
+        <day date="20111119" type="day-type" id="0"/>
+        <day date="20110313" type="day-type" id="0"/>
+        <day date="20120310" type="day-type" id="0"/>
+        <day date="20110703" type="day-type" id="0"/>
+        <day date="20130317" type="day-type" id="0"/>
+        <day date="20111023" type="day-type" id="0"/>
+        <day date="20120212" type="day-type" id="0"/>
+        <day date="20110528" type="day-type" id="0"/>
+        <day date="20110917" type="day-type" id="0"/>
+        <day date="20120107" type="day-type" id="0"/>
+        <day date="20110501" type="day-type" id="0"/>
+        <day date="20120428" type="day-type" id="0"/>
+        <day date="20110821" type="day-type" id="0"/>
+        <day date="20111211" type="day-type" id="0"/>
+        <day date="20110326" type="day-type" id="0"/>
+        <day date="20120401" type="day-type" id="0"/>
+        <day date="20110716" type="day-type" id="0"/>
+        <day date="20130330" type="day-type" id="0"/>
+        <day date="20111105" type="day-type" id="0"/>
+        <day date="20120225" type="day-type" id="0"/>
+        <day date="20110619" type="day-type" id="0"/>
+        <day date="20130303" type="day-type" id="0"/>
+        <day date="20111009" type="day-type" id="0"/>
+        <day date="20120129" type="day-type" id="0"/>
+        <day date="20110514" type="day-type" id="0"/>
+        <day date="20110903" type="day-type" id="0"/>
+        <day date="20111224" type="day-type" id="0"/>
+        <day date="20110417" type="day-type" id="0"/>
+        <day date="20120414" type="day-type" id="0"/>
+        <day date="20110807" type="day-type" id="0"/>
+        <day date="20111127" type="day-type" id="0"/>
+        <day date="20110312" type="day-type" id="0"/>
+        <day date="20120318" type="day-type" id="0"/>
+        <day date="20110702" type="day-type" id="0"/>
+        <day date="20130316" type="day-type" id="0"/>
+        <day date="20111022" type="day-type" id="0"/>
+        <day date="20120211" type="day-type" id="0"/>
+        <day date="20110605" type="day-type" id="0"/>
+        <day date="20110925" type="day-type" id="0"/>
+        <day date="20120115" type="day-type" id="0"/>
+        <day date="20110430" type="day-type" id="0"/>
+        <day date="20110820" type="day-type" id="0"/>
+        <day date="20111210" type="day-type" id="0"/>
+        <day date="20110403" type="day-type" id="0"/>
+        <day date="20120331" type="day-type" id="0"/>
+        <day date="20110724" type="day-type" id="0"/>
+        <day date="20111113" type="day-type" id="0"/>
+        <day date="20120304" type="day-type" id="0"/>
+        <day date="20110618" type="day-type" id="0"/>
+        <day date="20130302" type="day-type" id="0"/>
+        <day date="20111008" type="day-type" id="0"/>
+        <day date="20110522" type="day-type" id="0"/>
+        <day date="20120128" type="day-type" id="0"/>
+        <day date="20110911" type="day-type" id="0"/>
+        <day date="20120101" type="day-type" id="0"/>
+        <day date="20110416" type="day-type" id="0"/>
+        <day date="20120422" type="day-type" id="0"/>
+        <day date="20110806" type="day-type" id="0"/>
+        <day date="20111126" type="day-type" id="0"/>
+        <day date="20110320" type="day-type" id="0"/>
+        <day date="20120317" type="day-type" id="0"/>
+        <day date="20110710" type="day-type" id="0"/>
+        <day date="20130324" type="day-type" id="0"/>
+        <day date="20111030" type="day-type" id="0"/>
+        <day date="20120219" type="day-type" id="0"/>
+        <day date="20110604" type="day-type" id="0"/>
+        <day date="20110924" type="day-type" id="0"/>
+        <day date="20110508" type="day-type" id="0"/>
+        <day date="20120114" type="day-type" id="0"/>
+        <day date="20110828" type="day-type" id="0"/>
+        <day date="20111218" type="day-type" id="0"/>
+        <day date="20110402" type="day-type" id="0"/>
+        <day date="20120408" type="day-type" id="0"/>
+        <day date="20110723" type="day-type" id="0"/>
+        <day date="20111112" type="day-type" id="0"/>
+        <day date="20110306" type="day-type" id="0"/>
+        <day date="20110626" type="day-type" id="0"/>
+        <day date="20120303" type="day-type" id="0"/>
+        <day date="20130310" type="day-type" id="0"/>
+        <day date="20111016" type="day-type" id="0"/>
+        <day date="20120205" type="day-type" id="0"/>
+        <day date="20110521" type="day-type" id="0"/>
+        <day date="20110910" type="day-type" id="0"/>
+        <day date="20111231" type="day-type" id="0"/>
+        <day date="20110424" type="day-type" id="0"/>
+        <day date="20120421" type="day-type" id="0"/>
+        <day date="20110814" type="day-type" id="0"/>
+        <day date="20111204" type="day-type" id="0"/>
+        <day date="20110319" type="day-type" id="0"/>
+        <day date="20120325" type="day-type" id="0"/>
+        <day date="20110709" type="day-type" id="0"/>
+        <day date="20130323" type="day-type" id="0"/>
+        <day date="20111029" type="day-type" id="0"/>
+        <day date="20120218" type="day-type" id="0"/>
+        <day date="20110612" type="day-type" id="0"/>
+        <day date="20111002" type="day-type" id="0"/>
+        <day date="20120122" type="day-type" id="0"/>
+        <day date="20110507" type="day-type" id="0"/>
+        <day date="20110827" type="day-type" id="0"/>
+        <day date="20111217" type="day-type" id="0"/>
+        <day date="20110410" type="day-type" id="0"/>
+        <day date="20120407" type="day-type" id="0"/>
+        <day date="20110731" type="day-type" id="0"/>
+        <day date="20111120" type="day-type" id="0"/>
+        <day date="20110305" type="day-type" id="0"/>
+        <day date="20120311" type="day-type" id="0"/>
+        <day date="20110625" type="day-type" id="0"/>
+        <day date="20130309" type="day-type" id="0"/>
+        <day date="20111015" type="day-type" id="0"/>
+        <day date="20120204" type="day-type" id="0"/>
+        <day date="20110529" type="day-type" id="0"/>
+        <day date="20110918" type="day-type" id="0"/>
+        <day date="20120108" type="day-type" id="0"/>
+        <day date="20110423" type="day-type" id="0"/>
+        <day date="20120429" type="day-type" id="0"/>
+        <day date="20110813" type="day-type" id="0"/>
+        <day date="20111203" type="day-type" id="0"/>
+        <day date="20110327" type="day-type" id="0"/>
+      </days>
+    </calendar>
+  </calendars>
+  <tasks>
+    <task id="1" name="Investigar E. del Arte" note="" work="2592000" start="20110320T000000Z" end="20110617T170000Z" work-start="20110320T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110320T000000Z"/>
+    </task>
+    <task id="2" name="EDA (S,D,C)" note="" work="2592000" start="20110320T000000Z" end="20110617T170000Z" work-start="20110320T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20110320T000000Z"/>
+    </task>
+    <task id="3" name="Estudiar Bibliotecas. Pruebas" note="" work="2016000" start="20110617T170000Z" end="20110826T170000Z" work-start="20110618T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110615T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="2" type="FS"/>
+        <predecessor id="1" predecessor-id="1" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="4" name="Pruebas robots reales" note="" work="1728000" start="20110627T170000Z" end="20110826T170000Z" work-start="20110628T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <predecessors>
+        <predecessor id="1" predecessor-id="3" type="SS" lag="864000"/>
+      </predecessors>
+    </task>
+    <task id="5" name="Crear plataforma flexible" note="" work="2592000" start="20110826T170000Z" end="20111124T170000Z" work-start="20110827T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20110822T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="3" type="FS"/>
+        <predecessor id="1" predecessor-id="4" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="6" name="Pruebas robots reales." note="" work="2592000" start="20110905T170000Z" end="20111204T170000Z" work-start="20110906T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <predecessors>
+        <predecessor id="1" predecessor-id="5" type="SS" lag="864000"/>
+      </predecessors>
+    </task>
+    <task id="7" name="Preparaci&#xF3;n doc final y defensa." note="" work="1728000" start="20111204T170000Z" end="20120202T170000Z" work-start="20111205T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20111110T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="6" type="FS"/>
+      </predecessors>
+    </task>
+  </tasks>
+  <resource-groups/>
+  <resources>
+    <resource id="1" name="Martin Llofri&#xFA;" short-name="Tincho" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="2" name="Federico Andrade" short-name="Fede" type="1" units="0" email="fandrade9@gmail.com" note="" std-rate="0"/>
+  </resources>
+  <allocations/>
+</project>

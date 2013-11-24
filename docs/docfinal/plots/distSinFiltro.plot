@@ -1,0 +1,18 @@
+#
+set terminal png
+set output "distSinFiltro.png"
+set title ""
+set yrange [0:190000]
+set auto x
+set style data line
+#set xtic rotate by -45 scale 0 font ",8"
+set grid
+set xlabel "mins"
+set ylabel "milímetros"
+
+
+#set key autotitle columnheader
+plot 'distSinFiltro.dat' using ($0 / 600.):1 t "" 
+
+#pause -1
+#

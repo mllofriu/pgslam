@@ -1,0 +1,79 @@
+10
+
+dir
+402
+https://www.fing.edu.uy/ens/svn/repos/pgslam/Localizacion/.metadata/.plugins
+https://www.fing.edu.uy/ens/svn/repos/pgslam
+
+
+
+2012-02-15T20:54:02.940844Z
+4
+martincho
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7f056f42-1135-414e-8176-63e81371351f
+
+org.eclipse.debug.core
+dir
+
+org.eclipse.pde.api.tools
+dir
+
+org.tigris.subversion.subclipse.ui
+dir
+
+org.eclipse.ltk.core.refactoring
+dir
+
+org.python.pydev
+dir
+
+org.eclipse.jdt.launching
+dir
+
+org.eclipse.jdt.ui
+dir
+
+org.eclipse.ui.workbench
+dir
+
+org.eclipse.pde.core
+dir
+
+org.eclipse.core.resources
+dir
+
+org.eclipse.cdt.core
+dir
+
+org.eclipse.debug.ui
+dir
+
+com.collabnet.subversion.merge
+dir
+
+org.eclipse.ui.intro
+dir
+
+org.eclipse.jdt.core
+dir
+
+org.eclipse.jdt.junit
+dir
+
+org.eclipse.core.runtime
+dir
+

@@ -1,0 +1,32 @@
+Exception in thread "main" java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:58)
+Caused by: java.lang.RuntimeException: Matrix is singular.
+	at brick.utils.LUDecompositionFloat.solve(LUDecompositionFloat.java:291)
+	at brick.utils.MatrixFloat.solve(MatrixFloat.java:783)
+	at brick.utils.MatrixFloat.inverse(MatrixFloat.java:773)
+	at brick.utils.Matematicas.gMulti(Matematicas.java:22)
+	at brick.particulas.smodel.MarcaSModel.getLikelihood(MarcaSModel.java:47)
+	at brick.particulas.MCLParticle.calculateWeight(MCLParticle.java:92)
+	at brick.particulas.MCLParticleSet.calculateWeights(MCLParticleSet.java:314)
+	at brick.particulas.MCLPoseProvider.updateParts(MCLPoseProvider.java:179)
+	at brick.particulas.MCLPoseProvider.update(MCLPoseProvider.java:164)
+	at brick.particulas.UpdateCmdMarcas.execute(UpdateCmdMarcas.java:21)
+	at pc.parametrizacion.evolutivos.EvolutivosFitness.evaluate(EvolutivosFitness.java:127)
+	at org.jgap.FitnessFunction.getFitnessValue(FitnessFunction.java:66)
+	at org.jgap.Chromosome.calcFitnessValue(Chromosome.java:565)
+	at org.jgap.Chromosome.getFitnessValue(Chromosome.java:536)
+	at org.jgap.impl.GABreeder.updateChromosomes(GABreeder.java:286)
+	at org.jgap.impl.GABreeder.evolve(GABreeder.java:162)
+	at org.jgap.Genotype.evolve(Genotype.java:226)
+	at org.jgap.Genotype.evolve(Genotype.java:269)
+	at pc.parametrizacion.evolutivos.EvolutivosAlgoritmo.test(EvolutivosAlgoritmo.java:68)
+	at pc.parametrizacion.evolutivos.EvolutivosAlgoritmo.main(EvolutivosAlgoritmo.java:117)
+	... 5 more
+
+real	19m44.209s
+user	18m14.860s
+sys	0m2.050s

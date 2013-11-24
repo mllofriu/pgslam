@@ -1,0 +1,4527 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass AGU-article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Estado del arte del SLAM
+\end_layout
+
+\begin_layout Section*
+Objetivo del documento
+\end_layout
+
+\begin_layout Standard
+El objetivo de este documento es presentar el problema de localización y
+ confección de mapas de forma simultanea (Simultaneous Location and Mapping
+ – SLAM).
+ En la primera sección presentaremos el problema del SLAM, sus objetivos
+ y sus principales dificultades.
+ Esta sección tendrá como objetivo introducir el problema en cuestión orientado
+ a un público general sin conocimientos previos de robótica.
+ Luego, dedicaremos la siguiente sección a la introducción de algunos conceptos
+ importantes para comprender el marco teórico del problema y las soluciones
+ propuestas.
+ La sección III estará dedicada a la revisión de las principales corrientes
+ de solución del problema del SLAM que conviven actualmente.
+\end_layout
+
+\begin_layout Section
+El problema de SLAM
+\end_layout
+
+\begin_layout Subsection
+Motivación
+\end_layout
+
+\begin_layout Standard
+El estudio de posibles soluciones robóticas para algunos problemas como
+ producción industrial, rescates en zonas peligrosas y exploración espacial
+ han detectado la necesidad de robots capaces de navegar de forma autónoma
+ en terrenos inhóspitos.
+ Para navegar efectivamente por un terreno conocido a partir de un mapa
+ conocido a priori, un robot deberá ubicar en el espacio ciertas características
+ distinguibles y conocidas (llamadas 'features' en la literatura anglosajona).
+ El agente utilizará estas características para determinar su posición relativa
+ en el mapa conocido.
+ Sin embargo, acorde a la definición de robot autónomo [Ref], un robot deberá
+ basarse principalmente en el conocimiento adquirido durante la ejecución
+ para desempeñar sus tareas.
+ La ventaja de un robot autónomo es que este es capaz de realizar sus tareas
+ en ambientes para los que la construcción de un mapa previamente a la ejecución
+ de las tareas del robot es muy costosa o imposible.
+ Por lo tanto, la comunidad de investigadores se ha volcado al estudio de
+ algoritmos para la confección de mapas en linea [Ref], es decir, la confección
+ de mapas por parte del robot mientras este realiza sus tareas.
+ Esta confección de mapas en linea presenta una paradoja que radica en que
+ un agente deberá conocer su posición para poder construir un mapa de su
+ entorno y, como hemos visto, precisa de un mapa de su entorno para poder
+ ubicarse a si mismo.
+ 
+\end_layout
+
+\begin_layout Subsection
+Objetivos del SLAM 
+\end_layout
+
+\begin_layout Standard
+Los algoritmos del SLAM pretenden resolver esta paradoja, mediante el refinamien
+to iterativo de la posición del robot y de las características distinguibles
+ de su entorno en base a la información sensada y la información interna
+ de control (noción de movimiento propio).
+ En concreto, este tipo de soluciones pretende obtener una estimación de
+ la posición del robot relativa a un conjunto de características distinguibles
+ del entorno (localización) basándose en información adquirida sobre la
+ ubicación estimada de estas características en el pasado (confección de
+ mapas).
+\end_layout
+
+\begin_layout Subsection
+Principales desafíos
+\end_layout
+
+\begin_layout Standard
+La localización y confección de mapas simultanea presenta varios desafios
+ complejos de resolver.
+ A continuación presentaremos los principales problemas a los que se enfrentan
+ los investigadores a la hora de resolver el problema de SLAM.
+\end_layout
+
+\begin_layout Subsubsection
+Incertidumbre total
+\end_layout
+
+\begin_layout Standard
+Como ya se comentó más arriba, la determinación de la posición exacta del
+ agente requiere conocimiento sobre la posición exacta de las características
+ de su entorno, y la determinación de la posición exacta de estas característica
+s requiere del conocimiento de la posición exacta del agente.
+ Dado que el agente no posee inicialmente ninguno de estos datos, y dado
+ que la incertidumbre de su propia posición aumenta con su movimiento (como
+ veremos más adelante), los algoritmos del SLAM deben ser capaces de manejar
+ un cierto error en los datos que son computados.
+ Esta incertidumbre debe ser manejada de forma tal que el error en las estimacio
+nes no crezca (de forma de evitar una divergencia en la estimación de la
+ posición del agente y de las características de su entorno).
+\end_layout
+
+\begin_layout Subsubsection
+Ruido en los sensores
+\end_layout
+
+\begin_layout Standard
+Las medidas realizadas por los sensores no son precisas, si no que contienen
+ un cierto ruido estocástico que puede representarse como
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\widetilde{z}=z+R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde z corresponde a la medida real y R es el ruido.
+ Este ruido suele ser modelado como sonido blanco (white noise) en el sentido
+ que su valor esperado es 0.
+ En casos particulares como los filtros de Kalman (que veremos más adelante),
+ el ruido es considerado como una variable estocástica de distribución normal
+ centrada en 0 y varianza v.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $R=\mathcal{N}(0,v)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Incertidumbre en las medidas
+\end_layout
+
+\begin_layout Standard
+odométricas Debido a las condiciónes potencialmente inhóspitas en los que
+ se desempeñan los agentes, el desplazamiento realmente realizado puede
+ diferir del esperado en función de los comandos emitidos a los sistemas
+ de desplazamiento.
+ Por ejemplo, si la superficie sobre la que se desplaza el robot es resbaladiza
+ puede ocasionar que las ruedas patinen en vez de impulsar al agente provocando
+ que el robot estime que se movió una distancia x cuando en realidad se
+ movió una distancia menor o no consiguió moverse.
+ En algunos casos, este error también es modelado como una variable estocástica
+ de distribución normal con valor esperado 0 y varianza w.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x=\mathcal{N}(0,w)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Identificación de las características
+\end_layout
+
+\begin_layout Standard
+Como hemos explicado, el agente necesita de ciertas características distinguible
+s del terreno para poder ubicarse a si mismo.
+ Estas características pueden ser artificiales (colocadas artificialmente
+ con el fin de permitir que el robot se ubique) o naturales (que pertenecen
+ naturalmente al paisaje).
+ Para utilizar la ubicación de estas características, el robot debe poder
+ identificarlas en el entorno.
+ Sin embargo, esto no siempre resulta una tarea simple y es más dificultosa
+ a medida que el error en la estimación de la ubicación de las características
+ de un entorno en particular aumenta debido a que el robot no visita este
+ entorno.
+ Además en la mayoría de los casos la tarea de reconomiento de marcas (naturales
+, artificiales o amgas) se realiza con el robot en movimiento lo cual introduce
+ aún mas ruido en las lecturas de los sensores.
+\end_layout
+
+\begin_layout Subsubsection
+Cerrado de ciclos (loop-closure) 
+\end_layout
+
+\begin_layout Standard
+Cuando un agente retorna nuevamenta a un lugar ya conocido, para el que
+ se confeccionó un mapa del entorno, este deber reconocer que ha retornado
+ a este lugar, evitando catalogarlo como un nuevo entorno.
+ En ciertos casos, la información de odometría puede contener errores que
+ llevan a un agente a creer que ha llegado a un nuevo entorno cuando está
+ volviendo a uno conocido.
+ Si en estos casos, la información sensada sobre las características distinguibl
+es del entorno no permiten al agente corregir este error, el mapa finalmente
+ construido perderá precisión drásticamente, debido a que el mapa contendrá
+ réplicas diferentes para un mismo lugar, causados por ese desfasaje inicial.
+ Por lo tanto, es muy importante que los algoritmos del SLAM sean capaces
+ de reconocer cuando han llegado a un entorno conocido, realizando un buen
+ cerrado de los ciclos en el mapa.
+\end_layout
+
+\begin_layout Section
+Conocimientos previos necesarios
+\end_layout
+
+\begin_layout Standard
+Actualmente las soluciones del SLAM se concentran en dos modelos principales:
+ 
+\end_layout
+
+\begin_layout Itemize
+Bayesianos 
+\end_layout
+
+\begin_layout Itemize
+BioInspirados
+\end_layout
+
+\begin_layout Standard
+A fin de poder comprender a fondo los modelos probabilistas bayesianos vamos
+ a introducir a continuación algunos conceptos relacionados con estos modelos.
+\end_layout
+
+\begin_layout Subsection
+Modelos Bayesianos
+\end_layout
+
+\begin_layout Subsubsection
+Redes Bayesianas 
+\end_layout
+
+\begin_layout Standard
+Las redes bayesianas son una representación gráfica de la interdependencia
+ de variables estocásticas.
+ Una red bayesiana consta de un grafo dirigido acíclico en donde los nodos
+ representan variables estocásticas y las aristas representan relaciones
+ de dependencia entre las variables.
+ Esto quiere decir que una arista entre un nodo X y otro nodo Y significa
+ que las variables X e Y no son independientes, o de otra forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(X\wedge Y)=P(X).P(Y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Estas redes son utilizadas para modelar sistemas de interdependencia probabilist
+icas y comunicarlo de manera clara.
+ Por ejemplo, el diagrama en la Fig.
+ 1, representa una relación causa efecto entre el posible hundimiento de
+ un barco y la presencia de una tormenta o un desperfecto técnico.
+ A su vez, se muestran algunos factores que inciden en estas posibles causas
+ de tormentas y desperfectos técnicos.
+ Es importante notar que la ausencia de aristas entre dos nodos indica que
+ las variables representadas por estos nodos son independientes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../../../../../pasted1.png
+	lyxscale 50
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Factorización 
+\end_layout
+
+\begin_layout Standard
+Una definición más rigurosa de las redes bayesianas establece que un vector
+ estocástico X de N variables es una red bayesiana con respecto a un grafo
+ G si
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(X=x)=\prod_{1}^{N}p(x_{i}|x_{pa}(i))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde pa(i) representa a los los padres del nodo i en el grafo G.
+ Por lo tanto, la probabilidad de BarcoHundido puede calcularse como
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(BarcoHundido)=p(BarcoHundido|Tormenta,DesperfectoTecnico)*p(Tormenta|CorrientesDeAire,Marea)*p(DesperfectoTecnico|MotorAntiguo)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Separación-d
+\end_layout
+
+\begin_layout Standard
+Este modelo permite también establecer pautas sobre la independencia entre
+ variables estocásticas dado que los valores de otras variables relacionadas
+ son conocidos.
+ Para esto, se define el concepto de markov-blanquet de un nodo X como el
+ conjunto de nodos del grafo que son padres de X o hijos de X o padres de
+ los hijos de X.
+ Por ejemplo, el markov-blanquet de la variable BarcoHundido esta conformado
+ por DesperfectoTecnico y Tormenta, mientras que el de Tormenta está conformado
+ por BarcoHundido, DesperfectoTecnico, Marea y CorrientesDeAire.
+ Luego, establecemos que una variable estocástica será independiente de
+ todas las demás si se conocen los valores de todas las variables de su
+ markov-blanquet.
+ Ejemplificando:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(BarcoHundido|Tormenta,DesperfectoTecnico,CorrientesDeAire,Marea,MotorAntiguo)=P(BarcoHundido|Tormenta,DesperfectoTecnico)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+pues Tormenta y DesperfectoTecnico conforman su markov-blanquet.
+ Esto resulta bastante coherente tomando en cuenta nuestro modelo simplificado,
+ pues es razonable que el hecho de poseer un motor antiguo no afecte la
+ probabilidad de sufrir un naufragio, si por ejemplo ya sabemos que este
+ no será causado por un desperfecto técnico.
+ 
+\end_layout
+
+\begin_layout Subsection
+Filtro de Kalman
+\end_layout
+
+\begin_layout Subsubsection
+Tratamiento de señales 
+\end_layout
+
+\begin_layout Standard
+De la literatura del procesamiento de señales con ruido es que viene el
+ término de filtro.
+ Estas herramientas intentan solucionar el problema de estimar una señal
+ original x(t) cuando solo es posible observar 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $y(t)=x(t)+r(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde r(t) es una señal de ruido no conocida.
+ Muchas soluciones a este problema buscan encontrar el x*(t) óptimo tal
+ de maximizar la probabilidad
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p(x(t)|y(0)\ldots y(h))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El nombre que recibe el problema a tratar varía según la relación entre
+ h (los datos a tomar en cuenta) y t (el momento en el que se desea estimar
+ el valor de la señal).
+ Se diferencian tres grandes grupos de problemas
+\end_layout
+
+\begin_layout Itemize
+predicciones: estimar x(t) con datos estrictamente anteriores (h < t)
+\end_layout
+
+\begin_layout Itemize
+filtros: estimar x(t) con datos conocidos hasta el momento (h = t) 
+\end_layout
+
+\begin_layout Itemize
+interpolación: estimar x(t) con datos estrictamente posteriores (h > t)
+\end_layout
+
+\begin_layout Standard
+Nosotros nos concentraremos en los filtros pues son los que luego aplicaremos
+ en la soluciones del problema del SLAM.
+\end_layout
+
+\begin_layout Subsubsection
+Modelado de evolución de Kalman
+\end_layout
+
+\begin_layout Standard
+Para la solución de este problema, Kalman propone un esquema particular
+ [1] que luego resultará muy propicio para la solución del problema de localizac
+ión y construcción de mapas en simultaneo.
+ Kalman elige representar a la componente oculta como un vector que representan
+ de manera completa el estado de un sistema.
+\end_layout
+
+\begin_layout Standard
+El esquema propuesto establece una relación lineal en la evolución del sistema
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x(t)=F.x(t-1)+r(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde x(t) es un vector que representa el estado del sistema, F es una matriz
+ que representa la función de transición de un estado a otro y r(t) representa
+ un ruido en la transición del sistema.
+ A su vez las observaciones son modeladas como una función lineal del estado
+ y un ruido adicional
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $y(t)=H.x(t)+w(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde H es una matriz que representa la función que determina la observación
+ dado el estado y w(t) es el ruido asociado a este proceso.
+\end_layout
+
+\begin_layout Subsubsection
+Representación bayesiana
+\end_layout
+
+\begin_layout Standard
+Una gran ventaja de este modelo es su recursividad.
+ Dado que el valor del estado depende tan solo del estado anterior se torna
+ innecesario utilizar los valores anteriores del estado, disminuyendo el
+ orden computacional del cálculo y el espacio necesario para correr el algoritmo
+ de estimación.Si además observamos que el tiempo es tratado en forma discreta,
+ podemos modelar la evolución del sistema según la red bayesiana de la Fig.
+ 2.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../../../../../pasted2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En esta red bayesiana se puede observar un hecho adicional que está implicito
+ en las ecuaciones de actualización.
+ Las observaciones realizadas serán independientes entre sí.
+ Esto es importante pues es utilizado en las derivaciones de las formulas
+ de actualización del estado.
+ También podemos observar como dado el valor de un estado del sistema 
+\begin_inset Formula $x(t)$
+\end_inset
+
+, los valores posteriores del sistema serán independientes de todos los
+ valores de estado y observaciones previas, reafirmando lo establecido sobre
+ la recursividad de este modelo.
+\end_layout
+
+\begin_layout Standard
+Estimador óptimo Presentado el modelo de evolución del sistema, solo resta
+ encontrar un estimador que nos permita obtener un valor del sistema en
+ un tiempo t dado que sea óptimo según algún criterio.
+ Este criterio podría ser minimizar el costo computacional contemplando
+ un error dado, o minimizar la suma del cuadrado del error en la estimación.
+ Este último criterio es precisamente el que utiliza el filtro de Kalman.
+ Si suponemos que en el timpo t+1 tenemos un estimador no sesgado del estado
+ en el tiempo t (
+\begin_inset Formula $\tilde{x}(t)$
+\end_inset
+
+), podemos definir el error como 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $e(t)=x(t)-\tilde{x}(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este error es en sí una variable estocástica que tendrá valor esperado nulo
+ debido a que el estimador 
+\begin_inset Formula $\tilde{x}(t)$
+\end_inset
+
+ es un estimador sin sezgo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $E(\tilde{x}(t)-x(t))=E(e(t))=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Definidos estas variables, el filtro intentará encontrar un estimador no
+ sezgado del sistema para el tiempo t + 1 tal que presente el menor error
+ cuadrático de estimación.
+ Es decir que se buscará un
+\begin_inset Formula $\tilde{x}(t+1)$
+\end_inset
+
+ tal que
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $E(\tilde{x}(t+1)-x(t+1))=E(e(t+1))=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $E((\tilde{x}(t+1)-x(t+1))^{2})=E(e(t+1)^{2})=E(e(t+1)^{2}-e(t+1))=var(e(t+1)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que 
+\begin_inset Formula $E(e(t+1)$
+\end_inset
+
+es nulo, encontramos que minimizar el error cuadrático es igual a encontrar
+ un estimador tal que tenga la menor varianza posible.
+\end_layout
+
+\begin_layout Subsubsection
+Dinámica del algoritmo
+\end_layout
+
+\begin_layout Standard
+Para encontrar el estimador no sezgado de menor varianza, el algoritmo propuesto
+ realiza dos pasos, correspondientes a cada una de las ecuaciones que describen
+ la evolución del sistema: 
+\end_layout
+
+\begin_layout Itemize
+En primera instancia se realiza un paso de predicción o extrapolación del
+ estado del sistema para el tiempo t+1.
+ 
+\end_layout
+
+\begin_layout Itemize
+Luego, la información sensada es utilizada para hacer una actualización
+ del estimado del estado del sistema.
+\end_layout
+
+\begin_layout Standard
+Además, en cada uno de los pasos se actualiza la varianza del estimador.
+ En esta sección omitiremos la derivación de las fórmulas aplicables a cada
+ paso pero pasaremos a dar pautas generales de los principios que los subyacen.
+ Para una explicación detallada de las derivaciones de las fórmulas puede
+ leerse [2], y para una explicación conceptual de las ideas que se manejan
+ en el filtro puede leerse [3].
+\end_layout
+
+\begin_layout Paragraph
+Paso de predicción
+\end_layout
+
+\begin_layout Standard
+En el paso de predicción, el estado estimado del sistema en el tiempo t
+ es utilizada para estimar el estado en el tiempo t + 1.
+ Dado que el sistema evoluciona de forma lineal, esta estimación se realiza
+ calculando
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x(t+1)=F.x(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La varianza de este estimador se representa por la matriz P(t).
+ Esta varianza es actualizada según la ecuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(t+1)=F.P(t).F^{t}+Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde Q es la matriz que representa la varianza del ruido r(t) explicado
+ en el modelo.
+ Esta ecuación puede ser entendida como la suma de dos varianzas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $var(r(t))=Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $var(F.x(t))=F.var(x(t)).F^{t}=F.P(t).F^{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es importante observar que en este paso la varianza del estimador aumenta
+ con respecto al estimador antes del paso de predicción.
+ Esto es razonable, pues la incertidumbre aumenta en la medida que el sistema
+ cambia debido al ruido presente en el proceso de transición.
+ Si este ruido no existiera, en el mejor de los casos, la varianza P no
+ crecería con el tiempo, pero tampoco disminuiría.
+ Dado que nuestra incertidumbre del sistema aumenta en el paso de predicción,
+ es de esperar que disminuya en el paso siguiente para que nuestro estimador
+ no diverja con el paso del tiempo.
+ A continuación mostraremos que esto efectivamente ocurre.
+\end_layout
+
+\begin_layout Paragraph
+Paso de actualización
+\end_layout
+
+\begin_layout Standard
+Durante el paso de actualización, la información sensada es comparada con
+ la predicción de la información a sensar basada en el estado actual del
+ sistema.
+ Por lo tanto calcularemos, en primer lugar, esta diferencia 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tilde{y}(t+1)=z(t)-H.x(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde z(t) es la observación efectuada en el tiempo t y H es la matriz que
+ relaciona el estado del sistema y las observaciones realizadas.
+ De manera similar podemos expresar la varianza de este estimador como 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S(t+1)=H.P(t).H^{t}+Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde Q representa la matriz del ruido w(t) presentado con el modelo.
+ Luego calcularemos la ganancia de información asociada a esta diferencia.
+ El concepto de ganancia representa una medida de el aporte de información
+ que realizan estos nuevos datos sensados.
+ También puede verse como una relación entre la confianza en la información
+ sensada y la información derivada de la etapa de predicción.
+ Esta ganancia se calcula
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K(t+1)=P(t).H(t)^{t}S(t)^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, se tienen todos los datos para realizar el paso de actualización
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x(t+1)=x(t+1)+K(t+1).\tilde{y}(t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Al observar esta ecuación se puede arribar a algunas conclusiones preliminares
+\end_layout
+
+\begin_layout Itemize
+a menor ganancia (K), habrá un menor cambio en el estimado del sistema con
+ respecto a lo extrapolado en el paso anterior 
+\end_layout
+
+\begin_layout Itemize
+si la diferencia 
+\begin_inset Formula $\tilde{y}(t)$
+\end_inset
+
+ (también denominada innovación) es muy pequeña, el cambio en el sistema
+ no será grande 
+\end_layout
+
+\begin_layout Itemize
+una alta varianza P(t) para el paso anterior, que implica una alta incertidumbre
+ en el valor estimado, implicará una gran ganancia que determinará una actualiza
+ción más significativa 
+\end_layout
+
+\begin_layout Itemize
+una alta varianza en las observaciones realizadas (Q), que implica una alta
+ incertidumbre en los datos sensados, determinará una varianza S grande
+ y por lo tanto un K pequeño, haciendo que la actualización no realice grandes
+ cambios en el valor extrapolado en el paso anterior
+\end_layout
+
+\begin_layout Standard
+Luego resta calcular la nueva covarianza del estimador
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(t+1)=P(t+1)+K(t+1).H(t+1).P(t+1)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Conclusiones
+\end_layout
+
+\begin_layout Standard
+Luego de todo lo expuesto, tenemos un algoritmo que nos permite actualizar
+ de manera iterativa la estimación de un sistema dado bajo las hipotesis
+ (bastante fuertes) de que su transformación es lineal con el tiempo y también
+ lo son las observaciones con respecto al estado del sistema.
+ Si nosotros modelamos la posición de un robot y la de todas las características
+ distinguibles del mapa como el estado del sistema, la aplicación del filtro
+ de Kalman iterativo nos proporciona un método de realizar localización
+ (actulización de la posición del robot) y confeccion de mapas (actualización
+ de la posición de las características) de forma simultanea.
+\end_layout
+
+\begin_layout Section
+Revisión de las implementaciones existentes
+\end_layout
+
+\begin_layout Standard
+A continuación se incluyen tablas de resumen de las implementaciones de
+ SLAM relevadas.
+\end_layout
+
+\begin_layout Subsection
+openslam.org
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Iterated SLSJF: A Sparse Local Submap Joining Algorithm with Improved Consistenc
+y 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Extended Kalman Filter y Extended Information Filter
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Aplicacion de 
+\begin_inset Quotes eld
+\end_inset
+
+Iterative Sparse Local Submap Joining Algorithm
+\begin_inset Quotes erd
+\end_inset
+
+ a submapas generados con EKF.
+ Toma a cada submapa como una observación e interpreta el problema de fusionarlo
+s como un problema de minimización de error cuadrático.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full Slam
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cámara + Odometría y Range Finder (range + bearing) + Odometría
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado.
+ En la simulación con datos reales se preprocesan las imagenes para dar
+ posición de las marcas.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pasivo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 dimensiones
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cerrado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simulación
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simulacion de una grilla de features con un sensor de distancia simulado.
+ Utilización de datos 
+\begin_inset Quotes eld
+\end_inset
+
+DLR-Spatial-Cognition Data Set
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ambas pruebas son simuladas.
+ Se habla de ordenes de decenas de segundos para la resolución del problema.
+ Siempre se aporta información sobre correspondencia con las marcas.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Shoudong Huang, Zhan Wang and Gamini Dissanayake 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2008
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+http://www.araa.asn.au/acra/acra2008/papers/pap102s1.pdf http://services.eng.uts.edu.au/
+~sdhuang/SLSJF_IEEE_TRO_final_2008_May_27.pdf
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CEKF-SLAM
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EKF
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simplificaciones por particularidades de las matrices.
+ Definición de áreas locales, actualizando la covarianza de la estimación
+ de las marcas dentro del área (update local) en cada iteración y realizando
+ una actualización total cuando el robot se mueve de área (actualización
+ total).
+ Ambas modificaciones reducen el costo computacional llegando a un orden
+ 
+\begin_inset Formula $o(N_{a}^{2})$
+\end_inset
+
+ donde 
+\begin_inset Formula $N_{a}$
+\end_inset
+
+es el número de marcas en el área local.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Laser Range Scanner
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pasivo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 dimensiones
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Abierto
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se realizaron pruebas utilizando una camioneta con encoders en las ruedas
+ traseras y un sensor laser instalado en la parte delantera.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se realizaron recorridas de hasta 4 km en una zona abierta donde las principales
+ marcas eran árboles.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se restringe a un ambiente de dos dimensiones.
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jose Guivant, Eduardo Nebot - Australian Centre for Field Robotics (Paper)
+ y Haiqiang Zhang, Lihua Dou la implementación
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2001
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jose Guivant and Eduardo Nebot: Optimization of the Simultaneous Localization
+ and Map Building Algorithm for Real Time Implementation, IEEE TRANSACTIONS
+ ON ROBOTICS AND AUTOMATION, 2001
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DP-SLAM
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Filtro de particulas
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se utiliza un occupancy grid en vez de marcas.
+ El mapa es considerado parte del estado oculto (hidden state) y cada particula
+ estima su propio mapa.
+ Se mantiene un único mapa que mantiene un 
+\begin_inset Quotes eld
+\end_inset
+
+diff
+\begin_inset Quotes erd
+\end_inset
+
+ para cada una de las particulas, que permite ahorrar mucho espacio en memoria
+ y no incurre en costos computacionales en comparación con mantener un mapo
+ por partícula.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online (pero es necesario mucho poder de cómputo)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Laser Range Scanner
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No se utilizan modelos probabilistas, se confía totalmente en las medidas
+ reportadas por el sensor (v1.0).
+ Se utiliza un modelo probabilista de ocupación.
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ruido gausianno con varianzas proporcionales a la magnitud medida.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pasivo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 dimensiones
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cerrado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+iRobot ATRV Jr.
+ con un scanner SICK.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se pruebó el algoritmo en un ciclo de un corredor de 16 m por 14 m.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+El sensor es muy preciso (5 mm aprox de error).
+ Realizan pruebas manteniendo un solo mapa (el mejor) y el cierre del ciclo
+ no se produce adecuadamente.
+ Se requiere una Pentium IV 2.4 Gh para procesar la información en tiempo
+ similares a los de ejecución del robot.
+ El ambiente es muy cerrado y poco ambiguo (solo un loop).
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Austin Eliazar, Ronald Parr - Deparment of Computer Science - Duke University
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2003 (DP-SLAM v 1.0)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Austin Eliazar, Ronald Parr: DP-SLAM: Fast, Robust Simultainous Localization
+ and Mapping Without Predetermined Landmarks, IJCAI, 2003; Austin Eliazar,
+ Ronald Parr: DP-SLAM 2.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EKFMonoSLAM
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EKF
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se utiliza una técnica de eliminación de outliers denominada RANSAC y se
+ integra al algoritmo EKF para introducir más información a este algoritmo.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online (pero es necesario mucho poder de cómputo)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cámara y Cámara + odometría
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pinhole camera model
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Velocidad constante
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pasivo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6 dimensiones
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ambos
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Conjunto de datos experimentales RAWSEED es proporcionado al algoritmo.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se comparan soluciones de RANSAC con 1 y 5 puntos y JCBB, utilizando diferentes
+ párametros.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+*** Falta investigar el tema de Bundle Adjustment
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Giorgio Grisetti, Cyrill Stachniss, Wolfram Burgard
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2006
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Giorgio Grisetti, Cyrill Stachniss, and Wolfram Burgard: Improved Techniques
+ for Grid Mapping with Rao-Blackwellized Particle Filters, IEEE Transactions
+ on Robotics, 2006Giorgio Grisetti, Cyrill Stachniss, and Wolfram Burgard:
+ Improved Techniques for Grid Mapping with Rao-Blackwellized Particle Filters,
+ IEEE Transactions on Robotics, 2006
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FLIRTLib
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FLIRT + RANSAC.
+ Esta solución no implementa un algoritmo d SLAM completo en si.
+ Solo implementa un reconocedor de patrones de sensado utilizando un Laser
+ Range Finder.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ninguna
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No aplica
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Laser Range Finder
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Interesting Points (introducido en el paper).
+ Los IP constan de un conjunto de medidas de rango que conforman un patrón
+ distinguible, permitiendo reconocerlo luego cuando el robot retorna al
+ mismo lugar.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No aplica.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No aplica.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 dimensiones
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Abierto y cerrado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simulación utilizando datasets.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Datasets fr-079, intel, mti-csail utizando un algoritmo de SLAM como 
+\begin_inset Quotes eld
+\end_inset
+
+ground truth
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se llega a buenos resultados
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gian Diego Tipaldi.
+ Kai O.
+ Arras
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2010
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gian Diego Tipaldi and Kai O.
+ Arras: FLIRT - Interest Regions for 2D Range Data, In Proc.
+ of the IEEE International Conference on Robotics and Automation (ICRA),
+ 2010 (http://www.informatik.uni-freiburg.de/~tipaldi/papers/tipaldiICRA10.pdf)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+G2O
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Grafos
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No es un algoritmo de SLAM en si.
+ G2O consiste de una biblioteca para la resolución de problemas de mínimos
+ cuadrados expresado como un grafo de restricciones.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No especificado
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pasivo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7 dimensiones *** Averiguar como hace
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ambos
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Datasets intel y manhattan3500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No está claro.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se compara el tiempo de ejecución pero no los resultados.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rainer Kuemmerle, Giorgio Grisetti, Hauke Strasdat, Kurt Konolige, Wolfram
+ Burgard;
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2011
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rainer Kuemmerle, Giorgio Grisetti, Hauke Strasdat, Kurt Konolige, and Wolfram
+ Burgard: g2o: A General Framework for Graph Optimization, IEEE International
+ Conference on Robotics and Automation (ICRA), 2011 (http://ais.informatik.uni-fre
+iburg.de/publications/papers/kuemmerle11icra.pdfk)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SLAM6D
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Generador de escenas a partir de una nube de puntos 3D.
+ Utiliza Iterative Closest Point y Global Relaxation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N/A
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido (no hay acceso al paper)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No utiliza modelo sensores pues toma los puntos como entrada.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No utiliza modelo de sensado pues toma los puntos como entrada.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No utiliza modelo de odometría pues toma los puntos como entrada.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pasivo
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6 dimensiones
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ambos
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido (no hay acceso al paper)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido (no hay acceso al paper)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido (no hay acceso al paper)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Andreas Nuechter; Kai Lingemann; Jochen Sprickerhof; Dorit Borrmann; Jan
+ Elseberg; Peter Schneider; Deyuan Qui;
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2009
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desconocido (no hay acceso al paper)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Andreas Nuechter: 3D Robotic Mapping, Springer Tracts in Advanced Robotics
+ (STAR), ISBN 978-3540898832, Springer Verlag, 2009
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SLOM
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Least-Squares Problem Optimization
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N/A
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No utiliza sensores pues solo implementa la solución del problema de mínimos
+ cuadrados.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No utiliza modelo de sensado pues solo implementa la solución del problema
+ de mínimos cuadrados.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No utiliza modelo de odometría pues solo implementa la solución del problema
+ de mínimos cuadrados
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N/A
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3D
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ambos
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N/A
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N/A
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+N/A
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Christoph Hertzberg; Udo Frese; 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2008
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No hay información.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+C.
+ Hertzberg: A Framework for Sparse, Non-Linear Least Squares Problems on
+ Manifolds, Diploma Thesis, University of Bremen, 2008 - http://www.informatik.uni
+-bremen.de/agebv/downloads/published/hertzberg_thesis_08.pdf
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nombre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algoritmo Base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modificaciones del algorítmo base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Online SLAM/Full Slam
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensores utilizados
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Modelo de odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activo o Pasivo (control)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensiones de entorno considerado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entorno Abierto o cerrado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Plataforma de prueba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pruebas realizadas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observaciones de las pruebas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Autores
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Año
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sigue en mantenimiento?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Referencias
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Nota para los tutores:
+\end_layout
+
+\begin_layout Standard
+Este documento no pretener ser una primera versión, pero sí muestra el rumbo
+ iniciado por el equipo en lo que refiere al estado del arte y como presentarlo.
+ Algunas de las tareas pendientes para seguir desarrollando el documento
+ son :
+\end_layout
+
+\begin_layout Itemize
+Agregar que el ruido es gausiano 
+\end_layout
+
+\begin_layout Itemize
+Agregar que la varianza puede verse como la incertidumbre 
+\end_layout
+
+\begin_layout Itemize
+Agregar derivación de formulas 
+\end_layout
+
+\begin_layout Itemize
+Agregar apendice de probabilidades en vectores 
+\end_layout
+
+\begin_layout Itemize
+Agregar cuestion de error de observaciones esta ligado 
+\end_layout
+
+\begin_layout Itemize
+Cambiar x(t+1) del update por x-(t+1) 
+\end_layout
+
+\begin_layout Itemize
+Kalman extendido 
+\end_layout
+
+\begin_layout Itemize
+Costo computacional de kalman
+\end_layout
+
+\end_body
+\end_document

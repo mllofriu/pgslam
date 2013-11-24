@@ -1,0 +1,23 @@
+SimulacionesIter1 
+toma la suma de errores como criterios
+parte de las medias 0.2 3.0 50 20
+
+SimulacionesIter2
+toma la suma de errores como criterios
+parte de las medias 0.1 1.5 25 10
+
+SimulacionesIter1 
+toma la suma de errores como criterios
+parte de las minimas 0.3 4.5 75 30
+
+SimUnaCorrida
+Una corrida para provar octave
+private float distNoise[] = {0.0f, 0.01f, 0.02f, 0.03f, 0.04f, 0.05f,0.06f,0.07f,0.08f,0.09f};
+private float distAngle[] = {0.0f, 0.15f, .30f, .45f, .60f, .75f, .90f, .105f, .120f, .135f};
+private float updDist[] = {0.0f, 2.5f, 5f, 7.5f, 10f,12.5f, 15f, 17.5f, 20f, 22.5f};
+private float updAngle[] = {0f, 5f, 10f, 15f, 20f, 25f, 30f,35f,40f,45f};
+
+
+Conclusiones se halla un minimo en simulacionesiter1 en la conf (1.6000e-01   3.3000e+00   7.0000e+01   1.8000e+01) con un valor acumulado de 3.5289e+04 mm (35 m) en diez corridas.
+En Iter2 se encuentra un minimo en la conf (1.0000e-01   1.5000e+00   3.0000e+01   1.4000e+01) de valor 4.9116e+04 (50 m).      
+En Iter3 se encuentra un minimo en la conf ( 3.0000e-01   5.8500e+00   1.0500e+02   3.3000e+01 ) de valor 4.2786e+04 (42 m)

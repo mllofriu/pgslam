@@ -1,0 +1,3405 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Caso de estudio
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+En este capítulo se presenta un problema abordado como caso de estudio y
+ una solución robótica que utiliza un sistema de SLAM  sobre un entorno
+ controlado.
+ Se describe el hardware, diseño mecánico y el software de control de este
+ sistema.
+ 
+\end_layout
+
+\begin_layout Standard
+Además, en este capítulo el lector encontrará una sección dedicada a estudiar
+ el caso de una ejecución de la solución implementada, destinada a facilitar
+ la comprensión de todos los elementos presentados y su interacción.
+\end_layout
+
+\begin_layout Standard
+Finalmente se incluye una sección de análisis de los métodos de calibración
+ del sistema de SLAM considerados.
+\end_layout
+
+\begin_layout Section
+El problema
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:El-problema"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se plantea el problema de recorrer de forma exhaustiva un terreno rectangular,
+ de dimensiones desconocidas para el robot.
+ Se busca solucionar el problema general de encontrar objetos que están
+ distribuidos en el entorno en forma aleatoria y que pueden ser sensados
+ únicamente a corta distancia.
+ A partir de esta propuesta, el robot debe recorrer el entorno realizando
+ el mayor cubrimiento posible del mismo.
+ Además, el robot debe evitar salir de los límites del entorno, delimitados
+ por paredes, acción por la cual será penalizado.
+\end_layout
+
+\begin_layout Standard
+Este problema aparece con frecuencia en la industria.
+ Se pueden citar ejemplos como la limpieza completa de un cuarto o la recorrida
+ de una plantación para cosecha, entre otras actividades.
+ 
+\end_layout
+
+\begin_layout Subsection
+Entorno 
+\end_layout
+
+\begin_layout Standard
+El entorno en el cual se mueve el robot es un rectángulo de 
+\begin_inset Formula $2.0$
+\end_inset
+
+m.
+ de ancho por 
+\begin_inset Formula $2.4$
+\end_inset
+
+m.
+ de largo, de superficie lisa, delimitado por paredes blancas de 
+\begin_inset Formula $60$
+\end_inset
+
+cm.
+ de alto.
+ En el mismo, se encuentran distribuidas seis marcas perfectamente distinguibles
+ por el robot.
+ Estas marcas fueron colocadas cerca de los límites del ambiente de trabajo
+ con el fin de facilitar la navegación del robot.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Entorno-de-pruebas-1"
+
+\end_inset
+
+ se puede observar una vista aérea esquemática del entorno donde ejecutará
+ el robot.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../solucionRecorrida/Inicial.dia
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Entorno de pruebas del robot.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Entorno-de-pruebas-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Los cuadrados etiquetados M1..M6 representan a las marcas.
+ El rectángulo azul representa al robot en su posición inicial y la línea
+ en su interior apunta en la orientación del robot.
+ El rectángulo exterior representa las paredes que delimitan el entorno.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Marcas
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Marcas"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Las marcas son prismas de base cuadrada utilizadas como referencias para
+ el robot.
+ Cada marca mide 
+\begin_inset Formula $15$
+\end_inset
+
+cm.
+ de alto por 
+\begin_inset Formula $5$
+\end_inset
+
+cm.
+ de lado.
+ Posee tres colores diferentes, violeta, naranja y verde, como se explicó
+ en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-sensado"
+
+\end_inset
+
+, y se diferencian entre sí por la combinación vertical de dichos colores.
+ Cada color ocupa 1/3 de la altura de la marca.
+\end_layout
+
+\begin_layout Standard
+Luego de varios experimentos combinando tipos de luz y materiales para las
+ marcas, se determinó que para disminuir el brillo y permitir un mejor sensado,
+ la creación de marcas de goma eva resultaba la mejor opción.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tincho, acá no hay que poner solamente 
+\begin_inset Quotes eld
+\end_inset
+
+las marcas son de goma eva
+\begin_inset Quotes erd
+\end_inset
+
+? Si bien hicimos el proceso de buscar 25000 tipos de marcas distinas, creo
+ q eso no hay q expresarlo.
+ (fede) Intenta ser una explicación de por que goma eva, no un llanto (tincho)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+poner fotos de las marcas, saque pila pero no encuentro donde deje las fotos
+ :S.
+ Bolas (tincho)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Iluminación
+\end_layout
+
+\begin_layout Standard
+Se determinó que la combinación de luz fluorescente
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Luz fluorescente:"
+description "Es la que proviene de luminaria que cuenta con una lámpara de vapor de mercurio a baja presión y que es utilizada normalmente para la iluminación doméstica e industrial. Su gran ventaja frente a otro tipo de lámparas, como las incandescentes, es su eficiencia energética"
+
+\end_inset
+
+ y luz incandescente resultaba la mejor opción para el mejor funcionamiento
+ de la cámara (ver subsubsección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Cámara"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Por que sacamos esto?porque no hay que poner todo el cuentito de lo que
+ fuimos haciendo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se utilizaron tres focos incandescentes de 
+\begin_inset Formula $500$
+\end_inset
+
+ watts, que proporcionaban el nivel de luz necesario para que la detección
+ de las marcas no presentara mayores problemas.
+ La utilización de goma eva para forrar las marcas disminuyó el efecto negativo
+ de quemado y enrojecimiento de los colores producido por la luz incandescente
+ de alta intensidad.
+ 
+\end_layout
+
+\begin_layout Standard
+Adicionalmente a los tres focos incandescentes, se utilizó la iluminación
+ presente en el laboratorio, de fuentes fluorescentes.
+ Esta iluminación adicional contribuyó a la eliminación de sombras en el
+ entorno.
+ En combinación con la presencia de luz incandescente intensa, la luz fluorescen
+te no presentaba las desventajas mencionadas anteriormente.
+\end_layout
+
+\begin_layout Subsection
+Límites
+\end_layout
+
+\begin_layout Standard
+Se colocaron paredes blancas de 60cm.
+ de alto de 
+\emph on
+Carton Plast
+\emph default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Carton Plast:"
+description "Material plástico disponible en láminas, similar al cartón"
+
+\end_inset
+
+ rodeando el entorno para mejorar el rendimiento de la cámara
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Se utiliza una cámara como sensor para detectar las marcas.
+ Esto se explica en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Cámara"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, aislando objetos externos al entorno de trabajo.
+ Se busca disminuir la probabilidad de detectar objetos que no sean marcas
+ (falsos positivos), y que la presencia de objetos extraños pueda afectar
+ la proporción de falsos negativos.
+\end_layout
+
+\begin_layout Section
+Hardware
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Hardware-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El sistema robótico construido se compone de cinco tipos de componentes
+ de hardware diferentes, estos son:
+\end_layout
+
+\begin_layout Itemize
+1 Placa de entrada/salida
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+No es entrada salida.
+ Es una computadora.
+\end_layout
+
+\end_inset
+
+ basada en microcontrolador (en adelante, 
+\begin_inset Formula $\mathit{ladrillo}$
+\end_inset
+
+) LEGO NXT
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mindstorm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+1 Placa computadora FoxBoard G20
+\begin_inset CommandInset citation
+LatexCommand cite
+key "foxboard"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+2 Sensores de ultrasonido
+\end_layout
+
+\begin_layout Itemize
+1 Cámara
+\end_layout
+
+\begin_layout Itemize
+3 Motores
+\end_layout
+
+\begin_layout Standard
+Las características y funciones más relevantes de los componentes utilizados
+ se describen a continuación.
+\end_layout
+
+\begin_layout Subsection
+Ladrillo LEGO
+\end_layout
+
+\begin_layout Standard
+En el ladrillo LEGO se ejecuta el sistema de navegación.
+ Además, los sensores y actuadores utilizados por el agente robótico se
+ encuentran conectados a este, como se describe en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Diseño-mecanico"
+
+\end_inset
+
+.
+ Los aspectos más sobresalientes del ladrillo LEGO son:
+\end_layout
+
+\begin_layout Itemize
+Procesador: Atmel® 32-bit ARM® processor, AT91SAM7S256 
+\end_layout
+
+\begin_layout Itemize
+Frecuencia de reloj: 48MHz
+\end_layout
+
+\begin_layout Itemize
+RAM: 64KB
+\end_layout
+
+\begin_layout Itemize
+FLASH: 256KB
+\end_layout
+
+\begin_layout Itemize
+Comunicación: Bluetooth y USB
+\end_layout
+
+\begin_layout Itemize
+Puertos entrada (sensores): 4 
+\end_layout
+
+\begin_layout Itemize
+Puertos salida (actuadores): 3
+\end_layout
+
+\begin_layout Subsection
+Placa Computadora FoxBoard G20
+\end_layout
+
+\begin_layout Standard
+Una placa computadora es una computadora completa en un sólo circuito impreso.
+ La placa computadora Fox Board G20 cuenta con un microprocesador, memoria
+ flash, memoria RAM, puertos de entrada/salida, ethernet, entre otras prestacion
+es.
+ Las principales características de dicha placa son:
+\end_layout
+
+\begin_layout Itemize
+Procesador: Atmel AT91SAM9G20 ARM9 CPU 
+\end_layout
+
+\begin_layout Itemize
+Frecuencia de reloj: 400Mhz 
+\end_layout
+
+\begin_layout Itemize
+RAM: 64MB 
+\end_layout
+
+\begin_layout Itemize
+Flash: 8MB 
+\end_layout
+
+\begin_layout Itemize
+USB 
+\emph on
+host
+\emph default
+: 2 
+\end_layout
+
+\begin_layout Itemize
+USB 
+\emph on
+device
+\emph default
+: 1 
+\end_layout
+
+\begin_layout Itemize
+Ethernet conector 
+\end_layout
+
+\begin_layout Itemize
+Puertos de entrada/salida: 80
+\end_layout
+
+\begin_layout Subsection
+Sensores y actuadores
+\end_layout
+
+\begin_layout Standard
+El robot cuenta con tres sensores y tres actuadores.
+ Dos de los sensores son ultrasónicos y son utilizados para detectar la
+ proximidad a las marcas y a eventuales obstáculos.
+ El tercer sensor, una cámara, conforma la base del sistema de visión.
+ Por otro lado, dos de los tres actuadores brindan movilidad al robot, mientras
+ que el tercero se ocupa de la rotación de la cámara.
+ Estos componentes se describen a continuación.
+\end_layout
+
+\begin_layout Subsubsection
+Cámara
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Cámara"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La cámara utilizada es una NXTCam-v3
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mindstormSensores"
+
+\end_inset
+
+, que pertenece al grupo de sensores avanzados del Kit LEGO NXT
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mindstorm"
+
+\end_inset
+
+.
+ La cámara posee la capacidad de realizar un preprocesamiento de imagen
+ en el propio firmware.
+ Este firmware reporta sólo los objetos binarios más grandes (en inglés
+ Binary Large Objects, en adelante BLOBS).
+ Esto ocurre debido a que la cámara ordena los BLOBS por tamaño y existe
+ un máximo de 8 BLOBS reportados al mismo tiempo.
+ 
+\end_layout
+
+\begin_layout Standard
+Las características más destacadas de este sensor son:
+\end_layout
+
+\begin_layout Itemize
+Capacidad de distinguir hasta 8 objetos definidos por el usuario de diferentes
+ colores
+\end_layout
+
+\begin_layout Itemize
+Lentes construidos con filtro infrarrojo, que permiten mayor tolerancia
+ a los cambios de luz
+\end_layout
+
+\begin_layout Itemize
+Funciona a 30fps
+\end_layout
+
+\begin_layout Subsubsection
+Ultrasonido
+\end_layout
+
+\begin_layout Standard
+El sensor de ultrasonido se utiliza para medir distancias.
+ Este sensor emite una señal de audio de alta frecuencia y cuenta el tiempo
+ que demora la misma en volver al sensor.
+ Existe una correspondencia entre el tiempo medido y la distancia al objeto
+ más cercano.
+ La especificaciones del sensor son:
+\end_layout
+
+\begin_layout Itemize
+Es capaz de medir en un rango de 0 a 255cm.
+\end_layout
+
+\begin_layout Itemize
+Precisión +/- 3cm.
+\end_layout
+
+\begin_layout Itemize
+Mide distancias en centímetros o pulgadas
+\end_layout
+
+\begin_layout Subsubsection
+Motores
+\end_layout
+
+\begin_layout Standard
+En nuestro caso se utilizan motores del Kit LEGO NXT.
+ Estos motores son del tipo servo que permiten rotación continúa.
+ Además, cuentan con un sensor interno que permite conocer el ángulo relativo
+ que se movió el motor desde su posición inicial.
+\end_layout
+
+\begin_layout Section
+Diseño mecánico 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Diseño-mecanico"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta sección está destinada a presentar al lector los componentes utilizados
+ en la construcción del robot y la estructura del mismo.
+ 
+\end_layout
+
+\begin_layout Subsection
+Componentes
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Componentes"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación, se listan en forma completa, todos los elementos físicos
+ que forman parte del sistema robótico:
+\end_layout
+
+\begin_layout Itemize
+1 Ladrillo (o Brick) del Kit LEGO NXT v2.0 
+\end_layout
+
+\begin_layout Itemize
+1 Placa computadora FoxBoard G20
+\end_layout
+
+\begin_layout Itemize
+2 Sensores de ultrasonido LEGO
+\end_layout
+
+\begin_layout Itemize
+2 Ruedas LEGO con llantas de plástico y cubierta de goma
+\end_layout
+
+\begin_layout Itemize
+1  
+\emph on
+Rueda loca
+\emph default
+ de plástico
+\end_layout
+
+\begin_layout Itemize
+Piezas (bastones, uniones, engranajes) del Kit LEGO NXT v2.0
+\end_layout
+
+\begin_layout Itemize
+3 Motores del Kit LEGO NXT v2.0
+\end_layout
+
+\begin_layout Itemize
+1 Dispositivo USB para conexión inalámbrica
+\end_layout
+
+\begin_layout Subsection
+Estructura
+\end_layout
+
+\begin_layout Standard
+El robot fue diseñado con forma de carrito, utilizando piezas del Kit LEGO
+ NXT v2.0.
+ El mismo, está contenido en un prisma de 
+\begin_inset Formula $26$
+\end_inset
+
+cm.
+ de largo por 
+\begin_inset Formula $20$
+\end_inset
+
+cm.
+ de ancho por 
+\begin_inset Formula $24$
+\end_inset
+
+cm.
+ de alto.
+ El robot posee un eje principal sobre el que están montados dos motores,
+ y a cada uno de estos se acopla una rueda de goma.
+ Una tercera rueda compone el tercer vértice del triángulo de apoyo.
+ Esta última rueda no está acoplada a ningún motor, ejerciendo solamente
+ la función de apoyo (Rueda Loca
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Rueda loca:"
+description "Rueda que gira libremente"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Vistas-del-diseño-mecanico"
+
+\end_inset
+
+ se pueden observar cuatro vistas del robot desde diferentes ángulos.
+ En ella se observa la disposición de los elementos que componen al robot
+ presentados en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Componentes"
+
+\end_inset
+
+.
+ Los elementos más pesados del robot (ladrillo, batería, motores y placa
+ computadora) fueron colocados lo más centrado y cerca del eje posible,
+ de forma de llevar el centro de masa hacia el eje de las ruedas motorizadas.
+ Esto permite al robot realizar rotaciones sobre si mismo, en lugar de describir
+ arcos.
+\end_layout
+
+\begin_layout Standard
+Al frente del robot se colocó una cámara montada sobre un eje motorizado
+ que permite su rotación, de forma de tener un mayor ángulo de visión sin
+ la necesidad de realizar giros con el robot.
+ La cámara fue colocada lo más alto posible en concordancia con el modelo
+ de visión utilizado, según se detalla en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-sensado"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Finalmente, el robot posee sensores ultrasónicos colocados en la parte frontal
+ inferior del mismo para detectar obstáculos como las marcas o los límites
+ del entorno.
+ 
+\end_layout
+
+\begin_layout Standard
+Se consideró que el tamaño del robot debería ser el menor posible para poder
+ aprovechar más el tamaño del escenario de trabajo y lo suficientemente
+ robusto para cargar con el hardware necesario para implementar SLAM.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robotVistaFrente.jpg
+	lyxscale 10
+	display false
+	width 30text%
+	height 30text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista frontal del robot.
+ En el recuadro superior se observa la cámara utilizada por el sistema de
+ visión, mientras que en inferior se aprecian los dos sensores ultrasónicos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robotVistaAtras.jpg
+	lyxscale 10
+	display false
+	width 28.5text%
+	height 28.5text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista trasera del robot donde se destaca la placa computadora (recuadro
+ superior) y el ladrillo LEGO (recuadro inferior).
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robotVistaPanor.jpg
+	lyxscale 10
+	display false
+	width 30text%
+	height 30text%
+	keepAspectRatio
+	clip
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista panorámica del robot.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/robotVistaInferior.jpg
+	lyxscale 10
+	display false
+	width 28.5text%
+	height 28.5text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Vista inferior del robot donde se observa la disposición triangular de las
+ ruedas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diferentes vistas del robot.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Vistas-del-diseño-mecanico"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Software
+\end_layout
+
+\begin_layout Standard
+A continuación se describen los mecanismos de instanciación del sistema
+ de SLAM descrito en el capítulo anterior.
+ Más adelante se describe el sistema de recorrido implementado para solucionar
+ el problema de cubrimiento.
+\end_layout
+
+\begin_layout Subsection
+Instanciación de los modelos
+\end_layout
+
+\begin_layout Standard
+Para utilizar el sistema de SLAM en la solución del problema de cubrimiento,
+ se implementaron componentes adicionales de software que proporcionan la
+ información de sensado y odometría necesarias a los modelos correspondientes
+ (sensado y movimiento).
+\end_layout
+
+\begin_layout Subsubsection
+Información de sensado
+\end_layout
+
+\begin_layout Standard
+Se implementó una componente de software destinada a la detección de marcas,
+ y a la estimación de la distancia y ángulo relativos de las mismas.
+\end_layout
+
+\begin_layout Standard
+Éste se divide en dos capas diferenciadas:
+\end_layout
+
+\begin_layout Itemize
+La detección de las marcas
+\end_layout
+
+\begin_layout Itemize
+La estimación de la ubicación de la marca
+\end_layout
+
+\begin_layout Standard
+A continuación se describen las principales características de cada capa.
+\end_layout
+
+\begin_layout Paragraph
+Detección de las marcas
+\end_layout
+
+\begin_layout Standard
+La cámara de LEGO presenta una gran componente de ruido en las mediciones
+ que realiza.
+ Además, la calidad de la imagen no permite un calibración precisa de los
+ colores.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calibración "
+
+\end_inset
+
+ se observa una captura de la cámara obtenida utilizando el software de
+ calibración.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/camApesta_2.png
+	lyxscale 10
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Captura de pantalla del software de calibración de la cámara.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Calibración "
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los problemas mencionados hacen difícil la detección de marcas (falsos negativos
+) debido al ruido, y también aumentan la probabilidad de detectar objetos
+ que no corresponden (falsos positivos) debido a la imprecisión de la configurac
+ión de los colores.
+\end_layout
+
+\begin_layout Standard
+Para solucionar estos problemas se diseñaron las marcas para que fueran
+ fácilmente detectables por la cámara y que permitieran filtrar los falsos
+ positivos.
+\end_layout
+
+\begin_layout Standard
+Experimentalmente se determinó que a mayor cantidad de colores configurados
+ para la detección en la cámara, mayor es la cantidad de falsos negativos
+ en el reconocimiento de un objeto.
+ Esto se debe a que la calidad de la imagen proporcionada no permite distinguir
+ bien un color de otro, y los colores configurados no pueden solaparse,
+ lo que lleva al usuario a configurar los colores con muy poco margen de
+ tolerancia.
+ Luego, pequeños cambios en la iluminación pueden afectar el reconocimiento
+ de los objetos.
+\end_layout
+
+\begin_layout Paragraph
+Diseño de las marcas
+\end_layout
+
+\begin_layout Standard
+En consecuencia, se diseñaron las marcas para que se compusieran de tres
+ objetos distinguibles, de tres colores diferentes.
+ Estos colores son comunes a todas las marcas, de modo que solo es necesario
+ configurar tres colores.
+\end_layout
+
+\begin_layout Standard
+Cada marca consta de una pila de tres cubos, donde el orden de los colores
+ la diferencia perfectamente del resto.
+ El conocimiento 
+\emph on
+a priori
+\emph default
+ de esta información permite filtrar falsos positivos con mayor eficacia.
+ Al buscar tres objetos de colores diferentes, perfectamente alineados,
+ de forma rectangular y tamaño similar disminuye la probabilidad de detectar
+ un falso positivo.
+\end_layout
+
+\begin_layout Standard
+Por otro lado, la oscilación de la cámara y la baja calidad de la imagen,
+ provoca, a veces, errores en la detección de los objetos, variando su tamaño
+ en alguna dimensión, su posición, o ambos.
+\end_layout
+
+\begin_layout Paragraph
+Modelo bayesiano
+\end_layout
+
+\begin_layout Standard
+Para integrar la información 
+\emph on
+a priori
+\emph default
+ de la forma de las marcas y contemplar las anomalías en el sensado de la
+ cámara, se implementó un modelo inverso de sensado, como el utilizado en
+ los sensores de distancia
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:2000:IAR:517685"
+
+\end_inset
+
+, que utiliza la regla de Bayes de la probabilidad condicional.
+ 
+\end_layout
+
+\begin_layout Standard
+La idea de base es tomar uno a uno los objetos detectados como uno de los
+ tres objetos de una potencial marca 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Luego, se establecen las distribuciones de probabilidades de los dos objetos
+ restantes.
+ Finalmente, se itera sobre el producto cartesiano de las particiones de
+ objetos ordenadas por color, hallando la probabilidad de sensar cada conjunto,
+ dado que la marca se corresponde a la marca 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Los conjuntos de objetos que superan un umbral preestablecido de probabilidad
+ son considerados marcas sensadas y son pasados a la capa siguiente.
+ En caso de que sea más de una marca la que pasa a la siguiente capa, se
+ actualiza cada observación de forma individual.
+\end_layout
+
+\begin_layout Paragraph
+Estimación de la ubicación de las marcas
+\begin_inset CommandInset label
+LatexCommand label
+name "par:Estimación-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una vez detectada una marca, se estima la distancia y ángulo relativo al
+ robot.
+\end_layout
+
+\begin_layout Standard
+Esto se hace con modelos polinómicos aprendidos en base a datos de entrenamiento
+, según se hace en 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+aqui además de la ref habría q poner un nombre o algo - ???
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "distAlfredo"
+
+\end_inset
+
+.
+ Esta solución se basa en los modelos de cámara Pinhole presentados en la
+ sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Sensado"
+
+\end_inset
+
+.
+ Para evitar la estimación de los parámetros intrínsecos de la cámara y
+ presentar una robustez mayor ante la distorsión generada por los lentes,
+ se utilizaron polinomios aprendidos en base a muestras de datos reales,
+ en lugar de realizar los cálculos teóricos del modelo Pinhole.
+\end_layout
+
+\begin_layout Standard
+Para la estimación de la distancia se utiliza la coordenada 
+\begin_inset Formula $y$
+\end_inset
+
+ del píxel más bajo de la marca, que presenta un estimador más estable de
+ la distancia que la medición del tamaño de los objetos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "distGismero"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La estimación del ángulo se realiza tomando como dato la coordenada 
+\begin_inset Formula $x$
+\end_inset
+
+ del centro de la marca.
+\end_layout
+
+\begin_layout Standard
+Para la determinación de los polinomios que mejor ajustan a los datos, se
+ utilizó la función 
+\emph on
+polyfit
+\emph default
+ de Octave
+\begin_inset CommandInset citation
+LatexCommand cite
+key "octave"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Información de odometría
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Información-de-odometría"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La información de odometría fue obtenida la clase DifferentialPilot implementada
+ en LeJOS.
+ Este sistema permite registrarse como observador de eventos de odometría.
+\end_layout
+
+\begin_layout Standard
+De esta forma, el sistema de SLAM es avisado cada vez que existe nueva informaci
+ón de los movimientos realizados por el robot.
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-desacoplamiento.-1-1"
+
+\end_inset
+
+ se puede observar el componente de desacoplamiento modificado, con el agregado
+ de esta instancia particular de 
+\emph on
+MoveProvider.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/desacoplamientoConDespliegue.dia
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de desacoplamiento.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-desacoplamiento.-1-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Despliegue de subsistemas de SLAM
+\end_layout
+
+\begin_layout Standard
+La arquitectura del sistema es distribuida y se despliega en tres plataformas
+ de cómputo diferentes: un ladrillo LEGO, una placa Fox Board G20 y una
+ PC de propósito general.
+ Esta última se usa sólo a propósitos de monitoreo, el SLAM se realiza completam
+ente en el hardware del robot.
+\end_layout
+
+\begin_layout Subsubsection
+La PC
+\end_layout
+
+\begin_layout Standard
+La inclusión de la PC como parte del sistema responde a:
+\end_layout
+
+\begin_layout Enumerate
+El requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Depuración"
+
+\end_inset
+
+: la PC cumple la función de receptora de los datos de depuración enviados.
+\end_layout
+
+\begin_layout Enumerate
+El requerimiento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Facilitar-la-investigación"
+
+\end_inset
+
+: la implementación de los sistemas desplegados en la PC permiten monitorear
+ e interpretar los datos producidos en los procesos de parametrización y
+ los experimentos para la comprensión del sistema.
+\end_layout
+
+\begin_layout Subsubsection
+Arquitectura distribuida
+\end_layout
+
+\begin_layout Standard
+Debido a las limitantes de procesamiento del ladrillo de LEGO, se utiliza
+ también la placa Fox Board G20, en la que se realizan las tareas de mayor
+ carga, en términos computacionales.
+ A continuación se incluye una descripción de cómo se distribuyen las tareas:
+\end_layout
+
+\begin_layout Itemize
+Un ladrillo LEGO dedicado a las tareas de control (exploración) del robot
+ y sensado del ambiente.
+\end_layout
+
+\begin_layout Itemize
+Una placa computadora Fox Board G20 dedicada a la ejecución del sistema
+ de SLAM implementado.
+\end_layout
+
+\begin_layout Standard
+Ambos componentes de hardware ejecutan en paralelo y se comunican utilizando
+ el protocolo que se mencionó anteriormente en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Comunicación"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Configuración de despliegue
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye la descripción del despliegue de cada subsistema
+ en cada unidad de hardware:
+\end_layout
+
+\begin_layout Itemize
+Ladrillo Lego: Aquí se despliegan las funciones control del movimiento,
+ ajenas al subsistema de desacoplamiento
+\end_layout
+
+\begin_layout Itemize
+Fox Board G20: Aquí se despliegan los subsistemas de desacoplamiento, partículas
+, modelos, comunicación y el de random
+\end_layout
+
+\begin_layout Itemize
+PC: Aquí se despliegan los subsistemas de comunicación (la parte de la PC)
+ y utilidades PC
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-despliegue"
+
+\end_inset
+
+ se puede apreciar el despliegue de los componentes de la arquitectura de
+ SLAM instanciada.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename diagramas/diaClases.dia
+	lyxscale 50
+	display false
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de despliegue de las clases de la arquitectura.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-despliegue"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Desacoplamiento
+\end_layout
+
+\begin_layout Standard
+Debido a que el sistema de partículas se ejecuta en la placa computadora
+ Fox Board G20 y el ladrillo LEGO es quien posee los sensores e información
+ de odometría, estos comandos son serializados y enviados a la Fox Board
+ G20 (a través de conexión USB).
+\end_layout
+
+\begin_layout Standard
+La clase 
+\emph on
+CmdProxy 
+\emph default
+recibe información por dos canales:
+\end_layout
+
+\begin_layout Itemize
+Mediante la implementación de un patrón 
+\emph on
+Observer
+\emph default
+.
+ La clase 
+\emph on
+CmdProxy 
+\emph default
+escucha los eventos generados por las clases 
+\emph on
+DifferentialPilot
+\emph default
+ del sistema de LeJOS.
+ Estos eventos se corresponden con el inicio y fin de un movimiento del
+ robot.
+\end_layout
+
+\begin_layout Itemize
+Mediante llamadas explícitas del comportamiento del robot a operaciones
+ de 
+\emph on
+update
+\emph default
+, realizadas por el módulo de detección de marcas.
+\end_layout
+
+\begin_layout Standard
+Esta información es serializada y enviada a la clase 
+\emph on
+CmdPoseProvider
+\emph default
+ utilizando los mecanismos de comunicación implementados.
+\end_layout
+
+\begin_layout Standard
+Para transmitir esta información, se implementaron dos clases que instancian
+ la clase comunicación, NXTCom y PCCom, como puede verse en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Subsistema-de-comunicación.-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagramas/comunicacion.dia
+	lyxscale 50
+	width 60text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Subsistema de comunicación.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Subsistema-de-comunicación.-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, los comandos son recibidos por 
+\emph on
+CmdPoseProvider
+\emph default
+ y encolados para su ejecución, cuando el subsistema de partículas esté
+ pronto para recibir nueva información.
+\end_layout
+
+\begin_layout Subsection
+Sistema de Recorrido
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Sistema de recorrido"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En alto nivel, el algoritmo de recorrida busca realizar el cubrimiento total
+ del escenario.
+\end_layout
+
+\begin_layout Standard
+Se plantea una solución basada en comportamientos que utiliza la implementación
+ de subsumption de LeJOS
+\begin_inset CommandInset citation
+LatexCommand cite
+key "subsumption"
+
+\end_inset
+
+.
+ Se definieron un conjunto de comportamientos que toman el control del robot
+ en diferentes situaciones.
+\end_layout
+
+\begin_layout Standard
+Todos los comportamientos comparten una misma representación, que consta
+ de:
+\end_layout
+
+\begin_layout Itemize
+Una serie de puntos a visitar (
+\emph on
+waypoints
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+La posición brindada por el sistema de SLAM 
+\end_layout
+
+\begin_layout Itemize
+Una variable de estado que indica el sentido actual de recorrida, que puede
+ tomar dos valores 
+\begin_inset Quotes eld
+\end_inset
+
+yendo
+\begin_inset Quotes erd
+\end_inset
+
+ y 
+\begin_inset Quotes eld
+\end_inset
+
+volviendo
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Comportamientos
+\end_layout
+
+\begin_layout Standard
+A continuación se incluye una descripción de los comportamientos implementados
+ en la solución.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+WayPointFollower
+\emph default
+: navega por los 
+\emph on
+waypoints
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Waypoints:"
+description "Puntos distinguibles que establecen una ruta a navegar"
+
+\end_inset
+
+
+\emph default
+ presentes en la lista actual de 
+\emph on
+waypoints
+\emph default
+.
+ Este sistema utiliza la información de ubicación proporcionada por el sistema
+ de SLAM para navegar a cada 
+\emph on
+waypoint
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+WallStopper
+\emph default
+: Detiene el robot al detectar un obstáculo utilizando dos sensores de distancia
+ colocados en su parte delantera.
+ Elimina todos los 
+\emph on
+waypoints
+\emph default
+ actuales y crea un nuevo 
+\emph on
+waypoint
+\emph default
+ que provoca que el robot navegue paralelo a la pared una distancia determinada.
+ El sentido de navegación depende de la variable de sentido de la recorrida.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+WayPointCreator
+\emph default
+: cuando la lista de 
+\emph on
+waypoints
+\emph default
+ está vacía, genera un número de nuevos 
+\emph on
+waypoints
+\emph default
+ mayor que el ancho del escenario, que hacen que el robot navegue paralelo
+ al eje de las 
+\emph on
+
+\begin_inset Formula $x$
+\end_inset
+
+
+\emph default
+ del mapa, manteniendo la coordenada 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Vision
+\emph default
+: Detiene el robot para observar una marca presente en el rango de visión
+ y estimar su distancia.
+ Luego, esta información es utilizada para actualizar el sistema de SLAM.
+\end_layout
+
+\begin_layout Subsubsection
+Análisis de la ejecución esperada
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Análisis-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A modo de ilustrar la conducta de los comportamientos implementados, se
+ incluye el análisis paso a paso de una ejecución acorde a lo que se espera:
+\end_layout
+
+\begin_layout Enumerate
+El robot se encuentra en el punto de partida.
+ Dado que no existen 
+\emph on
+waypoints
+\emph default
+, el comportamiento 
+\emph on
+WayPointCreator 
+\emph default
+toma el control y genera una serie de 
+\emph on
+waypoints 
+\emph default
+como se muestran en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Waypoints-iniciales-creados."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Luego, el comportamiento 
+\emph on
+WayPointFollower
+\emph default
+ toma la ejecución y navega uno a uno los 
+\emph on
+waypoints 
+\emph default
+existentes.
+ Ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Navegando-los-waypoints."
+
+\end_inset
+
+.
+ Es importante notar que luego de llegar a cada 
+\emph on
+waypoint, 
+\emph default
+el navegador utiliza la ubicación proporcionada por el sistema de SLAM para
+ decidir como llegar al nuevo 
+\emph on
+waypoint
+\emph default
+.
+\end_layout
+
+\begin_layout Enumerate
+Camino hacia un 
+\emph on
+waypoint,
+\emph default
+ el robot detecta una marca y se detiene para observarla mejor y determinar
+ la distancia a la que se encuentra, ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:El-robot-observa"
+
+\end_inset
+
+.
+ Esto es ejecutado por el comportamiento 
+\emph on
+Vision
+\emph default
+ que toma el control en el momento en que se observa la marca.
+ La información sensada es enviada al sistema de SLAM.
+ Luego, este comportamiento devuelve el control y es el comportamiento WayPointF
+ollower el que genera que se continúe con el trayecto preestablecido por
+ WayPointCreator.
+\end_layout
+
+\begin_layout Enumerate
+Cuando el robot llega a la proximidad de una pared o una marca, ver figura
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pared"
+
+\end_inset
+
+, el comportamiento 
+\emph on
+WallStopper 
+\emph default
+elimina los 
+\emph on
+waypoints
+\emph default
+ restantes y genera un nuevo 
+\emph on
+waypoint
+\emph default
+ acorde a la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comportamiento-de-WallStopper."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Una vez más, el comportamiento 
+\emph on
+WayPointFollower
+\emph default
+ toma la ejecución y navega hasta el 
+\emph on
+waypoint
+\emph default
+ generado por el comportamiento 
+\emph on
+WallStopper, 
+\emph default
+ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Navegando-al-paralelo"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Finalmente, dado que no hay 
+\emph on
+waypoints
+\emph default
+ a navegar, el comportamiento 
+\emph on
+WayPointCreator 
+\emph default
+toma el control nuevamente y el ciclo vuelve a comenzar, ver figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nueva-generación-de"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="right" valignment="top" width="0pt">
+<column alignment="right" valignment="top" width="0pt">
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../solucionRecorrida/primerosWays.dia
+	width 25text%
+	height 25text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\emph on
+Waypoints 
+\emph default
+iniciales creados.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Waypoints-iniciales-creados."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+|
+\begin_inset Graphics
+	filename ../solucionRecorrida/primerWayNavegado.dia
+	lyxscale 40
+	width 25text%
+	height 25text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Navegando los 
+\emph on
+waypoints.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Navegando-los-waypoints."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../solucionRecorrida/observaMarca.dia
+	width 25text%
+	height 25text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+El robot observa una marca.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:El-robot-observa"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../solucionRecorrida/pared1.dia
+	lyxscale 40
+	width 25text%
+	height 25text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+El robot detecta una pared.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pared"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../solucionRecorrida/pared2.dia
+	width 25text%
+	height 25text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Comportamiento de 
+\emph on
+WallStopper.
+\emph default
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Comportamiento-de-WallStopper."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../solucionRecorrida/navVert.dia
+	lyxscale 40
+	width 25text%
+	height 25text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Navegando al paralelo a la pared hasta el 
+\emph on
+waypoint
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Navegando-al-paralelo"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejecución esperada.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../solucionRecorrida/segundosWays.dia
+	lyxscale 40
+	width 30text%
+	height 30text%
+	keepAspectRatio
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Nueva generación de 
+\emph on
+waypoints.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nueva-generación-de"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de una corrida
+\end_layout
+
+\begin_layout Standard
+A continuación se describe una ejecución del sistema de SLAM implementado,
+ en la cual el lector puede ver como los sistemas y subsistemas mencionados
+ anteriormente interactúan entre sí.
+\end_layout
+
+\begin_layout Enumerate
+Cuando el sistema inicia, se da de alta un conjunto de partículas, en una
+ posición inicial establecida y con el mismo ángulo.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Inicialización-del-sistema."
+
+\end_inset
+
+ se puede ver que todas las partículas (círculo rojo) están concentradas
+ en el mismo punto (por eso se ve como una sola).
+ El círculo azul corresponde a la partícula promedio.
+ La mancha gris corresponde al terreno cubierto por el robot.
+ Al principio, el sistema no posee ningún mapa del entorno.
+ Luego, el robot comienza a resolver la navegación como se explicó en la
+ sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Análisis-de-la"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/estadoInicial.png
+	lyxscale 70
+	width 30text%
+	height 30text%
+	keepAspectRatio
+	clip
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Estado inicial del sistema.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Inicialización-del-sistema."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Luego que el robot comienza a moverse y completa un movimiento de avance
+ o giro, el ladrillo le envía a la Fox Board (MCLPoseProvider) un comando
+ llamado applyMove para que este último aplique el nuevo movimiento sobre
+ las partículas (paso de predicción).
+ Esta invocación se realiza mediante el sistema de desacoplamiento, donde
+ la clase Proxy en el ladrillo envía un mensaje 
+\emph on
+Command 
+\emph default
+a CmdPoseProvider en la Fox, que encola el comando para ser procesado cuando
+ el sistema de partículas esté disponible.
+\end_layout
+
+\begin_layout Enumerate
+Para cada partícula, utilizando el modelo de movimiento como se explicó
+ en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-movimiento"
+
+\end_inset
+
+, se estima su nueva posición 
+\begin_inset Formula $(x,y,\theta)$
+\end_inset
+
+, acción que se puede ver reflejada en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:movimientorobot"
+
+\end_inset
+
+.
+ El peso de las partículas se mantiene inalterado, pero el sistema en general
+ pierde confianza ya que las partículas están más dispersas.
+ La dispersión de las partículas ocurre sólo en la dirección de avance del
+ robot debido a que este sólo realizó movimientos de desplazamiento y no
+ de rotación, por lo que no existe incertidumbre con respecto a la rotación,
+ y las partículas se mueven todas en el mismo sentido.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/errorAvance.png
+	lyxscale 70
+	width 30text%
+	height 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aplicación de applyMove (
+\emph on
+predict
+\emph default
+) al completar un movimiento.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:movimientorobot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+Además, se puede apreciar como se dispersaron las partículas en el plano
+ horizontal debido al error en el desplazamiento.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+El robot continúa moviéndose y enviando el comando applyMove cada vez que
+ completa un movimiento.
+ Esto se mantiene así hasta que el robot observa una marca.
+\end_layout
+
+\begin_layout Enumerate
+Una vez que el robot observa una marca, se envía un comando update al MCLPosePro
+vider.
+ Esto desencadena tres procesos: la actualización del mapa en cada partícula,
+ la actualización del peso de cada partícula y la evaluación de la necesidad
+ de hacer resampling .
+ Los tres procesos se describen con mayor detalle a continuación:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+El proceso de integrar la nueva observación al mapa, implica que para cada
+ partícula se actualice el FK correspondiente a la estimación de dicha marca.
+ En este caso la partícula genera un nuevo FK correspondiente a la estimación
+ de la marca observada, debido a que esta marca no existía en su mapa.
+\begin_inset Newline newline
+\end_inset
+
+Debido a que las partículas presentaban un alto grado de dispersión, el
+ conjunto de estimaciones de la marca amarilla también presenta un alto
+ grado de dispersión.
+ Esto se puede ver en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Integración-de-la"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/estimacion1raMarcao.png
+	lyxscale 70
+	width 30text%
+	height 30text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Integración de una nueva observación al sistema.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Integración-de-la"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+Se puede apreciar la distribución de las partículas (círculos rojos) en
+ el mapa (acorde al error en el avance y la rotación).
+ Además, en amarillo, se muestra la estimación de la marca observada según
+ cada partícula.
+ El círculo amarillo representa la distancia estimada en torno a la marca
+ identificada.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Luego, se calculan los pesos de cada partícula teniendo en cuenta la nueva
+ observación y el mapa mantenido por cada una.
+\end_layout
+
+\begin_layout Enumerate
+Como esta marca es observada por primera vez, no proporciona nueva información
+ sobre la verosimilitud de una partícula u otra, por lo que la distribución
+ de los pesos será totalmente uniforme, es decir que tendrán varianza cero.
+ Por lo tanto, no se realizará el paso de resampling.
+\end_layout
+
+\begin_layout Standard
+Más adelante, luego de dar de alta otras marcas, se observa nuevamente la
+ marca amarilla y se realiza el resampling.
+ En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Proceso-de-resampling."
+
+\end_inset
+
+ podemos apreciar el resultado del proceso de resampling.
+\begin_inset Newline newline
+\end_inset
+
+Se puede observar un ligero cambio en la posición promedio estimada luego
+ del resampling.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="right" valignment="top" width="0pt">
+<column alignment="right" valignment="top" width="0pt">
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/antesResampling.png
+	lyxscale 40
+	width 40text%
+	height 50text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Distribución de los respectivos mapas generados por cada partícula.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+|
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/despuesResampling.png
+	lyxscale 40
+	width 40text%
+	height 50text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+ Se puede observar que las partículas con mayor verosimilitud se mantuvieron
+ en el sistema y además como disminuye la incertidumbre en la posición y
+ en el mapa.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Proceso de resampling en una ejecución.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Proceso-de-resampling."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Calibración de parámetros
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Parametrización"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El rendimiento del sistema de SLAM implementado depende de los valores de
+ ciertos parámetros del algoritmo.
+ A continuación detallamos la naturaleza de estos parámetros.
+\end_layout
+
+\begin_layout Subsection
+Parámetros
+\end_layout
+
+\begin_layout Paragraph
+Parámetros del Modelo de Movimiento
+\end_layout
+
+\begin_layout Standard
+Como se explicó en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-movimiento"
+
+\end_inset
+
+, el modelo de movimiento depende de dos parámetros correspondientes a las
+ varianzas de las distribuciones que modelan el ruido de desplazamiento.
+ 
+\end_layout
+
+\begin_layout Standard
+Estos parámetros deben establecerse de modo que reflejen los errores cometidos
+ por el robot al moverse.
+ Al aumentar el valor de estos parámetros, se contempla un mayor error potencial
+mente cometido por el robot.
+ Sin embargo, si este parámetro es demasiado alto, la dispersión de las
+ partículas aumenta rápidamente y nunca se logra un estimado preciso de
+ la posición.
+\end_layout
+
+\begin_layout Paragraph
+Parámetros del Modelo de Sensado
+\end_layout
+
+\begin_layout Standard
+En la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Modelo-de-sensado"
+
+\end_inset
+
+ se explicó que el modelo de sensado depende de un solo parámetro.
+ Este debe ser configurado para reflejar la confianza en la estimación de
+ la posición de la marca sensada.
+\end_layout
+
+\begin_layout Standard
+Al aumentar el valor de este parámetro, la confianza en los valores sensados
+ disminuye, aumentando la robustez del sistema ante medidas erróneas.
+ Sin embargo, si estos valores son demasiado altos, la información aportada
+ al sistema de SLAM por cada valor sensado disminuye, debido a que este
+ sistema no confía en estas medidas realizadas.
+ Esto torna imposible la convergencia del sistema en base a la eliminación
+ de partículas inverosímiles.
+\end_layout
+
+\begin_layout Paragraph
+Parámetro de resampling
+\begin_inset CommandInset label
+LatexCommand label
+name "par:Parámetro-de-resampling"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se comentó en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Proceso-de-Resampling"
+
+\end_inset
+
+, se implementó un parámetro que controla la frecuencia con la que se realiza
+ el paso de 
+\emph on
+resampling
+\emph default
+.
+\end_layout
+
+\begin_layout Paragraph
+Observaciones
+\end_layout
+
+\begin_layout Standard
+Es importante destacar que los parámetros correspondientes a los modelos
+ de sensado y movimiento suelen ser más relajados de lo que deberían ser
+ en teoría.
+ Es decir, que suelen representar más incertidumbre sobre las medidas y
+ movimientos realizados que la incertidumbre real.
+ Esto se hace de esta forma para evitar que la región de alta probabilidad
+ del modelo de sensado coincida con una zona sin partículas, lo que causaría
+ anomalías en el proceso de 
+\emph on
+resampling
+\emph default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "citeulike:560702"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Métodos de calibración
+\end_layout
+
+\begin_layout Standard
+Tomando en cuenta que existen cuatro parámetros a configurar, para los cuales
+ se decidió elegir 
+\begin_inset Formula $5$
+\end_inset
+
+ valores para cada uno, existen 
+\begin_inset Formula $5^{4}$
+\end_inset
+
+ combinaciones de parámetros a probar.
+ Además, dado que el rendimiento del sistema en una ejecución depende del
+ azar
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+cambiar esto, poner lo mismo que pongamos en pruebas
+\end_layout
+
+\end_inset
+
+, deben realizarse varias ejecuciones por combinación de parámetros para
+ evaluar estadísticamente el rendimiento del sistema utilizando una configuració
+n dada.
+ Se eligió 
+\begin_inset Formula $5$
+\end_inset
+
+ como un valor de corridas razonable tanto para no sesgar el experimento
+ como para no invertir mucho tiempo en la ejecución de las pruebas.
+ 
+\end_layout
+
+\begin_layout Standard
+Tomando estos números como cotas inferiores, se deben realizar al menos
+ 
+\begin_inset Formula $5*5^{4}=3125$
+\end_inset
+
+ ejecuciones para determinar el mejor conjunto de parámetros para el sistema
+ de SLAM.
+ Se estimaron empíricamente unos diez minutos destinados a realizar cada
+ una de las ejecuciones.
+ Luego, se tienen que invertir 
+\begin_inset Formula $31250$
+\end_inset
+
+ minutos, es decir 
+\begin_inset Formula $52$
+\end_inset
+
+ horas para realizar todas las ejecuciones.
+ 
+\end_layout
+
+\begin_layout Standard
+Este valor resultaba demasiado grande ya que las pruebas debían supervisadas,
+ además en muchos casos se debía reiniciar las pruebas debido a que la cámara
+ dejaba de funcionar u otros errores en el hardware del robot.
+ Luego, se decidió acortar los tiempos corriendo la calibración en simulaciones,
+ utilizando un conjunto de datos reales, recabados utilizando nuestro robot
+ previamente.
+ 
+\end_layout
+
+\begin_layout Subsection
+Conjuntos de datos
+\end_layout
+
+\begin_layout Standard
+La utilización de datos (
+\emph on
+datasets
+\emph default
+) es una práctica usual en la evaluación de un algoritmo de SLAM.
+ Pueden encontrarse sitios dedicados a la publicación de estos conjuntos
+ de datos, como por ejemplo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "datasets"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Los conjuntos de datos constan de una lista de datos de sensado y movimiento
+ realizados por un robot real, que constituyen toda la entrada de un algoritmo
+ de SLAM pasivo.
+ Utilizando estos datos, puede ejecutarse un algoritmo repetidas veces sin
+ tener que recurrir a la plataforma robótica real.
+\end_layout
+
+\begin_layout Standard
+Opcionalmente, el conjunto de datos puede incluir información de la ubicación
+ real del robot, a fin de evaluar el desempeño del sistema simulado.
+\end_layout
+
+\begin_layout Paragraph
+Obtención de los conjuntos de datos
+\end_layout
+
+\begin_layout Standard
+Se recabaron 12 conjuntos de datos correspondientes a diferentes ejecuciones
+ de un algoritmo de exploración ejecutado por el robot en el ambiente de
+ pruebas.
+\end_layout
+
+\begin_layout Standard
+El ambiente de pruebas constaba del mismo escenario descrito en la sección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:El-problema"
+
+\end_inset
+
+, con la salvedad que las marcas estaban espacialmente dispuestas de forma
+ diferente.
+ Además, el entorno contaba con líneas dispuestas sobre el suelo utilizadas
+ para delimitar el entorno de navegación, como se puede apreciar en la figura
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Ambiente-de-pruebas."
+
+\end_inset
+
+.
+ En este ambiente, el robot navegaba en el rectángulo interno del entorno,
+ sin atravesar líneas (se utilizó un sensor de escala de grises apuntando
+ hacia el suelo).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/r3c_recortada.png
+	lyxscale 30
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ambiente de pruebas.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Ambiente-de-pruebas."
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+poner la marcas en el centro??
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Durante la ejecución, el robot realiza tareas de exploración al azar, mientras
+ se envían datos de movimiento y sensado a una PC.
+ 
+\end_layout
+
+\begin_layout Standard
+Al mismo tiempo, esta PC se comunica con un sistema de localización global
+ basado en cámaras, utilizado en fútbol de robots, de nombre Doraemon
+\begin_inset CommandInset citation
+LatexCommand cite
+key "doraemon"
+
+\end_inset
+
+.
+ El sistema de localización global detecta un parche colocado en la parte
+ superior del robot y brinda coordenadas de la ubicación del robot en los
+ momentos que se sensa una línea en el suelo.
+\end_layout
+
+\begin_layout Standard
+La información de la posición real del robot se incluyó en los conjuntos
+ de datos.
+\end_layout
+
+\begin_layout Subsection
+Métrica de rendimiento
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Métrica-de-rendimiento"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Utilizando los conjuntos de datos, puede simularse la ejecución del sistema
+ de SLAM para medir el rendimiento de un determinado conjunto de parámetros.
+\end_layout
+
+\begin_layout Standard
+Sin embargo, para esto deben definirse métricas que permitan comparar el
+ resultado de dos ejecuciones sobre los conjuntos de datos.
+\end_layout
+
+\begin_layout Standard
+Se identificaron varias métricas posibles:
+\end_layout
+
+\begin_layout Itemize
+La suma del error cometido por el sistema
+\end_layout
+
+\begin_layout Itemize
+El error promedio cometido por el sistema
+\end_layout
+
+\begin_layout Itemize
+El error máximo cometido por el sistema
+\end_layout
+
+\begin_layout Itemize
+Indicador RMS (
+\emph on
+root mean squared
+\emph default
+) de la estimación de la coordenada 
+\begin_inset Formula $x$
+\end_inset
+
+ o 
+\begin_inset Formula $y$
+\end_inset
+
+ utilizado en la literatura de SLAM
+\end_layout
+
+\begin_layout Itemize
+La calidad del mapa construido
+\end_layout
+
+\begin_layout Standard
+En este contexto se utiliza el término error para referir a la distancia
+ euclidiana entre la posición estimada por el sistema de localización y
+ la brindada por Doraemon.
+\end_layout
+
+\begin_layout Standard
+Se consideró que el error máximo podía verse sesgado por errores en el sistema
+ de visión global o por inconsistencias en parte del conjunto de datos.
+ 
+\end_layout
+
+\begin_layout Standard
+Respecto al indicador RMS, se consideró que no incluía mayor información
+ que el error promedio y estos podían intercambiarse indiferentemente.
+\end_layout
+
+\begin_layout Standard
+Se consideró que la suma del error era equivalente al error promedio, con
+ la ventaja que el error promedio brinda información más intuitiva sobre
+ el rendimiento del sistema.
+\end_layout
+
+\begin_layout Standard
+La calidad del mapa construido fue descartada por ser difícil de evaluar
+ de manera objetiva, sobre todo en los casos en el que el mapa presentaba
+ transformaciones lineales con respecto al real, fenómeno que se detalla
+ en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Pruebas-cualitativas-de"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Finalmente se escogió el error promedio como métrica a utilizar.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Poner algo en pruebas de por que RMS y no promedio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Definición del conjunto de parámetros
+\end_layout
+
+\begin_layout Standard
+Una vez obtenido el conjunto de datos y definida la métrica a utilizar,
+ se debe definir el método de generación de conjunto de parámetros a utilizar.
+\end_layout
+
+\begin_layout Paragraph
+Producto cartesiano
+\end_layout
+
+\begin_layout Standard
+La primera aproximación constaba en la definición de un conjunto de valores
+ para cada parámetro, para luego generar un conjunto de valores resultante
+ del producto cartesiano entre los conjuntos de valores definidos.
+\end_layout
+
+\begin_layout Standard
+Este método resultó ineficiente debido a que probaba combinaciones que resultaba
+n poco probables de ser óptimas.
+ Además, para obtener tiempos de ejecución razonables para el proceso de
+ parametrización, el conjunto de valores a probar debía ser reducido, corriendo
+ el riesgo de dejar fuera buenas combinaciones.
+\end_layout
+
+\begin_layout Paragraph
+Algoritmo evolutivo
+\end_layout
+
+\begin_layout Standard
+Se decidió utilizar un algoritmo evolutivo para optimizar la búsqueda sobre
+ el espacio de parámetros.
+ 
+\end_layout
+
+\begin_layout Standard
+Se incluye en el capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Algoritmo-Evolutivo-de"
+
+\end_inset
+
+ el detalle del algoritmo evolutivo utilizado para la calibración y los
+ resultados arrojados.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,114 @@
+% This file was created with JabRef 2.7b.
+% Encoding: UTF8
+
+@INPROCEEDINGS{fastslam2,
+  author = {Michael Montemerlo and Sebastian Thrun and Daphne Koller and Ben
+	Wegbreit},
+  title = {FastSLAM 2.0: An Improved Particle Filtering Algorithm for Simultaneous
+	Localization and Mapping that Provably Converges},
+  booktitle = {In Proc. of the Int. Conf. on Artificial Intelligence (IJCAI},
+  year = {2003},
+  pages = {1151--1156}
+}
+
+@BOOK{Murphy:2000:IAR:517685,
+  title = {Introduction to AI Robotics},
+  publisher = {MIT Press},
+  year = {2000},
+  author = {Murphy, Robin R.},
+  address = {Cambridge, MA, USA},
+  edition = {1st},
+  isbn = {0262133830}
+}
+
+@BOOK{probrob,
+  title = {{Springer Handbook of Robotics}},
+  publisher = {Springer},
+  year = {2008},
+  editor = {Siciliano, Bruno and Khatib, Oussama},
+  abstract = {{Reaching for the human frontier, robotics is vigorously engaged in
+	the growing challenges of new emerging domains. Interacting, exploring,
+	and working with humans, the new generation of robots will increasingly
+	touch people and their lives. The credible prospect of practical
+	robots among humans is the result of the scientific endeavour of
+	a half a century of robotic developments that established robotics
+	as a modern scientific discipline. The Springer Handbook of Robotics
+	brings a widespread and well-structured compilation of classic and
+	emerging application areas of robotics. From the foundations to the
+	social and ethical implications of robotics, the handbook provides
+	a comprehensive collection of the accomplishments in the field, and
+	constitutes a premise of further advances towards new challenges
+	in robotics. This handbook, edited by two internationally renowned
+	scientists with the support of an outstanding team of seven part
+	editors and onehundred sixty-four authors, is an authoritative reference
+	for robotics researchers, newcomers to the field, and scholars from
+	related disciplines such as biomechanics, neurosciences, virtual
+	simulation, animation, surgery, and sensor networks among others.}},
+  citeulike-article-id = {4135858},
+  citeulike-linkout-0 = {http://www.libreka.de/9783540239574/},
+  citeulike-linkout-1 = {http://springerlink.com/content/r6m219/},
+  citeulike-linkout-2 = {http://dx.doi.org/10.1007/978-3-540-30301-5},
+  doi = {10.1007/978-3-540-30301-5},
+  keywords = {inverse\_kinematics},
+  posted-at = {2009-03-05 15:47:10},
+  priority = {2},
+  url = {http://www.libreka.de/9783540239574/}
+}
+
+@MISC{datasets,
+  title = {Sitio Web de Conjunto de Datos de Freiburg - http://kaspar.informatik.uni-freiburg.de/~slamEvaluation/datasets.php},
+  owner = {ludo},
+  timestamp = {2012.03.11}
+}
+
+@MISC{dora,
+  title = {Sitio Web de Doraemon - http://sourceforge.net/projects/robocup-video/},
+  owner = {ludo},
+  timestamp = {2012.03.11}
+}
+
+@MISC{jgap,
+  title = {Sitio Web de JGAP - http://jgap.sourceforge.net/},
+  owner = {ludo},
+  timestamp = {2012.03.11}
+}
+
+@MISC{khepe,
+  title = {Sitio Web de Khepera III- http://www.k-team.com/mobile-robotics-products/khepera-iii},
+  owner = {ludo},
+  timestamp = {2012.03.12}
+}
+
+@MISC{lego,
+  title = {Sitio Web oficial de LEGO - http://shop.lego.com/en-US/NXT-Intelligent-Brick-9841},
+  owner = {fede},
+  timestamp = {2012.03.11}
+}
+
+@MISC{lejos,
+  title = {Framework leJOS - http://lejos.sourceforge.net/},
+  owner = {fede},
+  timestamp = {2012.03.11}
+}
+
+@MISC{mindstorm,
+  title = {Kit LEGO MINDSTORM versi\'on 2.0 - http://shop.lego.com/en-US/LEGO-MINDSTORMS-NXT-2-0-8547},
+  owner = {fede},
+  timestamp = {2012.03.11}
+}
+
+@MISC{pgslamwiki,
+  title = {Proyecto de grado sobre Localizaci\'on y Armado de Mapas Simult\'aneo
+	- http://www.fing.edu.uy/~pgslam/wiki/index.php/P%C3%A1gina\_principal},
+  owner = {fede},
+  timestamp = {2012.03.11}
+}
+
+@comment{jabref-meta: selector_publisher:}
+
+@comment{jabref-meta: selector_author:}
+
+@comment{jabref-meta: selector_journal:}
+
+@comment{jabref-meta: selector_keywords:}
+

@@ -1,0 +1,31 @@
+Largo
+
+Cubrimiento util Slam 96.24548
+Cubrimiento util Odom 95.13045
+Cubrimiento inutil Slam 20.2743
+Cubrimiento inutil Odom 24.389954
+Distancia Slam 642657.25
+Distancia Odom 322387.25
+CubrimientoUtilTotal Slam 9320.362
+CubrimientoUtilTotal Odom 4218.156
+CubrimientoUtilTotal/Distancia Slam 72.83261
+CubrimientoUtilTotal/Distancia Odom 65.220856
+RMS Slam 0.41624886
+RMS Odom 0.64014524
+
+Cortos
+
+Cubrimiento util Slam 86.81616
+Cubrimiento util Odom 92.24267
+Cubrimiento inutil Slam 4.641122
+Cubrimiento inutil Odom 14.496963
+Distancia Slam 112032.984
+Distancia Odom 137319.97
+CubrimientoUtilTotal Slam 1788.3007
+CubrimientoUtilTotal Odom 2035.9163
+CubrimientoUtilTotal/Distancia Slam 79.82141
+CubrimientoUtilTotal/Distancia Odom 73.86682
+RMS Slam NaN
+RMS Odom NaN
+
+

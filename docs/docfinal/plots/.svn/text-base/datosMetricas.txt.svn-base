@@ -1,0 +1,59 @@
+Cortas 
+
+Cubrimiento util Slam 86.81616
+Cubrimiento util Odom 92.24267
+Cubrimiento inutil Slam 4.641122
+Cubrimiento inutil Odom 14.496963
+Distancia Slam 112032.984
+Distancia Odom 137319.97
+CubrimientoUtilTotal Slam 1788.3007
+CubrimientoUtilTotal Odom 2035.9163
+CubrimientoUtilTotal/Distancia Slam 79.82141
+CubrimientoUtilTotal/Distancia Odom 73.86682
+CubrimientoInutil/Total Slam 0.0020852836
+CubrimientoInutil/Total Odom 0.006665936
+RMS Slam NaN
+RMS Odom NaN
+var util slam2.234285472863588
+var inutl slam 1.743311361292322
+var cub util tot slam 46.10579291829824
+var cub dist slam 0.7183821607650673
+var cub inutil total slam 7.773653036084139E-4
+var rms slam NaN
+var util odom3.2336041550101378
+var inutl odom 3.2778282125727234
+var cub util tot odom 935.8219982988218
+var cub dist odom 3.485364285972503
+var cub inutil total odom 0.002469698230021426
+var rms odom NaN
+
+Largas
+
+Cubrimiento util Slam 96.24548
+Cubrimiento util Odom 95.13045
+Cubrimiento inutil Slam 20.2743
+Cubrimiento inutil Odom 24.389954
+Distancia Slam 642657.25
+Distancia Odom 322387.25
+CubrimientoUtilTotal Slam 9320.362
+CubrimientoUtilTotal Odom 4218.156
+CubrimientoUtilTotal/Distancia Slam 72.83261
+CubrimientoUtilTotal/Distancia Odom 65.220856
+CubrimientoInutil/Total Slam 0.0017869468
+CubrimientoInutil/Total Odom 0.0055448925
+RMS Slam 0.41624886
+RMS Odom 0.64014524
+var util slam1.1699101570064767
+var inutl slam 1.3466294066936784
+var cub util tot slam 1427.157533350821
+var cub dist slam 1.874780578490059
+var cub inutil total slam 2.7225543591750305E-4
+var rms slam 0.17983289723996002
+var util odom3.614846841989303
+var inutl odom 4.31203336540718
+var cub util tot odom 2146.22133061807
+var cub dist odom 5.553641133534637
+var cub inutil total odom 0.0017613262210172272
+var rms odom 0.26248901094413873
+
+    

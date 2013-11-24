@@ -1,0 +1,135 @@
+<map version="0.9.0">
+<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<node CREATED="1301599756928" ID="ID_1704532415" MODIFIED="1301599766942" TEXT="Estado del arte">
+<node CREATED="1301927459248" ID="ID_1320930383" MODIFIED="1301927461811" POSITION="right" TEXT="teoria">
+<node CREATED="1301599770507" FOLDED="true" ID="ID_110936129" MODIFIED="1301927480053" TEXT="Slams probabilistas">
+<node CREATED="1301599827503" ID="ID_1528618278" MODIFIED="1301927449129" TEXT="Estados ocultos">
+<node CREATED="1301599831478" ID="ID_461600655" MODIFIED="1301599837196" TEXT="Posici&#xf3;n del robot"/>
+<node CREATED="1301599837631" ID="ID_1639239145" MODIFIED="1301599850932" TEXT="Posici&#xf3;n de los objetos (mapa)"/>
+</node>
+<node CREATED="1301599852968" ID="ID_788943207" MODIFIED="1301599870669" TEXT="Complejidad hace necesarios estimadores de los estados">
+<node CREATED="1301599877668" ID="ID_95339123" MODIFIED="1301599884998" TEXT="EFK Filters">
+<node CREATED="1301600065953" ID="ID_1278125735" MODIFIED="1301600068707" TEXT="Kalman comun">
+<node CREATED="1301599940785" ID="ID_15916939" MODIFIED="1301600061325" TEXT="Posicion evoluciona lineal con el tiempo"/>
+<node CREATED="1301599949834" ID="ID_1538607464" MODIFIED="1301600061065" TEXT="Observaci&#xf3;nes calculadas linealmente con la posicion"/>
+<node CREATED="1301599964670" ID="ID_455817407" MODIFIED="1301599978687" TEXT="Posici&#xf3;n inicial es gausiana"/>
+<node CREATED="1301599979383" ID="ID_1452559890" MODIFIED="1301599983885" TEXT="Ruido">
+<node CREATED="1301599984839" ID="ID_170543925" MODIFIED="1301600017793" TEXT="Gausiano"/>
+<node CREATED="1301599990022" ID="ID_619293764" MODIFIED="1301599998675" TEXT="En evoluci&#xf3;n de la posicion"/>
+<node CREATED="1301599999038" ID="ID_1611853979" MODIFIED="1301600003003" TEXT="En observaciones"/>
+</node>
+</node>
+<node CREATED="1301600020666" ID="ID_335109013" MODIFIED="1301600034049" TEXT="Utilizo Jacobianas para aproximar linealmente a las funciones no lineales"/>
+<node CREATED="1301600389528" ID="ID_1505043161" MODIFIED="1301600396025" TEXT="Se basa en Bayes Networks">
+<node CREATED="1301600397027" ID="ID_103182212" MODIFIED="1301600417771" TEXT="Vinculan variables rand&#xf3;micas entre si en relaciones de dependencia"/>
+<node CREATED="1301600418433" ID="ID_543573904" MODIFIED="1301600436592" TEXT="Establecen atajos para el calculo de la probabilidad de una en funcion de sus vecinas"/>
+<node CREATED="1301600437683" ID="ID_1781999135" MODIFIED="1301600445659" TEXT="Referencias">
+<node CREATED="1301600446749" ID="ID_950034614" MODIFIED="1301600486963" TEXT="http://www.cs.ubc.ca/~murphyk/Bayes/bnintro.html"/>
+<node CREATED="1301600455584" ID="ID_1358886603" MODIFIED="1301600456582" TEXT="http://ww.cs.ubc.ca/~murphyk/Papers/dbnchapter.pdf"/>
+</node>
+</node>
+<node CREATED="1301600088900" ID="ID_399588663" MODIFIED="1301600096196" TEXT="Referencias">
+<node CREATED="1301600321481" ID="ID_1950005546" MODIFIED="1301600330902" TEXT="Derivaci&#xf3;n de kalman - http://www.aticourses.com/kalman_filter.pdf"/>
+<node CREATED="1301600359253" ID="ID_1362339470" MODIFIED="1301600367498" TEXT="Integrador de ideas - http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.778&amp;rep=rep1&amp;type=pdf"/>
+</node>
+</node>
+<node CREATED="1301599886004" ID="ID_945492404" MODIFIED="1301599891771" TEXT="RBP Filters">
+<node CREATED="1301600548055" ID="ID_91907905" MODIFIED="1301600552126" TEXT="Particle Filters">
+<node CREATED="1301600553150" ID="ID_1317088772" MODIFIED="1301600578080" TEXT="Utilizan part&#xed;culas o samples para estimar la distribuci&#xf3;n de una variable rand&#xf3;mica"/>
+<node CREATED="1301600580617" ID="ID_1664167963" MODIFIED="1301600586798" TEXT="Reducen el &#xf3;rden de calculo"/>
+<node CREATED="1301600587574" ID="ID_663241982" MODIFIED="1301600600727" TEXT="Aproximaci&#xf3;n para problemas no tratables anal&#xed;ticamente"/>
+<node CREATED="1301672398542" ID="ID_961482545" MODIFIED="1301672412147" TEXT="Pesos asociados a las particulas para darles importancia dentro del set"/>
+<node CREATED="1301672347889" ID="ID_1752803999" MODIFIED="1301672351114" TEXT="Problemas">
+<node CREATED="1301672355244" ID="ID_26652541" MODIFIED="1301672397111" TEXT="Pesos convergen a unas pocas particulas - resampling"/>
+<node CREATED="1301672371333" ID="ID_863475495" MODIFIED="1301672376708" TEXT="Loss of diversity"/>
+</node>
+</node>
+<node CREATED="1301672428928" ID="ID_354726281" MODIFIED="1301672430273" TEXT="Rao">
+<node CREATED="1301672431400" ID="ID_614336991" MODIFIED="1301672435685" TEXT="Divide el problema en dos">
+<node CREATED="1301672438162" ID="ID_754939619" MODIFIED="1301672449148" TEXT="Una parte solucionable solo con particulas"/>
+<node CREATED="1301672449394" ID="ID_856781607" MODIFIED="1301672465828" TEXT="Otra solucionable anal&#xed;ticamente o con EFK"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1301927468513" ID="ID_1490817708" MODIFIED="1301927477216" POSITION="right" TEXT="Implementaciones">
+<node CREATED="1301927650300" FOLDED="true" ID="ID_1246685918" MODIFIED="1301930607640" TEXT="EFKMonoSLAM">
+<node CREATED="1301927654479" ID="ID_968681563" MODIFIED="1301927656991" TEXT="Visual"/>
+<node CREATED="1301927657433" ID="ID_881979933" MODIFIED="1301927660119" TEXT="Monocular"/>
+<node CREATED="1301927663196" ID="ID_316168591" MODIFIED="1301927674707" TEXT="EFK"/>
+<node CREATED="1301927675090" ID="ID_625753246" MODIFIED="1301927784290" TEXT="Random Sample Consensus RANSAC">
+<node CREATED="1301927677930" ID="ID_1153599465" MODIFIED="1301927684990" TEXT="eliminar ruido"/>
+<node CREATED="1301927685269" ID="ID_1842545464" MODIFIED="1301927697282" TEXT="toma hipotesis m&#xe1;s votada"/>
+<node CREATED="1301927697568" ID="ID_477181653" MODIFIED="1301927701283" TEXT="elimina outliers"/>
+<node CREATED="1301927702999" ID="ID_765989152" MODIFIED="1301927736273" TEXT="le agregan la informaci&#xf3;n de update de EFK"/>
+</node>
+<node CREATED="1301927737266" ID="ID_146785260" MODIFIED="1301927740969" TEXT="Trabajos similares">
+<node CREATED="1301927797153" ID="ID_1141891642" MODIFIED="1301927820541" TEXT="Este paper es caso particular de Vedaldis"/>
+<node CREATED="1301927835998" ID="ID_149684987" MODIFIED="1301927850938" TEXT="Restricciones a dimensiones de movimientos para llegar a ransac de un punto"/>
+<node CREATED="1301927865620" ID="ID_1179232437" MODIFIED="1301927883110" TEXT="Joint compatibility branch and bound">
+<node CREATED="1301927885655" ID="ID_1631616536" MODIFIED="1301927888871" TEXT="ineficiente">
+<node CREATED="1301927966150" ID="ID_315274156" MODIFIED="1301927970290" TEXT="exponencial en los matches"/>
+</node>
+<node CREATED="1301927912150" ID="ID_50697293" MODIFIED="1301928179144" TEXT="opera con los datos previo a fusion">
+<node CREATED="1301927921464" ID="ID_1779381712" MODIFIED="1301927932421" TEXT="supone modelo lineal"/>
+<node CREATED="1301927932899" ID="ID_813944987" MODIFIED="1301927938257" TEXT="supone ruido gaussiano"/>
+<node CREATED="1301927939067" ID="ID_1956086322" MODIFIED="1301927956737" TEXT="No estoy muy de acuerdo con esto">
+<icon BUILTIN="messagebox_warning"/>
+</node>
+</node>
+</node>
+<node CREATED="1301928001379" ID="ID_615269667" MODIFIED="1301928004525" TEXT="active search">
+<node CREATED="1301928005110" ID="ID_266813228" MODIFIED="1301928014603" TEXT="se elije si sensar en funcion de la ganancia esperada"/>
+<node CREATED="1301928017901" ID="ID_141648363" MODIFIED="1301928068788" TEXT="ineficiente con muchos features">
+<node CREATED="1301928086905" ID="ID_269596993" MODIFIED="1301928105821" TEXT="Arreglado por Handa et al 2010"/>
+</node>
+</node>
+<node CREATED="1301928130414" ID="ID_384354896" MODIFIED="1301928146149" TEXT="Randomized Joint Compatibility (RJC)">
+<node CREATED="1301928149920" ID="ID_664662423" MODIFIED="1301928158692" TEXT="arregla temas de eficiencia de JCBB"/>
+<node CREATED="1301928159560" ID="ID_1930309223" MODIFIED="1301928179145" TEXT="sigue sufriendo de problemas de acuracy">
+<arrowlink DESTINATION="ID_50697293" ENDARROW="Default" ENDINCLINATION="117;0;" ID="Arrow_ID_706751279" STARTARROW="None" STARTINCLINATION="117;0;"/>
+</node>
+</node>
+</node>
+<node CREATED="1301928385415" ID="ID_948141814" MODIFIED="1301928512619" TEXT="Funcionamiento">
+<node CREATED="1301928507866" ID="ID_529747404" MODIFIED="1301928520348" TEXT="Calcula predict de EFK">
+<node CREATED="1301928601097" ID="ID_1924947811" MODIFIED="1301929099866" TEXT="modelo y covarianza"/>
+<node CREATED="1301928613668" ID="ID_210467571" MODIFIED="1301928619269" TEXT="observaciones y covarianza"/>
+</node>
+<node CREATED="1301928641007" ID="ID_1303251712" MODIFIED="1301928664009" TEXT="construye un conjunto de observaciones de busqueda a partir de las observaciones predichas"/>
+<node CREATED="1301928670656" ID="ID_497285605" MODIFIED="1301928674595" TEXT="Itera">
+<node CREATED="1301928676385" ID="ID_1712334926" MODIFIED="1301928696439" TEXT="Selecciona un conjunto random de obs"/>
+<node CREATED="1301928700210" ID="ID_536200902" MODIFIED="1301929109075" TEXT="hace update del modelo con esas obs"/>
+<node CREATED="1301928734526" ID="ID_1439604774" MODIFIED="1301928743152" TEXT="hace predict de obs. con nueva posicion"/>
+<node CREATED="1301928778635" ID="ID_926248101" MODIFIED="1301928793187" TEXT="cuenta low innovation inliers"/>
+<node CREATED="1301928797077" ID="ID_82642841" MODIFIED="1301928809490" TEXT="Si hay m&#xe1;s inliers que mejor caso">
+<node CREATED="1301928810596" ID="ID_990310735" MODIFIED="1301928824403" TEXT="guardo modelo"/>
+<node CREATED="1301928815595" ID="ID_1299851430" MODIFIED="1301928834189" TEXT="guardo inliers"/>
+<node CREATED="1301928834920" ID="ID_560299315" MODIFIED="1301928841450" TEXT="actualizo cantidad de iters"/>
+</node>
+</node>
+<node CREATED="1301928858079" ID="ID_1145829413" MODIFIED="1301929029541" TEXT="junta high innovation inliers">
+<node CREATED="1301928939975" ID="ID_318983739" MODIFIED="1301928956329" TEXT="para cada obs dentro de un th del modelo"/>
+<node CREATED="1301928982680" ID="ID_1568225675" MODIFIED="1301928994598" TEXT="hace un chi-squared para probar condicion"/>
+<node CREATED="1301928995532" ID="ID_1799790586" MODIFIED="1301929005436" TEXT="si pasa el test lo agrega a high innovation inliers"/>
+</node>
+<node CREATED="1301929029825" ID="ID_1306793979" MODIFIED="1301929031699" TEXT="hace otro update con low inliers"/>
+</node>
+<node CREATED="1301930579724" ID="ID_329575911" MODIFIED="1301930605488" TEXT="Falta leer">
+<icon BUILTIN="messagebox_warning"/>
+<node CREATED="1301930586259" ID="ID_846499072" MODIFIED="1301930592559" TEXT="Modelo de vision y avance"/>
+<node CREATED="1301930593171" ID="ID_1061711311" MODIFIED="1301930594821" TEXT="Calculos"/>
+<node CREATED="1301930595056" ID="ID_334446204" MODIFIED="1301930598355" TEXT="Loop closure?"/>
+<node CREATED="1301930599042" ID="ID_1684782859" MODIFIED="1301930601265" TEXT="Experimentos"/>
+</node>
+</node>
+</node>
+<node CREATED="1301928210055" ID="ID_1493039218" MODIFIED="1301928212040" POSITION="right" TEXT="Herramientas">
+<node CREATED="1301928263039" ID="ID_738789713" MODIFIED="1301928273601" TEXT="RAWSEEDS">
+<node CREATED="1301928284637" ID="ID_1332190589" MODIFIED="1301928301252" TEXT="Muestreo de visi&#xf3;n y odometr&#xed;a para escenarios largos"/>
+</node>
+</node>
+</node>
+</map>

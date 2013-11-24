@@ -1,0 +1,546 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\def\nompreamble{\addcontentsline{toc}{chapter}{\nomname}\markboth{\nomname}{\nomname}}
+\renewcommand\nomname{Glosario}
+\hyphenation{pro-pia-men-te di-fe-ren-cia cons-truc-ción par-ti-cu-lar in-tros-pec-ti-vos mo-de-lan-do con-si-guien-te gaussiana CmdPoseProvider co-lor vi-si-ta-da in-de-pen-dien-te in-de-pen-dien-te-men-te me-dian-te pro-ble-ma con-si-de-ra-dos}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes true
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\author 2090252569 "fede" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "titulo.lyx"
+
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+
+\change_inserted -1785986595 1341271802
+Resumen
+\end_layout
+
+\begin_layout Standard
+La creciente demanda de soluciones robóticas ha estimulado el desarrollo
+ de robots capaces de desempeñarse de forma autónoma en terrenos diversos
+ y, en ocasiones, desconocidos para los seres humanos.
+ En este contexto, resulta fundamental que el robot sea capaz de navegar
+ de forma autónoma en estos entornos.
+ Para lograr estos cometidos el agente robot debe ser capaz de responder
+ a la siguientes preguntas:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+¿Dónde estoy?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+¿Dónde estuve?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+¿Por dónde voy?
+\end_layout
+
+\begin_layout Standard
+Para responder a estas preguntas es crítico tener un mapa del entorno y
+ ubicarse en relación a este.
+ La academia e industria acuden a las técnicas de SLAM como solución estándar
+ al problema de obtención de un mapa y localización en un entorno desconocido.
+\change_deleted 2090252569 1341379757
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+En el presente trabajo se describe el sistema robótico elaborado, capaz
+ de realizar SLAM en el contexto de la solución de un problema que implica
+ cubrir completamente un entorno desconocido para el robot.
+\end_layout
+
+\begin_layout Standard
+Para implementarlo, se realizó, en primer lugar, una investigación sobre
+ el estado del arte del SLAM.
+ Se llevó a cabo un estudio 
+\change_deleted -1785986595 1341270240
+profundo 
+\change_unchanged
+del marco teórico del problema y se relevaron diferentes bibliotecas de
+ investigación de SLAM de código abierto.
+ 
+\change_deleted -1785986595 1341270289
+Sobre esta primera etapa el lector podrá
+\change_inserted -1785986595 1341270298
+Respecto a este ítem se incluye
+\change_deleted -1785986595 1341270299
+ encontrar 
+\change_inserted -1785986595 1341270300
+ 
+\change_unchanged
+una descripción general del problema del SLAM junto a los enfoques y técnicas
+ más destacadas de la literatura estudiada.
+\end_layout
+
+\begin_layout Standard
+Luego se
+\change_inserted -1785986595 1341270318
+ describe la implementación
+\change_deleted -1785986595 1341270320
+ implementó el 
+\change_inserted -1785986595 1341270322
+ del 
+\change_unchanged
+sistema robótico que resuelve el problema planteado.
+ Para esto se implementó un sistema de SLAM basado en FastSLAM y 
+\change_deleted -1785986595 1341270333
+parametrizado
+\change_inserted -1785986595 1341270339
+calibrado mediante el uso de
+\change_deleted -1785986595 1341270345
+ utilizando 
+\change_inserted -1785986595 1341270345
+ 
+\change_unchanged
+algoritmos evolutivos.
+ Este sistema de SLAM brinda un sistema de localización confiable sobre
+ el que implementar la solución de cubrimiento.
+ Se incluyen en este documento una descripción del algoritmo de SLAM implementad
+o, de la arquitectura del sistema y del proceso de 
+\change_deleted -1785986595 1341270353
+parametrización
+\change_inserted -1785986595 1341270362
+calibración de parámetros
+\change_unchanged
+ utilizando algoritmos evolutivos.
+\end_layout
+
+\begin_layout Standard
+Finalmente, se realizaron pruebas de rendimiento comparando contra otro
+ sistema de cubrimiento implementado sobre un sistema de localización basado
+ en integración de movimientos (odometría).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+thepage}{
+\backslash
+roman{page}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{plain}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341500190
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341500190
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341500188
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341500188
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341500188
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341500188
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset FloatList algorithm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\change_deleted -1785986595 1341266679
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341431259
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1785986595 1341431259
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\change_unchanged
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+thepage}{
+\backslash
+arabic{page}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{plain}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "intro.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "slam.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "marco.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "solucion.lyx"
+
+\end_inset
+
+
+\change_inserted -1785986595 1341428179
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1785986595 1341428191
+\begin_inset CommandInset include
+LatexCommand input
+filename "casoestudio.lyx"
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "evolutivos.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "pruebas.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "conclus.lyx"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "biblio"
+options "bibtotoc,plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

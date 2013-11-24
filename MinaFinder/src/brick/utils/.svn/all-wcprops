@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/utils
+END
+Matematicas.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/brick/utils/Matematicas.java
+END
+MatrixFloat.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinder/src/brick/utils/MatrixFloat.java
+END
+NXTCam.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/utils/NXTCam.java
+END
+Pgrand.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/ens/svn/repos/pgslam/!svn/ver/56/MinaFinder/src/brick/utils/Pgrand.java
+END
+DetectorDist.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/utils/DetectorDist.java
+END
+ColorSensorPer.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/4/MinaFinder/src/brick/utils/ColorSensorPer.java
+END
+MatrixCovar.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinder/src/brick/utils/MatrixCovar.java
+END
+Constantes.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/utils/Constantes.java
+END
+LUDecompositionFloat.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinder/src/brick/utils/LUDecompositionFloat.java
+END
+Observable.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/ens/svn/repos/pgslam/!svn/ver/4/MinaFinder/src/brick/utils/Observable.java
+END
+Queue.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/ens/svn/repos/pgslam/!svn/ver/30/MinaFinder/src/brick/utils/Queue.java
+END
+DetectorLineas.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ens/svn/repos/pgslam/!svn/ver/146/MinaFinder/src/brick/utils/DetectorLineas.java
+END
+Robot.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/brick/utils/Robot.java
+END
+Observer.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/ens/svn/repos/pgslam/!svn/ver/4/MinaFinder/src/brick/utils/Observer.java
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/brick/particulas/mapa
+END
+IEEEMarcasMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/ens/svn/repos/pgslam/!svn/ver/147/MinaFinder/src/brick/particulas/mapa/IEEEMarcasMap.java
+END
+IEEERecorridaMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/ens/svn/repos/pgslam/!svn/ver/176/MinaFinder/src/brick/particulas/mapa/IEEERecorridaMap.java
+END
+MapaMarcasLineas.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/ens/svn/repos/pgslam/!svn/ver/142/MinaFinder/src/brick/particulas/mapa/MapaMarcasLineas.java
+END
+Marca.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/brick/particulas/mapa/Marca.java
+END
+MapaIEEE.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/brick/particulas/mapa/MapaIEEE.java
+END

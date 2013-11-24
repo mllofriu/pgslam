@@ -1,0 +1,5135 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% or ...
+
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1785986595 "ludo,,," 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Este archivo es una plantilla para:
+\end_layout
+
+\begin_layout Itemize
+Presentar una conferencia-coloquio
+\end_layout
+
+\begin_layout Itemize
+Duración de unos 20min
+\end_layout
+
+\begin_layout Itemize
+En estilo ornamental
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+En principio, este archivo puede redistribuirse y/o modificarse bajo los
+ términos de GNU Public License, versión 2.
+ Sin embargo, se supone que este archivo es una plantilla para ser modificada
+ según las necesidades de cada cuál.
+ Por esta razón, si este archivo se utiliza como tal plantilla y no se distribuy
+e específicamente como parte de otro programa/paquete, el autor otorga permiso
+ extra para copiar y modificar libremente este archivo e incluso para suprimir
+ esta nota de copyright.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+includegraphics[width=0.20
+\backslash
+textwidth]{/images/logo_udelar.png}
+\backslash
+
+\backslash
+[1cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Estudio del estado del arte del SLAM e implementación de una plataforma
+ flexible 
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+SLAM 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+opcional, sólo para títulos largos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subtitle
+Tesis de Grado
+\end_layout
+
+\begin_layout Author
+M.
+ Llofriu 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ F.
+ Andrade 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+- Componer los nombres en el mismo orden en que aparecen en el artículo.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+- Usar el menú 
+\family sans
+Insertar\SpecialChar \menuseparator
+Recuadro Personalizado\SpecialChar \menuseparator
+Marca de Institución
+\family default
+ solo si los autores tienen distintas afiliaciones.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+Tesis de Grado
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+- opcional, usar sólo con varios autores
+\end_layout
+
+\begin_layout Plain Layout
+- si realmente son muchos autores, usar 
+\begin_inset Quotes eld
+\end_inset
+
+Autor et al.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+Instituto de Computación
+\begin_inset Newline newline
+\end_inset
+
+Facultad de Ingeniería
+\begin_inset Newline newline
+\end_inset
+
+Universidad de la República
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+- Usar el comando 
+\backslash
+inst sólo si hay varias afiliaciones.
+\end_layout
+
+\begin_layout Plain Layout
+- Poner algo sencillo, nadie se interesa por la dirección.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+Facultad de Ingeniería - UdelaR
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+opcional, aunque generalmente necesario
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+Tutores: Msc.
+ Ing.
+ Gonzalo Tejera y Facundo Benavides
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+- Usar el nombre de la conferencia o bien su abreviatura.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+- Realmente no es informativo para la audiencia, pero sí para quienes (incluyend
+o Vd.mismo) lean la presentación en línea.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument
+status collapsed
+
+\begin_layout Plain Layout
+CFP 2003
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+opcional, debería ser una abreviatura del nombre de la conferencia
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Si se dispone de un archivo como "institución-logo-nombrearchivo.xxx", donde
+ xxx es un formato gráfico aceptable por latex o pdflatex, entonces se puede
+ añadir un logotipo descomentando lo siguiente:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pgfdeclareimage[height=0.7cm]{institution-logo}{images/logo_udelar.png}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+pgfdeclareimage[height=0.7cm]{slam-logo}{images/logo.png}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+logo{
+\backslash
+pgfuseimage{slam-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Lo siguiente hace que se muestre un índice al inicio de cada subsección.
+ Suprímelo si no lo quieres.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSubsection[]{
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Índice}   
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+fontsize{8pt}{7.2}
+\backslash
+tableofcontents[currentsection,currentsubsection] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Si quieres descubrir todo en modo paso a paso, descomenta el siguiente comando:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Presentación del trabajo
+\end_layout
+
+\begin_layout BeginFrame
+Presentación
+\end_layout
+
+\begin_layout Itemize
+Los objetivos del proyecto fueron
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Estudiar el estado del arte del SLAM
+\end_layout
+
+\begin_layout Itemize
+Generar una plataforma flexible
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Objetivos adicionales
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Resolver un problema particular que ponga a prueba al sistema
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Se decidió resolver el problema del cubrimiento completo de un entorno (se
+ explica más adelante)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Índice
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fontsize{8pt}{7.2}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Estructurar una exposición es una tarea difícil y la siguiente estructura
+ podría no ser adecuada.
+ Aquí hay unas reglas aplicadas a este caso: 
+\end_layout
+
+\begin_layout Itemize
+Exactamente dos o tres secciones (además del sumario).
+ 
+\end_layout
+
+\begin_layout Itemize
+Como máximo, tres subsecciones por sección.
+ 
+\end_layout
+
+\begin_layout Itemize
+Hablar entre 30
+\begin_inset space \thinspace{}
+\end_inset
+
+s y 2
+\begin_inset space \thinspace{}
+\end_inset
+
+min por diapositiva.
+ Así que debería haber entre 15 y 30 fotogramas para decirlo todo.
+\end_layout
+
+\begin_layout Itemize
+Es probable que la audiencia sepa bastante poco sobre el tema de la conferencia,
+ así pues, ¡*simplifique*!
+\end_layout
+
+\begin_layout Itemize
+En una exposición de 20min, conseguir transmitir las ideas principales es
+ bastante.
+ Deje fuera los detalles, aunque eso signifique ser menos preciso de lo
+ que podría parecer necesario.
+\end_layout
+
+\begin_layout Itemize
+Si se omiten detalles vitales para una demostración/implementación, dígalo
+ una vez.
+ Para la audiencia será suficiente.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+begin{frame}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+frametitle{Contents}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+begin{multicols}{2} 
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+tableofcontents 
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{multicols} 
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Presentación del SLAM
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+7 minutos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+contextualizar la presentación y el problema que decidimos resolver, y como
+ está enmarcado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Descripción del problema
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+Descripción del problema
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Introducción
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+poner algo que motive al oyente de lo que está en el resumen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+SLAM: Localización y Armado de Mapas en Simultáneo
+\end_layout
+
+\begin_layout Itemize
+Resolver el problema de 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\shape italic
+¿Dónde estoy?
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+¿Dónde estuve?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Entrada:
+\series default
+ Información sensada y noción del movimiento propio
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Salida:
+\series default
+ Una estimación del mapa del entorno y la ubicación del robot en este
+\end_layout
+
+\begin_layout BeginFrame
+Motivación
+\end_layout
+
+\begin_layout Itemize
+Necesidad de robots autónomos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Navegar en terrenos desconocidos o inaccesibles
+\end_layout
+
+\begin_layout Itemize
+Realizar tareas en entornos dinámicos
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Algunos problemas que motivan a los investigadores
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Exploración espacial
+\end_layout
+
+\begin_layout Itemize
+Rescate en zonas afectadas por catástrofes
+\end_layout
+
+\begin_layout Itemize
+Tareas domésticas
+\end_layout
+
+\begin_layout Itemize
+Automóviles autónomos
+\end_layout
+
+\begin_layout Itemize
+Tareas agropecuarias
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Problema abierto
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Subsection
+Dificultades del SLAM
+\end_layout
+
+\begin_layout BeginFrame
+Dificultades
+\end_layout
+
+\begin_layout Itemize
+Sensores
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Externos (entorno) e internos (odometría)
+\end_layout
+
+\begin_layout Itemize
+Percepción limitada
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+rango
+\end_layout
+
+\begin_layout Itemize
+resolución
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Sensibles a ruido estocástico
+\end_layout
+
+\begin_layout Itemize
+Sujetos a limitaciones físicas (ej: cámara)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Movimiento del robot
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+El movimiento efectivo del robot suele diferir del esperado
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Dificultades
+\end_layout
+
+\begin_layout Itemize
+Cerrado de ciclos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Se debe reconocer un lugar en el cual ya se estuvo antes
+\end_layout
+
+\begin_layout Itemize
+Crucial para el éxito en el armado de mapas
+\end_layout
+
+\begin_layout Itemize
+Diferenciar lugares con propiedades similares
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\size large
+Manejo de la incertidumbre
+\end_layout
+
+\begin_layout Itemize
+Capacidad de cómputo
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Gran limitación en el procesamiento de datos
+\end_layout
+
+\begin_layout Itemize
+Cantidad de información creciente (memoria)
+\end_layout
+
+\begin_layout Itemize
+El mantenimiento del mapa y la estimación de la posición involucran cálculos
+ muy complejos en tiempo real
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Principales técnicas y enfoques
+\end_layout
+
+\begin_layout Subsection
+Enfoques
+\end_layout
+
+\begin_layout BeginFrame
+Enfoques
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Bioinspirados: 
+\series default
+buscan resolver el problema de la misma forma que los mamíferos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/raton.png
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Enfoques
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Probabilísticos: 
+\series default
+representan el mapa y la posición como una distribución de probabilidad
+ a estimar.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/gauss.png
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Subsection
+Probabilísticos
+\end_layout
+
+\begin_layout BeginFrame
+Introducción
+\end_layout
+
+\begin_layout Standard
+Se toma la ubicación y mapa como una variable (vectorial) 
+\color blue
+
+\begin_inset Formula $x_{1:t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename diagramas/distribucion.dia
+	width 15page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se estima utilizando:
+\end_layout
+
+\begin_layout Itemize
+La información de movimiento propio 
+\color blue
+
+\begin_inset Formula $u_{1:t}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+La información sensada 
+\color blue
+
+\begin_inset Formula $z_{1:t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+p(x_{1:t}|u_{1:t},z_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Introducción
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+decir q se conoce el mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/gaussthrun.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Introducción
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/gaussthurn2.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Red Bayesiana
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/bayes.png
+	width 60page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Filtros de Bayes
+\end_layout
+
+\begin_layout Standard
+Buscan estimar esta evolución con dos ecuaciones recursivas
+\end_layout
+
+\begin_layout Standard
+Pero primero...
+ notación
+\end_layout
+
+\begin_layout Standard
+
+\size large
+\color blue
+\begin_inset Formula 
+\[
+\overline{bel}(x_{1:t})=p(x_{1:t}|z_{1:t-1},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size large
+\color blue
+\begin_inset Formula 
+\[
+bel(x_{1:t})=p(x_{1:t}|z_{1:t},u_{1:t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Filtros de Bayes
+\end_layout
+
+\begin_layout FrameSubtitle
+Modelo de movimiento
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+p(x_{t}|u_{t},x_{t-1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename diagramas/modMov.dia
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Filtros de Bayes
+\end_layout
+
+\begin_layout FrameSubtitle
+Modelo de sensado
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+p(z_{t}|x_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename diagramas/modSens.dia
+	width 15page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Filtros de Bayes
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+\overline{bel}(x_{t})=\int p(x_{t}|u_{t},x_{t-1}).bel(x_{t-1})dx_{t-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+bel(x_{t})=\eta p(z_{t}|x_{t})\overline{bel}(x_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Filtros de Bayes
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+\overline{bel}(x_{t})=\int p(x_{t}|u_{t},x_{t-1}).bel(x_{t-1})dx_{t-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename diagramas/belMov.dia
+	width 80page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Filtros de Bayes
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\color blue
+\begin_inset Formula 
+\[
+bel(x_{t})=\eta p(z_{t}|x_{t})\overline{bel}(x_{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename diagramas/belSens.dia
+	width 80page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Principales técnicas
+\end_layout
+
+\begin_layout Itemize
+Filtros de Kalman
+\end_layout
+
+\begin_layout Itemize
+Filtros de Partículas
+\end_layout
+
+\begin_layout Itemize
+Optimización sobre grafos
+\end_layout
+
+\begin_layout BeginFrame
+Partículas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/robotparticle.png
+	width 80page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Partículas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/marca.png
+	width 60page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Partículas
+\end_layout
+
+\begin_layout FrameSubtitle
+Ejemplo localización
+\end_layout
+
+\begin_layout Standard
+
+\size largest
+Video
+\size default
+...
+\end_layout
+
+\begin_layout BeginFrame
+Partículas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/particles_sinLadoDerecho.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tirar flechas que vayan apareciendo mostrando las cosas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ppt con 4 imagenes que muestren como se abren las partículas, observación
+ marca y resampling
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Partículas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/particles_sinLadoDerecho_flechas.png
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+tirar flechas que vayan apareciendo mostrando las cosas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ppt con 4 imagenes que muestren como se abren las partículas, observación
+ marca y resampling
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Solución Implementada
+\end_layout
+
+\begin_layout Subsection
+Sistema de SLAM
+\end_layout
+
+\begin_layout BeginFrame
+Presentación
+\end_layout
+
+\begin_layout Standard
+Las principales componentes del software son:
+\end_layout
+
+\begin_layout Itemize
+Modelo de Sensado
+\end_layout
+
+\begin_layout Itemize
+Modelo de Movimiento
+\end_layout
+
+\begin_layout Itemize
+Núcleo del SLAM
+\end_layout
+
+\begin_layout Standard
+Otros aspectos importantes
+\end_layout
+
+\begin_layout Itemize
+Arquitectura
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Modelo de Sensado
+\end_layout
+
+\begin_layout Itemize
+Utiliza la estimación de la distancia y el ángulo relativo a una marca observada
+\end_layout
+
+\begin_layout Itemize
+Calcula la probabilidad de sensado como una gaussiana centrada en la marca
+\end_layout
+
+\begin_layout Itemize
+Se implementó una variación con convoluciones
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Modelo de Movimiento
+\end_layout
+
+\begin_layout Itemize
+Contempla dos fuentes de ruido
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Ruido gaussiano relacionado al desplazamiento lineal
+\end_layout
+
+\begin_layout Itemize
+Ruido gaussiano relacionado a la rotación
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+La dispersión de las partículas es proporcional al valor de cada parámetro
+\end_layout
+
+\begin_layout Itemize
+Este modelo refleja el error real cometido por el robot en sus movimientos
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Núcleo del SLAM
+\end_layout
+
+\begin_layout Standard
+Compuesto por dos componentes principales
+\end_layout
+
+\begin_layout Itemize
+Sistema de Partículas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Proceso de Update / Resampling
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Mapa y Filtros de Kalman
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Núcleo del SLAM
+\end_layout
+
+\begin_layout FrameSubtitle
+Sistema de Partículas
+\end_layout
+
+\begin_layout Itemize
+Encapsula las siguientes funcionalidades
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Actualización basado en la observación (update)
+\end_layout
+
+\begin_layout Itemize
+Estimación del movimiento (predict)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Cada partícula mantiene
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Un estimado de su posición utilizando tres coordenadas 
+\begin_inset Formula $\mathit{(x,y,\theta)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+6 Filtros de Kalman que son estimadores de cada una de las marcas existentes
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Núcleo del SLAM
+\end_layout
+
+\begin_layout FrameSubtitle
+Proceso de Update / Resampling
+\end_layout
+
+\begin_layout Itemize
+Realiza resampling selectivo
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Introduce un parámetro al sistema (parámetro de resampling)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Optimizado para consumir poca memoria
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Núcleo del SLAM
+\end_layout
+
+\begin_layout FrameSubtitle
+Mapa y Filtros de Kalman
+\end_layout
+
+\begin_layout Itemize
+Se mantiene un Mapa del entorno formado por seis marcas
+\end_layout
+
+\begin_layout Itemize
+Cada marca es un Filtro de Kalman modelado de la siguiente manera
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Un vector con la posición 
+\begin_inset Formula $\mathit{(x,y)}$
+\end_inset
+
+ de la marca
+\end_layout
+
+\begin_layout Itemize
+Una matriz de covarianza asociada al error de la estimación en la posición
+ de la marca
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Arquitectura
+\end_layout
+
+\begin_layout FrameSubtitle
+Características
+\end_layout
+
+\begin_layout Itemize
+Plataforma flexible con módulos intercambiables
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Interacción a través de interfaces
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Ejecución embebida en el robot
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+El sistema implementado se ejecuta completamente en el robot
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Desacoplamiento
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+El sistema de SLAM no interfiere con la navegación del robot
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+embebida en el robot porque queremos que el robot sea autónomo
+\end_layout
+
+\begin_layout Plain Layout
+desacomplamiento para poder implementar arquitecturas híbridas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Arquitectura
+\end_layout
+
+\begin_layout FrameSubtitle
+Características
+\end_layout
+
+\begin_layout Itemize
+Depuración
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Obtener información de depuración de procesos ejecutando dentro del robot
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Facilitar la investigación
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Parametrización del sistema que permita simplificar los proceso de optimización
+\end_layout
+
+\begin_layout Itemize
+Comunicación de los comandos y determinadas variables del robot a la PC
+ que permita la reproducción de experimentos de forma de analizar las corridas
+ del robot 
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Subsection
+Problema a resolver
+\end_layout
+
+\begin_layout BeginFrame
+Descripción
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+el titulo 
+\begin_inset Quotes eld
+\end_inset
+
+El Problema
+\begin_inset Quotes erd
+\end_inset
+
+ quizás sea mejor (fede)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<1->
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Se busca solucionar el problema general de encontrar objetos que están distribui
+dos en el entorno en forma aleatoria y que pueden ser sensados únicamente
+ a corta distancia.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Entorno, Marcas e Iluminación
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\begin_layout Itemize
+Entorno
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Rectangular
+\end_layout
+
+\begin_layout Itemize
+Cerrado
+\end_layout
+
+\begin_layout Itemize
+2.0m.
+ x 2.4m.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Marcas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Columnas de tres colores
+\end_layout
+
+\begin_layout Itemize
+Goma eva
+\end_layout
+
+\begin_layout Itemize
+Distintas permutaciones generan marcas diferentes
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Iluminación
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Combinación de luz fluorecente con luz infrarroja
+\end_layout
+
+\end_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename images/entornoPruebas.JPG
+	display false
+	scale 3
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename images/IMG_0044.JPG
+	display false
+	scale 7.5
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Subsection
+Desarrollo de la solución
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+21 minutos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Introducción
+\end_layout
+
+\begin_layout Itemize
+La solución se compone de tres partes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Software
+\end_layout
+
+\begin_layout Itemize
+Hardware
+\end_layout
+
+\begin_layout Itemize
+Mecánica
+\end_layout
+
+\end_deeper
+\begin_layout Block
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+<1->
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Nos enfocamos principalmente en el Software, en particular en el algoritmo
+ del SLAM
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Mecánica
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\begin_layout Itemize
+Robot móvil
+\end_layout
+
+\begin_layout Itemize
+Forma de carrito
+\end_layout
+
+\begin_layout Itemize
+Tracción en el eje (independiente en cada rueda)
+\end_layout
+
+\begin_layout Itemize
+Rueda loca como apoyo
+\end_layout
+
+\begin_layout Itemize
+Construcción a partir del kit LEGO NXT V2.0
+\end_layout
+
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename images/robotVistaPanor.jpg
+	display false
+	scale 5
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Hardware
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\begin_layout Itemize
+Ladrillo LEGO NTX V2.0
+\end_layout
+
+\begin_layout Itemize
+Placa Computadora Fox Board
+\end_layout
+
+\begin_layout Itemize
+2 sensores de Ultrasonido
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Utilizados para evitar obstáculos
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+1 Cámara
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Ubicada sobre un motor, de forma de tener un mayor ángulo de visión
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+3 motores del kit LEGO NTX
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Dos para movilidad
+\end_layout
+
+\end_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename images/robotVistaPanor.jpg
+	display false
+	scale 5
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Uso del SLAM
+\end_layout
+
+\begin_layout FrameSubtitle
+Información de sensado
+\end_layout
+
+\begin_layout Itemize
+Compuesto por dos capas bien diferenciadas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Detección de las marcas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Necesario debido al ruido de la cámara utilizada
+\end_layout
+
+\begin_layout Itemize
+Se busca disminuir los falsos positivos y los falsos negativos
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Estimación de la ubicación de las marcas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+La distancia se estima mediante modelos polinómicos 
+\end_layout
+
+\begin_layout Itemize
+Se utiliza la coordenada y del píxel más bajo
+\end_layout
+
+\begin_layout Itemize
+Para el ángulo se utiliza la coordenada x del centro de la marca
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+faltos positivos son peores ya que hacen que el robot se pierda
+\end_layout
+
+\begin_layout Plain Layout
+falsos negativos, eficiencia
+\end_layout
+
+\begin_layout Plain Layout
+coordenada x de la imagen
+\end_layout
+
+\begin_layout Plain Layout
+punto mas bajo en la y determino la distancia
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Uso del SLAM
+\end_layout
+
+\begin_layout FrameSubtitle
+Información de movimiento
+\end_layout
+
+\begin_layout Itemize
+Se realizó una integración con la API de LeJOS
+\end_layout
+
+\begin_layout Itemize
+Reportes asincrónicos de los movimientos realizados
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Algoritmo de recorrida
+\end_layout
+
+\begin_layout Itemize
+Algoritmo en alto nivel que busca realizar una recorrida completa del escenario
+ (sin conocer sus dimensiones)
+\end_layout
+
+\begin_layout Itemize
+Basado en comportamientos que compiten entre sí
+\end_layout
+
+\begin_layout Itemize
+Modelo del mundo compartido
+\end_layout
+
+\begin_layout Itemize
+Recorre el entorno formando 
+\begin_inset Quotes eld
+\end_inset
+
+S
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+explicar el contexto, un sistema que recorre en forma de S
+\end_layout
+
+\begin_layout Plain Layout
+los waypoints son puntos a seguir por el robot
+\end_layout
+
+\begin_layout Plain Layout
+el sitema de vision toma el control cuando ve una marca y lo libera para
+ que se pueda seguir
+\end_layout
+
+\begin_layout Plain Layout
+el wall stopper genera waypoint en el sentido creciente de las y.
+ yendo y volviendo son en sentido de las y
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Algoritmo de recorrida
+\end_layout
+
+\begin_layout FrameSubtitle
+Ejemplo
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename diagramas/Inicial.dia
+	display false
+	scale 12
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename diagramas/primerosWays.dia
+	display false
+	scale 12
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename diagramas/observaMarca.dia
+	display false
+	scale 12
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Algoritmo de recorrida
+\end_layout
+
+\begin_layout FrameSubtitle
+Ejemplo
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename diagramas/pared1.dia
+	display false
+	scale 12
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset Graphics
+	filename diagramas/pared2.dia
+	display false
+	scale 12
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename diagramas/segundosWays.dia
+	display false
+	scale 12
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Parametrización
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+no adelantarse
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout FrameSubtitle
+Parámetros Principales del Sistema
+\end_layout
+
+\begin_layout Itemize
+Modelo de movimiento
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reflejan errores cometidos por el robot al desplazarse
+\end_layout
+
+\begin_layout Itemize
+Se utilizan dos parámetros
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Error en el desplazamiento
+\end_layout
+
+\begin_layout Itemize
+Error en el giro
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Modelo de sensado
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Refleja la confianza en la estimación de la marca sensada
+\end_layout
+
+\begin_layout Itemize
+Se utiliza un solo parámetro
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Resampling
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Permite al sistema hace resampling cuando realmente eso aporta información
+ al mismo
+\end_layout
+
+\begin_layout Itemize
+Se utiliza un sólo parámetro
+\end_layout
+
+\end_deeper
+\begin_layout BeginFrame
+Calibración usando Algoritmos Genéticos
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+mucha info, sacaria un poco
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Función: calibrar el SLAM
+\end_layout
+
+\begin_layout Itemize
+Conjuntos de datos de SLAM pre-grabados
+\end_layout
+
+\begin_layout Itemize
+Individuos:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Despl.
+ Lineal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Despl.
+ Angular
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+M.
+ de Sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resampling
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Fitness: error cometido en la estimación de la posición en los conjuntos
+ de datos
+\end_layout
+
+\begin_layout Itemize
+Calibración del genético 
+\end_layout
+
+\begin_layout Itemize
+Ejecución del genético 
+\end_layout
+
+\begin_layout Itemize
+Prueba del genético
+\end_layout
+
+\begin_layout Itemize
+Utilización del cluster de Fing
+\end_layout
+
+\begin_layout BeginFrame
+Calibración usando Algoritmos Genéticos
+\end_layout
+
+\begin_layout FrameSubtitle
+Resultados
+\end_layout
+
+\begin_layout Itemize
+Calibración no intuitiva de SLAM
+\end_layout
+
+\begin_layout Itemize
+Error promedio en la estimación de aprox.
+ 20 cm en testing
+\end_layout
+
+\begin_layout Itemize
+Calibraciones diferentes con similares errores cometidos - trabajos futuros
+\end_layout
+
+\begin_layout Itemize
+Ejemplo mejor individuo
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mejor Individuo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Varianza
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ de Traslación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,067
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ de Rotación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,035
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ de Sensado
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7158
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7920,5 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990,32
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Param.
+ 
+\emph on
+Resampling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,071
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,45 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,30
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Experimentos
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+pruebas realizadas con un conjunto de datos reales obtenidos de nuestro
+ robot, era imposible hacer 3000 ejecuciones en el robot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Pruebas de cubrimiento
+\end_layout
+
+\begin_layout BeginFrame
+Preparación
+\end_layout
+
+\begin_layout Itemize
+Se implementó un sistema que integra la información de odometría para poder
+ comparar el sistema de SLAM implementado
+\end_layout
+
+\begin_layout Itemize
+Se utilizó el sistema de visión global Doraemon para tener una referencia
+ real de la posición del robot
+\end_layout
+
+\begin_layout Itemize
+Ambos sistemas realizaron la misma recorrida
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Pruebas
+\end_layout
+
+\begin_layout Itemize
+Se decidió hacer dos tipos de pruebas
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+que otras pruebas podriamos haber hecho?
+\end_layout
+
+\begin_layout Plain Layout
+1 - comparar contra otro sistema de slam
+\end_layout
+
+\begin_layout Plain Layout
+2 - Probar en otro entorno
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Cubrimiento del entorno
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Sistema Implementado (SLAM) vs.
+ Sistema basado en odometría
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Evaluación del mapa generado
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mapa generado vs.
+ mapa real
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Metodología
+\end_layout
+
+\begin_layout Itemize
+Se eligió un punto de partida fijo
+\end_layout
+
+\begin_layout Itemize
+Se toma al escenario como una grilla con precisión de medio centímetro
+\end_layout
+
+\begin_layout Itemize
+Se realizaron ejecuciones con cada sistema 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+escribir mas lindo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+5 ejecuciones de 20 minutos
+\end_layout
+
+\begin_layout Itemize
+5 ejecuciones de 100 minutos
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Terminación de las pruebas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Tiempo de ejecución
+\end_layout
+
+\begin_layout Itemize
+Abandono del escenario
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Métricas de rendimiento
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+6cm
+\end_layout
+
+\begin_layout Itemize
+Cubrimiento útil
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Zona interior del entorno
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Cubrimiento inútil
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Zona fuera del entorno
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Cubrimiento útil total
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Casillas visitadas dentro de la zona útil, incluye repetidas
+\end_layout
+
+\end_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename images/zonautil2.png
+	display false
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Métricas de rendimiento
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\lang english
+\begin_inset Graphics
+	filename images/cubrimiento_sinCostadoDerecho.png
+	display false
+	width 42.5page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Métricas de rendimiento
+\end_layout
+
+\begin_layout Itemize
+Eficiencia del recorrido
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Cociente entre el cubrimiento útil total y la distancia recorrida
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $\mathit{EficienciaRecorrido=CubrimientoUtilTotal/DistanciaRecorrida}$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\size small
+mejorar la indentacion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Error medio en la estimación de la posición (RMS)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Toma como referencia la posición obtenida con Doraemon
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula $\mathit{RMS=\sqrt{\frac{1}{n}\sum_{1}^{n}(x_{estimada}-x_{Doraemon})^{2}}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Ejecución exitosa o errónea
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Estudia la razón de terminación de las pruebas
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Evolución del cubrimiento útil total
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Estudia la evolución de los sistemas con el paso del tiempo
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados 
+\end_layout
+
+\begin_layout FrameSubtitle
+Pruebas de 20 minutos
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+achicar 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="5">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="30page%">
+<column alignment="center" valignment="middle" width="8page%">
+<column alignment="center" valignment="middle" width="9page%">
+<column alignment="center" valignment="middle" width="9page%">
+<column alignment="center" valignment="middle" width="9text%">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Odometría
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+SLAM
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Métrica
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Var
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Var
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Cubrimiento Útil 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $92,24\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $3.23\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $86,82\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $2.23\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Cubrimiento Inútil
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $14,50\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $3.28\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $4,64\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $1.74\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Cubrimiento Útil Total
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $2035,92\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $935.82\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $1788,30\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $46.11\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Eficiencia de Recorrido
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $73,86\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $3.48\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $79,82\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $0.72\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Ejecuciones con error
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $4/5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+\color red
+\begin_inset Formula $0/5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Evolución del cubrimiento 
+\end_layout
+
+\begin_layout FrameSubtitle
+Pruebas de 20 minutos
+\end_layout
+
+\begin_layout Itemize
+Evolución del cubrimiento útil
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+Cubrimiento útil
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset Graphics
+	filename plots/cubriCorto.png
+	display false
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Cubrimiento útil total
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename plots/cubriCortoTot.png
+	display false
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Pruebas de 100 minutos
+\end_layout
+
+\begin_layout BeginFrame
+Comparación de resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+20 minutos vs.
+ 100 minutos
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/cubUtil.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+Cubrimiento útil
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename plots/cubInutil.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Cubrimiento inútil
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+4cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename plots/cubUtilTotal.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Cubrimiento útil total
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Comparación de resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+20 minutos vs.
+ 100 minutos
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/eficRecorrida.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+Eficiencia recorrida
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename plots/ejecError.jpeg
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Ejecuciones con error
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout BeginFrame
+Evolución del Cubrimiento
+\end_layout
+
+\begin_layout FrameSubtitle
+Pruebas de 100 minutos
+\end_layout
+
+\begin_layout Itemize
+Evolución del cubrimiento útil
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+Cubrimiento útil
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset Graphics
+	filename plots/cubriLargo.png
+	display false
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Cubrimiento útil total
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+\begin_inset Graphics
+	filename plots/cubriLargoTot.png
+	display false
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Conclusiones pruebas
+\end_layout
+
+\begin_layout Itemize
+Pruebas de 20 minutos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Odometría es más eficiente
+\end_layout
+
+\begin_layout Itemize
+SLAM tiene retrasos debido al tiempo necesario para estabilizar la cámara
+\end_layout
+
+\begin_layout Itemize
+La corrección del error del SLAM permite mantener al robot en la zona útil
+\end_layout
+
+\begin_layout Itemize
+El SLAM presenta mayor robustez debido a la corrección
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Pruebas de 100 minutos
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+SLAM demostró mayor eficacia, precisión y robustez frente a odometría
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Subsection
+Pruebas del mapa generado
+\end_layout
+
+\begin_layout BeginFrame
+Mapa Generado
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/mapaOrig.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+Mapa original
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename images/mapaRotado.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Mapa generado
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Mapa Generado
+\end_layout
+
+\begin_layout Itemize
+Se mantienen las relaciones de distancia entre las marcas y el robot
+\end_layout
+
+\begin_layout Itemize
+El mapa generado se presenta trasladado y rotado en relación al mapa original
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Se realizó un análisis del error RMS 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Se presentan indicios de errores del marco de referencia al comienzo de
+ la recorrida
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Se realizaron corridas con un recorrido preestablecido 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+También se generó un mapa rotado
+\change_deleted -1785986595 1341341150
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout BeginFrame
+Conclusiones mapa generado
+\end_layout
+
+\begin_layout Itemize
+El mapa generado por el sistema de SLAM se presenta rotado y trasladado
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/evolErrorDist3.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+Error distancia
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+
+\lang english
+6cm
+\end_layout
+
+\end_deeper
+\begin_layout ColumnsCenterAligned
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Graphics
+	filename plots/evolErrorRot3.png
+	display false
+	scale 18
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\lang english
+Error rotación
+\end_layout
+
+\begin_layout ColumnsCenterAligned
+
+\end_layout
+
+\begin_layout Itemize
+Se concluye que este tipo de métrica (error RMS) no es adecuada a este contexto
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Resultados
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+5 minutos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Conclusiones
+\end_layout
+
+\begin_layout BeginFrame
+Conclusiones
+\end_layout
+
+\begin_layout Itemize
+Efectivo desarrollo de un sistema robótico autónomo que realiza SLAM
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Filtro de partículas + Kalman (FastSlam)
+\end_layout
+
+\begin_layout Itemize
+Basado en marcas
+\end_layout
+
+\begin_layout Itemize
+Parametrizado
+\end_layout
+
+\begin_layout Itemize
+Depurable
+\end_layout
+
+\begin_layout Itemize
+OnBoard
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Se resuelve el problema de cubrimiento en un entorno controlado
+\end_layout
+
+\begin_layout Itemize
+Plataforma flexible con componentes bien definidas
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+permutable?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Modelo de sensado
+\end_layout
+
+\begin_layout Itemize
+Modelo de movimiento
+\end_layout
+
+\begin_layout Itemize
+Núcleo del SLAM
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Conclusiones
+\end_layout
+
+\begin_layout Itemize
+Calibración con Algoritmos Evolutivos
+\end_layout
+
+\begin_layout Itemize
+Aportes sin precedentes relevados
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Modelo de sensado con convolución
+\end_layout
+
+\begin_layout Itemize
+Detección de marcas usando modelos bayesianos
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Interiorización de conocimientos del SLAM 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reredactar, tutores? 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Contribución a la plataforma de LeJOS (pendiente de publicar)
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Subsection*
+Trabajos futuros
+\end_layout
+
+\begin_layout BeginFrame
+Trabajos futuros
+\end_layout
+
+\begin_layout Itemize
+Rigidez del mapa final
+\end_layout
+
+\begin_layout Itemize
+Modelo de sensado y cámara
+\end_layout
+
+\begin_layout Itemize
+Pruebas Adicionales
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+robot secuetrado(localización global), marcas a medias, mover al robot control
+ remoto
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Algoritmo evolutivo
+\end_layout
+
+\begin_layout Itemize
+Llevar sistema a mayor escala
+\end_layout
+
+\begin_layout Itemize
+Probar el rendimiento del modelo con convolución
+\end_layout
+
+\begin_layout Itemize
+Integración con otros proyectos de grado: VisRob2, Salimoo
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+No olvidar: referencias, preguntas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Otras pruebas:
+\end_layout
+
+\begin_layout Plain Layout
+*robot con manipulador que lleve y traiga cosas
+\end_layout
+
+\begin_layout Plain Layout
+*torcer al robot en la mitad de las pruebas 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section*
+Finalmente
+\end_layout
+
+\begin_layout BeginFrame
+Gracias
+\end_layout
+
+\begin_layout Standard
+
+\size largest
+¿Preguntas?
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

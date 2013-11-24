@@ -1,0 +1,158 @@
+\relax 
+\ifx\hyper@anchor\@undefined
+\global \let \oldcontentsline\contentsline
+\gdef \contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global \let \oldnewlabel\newlabel
+\gdef \newlabel#1#2{\newlabelxx{#1}#2}
+\gdef \newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\let \contentsline\oldcontentsline
+\let \newlabel\oldnewlabel}
+\else
+\global \let \hyper@last\relax 
+\fi
+
+\@writefile{toc}{\beamer@endinputifotherversion {3.07pt}}
+\@writefile{nav}{\beamer@endinputifotherversion {3.07pt}}
+\@writefile{nav}{\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {1}{1}}}
+\@writefile{nav}{\headcommand {\sectionentry {1}{Agenda}{2}{Agenda}{0}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {1}{1}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {1}{1}}}
+\@writefile{nav}{\headcommand {\slideentry {1}{0}{2}{2/2}{}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {2}{2}}}
+\@writefile{toc}{\beamer@sectionintoc {2}{Introducci\IeC {\'o}n}{3}{0}{1}}
+\@writefile{nav}{\headcommand {\sectionentry {2}{Introducci\IeC {\'o}n}{3}{Introducci\IeC {\'o}n}{0}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {2}{2}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {2}{2}}}
+\@writefile{toc}{\beamer@subsectionintoc {2}{1}{El problema de SLAM}{3}{0}{1}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{2}{1}{3}{El problema de SLAM}}\headcommand {\beamer@subsectionpages {3}{2}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{1}{1}{3/6}{El problema de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {3}{6}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{1}{2}{7/9}{El problema de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {7}{9}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{1}{3}{10/13}{El problema de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {10}{13}}}
+\@writefile{toc}{\beamer@subsectionintoc {2}{2}{Clasificaciones de SLAM}{14}{0}{1}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{2}{2}{14}{Clasificaciones de SLAM}}\headcommand {\beamer@subsectionpages {3}{13}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{2}{1}{14/19}{Clasificaciones de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {14}{19}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{2}{2}{20/22}{Clasificaciones de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {20}{22}}}
+\@writefile{nav}{\headcommand {\slideentry {2}{2}{3}{23/28}{Clasificaciones de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {23}{28}}}
+\@writefile{toc}{\beamer@sectionintoc {3}{Estado de arte}{29}{0}{2}}
+\@writefile{nav}{\headcommand {\sectionentry {3}{Estado de arte}{29}{Estado de arte}{0}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {3}{28}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {14}{28}}}
+\@writefile{toc}{\beamer@subsectionintoc {3}{1}{SLAM en la actualidad}{29}{0}{2}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{3}{1}{29}{SLAM en la actualidad}}\headcommand {\beamer@subsectionpages {29}{28}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{1}{1}{29/30}{SLAM en la actualidad}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {29}{30}}}
+\@writefile{toc}{\beamer@subsectionintoc {3}{2}{SLAM Probabil\IeC {\'\i }sticos}{31}{0}{2}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{3}{2}{31}{SLAM Probabil\IeC {\'\i }sticos}}\headcommand {\beamer@subsectionpages {29}{30}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{1}{31/36}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {31}{36}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{2}{37/37}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {37}{37}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{3}{38/38}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {38}{38}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{4}{39/39}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {39}{39}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{5}{40/40}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {40}{40}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{6}{41/42}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {41}{42}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{7}{43/45}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {43}{45}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{2}{8}{46/49}{SLAM Probabil\IeC {\'\i }sticos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {46}{49}}}
+\@writefile{toc}{\beamer@subsectionintoc {3}{3}{Parem\IeC {\'e}tricos vs No Param\IeC {\'e}tricos}{50}{0}{2}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{3}{3}{50}{Parem\IeC {\'e}tricos vs No Param\IeC {\'e}tricos}}\headcommand {\beamer@subsectionpages {31}{49}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{3}{1}{50/53}{Parem\IeC {\'e}tricos vs No Param\IeC {\'e}tricos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {50}{53}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{3}{2}{54/54}{Parem\IeC {\'e}tricos vs No Param\IeC {\'e}tricos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {54}{54}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{3}{3}{55/57}{Parem\IeC {\'e}tricos vs No Param\IeC {\'e}tricos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {55}{57}}}
+\@writefile{toc}{\beamer@subsectionintoc {3}{4}{T\IeC {\'e}cnicas de SLAM}{58}{0}{2}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{3}{4}{58}{T\IeC {\'e}cnicas de SLAM}}\headcommand {\beamer@subsectionpages {50}{57}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{1}{58/60}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {58}{60}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{2}{61/61}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {61}{61}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{3}{62/64}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {62}{64}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{4}{65/65}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {65}{65}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{5}{66/66}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {66}{66}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{6}{67/71}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {67}{71}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{4}{7}{72/72}{T\IeC {\'e}cnicas de SLAM}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {72}{72}}}
+\@writefile{toc}{\beamer@subsectionintoc {3}{5}{SLAM BioInspirados}{73}{0}{2}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{3}{5}{73}{SLAM BioInspirados}}\headcommand {\beamer@subsectionpages {58}{72}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{5}{1}{73/73}{SLAM BioInspirados}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {73}{73}}}
+\@writefile{nav}{\headcommand {\slideentry {3}{5}{2}{74/74}{SLAM BioInspirados}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {74}{74}}}
+\@writefile{toc}{\beamer@sectionintoc {4}{Diferentes alternativas}{75}{0}{3}}
+\@writefile{nav}{\headcommand {\sectionentry {4}{Diferentes alternativas}{75}{Diferentes alternativas}{0}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {29}{74}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {73}{74}}}
+\@writefile{toc}{\beamer@subsectionintoc {4}{1}{Pr\IeC {\'o}ximos pasos}{75}{0}{3}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{4}{1}{75}{Pr\IeC {\'o}ximos pasos}}\headcommand {\beamer@subsectionpages {75}{74}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{1}{1}{75/78}{Pr\IeC {\'o}ximos pasos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {75}{78}}}
+\@writefile{toc}{\beamer@subsectionintoc {4}{2}{Benchmarking}{79}{0}{3}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{4}{2}{79}{Benchmarking}}\headcommand {\beamer@subsectionpages {75}{78}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{2}{1}{79/82}{Benchmarking}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {79}{82}}}
+\@writefile{toc}{\beamer@subsectionintoc {4}{3}{Framework}{83}{0}{3}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{4}{3}{83}{Framework}}\headcommand {\beamer@subsectionpages {79}{82}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{3}{1}{83/85}{Framework}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {83}{85}}}
+\@writefile{toc}{\beamer@subsectionintoc {4}{4}{Unificar trabajos previos}{86}{0}{3}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{4}{4}{86}{Unificar trabajos previos}}\headcommand {\beamer@subsectionpages {83}{85}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{4}{1}{86/86}{Unificar trabajos previos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {86}{86}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{4}{2}{87/91}{Unificar trabajos previos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {87}{91}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{4}{3}{92/94}{Unificar trabajos previos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {92}{94}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{4}{4}{95/95}{Unificar trabajos previos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {95}{95}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{4}{5}{96/100}{Unificar trabajos previos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {96}{100}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{4}{6}{101/101}{Unificar trabajos previos}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {101}{101}}}
+\@writefile{toc}{\beamer@subsectionintoc {4}{5}{Evaluaci\IeC {\'o}n del control del robot}{102}{0}{3}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {0}{4}{5}{102}{Evaluaci\IeC {\'o}n del control del robot}}\headcommand {\beamer@subsectionpages {86}{101}}}
+\@writefile{nav}{\headcommand {\slideentry {4}{5}{1}{102/104}{Evaluaci\IeC {\'o}n del control del robot}{0}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {102}{104}}}
+\@writefile{nav}{\headcommand {\partentry {Appendix}{1}}}
+\@writefile{nav}{\headcommand {\beamer@partpages {1}{104}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {75}{104}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {102}{104}}}
+\@writefile{nav}{\headcommand {\beamer@appendixpages {105}}}
+\@writefile{toc}{\beamer@sectionintoc {5}{Finalmente}{105}{1}{4}}
+\@writefile{nav}{\headcommand {\sectionentry {5}{Finalmente}{105}{Finalmente}{1}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {105}{104}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {105}{104}}}
+\@writefile{toc}{\beamer@subsectionintoc {5}{1}{Referencias}{105}{1}{4}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {1}{5}{1}{105}{Referencias}}\headcommand {\beamer@subsectionpages {105}{104}}}
+\@writefile{nav}{\headcommand {\slideentry {5}{1}{1}{105/105}{Referencias}{1}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {105}{105}}}
+\@writefile{toc}{\beamer@subsectionintoc {5}{2}{Discusi\IeC {\'o}n abierta}{106}{1}{4}}
+\@writefile{nav}{\headcommand {\beamer@subsectionentry {1}{5}{2}{106}{Discusi\IeC {\'o}n abierta}}\headcommand {\beamer@subsectionpages {105}{105}}}
+\@writefile{nav}{\headcommand {\slideentry {5}{2}{1}{106/106}{Discusi\IeC {\'o}n abierta}{1}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {106}{106}}}
+\@writefile{nav}{\headcommand {\slideentry {5}{2}{2}{107/107}{Discusi\IeC {\'o}n abierta}{1}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {107}{107}}}
+\@writefile{nav}{\headcommand {\slideentry {5}{2}{3}{108/108}{Discusi\IeC {\'o}n abierta}{1}}}
+\@writefile{nav}{\headcommand {\beamer@framepages {108}{108}}}
+\@writefile{nav}{\headcommand {\beamer@partpages {105}{108}}}
+\@writefile{nav}{\headcommand {\beamer@subsectionpages {106}{108}}}
+\@writefile{nav}{\headcommand {\beamer@sectionpages {105}{108}}}
+\@writefile{nav}{\headcommand {\beamer@documentpages {108}}}
+\@writefile{nav}{\headcommand {\def \inserttotalframenumber {43}}}

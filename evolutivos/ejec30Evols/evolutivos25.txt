@@ -1,0 +1,11 @@
+Size:4, Fitness value:0.005339782963765316, Alleles:[IntegerGene(0,100)=12, IntegerGene(0,100)=10, IntegerGene(0,10000)=7518, IntegerGene(0,1000)=71], Application data:null
+mediaCorrida 0 411.35516
+mediaCorrida 1 176.60478
+mediaCorrida 2 255.98746
+mediaCorrida 3 342.15387
+mediaCorrida 4 164.55017
+mediaCorrida 5 169.33899
+mediaCorrida 6 210.36853
+mediaCorrida 7 244.62677
+mediaCorrida 8 161.06227
+mediaCorrida 9 265.98035

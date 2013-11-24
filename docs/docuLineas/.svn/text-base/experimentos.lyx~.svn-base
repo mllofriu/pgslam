@@ -1,0 +1,1193 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Parametrización
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+El rendimiento del algoritmo de localización implementado depende de los
+ valores de ciertos parámetros del algoritmo.
+ A continuación detallamos la naturaleza de estos parámetros.
+\end_layout
+
+\begin_layout Subsection
+Modelo de desplazamiento
+\end_layout
+
+\begin_layout Standard
+Como se explicó en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modelo-de-movimiento"
+
+\end_inset
+
+, el modelo de movimiento depende de dos parámetros correspondientes a las
+ varianzas de las distribuciones que modelan el ruido de desplazamiento.
+ 
+\end_layout
+
+\begin_layout Standard
+Estos parámetros deben establecerse de modo que reflejen los errores cometidos
+ por el robot al moverse.
+ Al aumentar el valor de estos parámetros, se contempla un mayor error potencial
+mente cometido por el robot.
+ Sin embargo, si este parámetro es demasiado alto, la dispersión de las
+ partículas aumenta rápidamente y nunca se logra un estimado de la posición
+ preciso.
+\end_layout
+
+\begin_layout Subsection
+Modelo de observación
+\end_layout
+
+\begin_layout Standard
+Como se explicó en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modelo-de-sensado"
+
+\end_inset
+
+, el modelo de sensado depende de dos parámetros.
+ Estos deben ser configurados para reflejar la incertidumbre de los sensores
+ del robot.
+\end_layout
+
+\begin_layout Standard
+Al aumentar el valor de estos parámetros, la confianza en los valores sensados
+ disminuye, aumentando la robustez del sistema ante medidas erroneas.
+ Sin embargo, si estos valores son demasiado altos, la información aportada
+ al sistema de localización por cada valor sensado disminuye (porque este
+ sistema no confía en estas medidas), tornando imposible la convergencia
+ del sistema en base a la eliminación de partículas inverosímiles.
+\end_layout
+
+\begin_layout Standard
+Es importante notar que estos modelos suelen ser más relajados de lo que
+ deberían ser en teoría.
+ Es decir, que suelen representar más incertidumbre sobre las medidas realizadas
+ que la incertidumbre real.
+ Esto se hace de esta forma para evitar que la región de alta probabilidad
+ del modelo de sensado coincida con una zona sin partículas, lo que causaría
+ anomalías en el proceso de 
+\emph on
+resampling
+\emph default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "probrob"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Cantidad de partículas
+\end_layout
+
+\begin_layout Standard
+La cantidad de partículas utilizadas también afectan el rendimiento.
+ Sin embargo, no realizaremos un proceso de parametrización de este parámetro.
+ 
+\end_layout
+
+\begin_layout Standard
+Basándonos que existe un consenso de que una mayor cantidad de partículas
+ aumentan la precisión de la distribución de probabilidad a representar,
+ no incluiremos este parámetro en el análisis.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego de determinados los restantes parámetros, se establece la cantidad
+ de partículas de modo que sea la máxima posible, contemplando que el sistema
+ de localización sea capaz de mantener el estimado de la posición mientras
+ el robot realiza su tarea.
+\end_layout
+
+\begin_layout Section
+Método de parametrización
+\end_layout
+
+\begin_layout Standard
+Tomando en cuenta que se existen cuatro parámetros a configurar, para los
+ cuales se deben elegir al menos 5 valores, existen 
+\begin_inset Formula $5^{4}$
+\end_inset
+
+ combinaciones.
+ Además, dado que el rendimiento del sistema en una ejecución depende altamente
+ del azar, deben realizarse varias ejecuciones por combinación para evaluar
+ el verdadero rendimiento del sistema utilizando una configuración dada,
+ se eligió arbitrariamente 
+\begin_inset Formula $5$
+\end_inset
+
+ como este valor.
+\end_layout
+
+\begin_layout Standard
+Los valores arriba mencionados son cotas inferiores.
+ A nuestro parecer, deberían elegirse valores más conservadores, pero mantendrem
+os estos valores, pues sirven para una posterior justificación del método
+ de parametrización elegido.
+\end_layout
+
+\begin_layout Standard
+En resumen, se tienen que realizar al menos 
+\begin_inset Formula $5*5^{4}=3125$
+\end_inset
+
+ ejecuciones para determinar el mejor conjunto de parámetros del sistema
+ de localización implementado.
+ Si estimamos diez minutos destinados a realizar cada una de las ejecuciones,
+ se tienen que invertir 
+\begin_inset Formula $31250$
+\end_inset
+
+ minutos, es decir 
+\begin_inset Formula $52$
+\end_inset
+
+ horas realizando ejecuciones.
+\end_layout
+
+\begin_layout Standard
+Como este valor resultaba demasiado grande, tomando en cuenta que el proceso
+ de parametrización es una pequeña parte dentro del proyecto de grado, decidimos
+ realizar las ejecuciones utilizando un conjunto de datos reales, recabados
+ utilizando nuestro robot.
+ 
+\end_layout
+
+\begin_layout Subsection
+Conjunto de datos
+\end_layout
+
+\begin_layout Standard
+Los conjuntos de datos son una práctica usual en la evaluación de un algoritmo
+ de SLAM.
+ Pueden encontrarse sitios dedicados a la publicación de estos conjuntos
+ de datos, como por ejemplo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "datasets"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Los conjuntos de datos constan de una lista de datos de sensado y movimiento
+ que constituyen toda la entrada de un algoritmo de SLAM pasivo.
+ Utilizando estos datos, puede ejecutarse un algoritmo sin tener que recurrir
+ a la plataforma robótica real.
+\end_layout
+
+\begin_layout Standard
+Opcionalmente, el conjunto de datos puede incluir información de la ubicación
+ real del robot, a fin de evaluar el desempeño del sistema simulado.
+\end_layout
+
+\begin_layout Subsubsection
+Obtención del conjunto de datos
+\end_layout
+
+\begin_layout Standard
+El conjunto de datos utilizado constó de diez ejecuciones del robot en el
+ ambiente de pruebas
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+referencia cruzada
+\end_layout
+
+\end_inset
+
+.
+ El robot realizaba tareas de exploración al azar, mientras se enviaban
+ los datos de movimiento y sensado a una PC, utilizando bluetooth.
+ 
+\end_layout
+
+\begin_layout Standard
+Al mismo tiempo, esta PC se comunicaba con un sistema de localización global
+ basado en cámaras utilizado en fútbol de robots, de nombre Doraemon
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dora"
+
+\end_inset
+
+.
+ El sistema de localización global detectaba un parche colocado en la parte
+ superior del robot y brindaba coordenadas de la ubicación del robot en
+ los momentos que se sensaba una linea en el suelo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+foto del robot con el parche
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta información de la posición real del robot fue incluida en los conjuntos
+ de datos.
+\end_layout
+
+\begin_layout Subsection
+Métrica de rendimiento
+\end_layout
+
+\begin_layout Standard
+Utilizando los conjuntos de datos, puede simularse la ejecución del sistema
+ de localización para medir el rendimiento de un determinado conjunto de
+ parámetros.
+\end_layout
+
+\begin_layout Standard
+Sin embargo, para esto deben definirse métricas que permitan comparar el
+ resultado de dos ejecuciones de los conjuntos de datos.
+\end_layout
+
+\begin_layout Standard
+Se identificaron varias métricas posibles:
+\end_layout
+
+\begin_layout Itemize
+La suma del error cometido por el sistema.
+\end_layout
+
+\begin_layout Itemize
+El error promedio cometido por el sistema.
+\end_layout
+
+\begin_layout Itemize
+El error máximo cometido por el sistema.
+\end_layout
+
+\begin_layout Itemize
+Indicador RMS (
+\emph on
+root mean squared
+\emph default
+) de la estimación de la coordenada 
+\begin_inset Formula $x$
+\end_inset
+
+ o 
+\begin_inset Formula $y$
+\end_inset
+
+ utilizado en la literatura de SLAM.
+\end_layout
+
+\begin_layout Standard
+Donde error refiere a la distancia euclideana entre la posición estimada
+ por el sistema de localización y la brindada por Doraemon.
+\end_layout
+
+\begin_layout Standard
+Finalmente se escogió el error promedio como métrica a utilizar.
+ Se consideró que el error máximo podía verse sesgado por errores en el
+ sistema de visión global o por inconsistencias en parte del conjunto de
+ datos.
+ Respecto al indicador RMS, se consideró que no incluía mayor información
+ que el error promedio, con la dificultad adicional que no permitía incorporar
+ ambas coordenadas (
+\begin_inset Formula $x$
+\end_inset
+
+ e 
+\begin_inset Formula $y$
+\end_inset
+
+) fácilmente.
+ Se consideró que la suma del error era equivalente al error promedio, con
+ la ventaja que el error promedio brinda información más intuitiva sobre
+ el rendimiento del sistema.
+\end_layout
+
+\begin_layout Standard
+En conclusión, se eligió el error promedio como indicador de precisión del
+ sistema.
+\end_layout
+
+\begin_layout Subsection
+Obtención del conjunto de parámetros
+\end_layout
+
+\begin_layout Standard
+Obtenido el conjunto de datos y la métrica a utilizar, se debe definir el
+ método de generación de conjunto de parámetros a utilizar.
+\end_layout
+
+\begin_layout Subsubsection
+Producto cartesiano
+\end_layout
+
+\begin_layout Standard
+La primera aproximación constaba en la definición de un conjunto de valores
+ para cada parámetro, para luego generar un conjunto de valores resultante
+ del producto cartesiano entre los conjuntos de valores.
+\end_layout
+
+\begin_layout Standard
+Este método resultó ineficiente debido a que probaba combinaciones que resultaba
+n poco probables de ser óptimas.
+ Además, para obtener tiempos de ejecución razonables para el proceso de
+ parametrización, el conjunto de valores a probar debía ser reducido, corriendo
+ el riesgo de dejar fuera la combinación óptima.
+\end_layout
+
+\begin_layout Subsubsection
+Algoritmo evolutivo
+\end_layout
+
+\begin_layout Standard
+En consecuencia, se decidió utilizar un algoritmo evolutivo para la búsqueda
+ del parámetro utilizado.
+ El algoritmo evolutivo y todas sus características se describen en la sección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Algoritmo-Evolutivo"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Algoritmo Evolutivo
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Algoritmo-Evolutivo"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se describen las principales características del algoritmo
+ evolutivo utilizado.
+\end_layout
+
+\begin_layout Subsection
+Plataforma utilizada
+\end_layout
+
+\begin_layout Standard
+Se utilizó la plataforma JGAP
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jgap"
+
+\end_inset
+
+ basada en Java.
+ Se eligió esta plataforma porque:
+\end_layout
+
+\begin_layout Itemize
+Se integraba fácilmente con la solución desarrollada al momento, debido
+ a que ambas estaban implementadas utilizando el lenguaje Java.
+\end_layout
+
+\begin_layout Itemize
+La plataforma es fácil de utilizar y su curva de aprendizaje no es muy empinada.
+ 
+\end_layout
+
+\begin_layout Itemize
+Los autores ya habían realizado implementaciones utilizando esta plataforma,
+ por lo que existía una experiencia previa en el equipo.
+\end_layout
+
+\begin_layout Subsection
+Individuos
+\end_layout
+
+\begin_layout Standard
+Los individuos del algoritmo evolutivo consisten en 4 alelos de tipo entero,
+ correspondientes a cada uno de los parámetros a utilizar:
+\end_layout
+
+\begin_layout Enumerate
+El parámetro de ruido de desplazamiento.
+ El parámetro se calcula como el valor del alelo divido entre 100.
+\end_layout
+
+\begin_layout Enumerate
+El parámetro de ruido de rotación.
+ El parámetro se calcula como el valor del alelo dividido entre 100.
+\end_layout
+
+\begin_layout Enumerate
+El parámetro de actualización de distancia (sensado de las líneas).
+ El parámetro corresponde al valor del alelo, tal como está.
+\end_layout
+
+\begin_layout Enumerate
+El parámetro de de actualización de ángulo (sensor brújula).
+ El parámetro corresponde al valor del alelo, tal como está.
+\end_layout
+
+\begin_layout Standard
+La transformación que se hace a los valores del modelo de desplazamiento
+ (parametros 1 y 2) se realiza de modo de aumentar la resolución de búsqueda
+ en estos parámetros.
+ Además, se definieron restricciones de validez para los individuos, que
+ acotan el espacio de búsqueda de parámetros.
+ 
+\end_layout
+
+\begin_layout Standard
+La resolución de búsqueda y las cotas inferiores y superiores se eligieron
+ basándonos en estimados conservativos, derivados de razonamientos sobre
+ posibles cotas y resoluciones adecuadas.
+ Se entiende que esto no representa un sesgo pues es posible realizar nuevos
+ experimentos de parametrización en caso de que el valor óptimo de un parámetro
+ se encuentre cerca de las fronteras definidas, así como también experimentos
+ para aumentar la resolución de búsqueda en un entorno de la solución hallada
+ en una primera instancia.
+\end_layout
+
+\begin_layout Subsection
+Función de 
+\emph on
+fitness
+\end_layout
+
+\begin_layout Standard
+Se implementó una función de fitness que consiste en ejecutar el filtro
+ de partículas implementado, con los parámetros correspondientes al individuo,
+ utilizando el conjunto de datos recabado.
+ 
+\end_layout
+
+\begin_layout Standard
+Luego, se calcula el error promedio cometido en la estimación de la ubicación
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+asegurarse que en alguna parte hable de la estimación de la ubicación
+\end_layout
+
+\end_inset
+
+y se toma como valor de fitness el inverso de este número:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+fitness=\left(\frac{\sum dist(\bar{x},x)}{\eta}\right)^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde 
+\begin_inset Formula $\eta$
+\end_inset
+
+ corresponde al número de estimaciones realizadas durante las ejecuciones.
+\end_layout
+
+\begin_layout Subsection
+Criterio de parada
+\end_layout
+
+\begin_layout Standard
+Se utilizó como criterio de parada del algoritmo evolutivo la convergencia
+ de la función de 
+\emph on
+fitness
+\emph default
+ del individuo de mayor función de 
+\emph on
+fitness
+\emph default
+ de la población.
+\end_layout
+
+\begin_layout Standard
+Para esto, se estableció un número arbitrario de diez ciclos de evolución,
+ luego de los cuales, si la función de 
+\emph on
+fitness
+\emph default
+ del mejor individuo permanecía constante, se terminaba la búsqueda.
+\end_layout
+
+\begin_layout Standard
+Si bien este valor es pequeño en relación a los valores usuales utilizados
+ en la literatura, hay que considerar que una iteración del algoritmo puede
+ tomar tiempos que alcanzan los minutos, debido a que es necesario simular
+ varias ejecuciones del algoritmo de localización para determinar el valor
+ de 
+\emph on
+fitness
+\emph default
+ de un individuo.
+\end_layout
+
+\begin_layout Subsection
+Parametrización del algoritmo evolutivo
+\end_layout
+
+\begin_layout Standard
+Se realizaron ejecuciones destinadas a la parametrización del algoritmo
+ evolutivo, donde se escogieron valores para los parámetros de:
+\end_layout
+
+\begin_layout Itemize
+Probabilidad de cruzamiento
+\end_layout
+
+\begin_layout Itemize
+Probabilidad de mutación
+\end_layout
+
+\begin_layout Itemize
+Población del algoritmo
+\end_layout
+
+\begin_layout Standard
+Para esto, se definieron conjuntos de valores posibles, uno para cada parámetro,
+ acorde a los utilizados normalmente en la literatura.
+ En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Valores-elegidos-para"
+
+\end_inset
+
+ se pueden observar los valores escogidos para cada uno de los parámetros.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Cruzamiento
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Mutación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1/1000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cant.
+ Individuos
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Valores elegidos para la parametrización del algoritmo evolutivo.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Valores-elegidos-para"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego, se realizaron ejecuciones para probar la eficiencia del algoritmo
+ evolutivo utilizando cada combinación de los valores de los parámetros,
+ resultado de realizar el producto cartesiano entre los conjuntos.
+\end_layout
+
+\begin_layout Standard
+La evaluación de cada conjunto de parámetros consistió en la ejecución del
+ algoritmo evolutivo sobre un subconjunto del conjunto de datos (
+\begin_inset Formula $10\%$
+\end_inset
+
+) durante un tiempo fijo de 
+\begin_inset Formula $1$
+\end_inset
+
+ minuto.
+ Se realizaron cinco ejecuciones del algoritmo evolutivo por conjunto de
+ datos, a fin de evitar que el azar de una ejecución sesgara el proceso
+ de parametrización.
+ Este criterio de parada comprende una heurística para hallar el mejor conjunto
+ de parámetros en un tiempo limitado de ejecución.
+ Esta heurística puede no ser válida en algunos problemas, especialmente
+ en aquellos donde los resultados parciales del algoritmo no son un buen
+ estimador del rendimiento final del algoritmo.
+ Sin embargo, dada la naturaleza del problema de búsqueda, donde no esperamos
+ que haya grandes irregularidades y muchos máximos locales lejanos del máximo
+ global, consideramos que este no es uno de esos problemas.
+\end_layout
+
+\begin_layout Subsubsection
+Resultado de la parametrización del algoritmo evolutivo
+\end_layout
+
+\begin_layout Standard
+En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Conjunto-de-parámetros"
+
+\end_inset
+
+ se pueden observar los parámetros óptimos encontrados por una ejecución
+ del algoritmo evolutivo.
+ En esta ejecución se utilizó como criterio de parada la tasa de cambio
+ en la función de 
+\emph on
+fitness.
+ 
+\emph default
+Si la función de fitness no cambia durante 
+\begin_inset Formula $10$
+\end_inset
+
+ iteraciones, se detiene el algoritmo.
+\end_layout
+
+\begin_layout Standard
+Se observa que la probabilidad de mutación óptima resulta excesivamente
+ alta.
+ Debido a que este valor se encuentra en un extremo del rango de valores
+ elegidos, consideramos que podrían realizarse más pruebas, buscando si
+ valores no probados (mayores) de probabilidad de mutación brindan un mayor
+ rendimiento.
+ Sin embargo, dado que este valor resulta realmente alto con respecto a
+ los utilizados en la literatura y los resultados obtenidos con estos parámetros
+ resultaron satisfactorios, no realizaremos más estudios de parametrización
+ sobre este parámetro.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Cruzamiento
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prob.
+ Mutación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tam.
+ Población
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Conjunto de parámetros óptimo del algoritmo evolutivo.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Conjunto-de-parámetros"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Resultados de la parametrización
+\end_layout
+
+\begin_layout Standard
+Luego de parametrizado el algoritmo evolutivo se realizó una ejecución para
+ encontrar los parámetros que minimizan el error cometido sobre la totalidad
+ del conjunto de datos recabado.
+ En la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Valores-que-minimizan"
+
+\end_inset
+
+ se pueden observar los valores encontrados por el algoritmo evolutivo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desplazamiento Lineal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Desplazamiento rotación
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensado Lineas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensado Brújula
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+87
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Valores que minimizan el error cometido en el conjunto de datos recabados.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Valores-que-minimizan"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

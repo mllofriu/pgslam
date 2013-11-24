@@ -1,0 +1,20 @@
+Found NXT: mina 00165305C1A6
+leJOS NXJ> Connected to mina
+Connected to mina 00165305C1A6
+Console open
+3:603
+3:612
+3:550
+3:571
+3:563
+3:566
+3:538
+3:521
+3:580
+3:519
+3:571
+3:560
+3:550
+3:571
+3:580
+Got exception during close: java.io.IOException: Error in write

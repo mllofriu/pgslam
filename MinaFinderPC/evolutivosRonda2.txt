@@ -1,0 +1,162 @@
+Thread-2: Evolving generation 1, best error: 334.5227315700123
+Params 19 90 98 44 
+Thread-0: Evolving generation 1, best error: 329.4133813433396
+Params 30 88 95 49 
+Thread-1: Evolving generation 1, best error: 279.5016356456893
+Params 13 34 94 32 
+Thread-2: Evolving generation 2, best error: 214.95347841101923
+Params 13 17 58 16 
+Thread-0: Evolving generation 2, best error: 299.6458201036125
+Params 34 323 77 56 
+Thread-1: Evolving generation 2, best error: 226.23178614302054
+Params 13 34 94 64 
+Thread-2: Evolving generation 3, best error: 199.78089008901935
+Params 13 17 58 98 
+Thread-0: Evolving generation 3, best error: 224.4431883091779
+Params 38 7 98 51 
+Thread-1: Evolving generation 3, best error: 142.4985421860156
+Params 15 13 94 32 
+Thread-2: Evolving generation 4, best error: 151.95607540484468
+Params 19 5 60 79 
+Thread-0: Evolving generation 4, best error: 224.4431883091779
+Params 38 7 98 51 
+Thread-1: Evolving generation 4, best error: 142.4985421860156
+Params 15 13 94 32 
+Thread-2: Evolving generation 5, best error: 151.95607540484468
+Params 19 5 60 79 
+Thread-0: Evolving generation 5, best error: 139.43319640001906
+Params 6 7 98 52 
+Thread-1: Evolving generation 5, best error: 142.4985421860156
+Params 15 13 94 32 
+Thread-0: Evolving generation 6, best error: 135.4830909282123
+Params 6 7 98 20 
+Thread-2: Evolving generation 6, best error: 135.26715024302504
+Params 19 5 80 36 
+Thread-1: Evolving generation 6, best error: 138.01300978182763
+Params 15 13 98 32 
+Thread-2: Evolving generation 7, best error: 132.58630931411201
+Params 19 5 58 16 
+Thread-0: Evolving generation 7, best error: 135.4830909282123
+Params 6 7 98 20 
+Thread-1: Evolving generation 7, best error: 124.20276918849365
+Params 15 5 94 28 
+Thread-2: Evolving generation 8, best error: 127.15423331161507
+Params 19 5 97 36 
+Thread-0: Evolving generation 8, best error: 133.58457814601678
+Params 6 7 98 25 
+Thread-1: Evolving generation 8, best error: 124.20276918849365
+Params 15 5 94 28 
+Thread-2: Evolving generation 9, best error: 127.15423331161507
+Params 19 5 97 36 
+Thread-0: Evolving generation 9, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 9, best error: 123.36839270140158
+Params 15 5 94 28 
+Thread-2: Evolving generation 10, best error: 127.15423331161507
+Params 19 5 97 36 
+Thread-0: Evolving generation 10, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 10, best error: 123.36839270140158
+Params 15 5 94 28 
+Thread-2: Evolving generation 11, best error: 126.92231928566505
+Params 19 5 60 16 
+Thread-0: Evolving generation 11, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 11, best error: 123.36839270140158
+Params 15 5 94 28 
+Thread-2: Evolving generation 12, best error: 126.11618623863004
+Params 19 5 58 21 
+Thread-0: Evolving generation 12, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 12, best error: 123.36839270140158
+Params 15 5 94 28 
+Thread-2: Evolving generation 13, best error: 126.11618623863004
+Params 19 5 58 21 
+Thread-0: Evolving generation 13, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 13, best error: 123.0048942883264
+Params 15 5 94 28 
+Thread-2: Evolving generation 14, best error: 126.11618623863004
+Params 19 5 58 21 
+Thread-0: Evolving generation 14, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 14, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 15, best error: 126.05873869192357
+Params 19 5 60 16 
+Thread-0: Evolving generation 15, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 15, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 16, best error: 124.86550381993983
+Params 19 5 58 21 
+Thread-0: Evolving generation 16, best error: 125.96530710538588
+Params 6 7 98 25 
+Thread-1: Evolving generation 16, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 17, best error: 124.86550381993983
+Params 19 5 58 21 
+Thread-0: Evolving generation 17, best error: 123.3724258459076
+Params 6 7 98 25 
+Thread-1: Evolving generation 17, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 18, best error: 124.86550381993983
+Params 19 5 58 21 
+Thread-0: Evolving generation 18, best error: 123.3724258459076
+Params 6 7 98 25 
+Thread-1: Evolving generation 18, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 19, best error: 124.86550381993983
+Params 19 5 58 21 
+Thread-0: Evolving generation 19, best error: 123.3724258459076
+Params 6 7 98 25 
+Thread-1: Evolving generation 19, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 20, best error: 124.86550381993983
+Params 19 5 58 21 
+Thread-0: Evolving generation 20, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-1: Evolving generation 20, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 21, best error: 120.84180541078283
+Params 19 5 58 21 
+Thread-0: Evolving generation 21, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-1: Evolving generation 21, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-2: Evolving generation 22, best error: 120.84180541078283
+Params 19 5 58 21 
+Thread-1: Evolving generation 22, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-0: Evolving generation 22, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-2: Evolving generation 23, best error: 120.84180541078283
+Params 19 5 58 21 
+Thread-1: Evolving generation 23, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-0: Evolving generation 23, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-2: Evolving generation 24, best error: 120.84180541078283
+Params 19 5 58 21 
+Thread-1: Evolving generation 24, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-0: Evolving generation 24, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-2: Evolving generation 25, best error: 120.84180541078283
+Params 19 5 58 21 
+Thread-1: Evolving generation 25, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-0: Evolving generation 25, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-2: Evolving generation 26, best error: 119.5146166548744
+Params 19 5 60 21 
+Thread-1: Evolving generation 26, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-0: Evolving generation 26, best error: 122.70477202569444
+Params 6 7 98 25 
+Thread-2: Evolving generation 27, best error: 119.5146166548744
+Params 19 5 60 21 
+Thread-1: Evolving generation 27, best error: 120.03554768227056
+Params 15 5 94 28 
+Thread-0: Evolving generation 27, best error: 122.70477202569444
+Params 6 7 98 25 

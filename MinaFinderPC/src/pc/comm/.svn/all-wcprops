@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/comm
+END
+DoraIntegrator.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/comm/DoraIntegrator.java
+END
+ProxyEnvioCmd.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/comm/ProxyEnvioCmd.java
+END
+Comunication.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/comm/Comunication.java
+END
+PartUpdater.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/comm/PartUpdater.java
+END
+WPUpdater.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/comm/WPUpdater.java
+END
+HeadingProxy.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/comm/HeadingProxy.java
+END
+PCCom.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/comm/PCCom.java
+END
+Proxy.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/comm/Proxy.java
+END

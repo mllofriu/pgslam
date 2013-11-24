@@ -1,0 +1,35 @@
+Job Name: paramConParametrizado10
+Working directory: /home/pgslam/ejecEvols
+Queue: publica
+Cantidad de tasks: 1
+Home: /home/pgslam
+Puerto del MOM: 15003
+Nombre del usuario: pgslam
+Idioma: en_US.UTF-8
+Cookie: E92BCB2DB97EAE82D58B8320E38B4B8A
+Offset de numero de nodos: 0
+Shell: /bin/bash
+JobID:
+Host: node01.cluster.fing
+Cola de ejecucion: publica
+Archivo de nodos: /var/spool/pbs/aux//3900606.cluster.fing.edu.uy
+Path: /usr/lib64/lam/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/opt/mpich-ch_p4-gcc-1.2.7/bin:/opt/env-switcher/bin:/opt/pbs/bin:/opt/pbs/lib/xpbs/bin:/opt/maui/bin:/usr/local/ns3/bin:/opt/c3-4/:/home/pgslam/bin
+
+Current path:
+/home/pgslam/ejecEvols
+
+NODES
+node07.cluster.fing
+....................Logger: Size:4, Fitness value:0.005065472562307029, Alleles:[IntegerGene(0,100)=1, IntegerGene(0,100)=8, IntegerGene(0,10000)=4495, IntegerGene(0,1000)=29], Application data:null
+Evaluando fitness loggeado
+Logger: mediaCorrida 0 330.66867
+Logger: mediaCorrida 1 183.29555
+Logger: mediaCorrida 2 252.37245
+Logger: mediaCorrida 3 244.25563
+Logger: mediaCorrida 4 172.10286
+Logger: mediaCorrida 5 162.2364
+Logger: mediaCorrida 6 148.9845
+Logger: mediaCorrida 7 255.83138
+Logger: mediaCorrida 8 172.28893
+Logger: mediaCorrida 9 342.34326
+Error obtenido 197.41494750976562

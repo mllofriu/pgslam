@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/pruebas
+END
+Reader.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/ens/svn/repos/pgslam/!svn/ver/23/MinaFinderPC/src/pc/pruebas/Reader.java
+END
+TestKalman.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/ens/svn/repos/pgslam/!svn/ver/139/MinaFinderPC/src/pc/pruebas/TestKalman.java
+END
+LogReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/pruebas/LogReader.java
+END
+LectorObjCam.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/119/MinaFinderPC/src/pc/pruebas/LectorObjCam.java
+END
+PasajeMarcasACSV.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/ens/svn/repos/pgslam/!svn/ver/23/MinaFinderPC/src/pc/pruebas/PasajeMarcasACSV.java
+END
+RobotReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/pruebas/RobotReader.java
+END
+NumFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/155/MinaFinderPC/src/pc/pruebas/NumFormat.java
+END
+Beep.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/ens/svn/repos/pgslam/!svn/ver/158/MinaFinderPC/src/pc/pruebas/Beep.java
+END
+TrainSetReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/121/MinaFinderPC/src/pc/pruebas/TrainSetReader.java
+END
+PruebaArray.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/pruebas/PruebaArray.java
+END
+ObjCamViewer.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/pruebas/ObjCamViewer.java
+END
+CanvasCamara.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinderPC/src/pc/pruebas/CanvasCamara.java
+END
+ClassPath.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/ens/svn/repos/pgslam/!svn/ver/137/MinaFinderPC/src/pc/pruebas/ClassPath.java
+END
+Marca.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/ens/svn/repos/pgslam/!svn/ver/163/MinaFinderPC/src/pc/pruebas/Marca.java
+END
+Dora.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinderPC/src/pc/pruebas/Dora.java
+END
+LectorMarcasTS.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/119/MinaFinderPC/src/pc/pruebas/LectorMarcasTS.java
+END
+TMates.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinderPC/src/pc/pruebas/TMates.java
+END
+TRelBearing.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ens/svn/repos/pgslam/!svn/ver/192/MinaFinderPC/src/pc/pruebas/TRelBearing.java
+END
+TEscucha.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/ens/svn/repos/pgslam/!svn/ver/121/MinaFinderPC/src/pc/pruebas/TEscucha.java
+END

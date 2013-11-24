@@ -1,0 +1,17 @@
+Color 1 : Verde
+
+rojo 32 - 80
+verde 64 - 112
+azul 0 - 16
+
+Color 2 : Rojo Claro
+
+rojo 128 - 240
+verde 16 - 48
+azul 0 - 16
+
+Color 3: Violeta
+
+rojo 64 - 112
+verde 16 - 32
+azul 0 - 16

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/behaviors
+END
+WallStopBh.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/behaviors/WallStopBh.java
+END
+VisionBh.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/behaviors/VisionBh.java
+END
+WayPointCreatorBh.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/behaviors/WayPointCreatorBh.java
+END
+VolverBh.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/ens/svn/repos/pgslam/!svn/ver/191/MinaFinder/src/curtidor/behaviors/VolverBh.java
+END
+FollowWayPointsBh.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/ens/svn/repos/pgslam/!svn/ver/206/MinaFinder/src/curtidor/behaviors/FollowWayPointsBh.java
+END

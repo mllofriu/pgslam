@@ -1,0 +1,1 @@
+javac -cp /opt/lejos_nxj/lib/nxt/classes.jar:.:../../MinaFinder/src/:/opt/jgap/src/:/opt/jgap/lib/trove-2.0.2.jar:/opt/jgap/lib/jcommon-1.0.14.jar:/opt/jgap/lib/commons-codec-1.3.jar:/opt/jgap/lib/commons-lang-2.1.jar:/opt/jgap/ pc/parametrizacion/evolutivos/EvolParam.java
